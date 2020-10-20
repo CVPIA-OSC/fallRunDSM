@@ -1,0 +1,32 @@
+"watershed","order","sort","prop.Hatch"
+"Upper Sacramento River",1,0,0.37
+"Antelope Creek",2,2,0.2
+"Battle Creek",3,3,0.9
+"Bear Creek",4,4,0.37968253968254
+"Big Chico Creek",5,6,0.2
+"Butte Creek",6,7,0.115
+"Clear Creek",7,9,0.2225
+"Cottonwood Creek",8,11,0.3525
+"Cow Creek",9,12,0.2
+"Deer Creek",10,13,0.16
+"Elder Creek",11,14,0.37968253968254
+"Mill Creek",12,17,0.1525
+"Paynes Creek",13,19,0.365
+"Stony Creek",14,22,0.37968253968254
+"Thomes Creek",15,23,0.37968253968254
+"Upper-mid Sacramento River",16,25,0.37968253968254
+"Sutter Bypass",17,99,0.37968253968254
+"Bear River",18,5,0
+"Feather River",19,15,0.855
+"Yuba River",20,27,0.54
+"Lower-mid Sacramento River",21,26,0.37968253968254
+"Yolo Bypass",22,99,0.37968253968254
+"American River",23,1,0.571666666666667
+"Lower Sacramento River",24,28,0.37968253968254
+"Calaveras River",25,8,0.0766666666666667
+"Cosumnes River",26,10,0.02
+"Mokelumne River",27,18,0.7575
+"Merced River",28,16,0.745
+"Stanislaus River",29,21,0.705
+"Tuolumne River",30,24,0.465
+"San Joaquin River",31,20,0.37968253968254

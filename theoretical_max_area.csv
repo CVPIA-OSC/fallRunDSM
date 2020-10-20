@@ -1,0 +1,93 @@
+watershed,species,lifestage,max_suit_sqm
+Upper Sacramento River,fr,spawning,3073815.564
+Upper Sacramento River,fr,rearing,5108832
+Antelope Creek,fr,spawning,180588.9724
+Antelope Creek,fr,rearing,401795.5
+Battle Creek,fr,spawning,43018.91939
+Battle Creek,fr,rearing,106125.5
+Bear Creek,fr,spawning,35564.71276
+Bear Creek,fr,rearing,59941
+Big Chico Creek,fr,rearing,179828
+Big Chico Creek,fr,spawning,107896.8
+Butte Creek,fr,spawning,103005.4449
+Butte Creek,fr,rearing,209314.5
+Clear Creek,fr,rearing,116149.5
+Clear Creek,fr,spawning,69689.7
+Cottonwood Creek,fr,rearing,508178
+Cottonwood Creek,fr,spawning,304906.8
+Cow Creek,fr,spawning,261950.3403
+Cow Creek,fr,rearing,440044
+Deer Creek,fr,spawning,85684.2
+Deer Creek,fr,rearing,142807
+Elder Creek,fr,spawning,29529.9
+Elder Creek,fr,rearing,49216.5
+Mill Creek,fr,rearing,242627
+Mill Creek,fr,spawning,140700.3345
+Paynes Creek,fr,spawning,35883.9
+Paynes Creek,fr,rearing,59806.5
+Stony Creek,fr,rearing,411770.5
+Stony Creek,fr,spawning,247062.3
+Thomes Creek,fr,spawning,233463.9
+Thomes Creek,fr,rearing,389106.5
+Upper-mid Sacramento River,fr,rearing,11530666
+Bear River,fr,spawning,179490
+Bear River,fr,rearing,299150
+Feather River,fr,spawning,795740.4894
+Feather River,fr,rearing,4781768
+Yuba River,fr,spawning,483165.5135
+Yuba River,fr,rearing,902831.5
+Lower-mid Sacramento River,fr,rearing,4752674.5
+American River,fr,spawning,637733.9415
+American River,fr,rearing,1356104
+Lower Sacramento River,fr,rearing,1266119
+Calaveras River,fr,rearing,151728
+Calaveras River,fr,spawning,60508.5578
+Cosumnes River,fr,spawning,183649.7857
+Cosumnes River,fr,rearing,906717.5
+Mokelumne River,fr,spawning,50668.46846
+Mokelumne River,fr,rearing,488054
+Merced River,fr,spawning,236586.5841
+Merced River,fr,rearing,824145
+Stanislaus River,fr,rearing,827758
+Stanislaus River,fr,spawning,210541.1649
+Tuolumne River,fr,spawning,272621.5531
+Tuolumne River,fr,rearing,1186048
+San Joaquin River,fr,rearing,1080938.5
+North Delta,fr,rearing,NA
+South Delta,fr,rearing,NA
+Battle Creek,sr,rearing,441170.1198
+Battle Creek,sr,spawning,201026.7719
+Big Chico Creek,sr,rearing,284742.7187
+Big Chico Creek,sr,spawning,170845.6312
+Butte Creek,sr,rearing,386690.6893
+Butte Creek,sr,spawning,106568.9731
+Clear Creek,sr,rearing,260300.5631
+Clear Creek,sr,spawning,92493.55072
+Cottonwood Creek,sr,spawning,264086.6957
+Cottonwood Creek,sr,rearing,2715795.85
+Deer Creek,sr,rearing,372167.7947
+Deer Creek,sr,spawning,115339.2981
+Mill Creek,sr,rearing,615108.5023
+Mill Creek,sr,spawning,272075.09
+Thomes Creek,sr,spawning,17242.94405
+Thomes Creek,sr,rearing,443333.856
+Battle Creek,st,rearing,441170.1198
+Battle Creek,st,spawning,201026.7719
+Big Chico Creek,st,spawning,170845.6312
+Big Chico Creek,st,rearing,284742.7187
+Butte Creek,st,spawning,106568.9731
+Butte Creek,st,rearing,386690.6893
+Clear Creek,st,rearing,260300.5631
+Clear Creek,st,spawning,156180.3378
+Cottonwood Creek,st,spawning,1940145.488
+Cottonwood Creek,st,rearing,3233575.814
+Cow Creek,st,spawning,387539.9504
+Cow Creek,st,rearing,645899.9173
+Deer Creek,st,rearing,372167.7947
+Deer Creek,st,spawning,115339.2981
+Mill Creek,st,rearing,615108.5023
+Mill Creek,st,spawning,272075.09
+Paynes Creek,st,rearing,140843.8354
+Paynes Creek,st,spawning,84506.30125
+Thomes Creek,st,rearing,443333.856
+Thomes Creek,st,spawning,162367.4211
