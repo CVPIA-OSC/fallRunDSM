@@ -1,0 +1,32 @@
+order,dynam,grp,watershed,DiversityGroup
+1,D,1,Upper Sacramento River,2
+2,I,2,Antelope Creek,3
+3,I,2,Battle Creek,2
+4,ST,3,Bear Creek,2
+5,ST,3,Big Chico Creek,3
+6,I,2,Butte Creek,3
+7,D,1,Clear Creek,1
+8,D,1,Cottonwood Creek,1
+9,D,1,Cow Creek,2
+10,I,2,Deer Creek,3
+11,ST,3,Elder Creek,1
+12,I,2,Mill Creek,3
+13,ST,3,Paynes Creek,3
+14,ST,3,Stony Creek,1
+15,I,2,Thomes Creek,1
+16,,7,Upper-mid Sacramento River,
+17,,8,Sutter Bypass,
+18,ST,4,Bear River,3
+19,ST,4,Feather River,3
+20,ST,4,Yuba River,3
+21,,7,Lower-mid Sacramento River,
+22,,8,Yolo Bypass,
+23,ST,4,American River,3
+24,,7,Lower Sacramento River,
+25,ST,5,Calaveras River,4
+26,ST,5,Cosumnes River,3
+27,ST,5,Mokelumne River,3
+28,I,6,Merced River,4
+29,I,6,Stanislaus River,4
+30,I,6,Tuolumne River,4
+31,,9,San Joaquin River,
