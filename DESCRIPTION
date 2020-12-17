@@ -1,0 +1,25 @@
+Package: fallRunDSM
+Type: Package
+Title: Structured Decision Fall Run Model for CVPIA
+Version: 2.0
+Authors@R: c(
+    person("James", "Petterson", email = "jt.peterson@oregonstate.edu", role = "aut"),
+    person("Adam", "Duarte", email = "adam.duarte@oregonstate.edu", role = "aut"), 
+    person("Sadie", "Gill", email = "sgill@flowwest.com", role = "aut"), 
+    person("Emanuel", "Rodriguez", email = "erodriguez@flowwest.com", role = "cre"))
+Description: SDM is a key effort by CVPIA agencies to continuously improve project 
+    recommendations and prioritization toward the anadromous fish doubling goal. 
+    Our intent is to improve collaboration under a science-based framework that is 
+    both transparent and efficient. This package contains life cycle models for the 
+    for the key species impacted by CVPIA.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1
+URL: https://CVPIA-OSC.github.io/fallRunDSM/
+Imports: 
+    boot
+Suggests: 
+    testthat (>= 2.1.0)
+Depends: 
+    R (>= 2.10)

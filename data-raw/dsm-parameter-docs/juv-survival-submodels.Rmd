@@ -1,0 +1,135 @@
+---
+title: "Juvenile Survival Submodels"
+author: "Emanuel Rodriguez"
+date: "10/28/2020"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, cache = TRUE, warning = FALSE)
+knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
+library(tidyverse)
+library(lubridate)
+library(dataRetrieval)
+library(gt)
+```
+
+#### Temperature Parameters (Max temp thresh and Average temp thresh)
+
+The following inputs are used in rearing survival, lines 145-148 in `R/survival.R`. The goal of this analysis is to produce a proportion of month that temperatures exceed a threshold (20C, 25C) based on a monthly value.
+
+```{r, eval=FALSE}
+aveT20 <- rbinom(31, 1, boot::inv.logit(-14.32252 + 0.72102 * avg_temp[ , month , year]))
+maxT25 <- rbinom(31, 1, boot::inv.logit(-23.1766 + 1.4566 * avg_temp[ , month, year]))
+aveT20D <- rbinom(2, 1, boot::inv.logit(-18.30017 + 0.96991 * avg_temp_delta[month, year, ]))
+maxT25D <- rbinom(2, 1, boot::inv.logit(-157.537 + 6.998 * avg_temp_delta[month, year, ]))
+```
+
+##### Delta Survival
+
+```{r, echo=FALSE}
+files_to_read <- list.files("data-raw/dsm-parameter-docs/scripts-for-calculating-temp-metrics-2019_2020/", 
+                            pattern = ".csv", 
+                            full.names = TRUE)[-2]
+
+# read in data and create variables for proportions 
+temp_data <- map_df(files_to_read, ~read_csv(., col_types = cols(
+  agency_cd = col_character(),
+  site_no = col_character(),
+  datetime = col_datetime(format = "%m/%d/%Y %H:%M"),
+  tz_cd = col_character(),
+  TempC = col_double(),
+  year = col_double(),
+  month = col_double(),
+  day = col_double()
+))) %>% 
+  mutate(
+    gt_20 = ifelse(TempC >= 20, 1, 0), 
+    gt_25 = ifelse(TempC >= 25, 1, 0), 
+    gt_25_ever = ifelse(TempC >= 25, 1, 0)
+  )
+
+```
+
+To calcaulate the temperature proportion parameters for the delta, the following USGS Stations were used:
+
+```{r, echo=FALSE}
+sites <- temp_data %>% distinct(site_no) %>% 
+  pull() %>% 
+  as.character() %>% 
+  map_df(~dataRetrieval::readNWISsite(.) %>% select(site_no, station_nm)) %>% 
+  select(`Site Number` = site_no, 
+         `Station Name` = station_nm)
+
+gt(sites)
+```
+
+The figure below shows what these temperatures look like in 2017.
+
+```{r}
+temp_data %>%
+  left_join(sites, by = c("site_no" = "Site Number")) %>% 
+  filter(year(datetime) == 2017) %>% 
+  ggplot(aes(datetime, TempC, color = `Station Name`)) + geom_line() + 
+  theme(legend.position = "top") + 
+  labs(x = "DateTime", y = "Temperature (C)", color = NULL)
+```
+
+```{r}
+temp_data %>% 
+  left_join(sites, by = c("site_no" = "Site Number")) %>%
+  group_by(`Station Name`) %>% 
+  summarise(
+    `Total Observations` = format(n()), 
+    `Start Date` = format(min(datetime), "%m/%d/%Y"), 
+    `End Date` = format(max(datetime), "%m/%d/%Y")
+  ) %>% 
+  gt()
+```
+
+A time series is created by finding the proportion of times in a month when temperature exceeded either 20C or 25C at any one of the stations.
+
+```{r}
+# aggregate the data year and months
+annual_agg <- 
+  temp_data %>% 
+  group_by(year, month) %>% 
+  mutate(
+    total_over_25 = sum(gt_25_ever), 
+    prop_over_25 = mean(gt_25), 
+    prop_over_20 = mean(gt_20), 
+    monthly_mean = mean(TempC)
+  ) %>% ungroup() %>% 
+  select(month, year, total_over_25, prop_over_25, prop_over_20, monthly_mean) %>% 
+  distinct(month, year, .keep_all = TRUE) %>% 
+  arrange(year, month) %>% 
+  mutate(
+    prop_over_20 = ifelse(prop_over_20 == 0, 0.001, ifelse(prop_over_20 == 1, .999, prop_over_20)),
+    prop_over_25 = ifelse(prop_over_25 == 0, 0.001, ifelse(prop_over_25 == 1, .999, prop_over_25)),
+    total_over_25 = ifelse(total_over_25 > 1, 1, total_over_25),
+    prop_eta_20 = log(prop_over_20/(1-prop_over_20)), # manual logit link
+    prop_eta_25 = log(prop_over_25/(1-prop_over_25)), 
+    date = as_date(paste0(year, "-", month, "-01"))
+  )
+
+annual_agg %>% 
+  ggplot(aes(year, prop_over_25)) + geom_col()
+```
+
+```{r}
+# get model parameters for monthly_mean = b0 + b1*prop
+prop_over_20_model <- lm(prop_eta_20 ~ monthly_mean, data = annual_agg)
+prop_over_25_model <- lm(prop_eta_25 ~ monthly_mean, data = annual_agg)
+over_25_model <- glm(total_over_25 ~ monthly_mean, data = annual_agg, family = "binomial")
+
+annual_agg %>% 
+  ggplot(aes(monthly_mean, prop_over_20)) + geom_point() + 
+  geom_smooth(method = "glm", method.args = list(family = "binomial"))
+
+annual_agg %>% 
+  ggplot(aes(monthly_mean, total_over_25)) + geom_point() + 
+  geom_smooth(method = "glm", method.args = list(family = "binomial"))
+
+```

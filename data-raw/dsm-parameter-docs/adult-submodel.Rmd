@@ -1,0 +1,117 @@
+---
+title: "Adult Submodels"
+author: "Emanuel Rodriguez"
+date: "10/28/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This document presents details on parameters for all adult salmon submodels.
+
+## Adult Straying 
+
+The adult straying submodel is called `adult_stray`, it has the following function
+definition: 
+
+
+```r
+adult_stray <- function(wild, natal_flow, south_delta_watershed, cross_channel_gates_closed,
+                        prop_delta_trans = 0, prop_bay_trans = 0,
+                        betas = c(intercept = 3, wild = -5.5, `natal flow` = -1.99,
+                                  `gates open` = -0.174, bay = 2.09, delta = 2.89)){
+
+  boot::inv.logit(
+    betas[1] +
+      betas[2] * wild +
+      betas[3] * natal_flow +
+      betas[4] * south_delta_watershed * cross_channel_gates_closed +
+      betas[5] * prop_bay_trans * ( 1 - wild) +
+      betas[6] * prop_delta_trans * (1 - wild)
+  )
+
+}
+```
+
+the model is defined as the inverse logit of the following:
+
+$$\beta_0 + \beta_{wild}*Wild + \beta_{nf}*NatalFlow + \beta_{gates}*(SouthDeltaWS * CrossChannelClosed) +$$ 
+$$\beta_{bay}*PropBayTrans*(1 - Wild) + \beta_{delta}*PropDeltaTrans * (1 - Wild)$$
+
+the $\beta$ parameters were derived as follows:
+
+* $\beta_0$ (intercept) Empirical model fit using 2008–2011 tagging data provided by East Bay Municipal Utility District
+* $\beta_{wild}$ Wild salmon parameter. Estimated with coded wire tag data 2010–2013 [(Kormos et al. 2012, Palmer-Zwahlen & Kormos 2013-2015, Palmer-Zwahlen et al. 2018)](https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&usg= AOvVaw0VgMOwD7knFfSxRZy6k8RG)
+* $\beta_{nf}$ Natal Flow parameter. Empirical model fit using  2008–2011 tagging data provided by East Bay Municipal Utility District.
+* $\beta_{gates}$ Cross Channel Gates parameter. Empirical model fit using  2008–2011 tagging data provided by East Bay Municipal Utility District. 
+* $\beta_{bay}$ Bay transport proportion parameter. Estimated with coded wire tag data 2010–2013 [(Kormos et al. 2012, Palmer-Zwahlen & Kormos 2013-2015, Palmer-Zwahlen et al. 2018)](https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&usg= AOvVaw0VgMOwD7knFfSxRZy6k8RG)
+* $\beta_{delta}$ Delta transport proportion parameter. Estimated with coded wire tag data 2010–2013 [(Kormos et al. 2012, Palmer-Zwahlen & Kormos 2013-2015, Palmer-Zwahlen et al. 2018)](https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&usg= AOvVaw0VgMOwD7knFfSxRZy6k8RG)
+
+
+
+## Adult En Route Survival 
+
+The adult en-route surival is defined as `surv_adult_enroute` and has the following 
+function definition: 
+
+```r
+surv_adult_enroute <- function(migratory_temp, bypass_overtopped, adult_harvest,
+                               betas = c(intercept = 3, temperature = -0.26, overtop = -0.019)) {
+
+  pmax(boot::inv.logit(betas[1] + betas[2] * migratory_temp + betas[3] * bypass_overtopped) - adult_harvest, 0)
+
+}
+
+```
+
+it is defined as the inverse logit of
+
+$$
+\beta_0 + \beta_{temp}*MigratoryTemp + \beta_{overtop}*BypassOvertopped - AdultHarvest
+$$
+when this results in a positive value, otherwise it is 0.
+
+
+the $\beta$ parameters were derived as follows:
+
+* $\beta_0$ (intercetp). Calibration estimate
+* $\beta_{temp}$ Temperature parameter. [Schreck et al. (1994)](https://digital.library.unt.edu/ark:/67531/metadc786518/m2/1/high_res_d/83875.pdf). 
+* $\beta_{overtop}$ Bypass overtopped parameter. Expert opinion Ted Sommer, California Department of Water Resources (tributaries above bypasses only)
+
+
+
+
+## Adult Pre-spawn Survival 
+
+Ault pre-spawn survival is defined as `surv_adult_prespawn` and has the following
+function definition:
+
+```r
+surv_adult_prespawn <- function(deg_day,
+                                betas = c(intercept = 3, `degree days` = -0.000669526)){
+
+  boot::inv.logit(betas[1] + betas[2] * deg_day)
+}
+```
+
+it is defined as the inverse logit of:
+
+$$
+\beta_0 + \beta_{deg}*DegDay
+$$
+the $\beta$ were derived as follows:
+
+* $\beta_0$ (intercept) Calibration estimate. 
+* $\beta_{def}$ Degree Day parameter. [Colvin et al. (2018)](https://onlinelibrary.wiley.com/doi/10.1002/rra.3348)
+
+
+
+
+
+
+
+
+
+
