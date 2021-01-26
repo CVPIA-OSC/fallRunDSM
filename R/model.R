@@ -76,7 +76,6 @@ fall_run_model <- function(scenario = NULL, seeds = NULL){
     average_degree_days <- apply(accumulated_degree_days, 1, weighted.mean, month_return_proportions)
     prespawn_survival <- surv_adult_prespawn(average_degree_days)
 
-
     juveniles <- spawn_success(escapement = init_adults,
                                adult_prespawn_survival = prespawn_survival,
                                egg_to_fry_survival = egg_to_fry_surv,
