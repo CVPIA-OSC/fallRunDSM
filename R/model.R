@@ -9,8 +9,6 @@
 #' @export
 fall_run_model <- function(scenario = NULL, seeds = NULL){
 
-  debug_watershed <- 23
-
   watershed_labels <- c("Upper Sacramento River", "Antelope Creek", "Battle Creek",
                         "Bear Creek", "Big Chico Creek", "Butte Creek", "Clear Creek",
                         "Cottonwood Creek", "Cow Creek", "Deer Creek", "Elder Creek",
@@ -30,8 +28,6 @@ fall_run_model <- function(scenario = NULL, seeds = NULL){
     natural_spawners = matrix(0, nrow = 31, ncol = 20, dimnames = list(watershed_labels, 1:20)),
     juvenile_biomass = matrix(0, nrow = 31, ncol = 20, dimnames = list(watershed_labels, 1:20))
   )
-
-
 
   # initialise 31 x 4 matrices for natal fish, migrants, and ocean fish
   lower_mid_sac_fish <- matrix(0, nrow = 31, ncol = 4, dimnames = list(watershed_labels, size_class_labels))
@@ -79,6 +75,7 @@ fall_run_model <- function(scenario = NULL, seeds = NULL){
 
     average_degree_days <- apply(accumulated_degree_days, 1, weighted.mean, month_return_proportions)
     prespawn_survival <- surv_adult_prespawn(average_degree_days)
+
 
     juveniles <- spawn_success(escapement = init_adults,
                                adult_prespawn_survival = prespawn_survival,
