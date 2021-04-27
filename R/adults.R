@@ -1,39 +1,33 @@
 #' @title Adult Straying
 #' @description Calculate the proportion of adults straying to non-natal streams to spawn
-#' @param wild Indicator of wild fish returning
-#' @param natal_flow Proportion flows at tributary junctions coming from natal watershed in October
-#' @param south_delta_watershed Indicator if watershed feeds into South Delta
-#' @param cross_channel_gates_closed Number of days gates are closed for each month
-#' @param prop_delta_trans
-#' @param prop_bay_trans
-#' @param betas Parameters estimated from calibration
-#' @section Parameters:
-#' Parameters from the model are obtained from either literature, calibration, export elicitation,
-#' or meta-analysis. The source for each parameter in this function are detailed below.
-#'
-#'
-#' \itemize{
-#' \item intercept- Intercept: Empirical model fit using 2008–2011 tagging data provided by East Bay Municipal Utility District
-#' \item wild - Wild Salmon Parameter: Estimated with coded wire tag data 2010–2013 \href{https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&usg= AOvVaw0VgMOwD7knFfSxRZy6k8RG}{(Kormos et al. 2012, Palmer-Zwahlen & Kormos 2013-2015, Palmer-Zwahlen et al. 2018)}
-#' \item natal flow - Natal Flow Parameter: Empirical model fit using 2008–2011 tagging data provided by East Bay Municipal Utility District
-#' \item gates open - Cross Channel Gates Parameter: Empirical model fit using  2008–2011 tagging data provided by East Bay Municipal Utility District.
-#' \item bay - Bay transport proportion parameter. Estimated with coded wire tag data 2010–2013 \href{https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&usg= AOvVaw0VgMOwD7knFfSxRZy6k8RG}{(Kormos et al. 2012, Palmer-Zwahlen & Kormos 2013-2015, Palmer-Zwahlen et al. 2018)}
-#' \item delta  - Delta transport proportion parameter. Estimated with coded wire tag data 2010–2013 \href{https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&usg= AOvVaw0VgMOwD7knFfSxRZy6k8RG}{(Kormos et al. 2012, Palmer-Zwahlen & Kormos 2013-2015, Palmer-Zwahlen et al. 2018)}
-#' }
+#' @param wild Variable indicator of wild fish returning
+#' @param natal_flow Variable describing proportion flows at tributary junctions coming from natal watershed in October
+#' @param south_delta_watershed Variable indicator if watershed feeds into South Delta
+#' @param cross_channel_gates_closed Variable describing number of days gates are closed for each month
+#' @param prop_delta_trans Variable describing proportion transport to the delta
+#' @param prop_bay_trans Variable describing proportion transport to the bay
+#' @param .intercept Intercept, source: Empirical model fit using 2008–2011 tagging data provided by East Bay Municipal Utility District
+#' @param .wild Coefficient for wild variable, source: Estimated with coded wire tag data 2010–2013 \href{https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&usg= AOvVaw0VgMOwD7knFfSxRZy6k8RG}{(Kormos et al. 2012, Palmer-Zwahlen & Kormos 2013-2015, Palmer-Zwahlen et al. 2018)}
+#' @param .natal_flow Coefficient for natal flow variable, source: Empirical model fit using 2008–2011 tagging data provided by East Bay Municipal Utility District
+#' @param .cross_channel_gates_closed Coefficient for cross_channel_gates_closed variable, Source: Empirical model fit using  2008–2011 tagging data provided by East Bay Municipal Utility District.
+#' @param .prop_bay_trans Coefficient for prop_bay_trans variable, source: Estimated with coded wire tag data 2010–2013 \href{https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&usg= AOvVaw0VgMOwD7knFfSxRZy6k8RG}{(Kormos et al. 2012, Palmer-Zwahlen & Kormos 2013-2015, Palmer-Zwahlen et al. 2018)}
+#' @param .prop_delta_trans Coefficient for prop_delta_trans variable, source: Estimated with coded wire tag data 2010–2013 \href{https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&usg= AOvVaw0VgMOwD7knFfSxRZy6k8RG}{(Kormos et al. 2012, Palmer-Zwahlen & Kormos 2013-2015, Palmer-Zwahlen et al. 2018)}
 #' @source IP-117068
 #' @export
 adult_stray <- function(wild, natal_flow, south_delta_watershed, cross_channel_gates_closed,
-                        prop_delta_trans = 0, prop_bay_trans = 0,
-                        betas = c(intercept = 3, wild = -5.5, `natal flow` = -1.99,
-                                  `gates open` = -0.174, bay = 2.09, delta = 2.89)){
+                        prop_delta_trans = 0, prop_bay_trans = 0, .intercept = 3,
+                        .wild = -5.5, .natal_flow = -1.99,
+                        .cross_channel_gates_closed = -0.174,
+                        .prop_bay_trans = 2.09,
+                        .prop_delta_trans = 2.89){
 
   boot::inv.logit(
-    betas[1] +
-      betas[2] * wild +
-      betas[3] * natal_flow +
-      betas[4] * south_delta_watershed * cross_channel_gates_closed +
-      betas[5] * prop_bay_trans * ( 1 - wild) +
-      betas[6] * prop_delta_trans * (1 - wild)
+    .intercept +
+      .wild * wild +
+      .natal_flow * natal_flow +
+      .cross_channel_gates_closed * south_delta_watershed * cross_channel_gates_closed +
+      .prop_bay_trans * prop_bay_trans * ( 1 - wild) +
+      .prop_delta_trans * prop_delta_trans * (1 - wild)
   )
 
 }
@@ -61,20 +55,12 @@ surv_adult_enroute <- function(migratory_temp, bypass_overtopped, adult_harvest,
 
 #' @title Adult Prespawn Survival
 #' @description Calculate the adult prespawn survival
-#' @param deg_day Average degree days
-#' @param betas Parameters from calibration process
-#' @section Parameters:
-#' Parameters from the model are obtained from either literature, calibration, export elicitation,
-#' or meta-analysis. The source for each parameter in this function are detailed below.
-#'
-#'
-#' \itemize{
-#' \item intercept: Calibration Estimate
-#' }
+#' @param deg_day Variable describing average degree days
+#' @param .intercept Intercept, Source: Calibration Estimate
+#' @param .deg_day Coefficient for deg_day variable, source Colvin et al. (2018)
 #' @source IP-117068
 #' @export
-surv_adult_prespawn <- function(deg_day,
-                                betas = c(intercept = 3, `degree days` = -0.000669526)){
+surv_adult_prespawn <- function(deg_day, .intercept = 3, .deg_day = -0.000669526){
 
-  boot::inv.logit(betas[1] + betas[2] * deg_day)
+  boot::inv.logit(.intercept + .deg_day * deg_day)
 }

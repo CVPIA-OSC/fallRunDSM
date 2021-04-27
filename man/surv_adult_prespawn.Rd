@@ -7,27 +7,15 @@
 IP-117068
 }
 \usage{
-surv_adult_prespawn(
-  deg_day,
-  betas = c(intercept = 3, `degree days` = -0.000669526)
-)
+surv_adult_prespawn(deg_day, .intercept = 3, .deg_day = -0.000669526)
 }
 \arguments{
-\item{deg_day}{Average degree days}
+\item{deg_day}{Variable describing average degree days}
 
-\item{betas}{Parameters from calibration process}
+\item{.intercept}{Intercept, Source: Calibration Estimate}
+
+\item{.deg_day}{Coefficient for deg_day variable, source Colvin et al. (2018)}
 }
 \description{
 Calculate the adult prespawn survival
 }
-\section{Parameters}{
-
-Parameters from the model are obtained from either literature, calibration, export elicitation,
-or meta-analysis. The source for each parameter in this function are detailed below.
-
-
-\itemize{
-\item intercept: Calibration Estimate
-}
-}
-
