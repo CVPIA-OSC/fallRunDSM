@@ -39,29 +39,24 @@ adult_stray <- function(wild, natal_flow, south_delta_watershed, cross_channel_g
 }
 
 #' @title Adult En Route Survival
-#' @description Calculate adult survial en route to spawning grounds
-#' @param migratory_temp Proportion of migratory corridor temperature above  20°C
+#' @description Calculate adult survival en route to spawning grounds
+#' @param migratory_temp variable representing proportion of migratory corridor temperature above  20°C
 #' @param bypass_overtopped Indicator for bypass overtopped
 #' @param adult_harvest Adult harvest rate (Estimated with Coded Wire Tag data 2012–2013 (Palmer-Zwahlen & Kormos 2015; Palmer-Zwahlen et al. 2018))
-#' @param betas Parameters estimated from calibration
-#' @section Parameters:
-#' Parameters from the model are obtained from either literature, calibration, export elicitation,
-#' or meta-analysis. The source for each parameter in this function are detailed below.
-#'
-#'
-#' \itemize{
-#' \item intercept: Calibration Estimate
-#' \item temperature (Average daily temperature): \href{https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&usg= AOvVaw0VgMOwD7knFfSxRZy6k8RG}{Schreck et al. (1994)}
-#' \item overtop (Bypass overtopped parameter): Expert opinion Ted Sommer, California Department of Water Resources (tributaries above bypasses only)
-#' \item gates open - Cross Channel Gates Parameter: Empirical model fit using  2008–2011 tagging data provided by East Bay Municipal Utility District.
-#' }
+#' @param ..surv_adult_enroute_int intercept, source: calibration
+#' @param .migratory_temp coefficient for migratory_temp variable, source: \href{https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&usg= AOvVaw0VgMOwD7knFfSxRZy6k8RG}{Schreck et al. (1994)}
+#' @param .bypass_overtopped coefficient for bypass_overtopped variable, source: Expert opinion Ted Sommer, California Department of Water Resources (tributaries above bypasses only)
 #' @source IP-117068
 #' @export
+
 surv_adult_enroute <- function(migratory_temp, bypass_overtopped, adult_harvest,
-                               betas = c(intercept = 3, temperature = -0.26, overtop = -0.019)) {
+                               ..surv_adult_enroute_int = 3,
+                               .migratory_temp = -0.26,
+                               .bypass_overtopped = -0.019) {
 
-  pmax(boot::inv.logit(betas[1] + betas[2] * migratory_temp + betas[3] * bypass_overtopped) - adult_harvest, 0)
-
+  pmax(boot::inv.logit(..surv_adult_enroute_int +
+                       .migratory_temp * migratory_temp +
+                       .bypass_overtopped * bypass_overtopped) - adult_harvest, 0)
 }
 
 #' @title Adult Prespawn Survival

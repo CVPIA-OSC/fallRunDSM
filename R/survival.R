@@ -1,89 +1,67 @@
 #' @title Juvenile Rearing Survival
 #' @description Calculates the juvenile rearing survival inchannel and on the floodplain
-#' @param max_temp_thresh The probability of exceeding the max tempeature threshold
-#' @param avg_temp_thresh The probability of exceeding the avg temperatre threshold
-#' @param high_predation An indicator of high predation for a watershed
-#' @param contact_points The total number of contact points per watershed
-#' @param prop_diversions The proportion of water diverted
-#' @param total_diversions The total amount of water diverted
-#' @param stranded The stranding rate per watershed
-#' @param weeks_flooded The total weeks flooded per watershed
-#' @param betas The parameters from calibration process
-#' @section Parameters:
-#' Parameters from the model are obtained from either literature, calibration, export elicitation,
-#' and meta-analysis. The source for each parameter in this function are detailed below.
-#' \itemize{
-#' \item calibration adjustment: calibration estimate; varies by tributary
-#' \item average temperature: \href{https://www.noaa.gov/sites/default/files/atoms/files/07354626766.pdf}{Marine and Chech (2004)}
-#' \item predation \href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}
-#' \item contact points: calibration estimate
-#' \item contact points scaler
-#' \item proportion diverted: calibration estimate
-#' \item proportion diverted scaler
-#' \item total diverted: calibration estimate
-#' \item total diverted scaler
-#' \item stranded: \href{#}{USFWS (2006) and CDWR (2006)}
-#' \item medium: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
-#' \item large" \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
-#' \item floodplain habitat: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/SOMMER_T-SDWA+180+Floodplain+rearing+of+juvenile+chinook+salmon+evidence+of+enhanced+growth+and+survival+.pdf}{Sommer et al. (2001)}
-#' \item survival adjustment:
-#' }
-#'
+#' @param max_temp_thresh variable representing probability of exceeding the max temperature threshold
+#' @param avg_temp_thresh variable representing probability of exceeding the avg temperature threshold
+#' @param high_predation variable representing indicator of high predation for a watershed
+#' @param contact_points variable representing total number of contact points per watershed
+#' @param prop_diversions variable representing proportion of water diverted
+#' @param total_diversions variable representing total amount of water diverted
+#' @param stranded variable representing stranding rate per watershed
+#' @param weeks_flooded variable representing total weeks flooded per watershed
+#' @param ..surv_juv_rear_int  intercept, source: calibration (varies by tributary)
+#' @param .avg_temp_thresh coefficient for avg_temp_thresh variable, source: \href{https://www.noaa.gov/sites/default/files/atoms/files/07354626766.pdf}{Marine and Chech (2004)}
+#' @param .high_predation coefficient for high_predation variable, source: \href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}
+#' @param ..surv_juv_rear_contact_points coefficient for contact_points variable, source: calibration
+#' @param ..surv_juv_rear_prop_diversions coefficient for prop_diversions variable, source: calibration
+#' @param ..surv_juv_rear_total_diversions coefficient for total_diversions variable, source: calibration
+#' @param .stranded coefficient for stranded variable, source: \href{#}{USFWS (2006) and CDWR (2006)}
+#' @param .medium parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+#' @param .large parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+#' @param .floodplain parameter for floodplain rearing benefit, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/SOMMER_T-SDWA+180+Floodplain+rearing+of+juvenile+chinook+salmon+evidence+of+enhanced+growth+and+survival+.pdf}{Sommer et al. (2001)}
 #' @source IP-117068
 #' @export
 surv_juv_rear <- function(max_temp_thresh, avg_temp_thresh, high_predation,
                           contact_points, prop_diversions, total_diversions,
-                          stranded, weeks_flooded,
-                          betas = c(`2nd calibration adjustment` = 3.5,
-                                    `average temperature` = -0.717,
-                                    predation = -0.122,
-                                    `contact points` = 0.0358,
-                                    `contact points scaler` = -0.189,
-                                    `proportion diverted` = 0.05,
-                                    `proportion diverted scaler` = -3.51,
-                                    `total diverted` = 0.215,
-                                    `total diverted scaler` = -0.0021,
-                                    stranded = -1.939,
-                                    medium = 1.48,
-                                    large = 2.223,
-                                    `floodplain habitat` = 0.47,
-                                    `surival adjustments` = 1)){
-
+                          stranded, weeks_flooded, ..surv_juv_rear_int = 3.5,
+                          .avg_temp_thresh = -0.717, .high_predation = -0.122,
+                          ..surv_juv_rear_contact_points = -0.0068,
+                          ..surv_juv_rear_prop_diversions = -0.1755,
+                          ..surv_juv_rear_total_diversions = -0.0005,
+                          .stranded = -1.939,
+                          .medium = 1.48,
+                          .large = 2.223,
+                          .floodplain = 0.47){
   # determine the proportion of weeks when flooded vs not
   prop_ic <-ifelse(weeks_flooded > 0, (4 - weeks_flooded) / 4, 1)
   prop_fp <- 1 - prop_ic
 
-  base_score_inchannel <-
-    betas[1] +
-    (betas[2] * avg_temp_thresh) +
-    (betas[3] * high_predation) +
-    (betas[4] * betas[5] * contact_points * high_predation) +
-    (betas[6] * betas[7] * prop_diversions) +
-    (betas[8] * betas[9] * total_diversions) +
-    (betas[10] * stranded)
+  base_score_inchannel <- ..surv_juv_rear_int +
+    (.avg_temp_thresh * avg_temp_thresh) +
+    (.high_predation * high_predation) +
+    (..surv_juv_rear_contact_points * contact_points * high_predation) +
+    (..surv_juv_rear_prop_diversions * prop_diversions) +
+    (..surv_juv_rear_total_diversions * total_diversions) +
+    (.stranded * stranded)
 
-  base_score_floodplain <-
-    betas[1] +
-    betas[13] +
-    betas[2] * avg_temp_thresh +
-    betas[3] * high_predation
+  base_score_floodplain <- ..surv_juv_rear_int + .floodplain +
+    (.avg_temp_thresh  * avg_temp_thresh) + (.high_predation * high_predation)
 
   s1 <- ifelse(max_temp_thresh, .0001, boot::inv.logit(base_score_inchannel))
-  m1 <- ifelse(max_temp_thresh, .0001, boot::inv.logit(base_score_inchannel + betas[11]))
-  l1 <- ifelse(max_temp_thresh, .0001, boot::inv.logit(base_score_inchannel  + betas[12]))
+  m1 <- ifelse(max_temp_thresh, .0001, boot::inv.logit(base_score_inchannel + .medium))
+  l1 <- ifelse(max_temp_thresh, .0001, boot::inv.logit(base_score_inchannel  + .large))
 
   s2 <- ifelse(max_temp_thresh, .0001, boot::inv.logit(base_score_floodplain)) ^ prop_fp
-  m2 <- ifelse(max_temp_thresh, .0001, boot::inv.logit(base_score_floodplain + betas[11])) ^ prop_fp
-  l2 <- ifelse(max_temp_thresh, .0001, boot::inv.logit(base_score_floodplain + betas[12])) ^ prop_fp
+  m2 <- ifelse(max_temp_thresh, .0001, boot::inv.logit(base_score_floodplain + .medium)) ^ prop_fp
+  l2 <- ifelse(max_temp_thresh, .0001, boot::inv.logit(base_score_floodplain + .large)) ^ prop_fp
 
   list(
-    inchannel = cbind(s = s1 * betas[14],
-                      m = m1 * betas[14],
-                      l = l1 * betas[14],
+    inchannel = cbind(s = s1,
+                      m = m1,
+                      l = l1,
                       vl = 1),
-    floodplain = cbind(s = (s1^prop_ic * s2) * betas[14],
-                       m = (m1^prop_ic * m2) * betas[14],
-                       l = (l1^prop_ic * l2) * betas[14],
+    floodplain = cbind(s = (s1^prop_ic * s2),
+                       m = (m1^prop_ic * m2),
+                       l = (l1^prop_ic * l2),
                        vl = 1)
   )
 }
@@ -231,7 +209,17 @@ get_rearing_survival_rates <- function(year, month, scenario) {
                   total_diversions = total_diverted[x],
                   stranded = ws_strand[x],
                   weeks_flooded = weeks_flood[x],
-                  betas = betas[x, ])
+                  ..surv_juv_rear_int = betas[x, 1],
+                  .avg_temp_thresh = -0.717,
+                  .high_predation = -0.122,
+                  ..surv_juv_rear_contact_points = -0.0068,
+                  ..surv_juv_rear_prop_diversions = -0.1755,
+                  ..surv_juv_rear_total_diversions = -0.0005,
+                  .stranded = -1.939,
+                  .medium = 1.48,
+                  .large = 2.223,
+                  .floodplain = 0.47
+                  )
   }))
 
   river_surv <- matrix(unlist(rear_surv[ , 1]), ncol = 4, byrow = TRUE)
