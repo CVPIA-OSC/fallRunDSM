@@ -23,11 +23,11 @@ adult_stray <- function(wild, natal_flow, south_delta_watershed, cross_channel_g
 
   boot::inv.logit(
     .intercept +
-      .wild * wild +
-      .natal_flow * natal_flow +
-      .cross_channel_gates_closed * south_delta_watershed * cross_channel_gates_closed +
-      .prop_bay_trans * prop_bay_trans * ( 1 - wild) +
-      .prop_delta_trans * prop_delta_trans * (1 - wild)
+    .wild * wild +
+    .natal_flow * natal_flow +
+    .cross_channel_gates_closed * south_delta_watershed * cross_channel_gates_closed +
+    .prop_bay_trans * prop_bay_trans * ( 1 - wild) +
+    .prop_delta_trans * prop_delta_trans * (1 - wild)
   )
 
 }
