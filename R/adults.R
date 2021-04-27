@@ -4,8 +4,8 @@
 #' @param natal_flow Variable describing proportion flows at tributary junctions coming from natal watershed in October
 #' @param south_delta_watershed Variable indicator if watershed feeds into South Delta
 #' @param cross_channel_gates_closed Variable describing number of days gates are closed for each month
-#' @param prop_delta_trans Variable describing proportion transport to the delta
 #' @param prop_bay_trans Variable describing proportion transport to the bay
+#' @param prop_delta_trans Variable describing proportion transport to the delta
 #' @param .intercept Intercept, source: Empirical model fit using 2008–2011 tagging data provided by East Bay Municipal Utility District
 #' @param .wild Coefficient for wild variable, source: Estimated with coded wire tag data 2010–2013 \href{https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&usg= AOvVaw0VgMOwD7knFfSxRZy6k8RG}{(Kormos et al. 2012, Palmer-Zwahlen & Kormos 2013-2015, Palmer-Zwahlen et al. 2018)}
 #' @param .natal_flow Coefficient for natal flow variable, source: Empirical model fit using 2008–2011 tagging data provided by East Bay Municipal Utility District
@@ -15,7 +15,7 @@
 #' @source IP-117068
 #' @export
 adult_stray <- function(wild, natal_flow, south_delta_watershed, cross_channel_gates_closed,
-                        prop_delta_trans = 0, prop_bay_trans = 0, .intercept = 3,
+                        prop_bay_trans = 0, prop_delta_trans = 0, .intercept = 3,
                         .wild = -5.5, .natal_flow = -1.99,
                         .cross_channel_gates_closed = -0.174,
                         .prop_bay_trans = 2.09,

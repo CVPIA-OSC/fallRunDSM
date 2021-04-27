@@ -209,17 +209,7 @@ get_rearing_survival_rates <- function(year, month, scenario) {
                   total_diversions = total_diverted[x],
                   stranded = ws_strand[x],
                   weeks_flooded = weeks_flood[x],
-                  ..surv_juv_rear_int = betas[x, 1],
-                  .avg_temp_thresh = -0.717,
-                  .high_predation = -0.122,
-                  ..surv_juv_rear_contact_points = -0.0068,
-                  ..surv_juv_rear_prop_diversions = -0.1755,
-                  ..surv_juv_rear_total_diversions = -0.0005,
-                  .stranded = -1.939,
-                  .medium = 1.48,
-                  .large = 2.223,
-                  .floodplain = 0.47
-                  )
+                  ..surv_juv_rear_int = betas[x, 1])
   }))
 
   river_surv <- matrix(unlist(rear_surv[ , 1]), ncol = 4, byrow = TRUE)
