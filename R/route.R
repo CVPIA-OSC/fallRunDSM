@@ -122,24 +122,28 @@ route_regional <- function(month, migrants, inchannel_habitat, floodplain_habita
 #' the Delta Cross Channel gates are open
 #' @param mean_freeport_flow Mean of flow at freeport for standardizing discharge
 #' @param sd_freeport_flow Standard Deviation of flow at freeport for standardizing discharge
-#' @param betas Parameters for Sutter and Steamboat Sloughs (sss),  Delta Cross
-#' Channel (dcc), and Georgiana Slough (gs). All parameters are posterior medians
-#' @details
-#' This submodel is adapted from Perry et al. (2018) https://doi.org/10.1139/cjfas-2017-0310
-#' @source IP-117068
+#' @param .sss_int Intercept for Sutter and Steamboat Sloughs, source: \href{https://doi.org/10.1139/cjfas-2017-0310}[This submodel is adapted from Perry et al. (2018)]
+#' @param .sss_freeport_discharge Coefficient for freeport_flow for Sutter and Steamboat Sloughs, source: \href{https://doi.org/10.1139/cjfas-2017-0310}[This submodel is adapted from Perry et al. (2018)]
+#' @param .sss_upper_asymptote Parameter representing the upper asymptote for Sutter and Steamboat Sloughs, source: \href{https://doi.org/10.1139/cjfas-2017-0310}[This submodel is adapted from Perry et al. (2018)]
+#' @param .dcc_intercept Intercept for Delta Cross Channel, source: source: \href{https://doi.org/10.1139/cjfas-2017-0310}[This submodel is adapted from Perry et al. (2018)]
+#' @param .dcc_freeport_discharge Coefficient for freeport_flow for Delta Cross Channel Gates, source: \href{https://doi.org/10.1139/cjfas-2017-0310}[This submodel is adapted from Perry et al. (2018)]
+#' @param .gs_intercept Intercept for Georgiana Slough, source: source: \href{https://doi.org/10.1139/cjfas-2017-0310}[This submodel is adapted from Perry et al. (2018)]
+#' @param .gs_freeport_discharge Coefficient for freeport_flow for Georgiana Slough, source: \href{https://doi.org/10.1139/cjfas-2017-0310}[This submodel is adapted from Perry et al. (2018)]
+#' @param .gs_dcc_effect_on_routing Parameter representing the dcc effect on routing, source: \href{https://doi.org/10.1139/cjfas-2017-0310}[This submodel is adapted from Perry et al. (2018)]
+#' @param .gs_lower_asymptote Parameter representing the lower asymptote for Georgiana Slough, source: \href{https://doi.org/10.1139/cjfas-2017-0310}[This submodel is adapted from Perry et al. (2018)]
 #' @export
 route_south_delta <- function(freeport_flow, dcc_closed, month,
                               mean_freeport_flow = 21546.19,
                               sd_freeport_flow = 14375.9,
-                              betas = list(sss = c(intercept = 1.8922350,
-                                                   `freeport discharge` = 2.1703750,
-                                                   `upper asymptote` = 0.3512465),
-                                           dcc = c(intercept = -1.4896200,
-                                                   `freeport discharge` = -1.2488650),
-                                           gs = c(intercept = -2.9481450,
-                                                  `freeport discharge` = -2.9118350,
-                                                  `DCC effect on routing` = -0.5548430,
-                                                  `lower asymptote` = 0.2729845))){
+                              .sss_int = 1.8922350,
+                              .sss_freeport_discharge = 2.1703750,
+                              .sss_upper_asymptote = 0.3512465,
+                              .dcc_intercept = -1.4896200,
+                              .dcc_freeport_discharge = -1.2488650,
+                              .gs_intercept = -2.9481450,
+                              .gs_freeport_discharge = -2.9118350,
+                              .gs_dcc_effect_on_routing = -0.5548430,
+                              .gs_lower_asymptote = 0.2729845){
 
   number_of_days <- days_in_month(month)
   daily_gate_status <- c(dcc_closed, number_of_days - dcc_closed)
@@ -149,19 +153,21 @@ route_south_delta <- function(freeport_flow, dcc_closed, month,
 
   #----- First Junction, Sacramento and Sutter/Steamboat  ---------
   # Probability of entering Sutter/Steamboat
-  psi_SS <- boot::inv.logit(betas$sss[1] + betas$sss[2] * standardized_flow)
-  # psi_SS <- betas$sss[3] / (1 + exp(-lpsi_SS))
+  psi_SS <- boot::inv.logit(.sss_int + .sss_freeport_discharge * standardized_flow)
+  # psi_SS <- .sss_upper_asymptote / (1 + exp(-lpsi_SS))
   # Probability of remaining in Sacramento at junction with Sutter/Steamboat
   psi_SAC1 <- 1 - psi_SS
 
   #----- Second junction, Sacramento, DCC, and Georgiana Slough  ---------
   # Probability of entering DCC conditional on arriving at the river junction
   # (i.e, conditional on remaining in the Sacramento River at the Sutter/Steamboat)
-  psi_DCC <- boot::inv.logit(betas$dcc[1] + betas$dcc[2] * standardized_flow) * gate_status
+  psi_DCC <- boot::inv.logit(.dcc_intercept + .dcc_freeport_discharge * standardized_flow) * gate_status
 
   # Probability of entering Geo conditional on arriving at junction and
   # not entering DCC
-  psi_GEO_notDCC <- betas$gs[4] + boot::inv.logit(betas$gs[1] + betas$gs[2] * standardized_flow + betas$gs[3] * gate_status)
+  psi_GEO_notDCC <- .gs_lower_asymptote + boot::inv.logit(.gs_intercept +
+                                                  .gs_freeport_discharge * standardized_flow +
+                                                  .gs_dcc_effect_on_routing * gate_status)
 
   # Unconditional probability of entering Georgiana Slough, but conditional
   # on arriving at the junction of Sac, DCC, and Geo.
