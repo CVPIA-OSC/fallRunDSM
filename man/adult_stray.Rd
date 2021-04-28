@@ -12,8 +12,8 @@ adult_stray(
   natal_flow,
   south_delta_watershed,
   cross_channel_gates_closed,
-  prop_delta_trans = 0,
   prop_bay_trans = 0,
+  prop_delta_trans = 0,
   .intercept = 3,
   .wild = -5.5,
   .natal_flow = -1.99,
@@ -31,9 +31,9 @@ adult_stray(
 
 \item{cross_channel_gates_closed}{Variable describing number of days gates are closed for each month}
 
-\item{prop_delta_trans}{Variable describing proportion transport to the delta}
-
 \item{prop_bay_trans}{Variable describing proportion transport to the bay}
+
+\item{prop_delta_trans}{Variable describing proportion transport to the delta}
 
 \item{.intercept}{Intercept, source: Empirical model fit using 2008–2011 tagging data provided by East Bay Municipal Utility District}
 

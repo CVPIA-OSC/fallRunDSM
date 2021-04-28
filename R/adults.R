@@ -56,11 +56,11 @@ surv_adult_enroute <- function(migratory_temp, bypass_overtopped, adult_harvest,
 #' @title Adult Prespawn Survival
 #' @description Calculate the adult prespawn survival
 #' @param deg_day Variable describing average degree days
-#' @param .intercept Intercept, Source: Calibration Estimate
+#' @param ..surv_adult_prespawn_int Intercept, Source: Calibration Estimate
 #' @param .deg_day Coefficient for deg_day variable, source Colvin et al. (2018)
 #' @source IP-117068
 #' @export
-surv_adult_prespawn <- function(deg_day, .intercept = 3, .deg_day = -0.000669526){
+surv_adult_prespawn <- function(deg_day, ..surv_adult_prespawn_int = 3, .deg_day = -0.000669526){
 
-  boot::inv.logit(.intercept + .deg_day * deg_day)
+  boot::inv.logit(..surv_adult_prespawn_int + .deg_day * deg_day)
 }
