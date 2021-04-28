@@ -285,22 +285,17 @@ surv_juv_outmigration_sac <- function(flow_cms, avg_temp, total_diversions, prop
 
 #' @title Juvenile San Joaquin Outmigration Survival
 #' @description Calculates the San Joaquin River juvenile out migration survival
-#' @param betas The parameters estimated through calibration
-#' @section Parameters:
-#' Parameters from the model are obtained from either literature, calibration, export elicitation,
-#' and meta-analysis. The source for each parameter in this function are detailed below.
-#' \itemize{
-#' \item intercept: calibration estimate
-#' \item medium: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/perry_2010.pdf}{Perry (2010)}
-#' \item large" \href{https://dsm-docs.s3-us-west-2.amazonaws.com/perry_2010.pdf}{Perry (2010)}
-#' }
+#' @param ..surv_juv_outmigration_sj_int intercept, source: calibration
+#' @param .medium parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+#' @param .large parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
 #' @source IP-117068
 #' @export
-surv_juv_outmigration_san_joaquin <- function(betas = c(intercept = -3.5, medium = 1.48, large = 2.223)){
+surv_juv_outmigration_san_joaquin <- function(..surv_juv_outmigration_sj_int = -3.5,
+                                              .medium = 1.48, .large = 2.223){
 
-  s <- boot::inv.logit(betas[1])
-  m <- boot::inv.logit(betas[1] + betas[2])
-  l <- vl <- boot::inv.logit(betas[1] + betas[3])
+  s <- boot::inv.logit(..surv_juv_outmigration_sj_int)
+  m <- boot::inv.logit(..surv_juv_outmigration_sj_int + .medium)
+  l <- vl <- boot::inv.logit(..surv_juv_outmigration_sj_int + .large)
 
   cbind(s = s, m = m, l = l, vl = vl)
 }

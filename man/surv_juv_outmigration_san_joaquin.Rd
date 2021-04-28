@@ -8,23 +8,18 @@ IP-117068
 }
 \usage{
 surv_juv_outmigration_san_joaquin(
-  betas = c(intercept = -3.5, medium = 1.48, large = 2.223)
+  ..surv_juv_outmigration_sj_int = -3.5,
+  .medium = 1.48,
+  .large = 2.223
 )
 }
 \arguments{
-\item{betas}{The parameters estimated through calibration}
+\item{..surv_juv_outmigration_sj_int}{intercept, source: calibration}
+
+\item{.medium}{parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}}
+
+\item{.large}{parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}}
 }
 \description{
 Calculates the San Joaquin River juvenile out migration survival
 }
-\section{Parameters}{
-
-Parameters from the model are obtained from either literature, calibration, export elicitation,
-and meta-analysis. The source for each parameter in this function are detailed below.
-\itemize{
-\item intercept: calibration estimate
-\item medium: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/perry_2010.pdf}{Perry (2010)}
-\item large" \href{https://dsm-docs.s3-us-west-2.amazonaws.com/perry_2010.pdf}{Perry (2010)}
-}
-}
-
