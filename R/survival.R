@@ -302,36 +302,42 @@ surv_juv_outmigration_san_joaquin <- function(..surv_juv_outmigration_sj_int = -
 
 #' @title Juvenile Delta Outmigration Survival
 #' @description Calculates the Sacramento Delta juvenile out migration survival
-#' @param flow_cms Delta inflow in cubic meters per second
-#' @param avg_temp Monthly mean temperature in celsius
-#' @param perc_diversions Monthly mean percent diverted
-#' @param betas Parameter estimates from calibration
+#' @param delta_flow Variable describing delta inflow in cubic meters per second
+#' @param avg_temp Variable describing monthly mean temperature in celsius
+#' @param perc_diversions Variable describing monthly mean percent diverted
+#' @param .intercept_one Intercept for model one, source: TODO
+#' @param .intercept_two Intercept for model two, source: TODO
+#' @param .intercept_three Intercept for model three, source: TODO
+#' @param .delta_flow Coefficient for delta_flow variable, source: TODO
+#' @param .avg_temp Coefficient for avg_temp variable, source: TODO
+#' @param .perc_diversions Coefficient for perc_diversions variable, source: TODO
+#' @param .medium parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+#' @param .large parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
 #' @source IP-117068
 #' @export
 surv_juv_outmigration_sac_delta <- function(delta_flow, avg_temp, perc_diversions,
-                                            betas = c(`intercept 1` = -3.5, `intercept 2` =  0.3,
-                                                      `intercept 3` = -3.5, flow = 0.0013,
-                                                      `average temperature` = 0.386,
-                                                      `percent diversions` = -0.033,
-                                                      medium = 1.48, large = 2.223)){
+                                            .intercept_one = -3.5, .intercept_two =  0.3,
+                                            .intercept_three = -3.5, .delta_flow = 0.0013,
+                                            .avg_temp = 0.386, .perc_diversions = -0.033,
+                                            .medium = 1.48, .large = 2.223){
 
   model_weight <- 1/3
 
-  base_score1 <- betas[1] + betas[4] * delta_flow
-  base_score2 <- betas[2] + betas[5] * avg_temp
-  base_score3 <- betas[3] + betas[6] * perc_diversions
+  base_score1 <- .intercept_one + .delta_flow * delta_flow
+  base_score2 <- .intercept_two + .avg_temp * avg_temp
+  base_score3 <- .intercept_three + .perc_diversions * perc_diversions
 
   s <- model_weight * (boot::inv.logit(base_score1) +
                          boot::inv.logit(base_score2) +
                          boot::inv.logit(base_score3))
 
-  m <- model_weight * (boot::inv.logit(base_score1 + betas[7]) +
-                         boot::inv.logit(base_score2 + betas[7]) +
-                         boot::inv.logit(base_score3 + betas[7]))
+  m <- model_weight * (boot::inv.logit(base_score1 + .medium) +
+                         boot::inv.logit(base_score2 + .medium) +
+                         boot::inv.logit(base_score3 + .medium))
 
-  vl <- l <- model_weight * (boot::inv.logit(base_score1 + betas[8]) +
-                               boot::inv.logit(base_score2 + betas[8]) +
-                               boot::inv.logit(base_score3 + betas[8]))
+  vl <- l <- model_weight * (boot::inv.logit(base_score1 + .large) +
+                               boot::inv.logit(base_score2 + .large) +
+                               boot::inv.logit(base_score3 + .large))
 
   cbind(s = s, m = m, l = l, vl = vl)
 }

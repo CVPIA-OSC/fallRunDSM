@@ -11,19 +11,38 @@ surv_juv_outmigration_sac_delta(
   delta_flow,
   avg_temp,
   perc_diversions,
-  betas = c(`intercept 1` = -3.5, `intercept 2` = 0.3, `intercept 3` = -3.5, flow =
-    0.0013, `average temperature` = 0.386, `percent diversions` = -0.033, medium = 1.48,
-    large = 2.223)
+  .intercept_one = -3.5,
+  .intercept_two = 0.3,
+  .intercept_three = -3.5,
+  .delta_flow = 0.0013,
+  .avg_temp = 0.386,
+  .perc_diversions = -0.033,
+  .medium = 1.48,
+  .large = 2.223
 )
 }
 \arguments{
-\item{avg_temp}{Monthly mean temperature in celsius}
+\item{delta_flow}{Variable describing delta inflow in cubic meters per second}
 
-\item{perc_diversions}{Monthly mean percent diverted}
+\item{avg_temp}{Variable describing monthly mean temperature in celsius}
 
-\item{betas}{Parameter estimates from calibration}
+\item{perc_diversions}{Variable describing monthly mean percent diverted}
 
-\item{flow_cms}{Delta inflow in cubic meters per second}
+\item{.intercept_one}{Intercept for model one, source: TODO}
+
+\item{.intercept_two}{Intercept for model two, source: TODO}
+
+\item{.intercept_three}{Intercept for model three, source: TODO}
+
+\item{.delta_flow}{Coefficient for delta_flow variable, source: TODO}
+
+\item{.avg_temp}{Coefficient for avg_temp variable, source: TODO}
+
+\item{.perc_diversions}{Coefficient for perc_diversions variable, source: TODO}
+
+\item{.medium}{parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}}
+
+\item{.large}{parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}}
 }
 \description{
 Calculates the Sacramento Delta juvenile out migration survival
