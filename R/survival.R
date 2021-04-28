@@ -68,34 +68,30 @@ surv_juv_rear <- function(max_temp_thresh, avg_temp_thresh, high_predation,
 
 #' @title Juvenile Bypass Survival
 #' @description Calculates the juvenile rearing survival in the bypasses
-#' @param max_temp_thresh The probability of exceeding the max temp threshold
-#' @param avg_temp_thresh The probability of exceeding the average temperature
-#' @param high_predation An indicator for high predation in watershed
-#' @param betas The parameter estimates from calibration
-#' @section Parameters:
-#' Parameters from the model are obtained from either literature, calibration, export elicitation,
-#' and meta-analysis. The source for each parameter in this function are detailed below.
-#' \itemize{
-#' \item intercept: calibration estimate; varies by tributary
-#' \item average temperature: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/marine_cech_water_temp_effects.pdf}{Marine and Chech (2004)}
-#' \item predation \href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}
-#' \item medium: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
-#' \item large" \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
-#' \item floodplain habitat: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/SOMMER_T-SDWA+180+Floodplain+rearing+of+juvenile+chinook+salmon+evidence+of+enhanced+growth+and+survival+.pdf}{Sommer et al. (2001)}
-#' }
+#' @param max_temp_thresh Variable representing the probability of exceeding the max temp threshold
+#' @param avg_temp_thresh Variable representing the probability of exceeding the average temperature
+#' @param high_predation Variable representing an indicator for high predation in watershed
+#' @param ..surv_juv_bypass_int intercept, source: calibration
+#' @param .avg_temp_thresh coefficient for avg_temp_thresh variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/marine_cech_water_temp_effects.pdf}{Marine and Chech (2004)}
+#' @param .high_predation coefficient for high_predation variable, source:\href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}
+#' @param .medium parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+#' @param .large parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+#' @param .floodplain parameter for floodplain rearing benefit, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/SOMMER_T-SDWA+180+Floodplain+rearing+of+juvenile+chinook+salmon+evidence+of+enhanced+growth+and+survival+.pdf}{Sommer et al. (2001)}
 #'
 #' @source IP-117068
 #' @export
 surv_juv_bypass <- function(max_temp_thresh, avg_temp_thresh, high_predation,
-                            betas = c(intercept = -3.5, `average temperature` = -0.717,
-                                      predation = -0.122, medium = 1.48, large = 2.223,
-                                      `floodplain habitat` = 0.47)){
+                            ..surv_juv_bypass_int = -3.5, .avg_temp_thresh = -0.717,
+                            .high_predation = -0.122, .medium = 1.48, .large = 2.223,
+                            .floodplain = 0.47){
 
-  base_score <- betas[1] + betas[6] + betas[2] * avg_temp_thresh + betas[3] * high_predation
+  base_score <- ..surv_juv_bypass_int + .floodplain +
+                .avg_temp_thresh * avg_temp_thresh +
+                .high_predation * high_predation
 
   s <- ifelse(max_temp_thresh, .0001, boot::inv.logit(base_score))
-  m <- ifelse(max_temp_thresh, .0001, boot::inv.logit(base_score + betas[4]))
-  l <- ifelse(max_temp_thresh, .0001, boot::inv.logit(base_score + betas[5]))
+  m <- ifelse(max_temp_thresh, .0001, boot::inv.logit(base_score + .medium))
+  l <- ifelse(max_temp_thresh, .0001, boot::inv.logit(base_score + .large))
 
   cbind(s = s, m = m, l = l, vl = 1)
 }
@@ -221,8 +217,7 @@ get_rearing_survival_rates <- function(year, month, scenario) {
 
   bp_surv <- surv_juv_bypass(max_temp_thresh = maxT25[22],
                              avg_temp_thresh = aveT20[22],
-                             high_predation = 0,
-                             betas = bp_survival_betas[1, ])
+                             high_predation = 0)
 
   sutter_surv <- sqrt(bp_surv)
   yolo_surv <- sqrt(bp_surv)
@@ -570,8 +565,7 @@ get_migratory_survival_rates <- function(year, month) {
 
   bp_surv <- surv_juv_bypass(max_temp_thresh = maxT25[22],
                              avg_temp_thresh = aveT20[22],
-                             high_predation = 0,
-                             betas = bp_survival_betas[1, ])
+                             high_predation = 0)
 
   sutter <- sqrt(bp_surv)
 
