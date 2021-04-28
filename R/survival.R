@@ -235,49 +235,48 @@ get_rearing_survival_rates <- function(year, month, scenario) {
 # JUVENILE MIGRATORY SURVIVAL -----
 #' @title Juvenile Mainstem Sacramento Outmigration Survival
 #' @description Calculates the Mainstem Sacramento juvenile out migration survival
-#' @param flow_cms Upper Sacramento River flow in cubic meters per second
-#' @param avg_temp Monthly mean temperature in celsius
-#' @param total_diversions Monthly mean total diversions in cubic feet per second
-#' @param prop_diversions Monthly mean proportion diverted
-#' @param betas Parameter estimates from calibration
-#' @section Parameters:
-#' Parameters from the model are obtained from either literature, calibration, export elicitation,
-#' and meta-analysis. The source for each parameter in this function are detailed below.
-#' \itemize{
-#' \item intercept 1 & 2: calibration estimate; varies by tributary
-#' \item flow: emperical model fit to the 2014 late-fall-run Chinook salmon tag release data
-#' \item proportion diverted: calibration estimate
-#' \item total diverted: calibration estimate
-#' \item average temperature: emperical model fit to the 2014 late-fall-run Chinook salmon tag release data
-#' \item model weight:
-#' \item medium: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/perry_2010.pdf}{Perry (2010)}
-#' \item large" \href{https://dsm-docs.s3-us-west-2.amazonaws.com/perry_2010.pdf}{Perry (2010)}
-#' }
+#' @param flow_cms Variable representing upper Sacramento River flow in cubic meters per second
+#' @param avg_temp Variable representing monthly mean temperature in celsius
+#' @param total_diversions Variable representing monthly mean total diversions in cubic feet per second
+#' @param prop_diversions Variable representing monthly mean proportion diverted
+#' @param ..surv_juv_outmigration_sac_int_one intercept for first model, source: calibration (varies by tributary)
+#' @param .flow_cms coefficient for flow_cms, source: empirical model fit to the 2014 late-fall-run Chinook salmon tag release data
+#' @param ..surv_juv_outmigration_sac_prop_diversions coefficient for prop_diversions, source: calibration
+#' @param ..surv_juv_outmigration_sac_total_diversions coefficient for total_diversions, source: calibration
+#' @param ..surv_juv_outmigration_sac_int_two intercept for second model, source: calibration (varies by tributary)
+#' @param .avg_temp coefficient for avg_temp, source: empirical model fit to the 2014 late-fall-run Chinook salmon tag release data
+#' @param .model_weight parameter describing how to weight the two models
+#' @param .medium parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+#' @param .large parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
 #' @source IP-117068
 #' @export
 surv_juv_outmigration_sac <- function(flow_cms, avg_temp, total_diversions, prop_diversions,
-                                  betas = c(`intercept 1` = 2.5, flow = 0.0092,
-                                            `proportion diversion` = -3.51 * 0.05,
-                                            `total diversion` = -0.0021 * 0.215,
-                                            `intercept 2` = 0.3,
-                                            `average temperature` = 0.554,
-                                            `model weight` = .5,
-                                            medium = 1.48, large = 2.223)){
+                                      ..surv_juv_outmigration_sac_int_one = 2.5, .flow_cms = 0.0092,
+                                      ..surv_juv_outmigration_sac_prop_diversions = -3.51 * 0.05,
+                                      ..surv_juv_outmigration_sac_total_diversions = -0.0021 * 0.215,
+                                      ..surv_juv_outmigration_sac_int_two = 0.3,
+                                      .avg_temp = 0.554,
+                                      .model_weight = .5,
+                                      .medium = 1.48, .large = 2.223){
 
 
-  base_score1 <- betas[1] + betas[2] * flow_cms + betas[3] * prop_diversions + betas[4] * total_diversions
-  base_score2 <- betas[5] + betas[6] * avg_temp + betas[3] * prop_diversions + betas[4] * total_diversions
-  model_weighting <- betas[7]
+  base_score1 <- ..surv_juv_outmigration_sac_int_one + .flow_cms * flow_cms +
+                 ..surv_juv_outmigration_sac_prop_diversions * prop_diversions +
+                 ..surv_juv_outmigration_sac_total_diversions * total_diversions
+  base_score2 <- ..surv_juv_outmigration_sac_int_two + .avg_temp * avg_temp +
+                 ..surv_juv_outmigration_sac_prop_diversions * prop_diversions +
+                 ..surv_juv_outmigration_sac_total_diversions * total_diversions
+  model_weighting <- .model_weight
   model_weighting_compliment <- 1 - model_weighting
 
   s <- boot::inv.logit(base_score1) * model_weighting +
     boot::inv.logit(base_score2) * model_weighting_compliment
 
-  m <- boot::inv.logit(base_score1 + betas[8]) * model_weighting +
-    boot::inv.logit(base_score2 + betas[8]) * model_weighting_compliment
+  m <- boot::inv.logit(base_score1 + .medium) * model_weighting +
+    boot::inv.logit(base_score2 + .medium) * model_weighting_compliment
 
-  l <- vl <- boot::inv.logit(base_score1 + betas[9]) * model_weighting +
-    boot::inv.logit(base_score2 + betas[9]) * model_weighting_compliment
+  l <- vl <- boot::inv.logit(base_score1 + .large) * model_weighting +
+    boot::inv.logit(base_score2 + .large) * model_weighting_compliment
 
   cbind(s = s, m = m, l = l, vl = vl)
 
