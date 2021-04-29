@@ -11,10 +11,10 @@
 #' @source IP-117068
 #' @export
 surv_egg_to_fry <- function(proportion_natural, scour, temperature_effect,
-                            .surv_egg_to_fry_int = 0.041, .proportion_natural = 0.533,
+                            ..surv_egg_to_fry_int = 0.041, .proportion_natural = 0.533,
                             .scour = -0.655){
 
-  boot::inv.logit(.surv_egg_to_fry_int + .proportion_natural * proportion_natural +
+  boot::inv.logit(..surv_egg_to_fry_int + .proportion_natural * proportion_natural +
                   .scour * scour) * temperature_effect
 }
 
