@@ -14,7 +14,17 @@ fall_run_model <- function(scenario = NULL, seeds = NULL,
                            ..surv_juv_rear_int,
                            ..surv_juv_rear_contact_points,
                            ..surv_juv_rear_prop_diversions,
-                           ..surv_juv_rear_total_diversions){
+                           ..surv_juv_rear_total_diversions,
+                           ..surv_juv_bypass_int,
+                           ..surv_juv_delta_int,
+                           ..surv_juv_delta_contact_points,
+                           ..surv_juv_delta_total_diverted,
+                           ..surv_juv_outmigration_sj_int,
+                           ..surv_juv_outmigration_sac_int_one,
+                           ..surv_juv_outmigration_sac_prop_diversions,
+                           ..surv_juv_outmigration_sac_total_diversions,
+                           ..surv_juv_outmigration_sac_int_two,
+                           ..ocean_entry_success_int){
 
   watershed_labels <- c("Upper Sacramento River", "Antelope Creek", "Battle Creek",
                         "Bear Creek", "Big Chico Creek", "Butte Creek", "Clear Creek",
@@ -98,8 +108,17 @@ fall_run_model <- function(scenario = NULL, seeds = NULL,
                                                      ..surv_juv_rear_int= ..surv_juv_rear_int,
                                                      ..surv_juv_rear_contact_points= ..surv_juv_rear_contact_points,
                                                      ..surv_juv_rear_prop_diversions= ..surv_juv_rear_prop_diversions,
-                                                     ..surv_juv_rear_total_diversions= ..surv_juv_rear_total_diversions) # rearing_survival$inchannel
-      migratory_survival <- get_migratory_survival_rates(year, month) #migratory_survival$uppermid_sac
+                                                     ..surv_juv_rear_total_diversions= ..surv_juv_rear_total_diversions,
+                                                     ..surv_juv_bypass_int = ..surv_juv_bypass_int,
+                                                     ..surv_juv_delta_int = ..surv_juv_delta_int,
+                                                     ..surv_juv_delta_contact_points = ..surv_juv_delta_contact_points,
+                                                     ..surv_juv_delta_total_diverted = ..surv_juv_delta_total_diverted) # rearing_survival$inchannel
+      migratory_survival <- get_migratory_survival_rates(year, month,
+                                                         ..surv_juv_outmigration_sj_int = ..surv_juv_outmigration_sj_int,
+                                                         ..surv_juv_outmigration_sac_int_one = ..surv_juv_outmigration_sac_int_one,
+                                                         ..surv_juv_outmigration_sac_prop_diversions = ..surv_juv_outmigration_sac_prop_diversions,
+                                                         ..surv_juv_outmigration_sac_total_diversions = ..surv_juv_outmigration_sac_total_diversions,
+                                                         ..surv_juv_outmigration_sac_int_two = ..surv_juv_outmigration_sac_int_two) #migratory_survival$uppermid_sac
       migrants <- matrix(0, nrow = 31, ncol = 4, dimnames = list(watershed_labels, size_class_labels))
 
       if (month == 8) {
@@ -367,7 +386,8 @@ fall_run_model <- function(scenario = NULL, seeds = NULL,
 
       adults_in_ocean <- adults_in_ocean + ocean_entry_success(migrants = migrants_at_golden_gate,
                                                                month = month,
-                                                               avg_ocean_transition_month = avg_ocean_transition_month)
+                                                               avg_ocean_transition_month = avg_ocean_transition_month,
+                                                               ..ocean_entry_success_int = ..ocean_entry_success_int)
 
     } # end month loop
 
