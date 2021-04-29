@@ -86,5 +86,33 @@ test_that('The prespawn survival function returns the expected values for year 1
                expected_prespawn_surv)
 })
 
+# Tests egg to fry surv
+expected_egg_surv <- c(`Upper Sacramento River` = 0.508283676958069, `Antelope Creek` = 0.535399956490784,
+                       `Battle Creek` = 0.453066456696592, `Bear Creek` = 0.493791973234685,
+                       `Big Chico Creek` = 0.516182007507822, `Butte Creek` = 0.556564999873063,
+                       `Clear Creek` = 0.544088820855689, `Cottonwood Creek` = 0.471535406023962,
+                       `Cow Creek` = 0.548107361679654, `Deer Creek` = 0.551271274174912,
+                       `Elder Creek` = 0.49914209957619, `Mill Creek` = 0.498951249626129,
+                       `Paynes Creek` = 0.49539261838608, `Stony Creek` = 0.488109078491193,
+                       `Thomes Creek` = 0.495131822625042, `Upper-mid Sacramento River` = 0,
+                       `Sutter Bypass` = 0, `Bear River` = 0.512991581615581, `Feather River` = 0.437030519553356,
+                       `Yuba River` = 0.502413166776223, `Lower-mid Sacramento River` = 0,
+                       `Yolo Bypass` = 0, `American River` = 0.478141299898216, `Lower Sacramento River` = 0,
+                       `Calaveras River` = 0.503706109834966, `Cosumnes River` = 0.518675616972662,
+                       `Mokelumne River` = 0.461524353396851, `Merced River` = 0.329759126931278,
+                       `Stanislaus River` = 0.472280880371357, `Tuolumne River` = 0.511951882200814,
+                       `San Joaquin River` = 0)
+
+test_that('The egg_to_fry survival function returns the expected values for year 1', {
+  expect_equal(egg_to_fry_surv <- surv_egg_to_fry(proportion_natural = 1 - proportion_hatchery,
+                                                  scour = test_data$prob_nest_scoured,
+                                                  temperature_effect = test_data$mean_egg_temp_effect),
+               expected_egg_surv)
+})
+
+
+
+
+
 
 
