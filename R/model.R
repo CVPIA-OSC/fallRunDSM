@@ -5,6 +5,23 @@
 #' @param seeds The default value is NULL runs the model in seeding mode,
 #' returning a 31 by 25 matrix with the first four years of seeded adults. This
 #' returned value can be fed into the model again as the value for the seeds argument
+#' @param ..surv_adult_enroute_int TODO
+#' @param ..surv_adult_prespawn_int TODO
+#' @param ..surv_egg_to_fry_int TODO
+#' @param ..surv_juv_rear_int TODO
+#' @param ..surv_juv_rear_contact_points TODO
+#' @param ..surv_juv_rear_prop_diversions TODO
+#' @param ..surv_juv_rear_total_diversions TODO
+#' @param ..surv_juv_bypass_int TODO
+#' @param ..surv_juv_delta_int TODO
+#' @param ..surv_juv_delta_contact_points TODO
+#' @param ..surv_juv_delta_total_diverted TODO
+#' @param ..surv_juv_outmigration_sj_int TODO
+#' @param ..surv_juv_outmigration_sac_int_one TODO
+#' @param ..surv_juv_outmigration_sac_prop_diversions TODO
+#' @param ..surv_juv_outmigration_sac_total_diversions TODO
+#' @param ..surv_juv_outmigration_sac_int_two TODO
+#' @param ..ocean_entry_success_int TODO
 #' @source IP-117068
 #' @export
 fall_run_model <- function(scenario = NULL, seeds = NULL,
