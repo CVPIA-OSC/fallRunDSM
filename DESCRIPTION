@@ -20,6 +20,7 @@ URL: https://CVPIA-OSC.github.io/fallRunDSM/
 Imports: 
     boot
 Suggests: 
-    testthat (>= 2.1.0)
+    testthat (>= 3.0.0)
 Depends: 
     R (>= 2.10)
+Config/testthat/edition: 3

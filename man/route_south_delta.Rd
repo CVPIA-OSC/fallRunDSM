@@ -3,9 +3,6 @@
 \name{route_south_delta}
 \alias{route_south_delta}
 \title{South Delta Routing}
-\source{
-IP-117068
-}
 \usage{
 route_south_delta(
   freeport_flow,
@@ -13,10 +10,15 @@ route_south_delta(
   month,
   mean_freeport_flow = 21546.19,
   sd_freeport_flow = 14375.9,
-  betas = list(sss = c(intercept = 1.892235, `freeport discharge` = 2.170375, `upper
-    asymptote` = 0.3512465), dcc = c(intercept = -1.48962, `freeport discharge` =
-    -1.248865), gs = c(intercept = -2.948145, `freeport discharge` = -2.911835, `DCC
-    effect on routing` = -0.554843, `lower asymptote` = 0.2729845))
+  .sss_int = 1.892235,
+  .sss_freeport_discharge = 2.170375,
+  .sss_upper_asymptote = 0.3512465,
+  .dcc_intercept = -1.48962,
+  .dcc_freeport_discharge = -1.248865,
+  .gs_intercept = -2.948145,
+  .gs_freeport_discharge = -2.911835,
+  .gs_dcc_effect_on_routing = -0.554843,
+  .gs_lower_asymptote = 0.2729845
 )
 }
 \arguments{
@@ -24,19 +26,30 @@ route_south_delta(
 
 \item{dcc_closed}{Number of days the Delta Cross Channel gates are closed during the month}
 
-\item{month}{Current simulation month as an integer for calculating number of days
-the Delta Cross Channel gates are open}
+\item{month}{Current simulation month as an integer for calculating number of days the Delta Cross Channel gates are open}
 
 \item{mean_freeport_flow}{Mean of flow at freeport for standardizing discharge}
 
 \item{sd_freeport_flow}{Standard Deviation of flow at freeport for standardizing discharge}
 
-\item{betas}{Parameters for Sutter and Steamboat Sloughs (sss),  Delta Cross
-Channel (dcc), and Georgiana Slough (gs). All parameters are posterior medians}
+\item{.sss_int}{Intercept for Sutter and Steamboat Sloughs, source: \href{https://doi.org/10.1139/cjfas-2017-0310}{This submodel is adapted from Perry et al. (2018)}}
+
+\item{.sss_freeport_discharge}{Coefficient for freeport_flow for Sutter and Steamboat Sloughs, source: \href{https://doi.org/10.1139/cjfas-2017-0310}{This submodel is adapted from Perry et al. (2018)}}
+
+\item{.sss_upper_asymptote}{Parameter representing the upper asymptote for Sutter and Steamboat Sloughs, source: \href{https://doi.org/10.1139/cjfas-2017-0310}{This submodel is adapted from Perry et al. (2018)}}
+
+\item{.dcc_intercept}{Intercept for Delta Cross Channel, source: \href{https://doi.org/10.1139/cjfas-2017-0310}{This submodel is adapted from Perry et al. (2018)}}
+
+\item{.dcc_freeport_discharge}{Coefficient for freeport_flow for Delta Cross Channel Gates, source: \href{https://doi.org/10.1139/cjfas-2017-0310}{This submodel is adapted from Perry et al. (2018)}}
+
+\item{.gs_intercept}{Intercept for Georgiana Slough, source: \href{https://doi.org/10.1139/cjfas-2017-0310}{This submodel is adapted from Perry et al. (2018)}}
+
+\item{.gs_freeport_discharge}{Coefficient for freeport_flow for Georgiana Slough, source: \href{https://doi.org/10.1139/cjfas-2017-0310}{This submodel is adapted from Perry et al. (2018)}}
+
+\item{.gs_dcc_effect_on_routing}{Parameter representing the dcc effect on routing, source: \href{https://doi.org/10.1139/cjfas-2017-0310}{This submodel is adapted from Perry et al. (2018)}}
+
+\item{.gs_lower_asymptote}{Parameter representing the lower asymptote for Georgiana Slough, source: \href{https://doi.org/10.1139/cjfas-2017-0310}{This submodel is adapted from Perry et al. (2018)}}
 }
 \description{
 Routes juveniles through the South Delta
-}
-\details{
-This submodel is adapted from Perry et al. (2018) https://doi.org/10.1139/cjfas-2017-0310
 }

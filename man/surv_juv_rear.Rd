@@ -16,54 +16,55 @@ surv_juv_rear(
   total_diversions,
   stranded,
   weeks_flooded,
-  betas = c(`2nd calibration adjustment` = 3.5, `average temperature` = -0.717,
-    predation = -0.122, `contact points` = 0.0358, `contact points scaler` = -0.189,
-    `proportion diverted` = 0.05, `proportion diverted scaler` = -3.51, `total diverted`
-    = 0.215, `total diverted scaler` = -0.0021, stranded = -1.939, medium = 1.48, large =
-    2.223, `floodplain habitat` = 0.47, `surival adjustments` = 1)
+  ..surv_juv_rear_int = 3.5,
+  .avg_temp_thresh = -0.717,
+  .high_predation = -0.122,
+  ..surv_juv_rear_contact_points = -0.0068,
+  ..surv_juv_rear_prop_diversions = -0.1755,
+  ..surv_juv_rear_total_diversions = -5e-04,
+  .stranded = -1.939,
+  .medium = 1.48,
+  .large = 2.223,
+  .floodplain = 0.47
 )
 }
 \arguments{
-\item{max_temp_thresh}{The probability of exceeding the max tempeature threshold}
+\item{max_temp_thresh}{variable representing probability of exceeding the max temperature threshold}
 
-\item{avg_temp_thresh}{The probability of exceeding the avg temperatre threshold}
+\item{avg_temp_thresh}{variable representing probability of exceeding the avg temperature threshold}
 
-\item{high_predation}{An indicator of high predation for a watershed}
+\item{high_predation}{variable representing indicator of high predation for a watershed}
 
-\item{contact_points}{The total number of contact points per watershed}
+\item{contact_points}{variable representing total number of contact points per watershed}
 
-\item{prop_diversions}{The proportion of water diverted}
+\item{prop_diversions}{variable representing proportion of water diverted}
 
-\item{total_diversions}{The total amount of water diverted}
+\item{total_diversions}{variable representing total amount of water diverted}
 
-\item{stranded}{The stranding rate per watershed}
+\item{stranded}{variable representing stranding rate per watershed}
 
-\item{weeks_flooded}{The total weeks flooded per watershed}
+\item{weeks_flooded}{variable representing total weeks flooded per watershed}
 
-\item{betas}{The parameters from calibration process}
+\item{..surv_juv_rear_int}{intercept, source: calibration (varies by tributary)}
+
+\item{.avg_temp_thresh}{coefficient for avg_temp_thresh variable, source: \href{https://www.noaa.gov/sites/default/files/atoms/files/07354626766.pdf}{Marine and Chech (2004)}}
+
+\item{.high_predation}{coefficient for high_predation variable, source: \href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}}
+
+\item{..surv_juv_rear_contact_points}{coefficient for contact_points variable, source: calibration}
+
+\item{..surv_juv_rear_prop_diversions}{coefficient for prop_diversions variable, source: calibration}
+
+\item{..surv_juv_rear_total_diversions}{coefficient for total_diversions variable, source: calibration}
+
+\item{.stranded}{coefficient for stranded variable, source: \href{#}{USFWS (2006) and CDWR (2006)}}
+
+\item{.medium}{parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}}
+
+\item{.large}{parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}}
+
+\item{.floodplain}{parameter for floodplain rearing benefit, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/SOMMER_T-SDWA+180+Floodplain+rearing+of+juvenile+chinook+salmon+evidence+of+enhanced+growth+and+survival+.pdf}{Sommer et al. (2001)}}
 }
 \description{
 Calculates the juvenile rearing survival inchannel and on the floodplain
 }
-\section{Parameters}{
-
-Parameters from the model are obtained from either literature, calibration, export elicitation,
-and meta-analysis. The source for each parameter in this function are detailed below.
-\itemize{
-\item calibration adjustment: calibration estimate; varies by tributary
-\item average temperature: \href{https://www.noaa.gov/sites/default/files/atoms/files/07354626766.pdf}{Marine and Chech (2004)}
-\item predation \href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}
-\item contact points: calibration estimate
-\item contact points scaler
-\item proportion diverted: calibration estimate
-\item proportion diverted scaler
-\item total diverted: calibration estimate
-\item total diverted scaler
-\item stranded: \href{#}{USFWS (2006) and CDWR (2006)}
-\item medium: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
-\item large" \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
-\item floodplain habitat: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/SOMMER_T-SDWA+180+Floodplain+rearing+of+juvenile+chinook+salmon+evidence+of+enhanced+growth+and+survival+.pdf}{Sommer et al. (2001)}
-\item survival adjustment:
-}
-}
-

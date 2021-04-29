@@ -14,42 +14,45 @@ surv_juv_delta(
   contact_points,
   prop_diverted,
   total_diverted,
-  betas = c(intercept = 1.4, `avg temp thresh` = -0.717, predation = -0.122, contact =
-    0.0358 * -0.189, `prop diversions` = -3.51, `total diversions` = 0.5 * -0.0021,
-    medium = 1.48, large = 2.223)
+  ..surv_juv_delta_int = 1.4,
+  .avg_temp_thresh = -0.717,
+  .high_predation = -0.122,
+  ..surv_juv_delta_contact_points = 0.0358 * -0.189,
+  .prop_diverted = -3.51,
+  ..surv_juv_delta_total_diverted = 0.5 * -0.0021,
+  .medium = 1.48,
+  .large = 2.223
 )
 }
 \arguments{
-\item{max_temp_thresh}{The probability of exceeding the max temp threshold}
+\item{max_temp_thresh}{Variable representing the probability of exceeding the max temp threshold}
 
-\item{avg_temp_thresh}{The probability of exceeding the average temperature}
+\item{avg_temp_thresh}{Variable representing the probability of exceeding the average temperature}
 
-\item{high_predation}{An indicator for high predation in delta}
+\item{high_predation}{Variable representing an indicator for high predation in delta}
 
-\item{contact_points}{The number of contact points in watershed}
+\item{contact_points}{Variable representing the number of contact points in watershed}
 
-\item{betas}{The parameter estimates from calibration}
+\item{prop_diverted}{Variable representing the proportion of water diverted}
 
-\item{prop_diversions}{The proportion of water diverted}
+\item{total_diverted}{Variable representing the total diversions}
 
-\item{total_diversions}{The total diversions}
+\item{..surv_juv_delta_int}{intercept, source: calibration}
+
+\item{.avg_temp_thresh}{Coefficient for avg_temp_thresh variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/marine_cech_water_temp_effects.pdf}{Marine and Chech (2004)}}
+
+\item{.high_predation}{Coefficient for high_predation variable, source: \href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}}
+
+\item{..surv_juv_delta_contact_points}{Coefficient for contact_points variable, source: calibration}
+
+\item{.prop_diverted}{Coefficient for prop_diversions variable, source: Newman and Brandes (2010)}
+
+\item{..surv_juv_delta_total_diverted}{Coefficient for total_diversions variable, source: calibration}
+
+\item{.medium}{parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}}
+
+\item{.large}{parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}}
 }
 \description{
 Calculates the juvenile rearing survival in the deltas
 }
-\section{Parameters}{
-
-Parameters from the model are obtained from either literature, calibration, export elicitation,
-and meta-analysis. The source for each parameter in this function are detailed below.
-\itemize{
-\item intercept: calibration estimate; varies by tributary
-\item average temperature: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/marine_cech_water_temp_effects.pdf}{Marine and Chech (2004)}
-\item predation \href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}
-\item contact points: calibration estimate
-\item proportion diverted: calibration estimate
-\item total diverted: calibration estimate
-\item medium: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
-\item large" \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
-}
-}
-
