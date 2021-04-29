@@ -5,10 +5,12 @@ library(fallRunDSM)
 test_data <- fallRunDSM::load_baseline_data()
 year <- 1
 month <- 9
-aveT20 <- rbinom(31, 1, boot::inv.logit(-14.32252 + 0.72102 * test_data$avg_temp[ , month , year]))
-maxT25 <- rbinom(31, 1, boot::inv.logit(-23.1766 + 1.4566 * test_data$avg_temp[ , month, year]))
-aveT20D <- rbinom(2, 1, boot::inv.logit(-18.30017 + 0.96991 * test_data$avg_temp_delta[month, year, ]))
-maxT25D <- rbinom(2, 1, boot::inv.logit(-157.537 + 6.998 * test_data$avg_temp_delta[month, year, ]))
+aveT20 <- c(0L, 0L, 0L, 1L, 1L, 0L, 0L, 0L, 1L, 0L, 0L, 1L, 0L, 1L, 0L,
+            0L, 0L, 0L, 0L, 0L, 1L, 0L, 1L, 0L, 0L, 1L, 0L, 0L, 0L, 1L, 1L)
+maxT25 <- c(0L, 0L, 1L, 1L, 1L, 1L, 0L, 1L, 1L, 1L, 0L, 1L, 0L, 1L, 1L,
+            1L, 1L, 0L, 0L, 1L, 1L, 1L, 1L, 1L, 0L, 1L, 1L, 1L, 0L, 1L, 1L)
+aveT20D <- c(1L, 1L)
+maxT25D <- 0:1
 high_predation <- c(1L, 0L, 0L, 0L, 0L, 0L, 1L, 1L, 1L, 0L, 0L, 0L, 0L, 0L, 0L,
                     0L, 0L, 1L, 0L, 0L, 1L, 0L, 0L, 1L, 0L, 1L, 0L, 1L, 1L, 0L, 1L)
 ws_strand <- c(1L, 0L, 0L, 0L, 0L, 0L, 1L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L,
