@@ -30,6 +30,7 @@ More details for each item in the list available below.
   \item cc_gates_days_closed - \link[DSMflow]{delta_cross_channel_closed}
   \item cc_gates_prop_days_closed - \link[DSMflow]{delta_cross_channel_closed}
   \item proportion_flow_bypass - \link[DSMflow]{proportion_flow_bypasses}
+  \item gates_overtopped - \link[DSMflow]{gates_overtopped}
 }
 
 \strong{Temperature Inputs}

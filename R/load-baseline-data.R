@@ -21,6 +21,7 @@
 #'   \item cc_gates_days_closed - \link[DSMflow]{delta_cross_channel_closed}
 #'   \item cc_gates_prop_days_closed - \link[DSMflow]{delta_cross_channel_closed}
 #'   \item proportion_flow_bypass - \link[DSMflow]{proportion_flow_bypasses}
+#'   \item gates_overtopped - \link[DSMflow]{gates_overtopped}
 #' }
 #'
 #' \strong{Temperature Inputs}
@@ -75,6 +76,7 @@ load_baseline_data <- function() {
   cc_gates_days_closed <- DSMflow::delta_cross_channel_closed["count", ]
   cc_gates_prop_days_closed <- DSMflow::delta_cross_channel_closed["proportion", ]
   proportion_flow_bypass <- DSMflow::proportion_flow_bypasses
+  gates_overtopped <- DSMflow::gates_overtopped
 
   # DSMtemperature variables -----
   vernalis_temps <- DSMtemperature::vernalis_temperature
@@ -122,6 +124,7 @@ load_baseline_data <- function() {
     cc_gates_days_closed = cc_gates_days_closed,
     cc_gates_prop_days_closed = cc_gates_prop_days_closed,
     proportion_flow_bypass = proportion_flow_bypass,
+    gates_overtopped = gates_overtopped,
     vernalis_temps = vernalis_temps,
     prisoners_point_temps = prisoners_point_temps,
     degree_days = degree_days,
