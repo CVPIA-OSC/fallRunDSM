@@ -1,6 +1,6 @@
 library(testthat)
 library(fallRunDSM)
-# tests for routing functions
+# tests for adult functions
 # Lists inputs to use in testing
 test_data <- fallRunDSM::load_baseline_data()
 year <- 1
