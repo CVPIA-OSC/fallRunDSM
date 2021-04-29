@@ -3,7 +3,7 @@
 #' @param adults potential spawning adults for each watershed (length = 31) values must be integer
 #' @source IP-117068
 #' @export
-get_spawning_adults <- function(year, adults, hatch_adults) {
+get_spawning_adults <- function(year, adults, hatch_adults, ..surv_adult_enroute_int) {
 
   returning_hatchery_adults <- hatch_adults
 
@@ -31,7 +31,8 @@ get_spawning_adults <- function(year, adults, hatch_adults) {
   avg_migratory_temp <- rowMeans(migratory_temperature_proportion_over_20[ , 10:12])
   adult_en_route_surv <- surv_adult_enroute(migratory_temp = avg_migratory_temp,
                                             bypass_overtopped = bypass_is_overtopped,
-                                            adult_harvest = adult_harvest_rate)
+                                            adult_harvest = adult_harvest_rate,
+                                            ..surv_adult_enroute_int)
 
   #TODO random variable
   adults_survived_en_route <- rbinom(n = 31, size = round(adults_after_stray), prob = adult_en_route_surv[1])

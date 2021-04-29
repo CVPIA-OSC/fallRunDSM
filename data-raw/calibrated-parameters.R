@@ -52,13 +52,13 @@ index_ws_to_update <- c(1, 6, 10, 12, 16, 21, 24, 18, 19, 20, 23, 25, 26, 27, 28
 
 beta_to_update <- tibble(
   order = index_ws_to_update,
-  `2nd calibration adjustment`
+  surv_juv_rear_int = `2nd calibration adjustment`
 )
 
 survival_betas <- cvpiaData::watershed_ordering %>%
   left_join(beta_to_update) %>%
-  mutate(`2nd calibration adjustment` = ifelse(is.na(`2nd calibration adjustment`),
-                                               3.5, `2nd calibration adjustment`)) %>%
+  mutate(surv_juv_rear_int = ifelse(is.na(surv_juv_rear_int),
+                                               3.5, surv_juv_rear_int)) %>%
   add_column(`average temperature` = -0.717,
              predation = -0.122,
              `contact points` = 0.0358,
@@ -71,7 +71,12 @@ survival_betas <- cvpiaData::watershed_ordering %>%
              medium = 1.48,
              large = 2.223,
              `floodplain habitat` = 0.47,
-             `survival adjustments` = surv.adj)
+             `survival adjustments` = surv.adj) %>%
+  mutate(
+    contact_points_coeff = .0358 * -.189,
+    proportion_diverted_coeff = 0.05 * -3.51,
+    total_diverted_coeff = 0.215 * -0.0021
+  )
 
 usethis::use_data(survival_betas, overwrite = TRUE)
 

@@ -7,7 +7,14 @@
 #' returned value can be fed into the model again as the value for the seeds argument
 #' @source IP-117068
 #' @export
-fall_run_model <- function(scenario = NULL, seeds = NULL){
+fall_run_model <- function(scenario = NULL, seeds = NULL,
+                           ..surv_adult_enroute_int = 3,
+                           ..surv_adult_prespawn_int = 3,
+                           ..surv_egg_to_fry_int = 0.041,
+                           ..surv_juv_rear_int,
+                           ..surv_juv_rear_contact_points,
+                           ..surv_juv_rear_prop_diversions,
+                           ..surv_juv_rear_total_diversions){
 
   watershed_labels <- c("Upper Sacramento River", "Antelope Creek", "Battle Creek",
                         "Bear Creek", "Big Chico Creek", "Butte Creek", "Clear Creek",
@@ -54,7 +61,8 @@ fall_run_model <- function(scenario = NULL, seeds = NULL){
     avg_ocean_transition_month <- ocean_transition_month() # 2
 
     hatch_adults <- rmultinom(1, size = round(runif(1, 83097.01,532203.1)), prob = hatchery_allocation)[ , 1]
-    spawners <- get_spawning_adults(year, round(adults[ , year]), hatch_adults)
+    spawners <- get_spawning_adults(year, round(adults[ , year]), hatch_adults,
+                                    ..surv_adult_enroute_int = ..surv_adult_enroute_int)
     init_adults <- spawners$init_adults
 
     output$spawners[ , year] <- init_adults
@@ -64,7 +72,8 @@ fall_run_model <- function(scenario = NULL, seeds = NULL){
     egg_to_fry_surv <- surv_egg_to_fry(
       proportion_natural = 1 - proportion_hatchery,
       scour = prob_nest_scoured,
-      temperature_effect = mean_egg_temp_effect
+      temperature_effect = mean_egg_temp_effect,
+      ..surv_egg_to_fry_int = ..surv_egg_to_fry_int
     )
 
     min_spawn_habitat <- apply(spawning_habitat[ , 10:12, year], 1, min)
@@ -74,7 +83,8 @@ fall_run_model <- function(scenario = NULL, seeds = NULL){
                                      dec = degree_days[ , 12, year])
 
     average_degree_days <- apply(accumulated_degree_days, 1, weighted.mean, month_return_proportions)
-    prespawn_survival <- surv_adult_prespawn(average_degree_days)
+    prespawn_survival <- surv_adult_prespawn(average_degree_days,
+                                             ..surv_adult_prespawn_int = ..surv_adult_prespawn_int)
 
     juveniles <- spawn_success(escapement = init_adults,
                                adult_prespawn_survival = prespawn_survival,
@@ -84,7 +94,11 @@ fall_run_model <- function(scenario = NULL, seeds = NULL){
 
     for (month in 1:8) {
       habitat <- get_habitat(year, month) # habitat$yolo
-      rearing_survival <- get_rearing_survival_rates(year, month, scenario) # rearing_survival$inchannel
+      rearing_survival <- get_rearing_survival_rates(year, month, scenario,
+                                                     ..surv_juv_rear_int= ..surv_juv_rear_int,
+                                                     ..surv_juv_rear_contact_points= ..surv_juv_rear_contact_points,
+                                                     ..surv_juv_rear_prop_diversions= ..surv_juv_rear_prop_diversions,
+                                                     ..surv_juv_rear_total_diversions= ..surv_juv_rear_total_diversions) # rearing_survival$inchannel
       migratory_survival <- get_migratory_survival_rates(year, month) #migratory_survival$uppermid_sac
       migrants <- matrix(0, nrow = 31, ncol = 4, dimnames = list(watershed_labels, size_class_labels))
 

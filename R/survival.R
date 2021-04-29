@@ -143,7 +143,11 @@ surv_juv_delta <- function(max_temp_thresh, avg_temp_thresh, high_predation, con
 #' @param scenario The current scenario
 #' @source IP-117068
 #' @export
-get_rearing_survival_rates <- function(year, month, scenario) {
+get_rearing_survival_rates <- function(year, month, scenario,
+                                       ..surv_juv_rear_int,
+                                       ..surv_juv_rear_contact_points,
+                                       ..surv_juv_rear_prop_diversions,
+                                       ..surv_juv_rear_total_diversions) {
   watershed_labels <- c("Upper Sacramento River", "Antelope Creek", "Battle Creek",
                         "Bear Creek", "Big Chico Creek", "Butte Creek", "Clear Creek",
                         "Cottonwood Creek", "Cow Creek", "Deer Creek", "Elder Creek",
@@ -198,7 +202,10 @@ get_rearing_survival_rates <- function(year, month, scenario) {
                   total_diversions = total_diverted[x],
                   stranded = ws_strand[x],
                   weeks_flooded = weeks_flood[x],
-                  ..surv_juv_rear_int = betas[x, 1])
+                  ..surv_juv_rear_int = survival_betas[x, "surv_juv_rear_int", drop = TRUE],
+                  ..surv_juv_rear_contact_points = survival_betas[x, "contact_points_coeff", drop = TRUE],
+                  ..surv_juv_rear_prop_diversions = survival_betas[x, "proportion_diverted_coeff", drop = TRUE],
+                  ..surv_juv_rear_total_diversions = survival_betas[x, "total_diverted_coeff", drop = TRUE])
   }))
 
   river_surv <- matrix(unlist(rear_surv[ , 1]), ncol = 4, byrow = TRUE)
