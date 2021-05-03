@@ -205,7 +205,7 @@ get_rearing_survival_rates <- function(year, month, scenario,
                   total_diversions = total_diverted[x],
                   stranded = ws_strand[x],
                   weeks_flooded = weeks_flood[x],
-                  ..surv_juv_rear_int = ..surv_juv_rear_int,
+                  ..surv_juv_rear_int = ..surv_juv_rear_int[x],
                   ..surv_juv_rear_contact_points = ..surv_juv_rear_contact_points,
                   ..surv_juv_rear_prop_diversions = ..surv_juv_rear_prop_diversions,
                   ..surv_juv_rear_total_diversions = ..surv_juv_rear_total_diversions)
