@@ -55,6 +55,9 @@ fall_run_model <- function(scenario = NULL, seeds = NULL,
 
   size_class_labels <- c('s', 'm', 'l', 'vl')
 
+  # check function arguments
+  stopifnot("'..surv_juv_rear_int' must of length 1 or 31" = {length(..surv_juv_rear_int) == 1 | length(..surv_juv_rear_int) == 31})
+
   output <- list(
 
     # SIT METRICS

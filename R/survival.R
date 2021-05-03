@@ -193,6 +193,8 @@ get_rearing_survival_rates <- function(year, month, scenario,
   delta_num_contact_points <- delta_contact_points
   delta_high_predation <- delta_prop_high_predation
 
+  # replicate values if needed
+  if (length(..surv_juv_rear_int) == 1) ..surv_juv_rear_int <- rep(..surv_juv_rear_int, 31)
 
   rear_surv <- t(sapply(1:31, function(x) {
     surv_juv_rear(max_temp_thresh = maxT25[x],
