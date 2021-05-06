@@ -98,7 +98,20 @@ surv_juv_bypass <- function(max_temp_thresh, avg_temp_thresh, high_predation,
 
 #' @title Juvenile Delta Survival
 #' @description Calculates the juvenile rearing survival in the deltas
-#' @param max_temp_thresh Variable representing the probability of exceeding the max temp threshold
+#' @param avg_temp Variable representing average temperature in the delta
+#' @param avg_temp_thresh Variable representing the probability of exceeding the average temperature
+#' @param high_predation Variable representing an indicator for high predation in delta
+#' @param contact_points Variable representing the number of contact points in watershed
+#' @param prop_diverted Variable representing the proportion of water diverted
+#' @param total_diverted Variable representing the total diversions
+#' @param ..surv_juv_delta_int intercept, source: calibration
+#' @param .avg_temp_thresh Coefficient for avg_temp_thresh variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/marine_cech_water_temp_effects.pdf}{Marine and Chech (2004)}
+#' @param .high_predation Coefficient for high_predation variable, source: \href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}
+#' @param ..surv_juv_delta_contact_points Coefficient for contact_points variable, source: calibration
+#' @param .prop_diverted Coefficient for prop_diversions variable, source: Newman and Brandes (2010)
+#' @param ..surv_juv_delta_total_diverted Coefficient for total_diversions variable, source: calibration
+#' @param .medium parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+#' @param .large parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
 #' @source IP-117068
 #' @export
 surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_predation, contact_points,
