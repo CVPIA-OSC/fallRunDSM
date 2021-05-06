@@ -101,30 +101,34 @@ surv_juv_bypass <- function(max_temp_thresh, avg_temp_thresh, high_predation,
 #' @param max_temp_thresh Variable representing the probability of exceeding the max temp threshold
 #' @source IP-117068
 #' @export
-surv_juv_delta <- function(max_temp_thresh, avg_temp_thresh, high_predation, contact_points,
+surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_predation, contact_points,
                            prop_diverted, total_diverted, ..surv_juv_delta_int = 1.4,
                            .avg_temp_thresh = -0.717, .high_predation = -0.122,
                            ..surv_juv_delta_contact_points = 0.0358 * -0.189,
                            .prop_diverted = -3.51, ..surv_juv_delta_total_diverted = 0.5 * -0.0021,
                            .medium = 1.48, .large = 2.223){
+  # north delta
+  north_delta_surv <- rep((avg_temp <= 16.5)*.42 + (avg_temp > 16.5 & avg_temp < 19.5) * 0.42 / (1.55^(avg_temp-15.5)) + (avg_temp > 19.5 & avg_temp < 25)*0.035,4)
 
+  # south delta
   base_score <- ..surv_juv_delta_int +
-    .avg_temp_thresh * avg_temp_thresh +
-    .high_predation * high_predation +
-    ..surv_juv_delta_contact_points * contact_points * high_predation +
-    .prop_diverted * prop_diverted +
-    ..surv_juv_delta_total_diverted * total_diverted
+    .avg_temp_thresh * avg_temp_thresh[2] +
+    .high_predation * high_predation[2] +
+    ..surv_juv_delta_contact_points * contact_points[2] * high_predation[2] +
+    .prop_diverted * prop_diverted[2] +
+    ..surv_juv_delta_total_diverted * total_diverted[2]
 
-  s <- ifelse(max_temp_thresh, .0001, boot::inv.logit(base_score))
-  m <- ifelse(max_temp_thresh, .0001, boot::inv.logit(base_score + .medium))
-  l <- ifelse(max_temp_thresh, .0001, boot::inv.logit(base_score + .large))
+  s <- ifelse(max_temp_thresh[2], .0001, boot::inv.logit(base_score))
+  m <- ifelse(max_temp_thresh[2], .0001, boot::inv.logit(base_score + .medium))
+  l <- ifelse(max_temp_thresh[2], .0001, boot::inv.logit(base_score + .large))
 
-  cbind(s = s, m = m, l = l, vl = 1)
+  south_delta_surv <- cbind(s = s, m = m, l = l, vl = 1)
+  result <- rbind("north_delta" = north_delta_surv, "south_delta" = south_delta_surv)
+  row.names(result) <- c("North Delta", "South Delta")
+
+  result
 }
-# surv_juv_delta <- function(average_temp){
-#   results <- rep((average_temp <= 16.5)*.42 + (average_temp > 16.5 & average_temp < 19.5) * 0.42 / (1.55^(average_temp-15.5)) + (average_temp > 19.5 & average_temp < 25)*0.035,4)
-#   setNames(results, c("s", "m", "l", "vl"))
-# }
+
 
 #' @title Get Rearing Survival Rates
 #' @description Calculates the juvenile inchannel, floodplain, bypasses, and
@@ -206,7 +210,8 @@ get_rearing_survival_rates <- function(year, month, scenario) {
   sutter_surv <- sqrt(bp_surv)
   yolo_surv <- sqrt(bp_surv)
 
-  delta_juv_surv <- surv_juv_delta(max_temp_thresh = maxT25D,
+  delta_juv_surv <- surv_juv_delta(avg_temp = avg_temp_delta[month, year, "North Delta"],
+                                   max_temp_thresh = maxT25D,
                                    avg_temp_thresh = aveT20D,
                                    high_predation = delta_high_predation,
                                    contact_points = delta_num_contact_points,
