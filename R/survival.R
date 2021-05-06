@@ -466,22 +466,25 @@ get_migratory_survival_rates <- function(year, month) {
   sj_migration_surv <- surv_juv_outmigration_san_joaquin()
 
   # set up the regional survivals
-  uppermid_sac_migration_surv <- surv_juv_outmigration_sac(flow_cms = u_sac_flow,
-                                                       avg_temp = avg_temp[16, month, year],
-                                                       total_diversions = total_diverted[16],
-                                                       prop_diversions = proportion_diverted[16])^.5 # UM.Sac.S
+  # uppermid_sac_migration_surv <- surv_juv_outmigration_sac(flow_cms = u_sac_flow,
+  #                                                      avg_temp = avg_temp[16, month, year],
+  #                                                      total_diversions = total_diverted[16],
+  #                                                      prop_diversions = proportion_diverted[16])^.5 # UM.Sac.S
+  uppermid_sac_migration_surv <- surv_juv_outmigration_sac(flow_cms = u_sac_flow)
 
 
-  lowermid_sac_migration_surv <- surv_juv_outmigration_sac(flow_cms = u_sac_flow,
-                                                       avg_temp = avg_temp[21, month, year],
-                                                       total_diversions = total_diverted[21],
-                                                       prop_diversions = proportion_diverted[21])^.5 # LM.Sac.S
+  # lowermid_sac_migration_surv <- surv_juv_outmigration_sac(flow_cms = u_sac_flow,
+  #                                                      avg_temp = avg_temp[21, month, year],
+  #                                                      total_diversions = total_diverted[21],
+  #                                                      prop_diversions = proportion_diverted[21])^.5 # LM.Sac.S
+  lowermid_sac_migration_surv <- surv_juv_outmigration_sac(flow_cms = u_sac_flow)
 
 
-  lower_sac_migration_surv <- surv_juv_outmigration_sac(flow_cms = u_sac_flow,
-                                                    avg_temp = avg_temp[24, month, year],
-                                                    total_diversions = total_diverted[24],
-                                                    prop_diversions = proportion_diverted[24])^.5 # LL.Sac.S
+  # lower_sac_migration_surv <- surv_juv_outmigration_sac(flow_cms = u_sac_flow,
+  #                                                   avg_temp = avg_temp[24, month, year],
+  #                                                   total_diversions = total_diverted[24],
+  #                                                   prop_diversions = proportion_diverted[24])^.5 # LL.Sac.S
+  lower_sac_migration_surv <- surv_juv_outmigration_sac(flow_cms = u_sac_flow)
 
   sac_delta_migration_surv <- surv_juv_outmigration_sac_delta(delta_flow = delta_inflow[month, year, ],
                                                               avg_temp = avg_temp_delta[month, year, ],
