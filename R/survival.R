@@ -488,7 +488,7 @@ get_migratory_survival_rates <- function(year, month) {
 
   sac_delta_migration_surv <- surv_juv_outmigration_sac_delta(delta_flow = delta_inflow[month, year, ],
                                                               avg_temp = avg_temp_delta[month, year, ],
-                                                              perc_diversions = delta_proportion_diverted * 100) #Sac.Delt.S
+                                                              perc_diversions = delta_proportion_diverted[month, year, ] * 100) #Sac.Delt.S
 
   bay_delta_migration_surv <- mean(c(0.43, 0.46, 0.26, 0.25, 0.39)) # Bay.S Chipps island to bay
 
