@@ -1,4 +1,4 @@
-Package: fallRunDSM
+Package: fallRunDSMCalibration
 Type: Package
 Title: Structured Decision Fall Run Model for CVPIA
 Version: 2.0

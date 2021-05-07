@@ -5,9 +5,43 @@
 #' @param seeds The default value is NULL runs the model in seeding mode,
 #' returning a 31 by 25 matrix with the first four years of seeded adults. This
 #' returned value can be fed into the model again as the value for the seeds argument
+#' @param ..surv_adult_enroute_int TODO
+#' @param ..surv_adult_prespawn_int TODO
+#' @param ..surv_egg_to_fry_int TODO
+#' @param ..surv_juv_rear_int TODO
+#' @param ..surv_juv_rear_contact_points TODO
+#' @param ..surv_juv_rear_prop_diversions TODO
+#' @param ..surv_juv_rear_total_diversions TODO
+#' @param ..surv_juv_bypass_int TODO
+#' @param ..surv_juv_delta_int TODO
+#' @param ..surv_juv_delta_contact_points TODO
+#' @param ..surv_juv_delta_total_diverted TODO
+#' @param ..surv_juv_outmigration_sj_int TODO
+#' @param ..surv_juv_outmigration_sac_int_one TODO
+#' @param ..surv_juv_outmigration_sac_prop_diversions TODO
+#' @param ..surv_juv_outmigration_sac_total_diversions TODO
+#' @param ..surv_juv_outmigration_sac_int_two TODO
+#' @param ..ocean_entry_success_int TODO
 #' @source IP-117068
 #' @export
-fall_run_model <- function(scenario = NULL, seeds = NULL){
+fall_run_model <- function(scenario = NULL, seeds = NULL,
+                           ..surv_adult_enroute_int = 3,
+                           ..surv_adult_prespawn_int = 3,
+                           ..surv_egg_to_fry_int = 0.041,
+                           ..surv_juv_rear_int = 3.5,
+                           ..surv_juv_rear_contact_points = -0.0068,
+                           ..surv_juv_rear_prop_diversions = -0.1755,
+                           ..surv_juv_rear_total_diversions = -0.0005,
+                           ..surv_juv_bypass_int = -3.5,
+                           ..surv_juv_delta_int = 1.4,
+                           ..surv_juv_delta_contact_points = (.0358 * -0.189),
+                           ..surv_juv_delta_total_diverted = (.5 * -0.0021),
+                           ..surv_juv_outmigration_sj_int = -3.5,
+                           ..surv_juv_outmigration_sac_int_one = 2.5,
+                           ..surv_juv_outmigration_sac_prop_diversions = (-3.51 * .05),
+                           ..surv_juv_outmigration_sac_total_diversions = (-.0021 * .215),
+                           ..surv_juv_outmigration_sac_int_two = 0.3,
+                           ..ocean_entry_success_int){
 
   watershed_labels <- c("Upper Sacramento River", "Antelope Creek", "Battle Creek",
                         "Bear Creek", "Big Chico Creek", "Butte Creek", "Clear Creek",
@@ -20,6 +54,9 @@ fall_run_model <- function(scenario = NULL, seeds = NULL){
                         "Tuolumne River", "San Joaquin River")
 
   size_class_labels <- c('s', 'm', 'l', 'vl')
+
+  # check function arguments
+  stopifnot("'..surv_juv_rear_int' must of length 1 or 31" = {length(..surv_juv_rear_int) == 1 | length(..surv_juv_rear_int) == 31})
 
   output <- list(
 
@@ -54,7 +91,8 @@ fall_run_model <- function(scenario = NULL, seeds = NULL){
     avg_ocean_transition_month <- ocean_transition_month() # 2
 
     hatch_adults <- rmultinom(1, size = round(runif(1, 83097.01,532203.1)), prob = hatchery_allocation)[ , 1]
-    spawners <- get_spawning_adults(year, round(adults[ , year]), hatch_adults)
+    spawners <- get_spawning_adults(year, round(adults[ , year]), hatch_adults,
+                                    ..surv_adult_enroute_int = ..surv_adult_enroute_int)
     init_adults <- spawners$init_adults
 
     output$spawners[ , year] <- init_adults
@@ -64,7 +102,8 @@ fall_run_model <- function(scenario = NULL, seeds = NULL){
     egg_to_fry_surv <- surv_egg_to_fry(
       proportion_natural = 1 - proportion_hatchery,
       scour = prob_nest_scoured,
-      temperature_effect = mean_egg_temp_effect
+      temperature_effect = mean_egg_temp_effect,
+      ..surv_egg_to_fry_int = ..surv_egg_to_fry_int
     )
 
     min_spawn_habitat <- apply(spawning_habitat[ , 10:12, year], 1, min)
@@ -74,7 +113,8 @@ fall_run_model <- function(scenario = NULL, seeds = NULL){
                                      dec = degree_days[ , 12, year])
 
     average_degree_days <- apply(accumulated_degree_days, 1, weighted.mean, month_return_proportions)
-    prespawn_survival <- surv_adult_prespawn(average_degree_days)
+    prespawn_survival <- surv_adult_prespawn(average_degree_days,
+                                             ..surv_adult_prespawn_int = ..surv_adult_prespawn_int)
 
     juveniles <- spawn_success(escapement = init_adults,
                                adult_prespawn_survival = prespawn_survival,
@@ -84,8 +124,21 @@ fall_run_model <- function(scenario = NULL, seeds = NULL){
 
     for (month in 1:8) {
       habitat <- get_habitat(year, month) # habitat$yolo
-      rearing_survival <- get_rearing_survival_rates(year, month, scenario) # rearing_survival$inchannel
-      migratory_survival <- get_migratory_survival_rates(year, month) #migratory_survival$uppermid_sac
+      rearing_survival <- get_rearing_survival_rates(year, month, scenario,
+                                                     ..surv_juv_rear_int= ..surv_juv_rear_int,
+                                                     ..surv_juv_rear_contact_points= ..surv_juv_rear_contact_points,
+                                                     ..surv_juv_rear_prop_diversions= ..surv_juv_rear_prop_diversions,
+                                                     ..surv_juv_rear_total_diversions= ..surv_juv_rear_total_diversions,
+                                                     ..surv_juv_bypass_int = ..surv_juv_bypass_int,
+                                                     ..surv_juv_delta_int = ..surv_juv_delta_int,
+                                                     ..surv_juv_delta_contact_points = ..surv_juv_delta_contact_points,
+                                                     ..surv_juv_delta_total_diverted = ..surv_juv_delta_total_diverted) # rearing_survival$inchannel
+      migratory_survival <- get_migratory_survival_rates(year, month,
+                                                         ..surv_juv_outmigration_sj_int = ..surv_juv_outmigration_sj_int,
+                                                         ..surv_juv_outmigration_sac_int_one = ..surv_juv_outmigration_sac_int_one,
+                                                         ..surv_juv_outmigration_sac_prop_diversions = ..surv_juv_outmigration_sac_prop_diversions,
+                                                         ..surv_juv_outmigration_sac_total_diversions = ..surv_juv_outmigration_sac_total_diversions,
+                                                         ..surv_juv_outmigration_sac_int_two = ..surv_juv_outmigration_sac_int_two) #migratory_survival$uppermid_sac
       migrants <- matrix(0, nrow = 31, ncol = 4, dimnames = list(watershed_labels, size_class_labels))
 
       if (month == 8) {
@@ -353,7 +406,8 @@ fall_run_model <- function(scenario = NULL, seeds = NULL){
 
       adults_in_ocean <- adults_in_ocean + ocean_entry_success(migrants = migrants_at_golden_gate,
                                                                month = month,
-                                                               avg_ocean_transition_month = avg_ocean_transition_month)
+                                                               avg_ocean_transition_month = avg_ocean_transition_month,
+                                                               ..ocean_entry_success_int = ..ocean_entry_success_int)
 
     } # end month loop
 
