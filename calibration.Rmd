@@ -1,0 +1,52 @@
+---
+title: "Calibrating Fall Run DSM"
+output: html_notebook
+---
+
+## Objective
+
+We are using genetic algorithms, a type of stochastic optimization, to calibrate the following model coefficients:
+
+* `..surv_adult_enroute_int`
+* `..surv_adult_prespawn_int`
+* `..surv_egg_to_fry_int`
+* `..surv_juv_rear_int`
+* `..surv_juv_rear_contact_points`
+* `..surv_juv_rear_prop_diversions`
+* `..surv_juv_rear_total_diversions`
+* `..surv_juv_bypass_int`
+* `..surv_juv_delta_int`
+* `..surv_juv_delta_contact_points`
+* `..surv_juv_delta_total_diverted`
+* `..surv_juv_outmigration_sj_int`
+* `..surv_juv_outmigration_sac_int_one`
+* `..surv_juv_outmigration_sac_prop_diversions`
+* `..surv_juv_outmigration_sac_total_diversions`
+* `..surv_juv_outmigration_sac_int_two`
+* `..ocean_entry_success_int`
+
+
+## Packages
+We are using the [GA](http://luca-scr.github.io/GA/index.html) R package to implement our genetic algorithms search
+and the [fallRunDSMCalibration](https://github.com/CVPIA-OSC/fallRunDSMCalibration) R package that contains
+a version of [fallRunDSM](https://github.com/CVPIA-OSC/fallRunDSM) that has exposed the above model coefficients
+in the `fall_run_model` function to enable optimization of these coefficients.
+Additionally, we are using [DSMCalibrationData](https://github.com/CVPIA-OSC/DSMCalibrationData)
+**NEED TO BUILD DOCUMENTATION SITES FOR THESE AND UPDATE LINKS**
+```{r}
+library(GA)
+library(fallRunDSMCalibration)
+library(DSMCalibrationData)
+```
+
+## Data
+
+```{r}
+fallRunDSMCalibration::
+```
+
+
+## Fitness Function
+```{r}
+
+```
