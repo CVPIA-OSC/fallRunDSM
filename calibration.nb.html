@@ -1784,25 +1784,44 @@ summary {
 </div>
 <div id="packages" class="section level2">
 <h2>Packages</h2>
-<p>We are using the <a href="http://luca-scr.github.io/GA/index.html">GA</a> R package to implement our genetic algorithms search and the <a href="https://github.com/CVPIA-OSC/fallRunDSMCalibration">fallRunDSMCalibration</a> R package that contains a version of <a href="https://github.com/CVPIA-OSC/fallRunDSM">fallRunDSM</a> that has exposed the above model coefficients in the <code>fall_run_model</code> function to enable optimization of these coefficients. Additionally, we are using <a href="https://github.com/CVPIA-OSC/DSMCalibrationData">DSMCalibrationData</a> <strong>NEED TO BUILD DOCUMENTATION SITES FOR THESE AND UPDATE LINKS</strong></p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShHQSlcbmxpYnJhcnkoZmFsbFJ1bkRTTUNhbGlicmF0aW9uKVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShHQSlcbmxpYnJhcnkoZmFsbFJ1bkRTTUNhbGlicmF0aW9uKVxubGlicmFyeShEU01DYWxpYnJhdGlvbkRhdGEpXG5saWJyYXJ5KHRpZHl2ZXJzZSlcbmBgYCJ9 -->
 <pre class="r"><code>library(GA)
-library(fallRunDSMCalibration)</code></pre>
+library(fallRunDSMCalibration)
+library(DSMCalibrationData)
+library(tidyverse)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>We are using the <a href="http://luca-scr.github.io/GA/index.html">GA</a> R package to implement our genetic algorithms search and the <a href="https://github.com/CVPIA-OSC/fallRunDSMCalibration">fallRunDSMCalibration</a> R package that contains a version of <a href="https://github.com/CVPIA-OSC/fallRunDSM">fallRunDSM</a> that has exposed the above model coefficients in the <code>fall_run_model</code> function to enable optimization of these coefficients. Additionally, we are using <a href="https://github.com/CVPIA-OSC/DSMCalibrationData">DSMCalibrationData</a> to access calibration related data.</p>
+<p><strong>NEED TO BUILD DOCUMENTATION SITES FOR THESE AND UPDATE LINKS</strong></p>
+</div>
+<div id="calibrating-data" class="section level2">
+<h2>Calibrating Data</h2>
+<p>We will be minimizing the error between <a href="https://wildlife.ca.gov/Conservation/Fishes/Chinook-Salmon/Anadromous-Assessment">GrandTab</a> estimated escapement data for the years 1998-2017 and escapement predicted by the DSM. The data inputs to the DSM are for years 1980-1999. We selected proxy years for 1998-2017 from the 1980-1999 model inputs by <a href="https://cdec.water.ca.gov/reportapp/javareports?name=WSIHIST">comparing the DWR water year indices</a> in this <a href="https://github.com/CVPIA-OSC/DSMCalibrationData/blob/main/data-raw/synthetic_years.R">analysis</a>.</p>
+<div id="selected-proxy-years" class="section level3">
+<h3>Selected Proxy Years</h3>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibnJvdyI6MjAsIm5jb2wiOjJ9LCJyZGYiOiJINHNJQUFBQUFBQUFBK1ZUelU3Q1FCQmVTc0hRQ0pMQUEzRHc0TUUyTEtDMGlRY1NqV2ZqVDRMSHBhelNXSGZKVWdMZWZCSjVRUThlUEZOMzZhNE8rd28yYWVlYm1aMzVacjVOYjYvR2ZXL3NJWVRLeUpWdnVTSWhxanpjWC9zaFFxNGpuWkpNMUpSZHkwTXRDVlN3S2QrMlRyZzRpa0tBSTRONzNXNFhZQXh3RCtBK3dBT0F6d0ErQjNnSWNBZ3c0TVdBRndOZURIZ3g0TVdBRndOZURIanhVSzdlVUh1UE5xRlNDWTAyRjVZOTFOYlY5bmpmLy9qUy9xbTJiVzFQZFA3YnFoOVl2dW5mc2F6SkYzTlpGMWRoNUpVdS91K2xvVzBoaUpOckRSeWRiMTZTTkprSWtpV2NkUjRwRVRyZXVxTXBqVE02N2R3SXZuNHJVdnVhMWdSZkJVYlh1dXI1TGo5NW5uL2E0c2NwV1JqeFRkQ2Jrb3dFVDBMVy80MzNtejNnY3pXUkxITFU3MWExaWt0Q2RkZ0ZpZ2NtajVaTVRUWDE0OW1TdmZqWU9sclh1QTJ3WTZsVDFhMnFsRDBuakJvdGFUempacWVVVEdpcW5ZWlVZaWRFTUJjSnk4eUdNcm9JTXA0UmM4NkxlV29pdTUzUjlnZlFHUVFZZlFRQUFBPT0ifQ== -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Calibration Year"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Selected Proxy Year"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1998","2":"1998"},{"1":"1999","2":"1999"},{"1":"2000","2":"1999"},{"1":"2001","2":"1987"},{"1":"2002","2":"1985"},{"1":"2003","2":"1993"},{"1":"2004","2":"1985"},{"1":"2005","2":"1980"},{"1":"2006","2":"1995"},{"1":"2007","2":"1989"},{"1":"2008","2":"1994"},{"1":"2009","2":"1981"},{"1":"2010","2":"1985"},{"1":"2011","2":"1997"},{"1":"2012","2":"1985"},{"1":"2013","2":"1987"},{"1":"2014","2":"1992"},{"1":"2015","2":"1992"},{"1":"2016","2":"1985"},{"1":"2017","2":"1998"}],"options":{"columns":{"min":{},"max":[10],"total":[2]},"rows":{"min":[10],"max":[10],"total":[20]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
-<div id="data" class="section level2">
-<h2>Data</h2>
+<div id="grandtab-data" class="section level3">
+<h3>GrandTab Data</h3>
+<p>which watersheds? display table of data</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZmFsbFJ1bkRTTUNhbGlicmF0aW9uOjpcbmBgYCJ9 -->
-<pre class="r"><code>fallRunDSMCalibration::</code></pre>
-<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+</div>
 </div>
 <div id="fitness-function" class="section level2">
 <h2>Fitness Function</h2>
@@ -1811,7 +1830,7 @@ library(fallRunDSMCalibration)</code></pre>
 <!-- rnb-chunk-end -->
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiQ2FsaWJyYXRpbmcgRmFsbCBSdW4gRFNNIgpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sKLS0tCgojIyBPYmplY3RpdmUKCldlIGFyZSB1c2luZyBnZW5ldGljIGFsZ29yaXRobXMsIGEgdHlwZSBvZiBzdG9jaGFzdGljIG9wdGltaXphdGlvbiwgdG8gY2FsaWJyYXRlIHRoZSBmb2xsb3dpbmcgbW9kZWwgY29lZmZpY2llbnRzOgoKKiBgLi5zdXJ2X2FkdWx0X2Vucm91dGVfaW50YAoqIGAuLnN1cnZfYWR1bHRfcHJlc3Bhd25faW50YAoqIGAuLnN1cnZfZWdnX3RvX2ZyeV9pbnRgCiogYC4uc3Vydl9qdXZfcmVhcl9pbnRgCiogYC4uc3Vydl9qdXZfcmVhcl9jb250YWN0X3BvaW50c2AKKiBgLi5zdXJ2X2p1dl9yZWFyX3Byb3BfZGl2ZXJzaW9uc2AKKiBgLi5zdXJ2X2p1dl9yZWFyX3RvdGFsX2RpdmVyc2lvbnNgCiogYC4uc3Vydl9qdXZfYnlwYXNzX2ludGAKKiBgLi5zdXJ2X2p1dl9kZWx0YV9pbnRgCiogYC4uc3Vydl9qdXZfZGVsdGFfY29udGFjdF9wb2ludHNgCiogYC4uc3Vydl9qdXZfZGVsdGFfdG90YWxfZGl2ZXJ0ZWRgCiogYC4uc3Vydl9qdXZfb3V0bWlncmF0aW9uX3NqX2ludGAKKiBgLi5zdXJ2X2p1dl9vdXRtaWdyYXRpb25fc2FjX2ludF9vbmVgCiogYC4uc3Vydl9qdXZfb3V0bWlncmF0aW9uX3NhY19wcm9wX2RpdmVyc2lvbnNgCiogYC4uc3Vydl9qdXZfb3V0bWlncmF0aW9uX3NhY190b3RhbF9kaXZlcnNpb25zYAoqIGAuLnN1cnZfanV2X291dG1pZ3JhdGlvbl9zYWNfaW50X3R3b2AKKiBgLi5vY2Vhbl9lbnRyeV9zdWNjZXNzX2ludGAKCgojIyBQYWNrYWdlcwpXZSBhcmUgdXNpbmcgdGhlIFtHQV0oaHR0cDovL2x1Y2Etc2NyLmdpdGh1Yi5pby9HQS9pbmRleC5odG1sKSBSIHBhY2thZ2UgdG8gaW1wbGVtZW50IG91ciBnZW5ldGljIGFsZ29yaXRobXMgc2VhcmNoCmFuZCB0aGUgW2ZhbGxSdW5EU01DYWxpYnJhdGlvbl0oaHR0cHM6Ly9naXRodWIuY29tL0NWUElBLU9TQy9mYWxsUnVuRFNNQ2FsaWJyYXRpb24pIFIgcGFja2FnZSB0aGF0IGNvbnRhaW5zCmEgdmVyc2lvbiBvZiBbZmFsbFJ1bkRTTV0oaHR0cHM6Ly9naXRodWIuY29tL0NWUElBLU9TQy9mYWxsUnVuRFNNKSB0aGF0IGhhcyBleHBvc2VkIHRoZSBhYm92ZSBtb2RlbCBjb2VmZmljaWVudHMKaW4gdGhlIGBmYWxsX3J1bl9tb2RlbGAgZnVuY3Rpb24gdG8gZW5hYmxlIG9wdGltaXphdGlvbiBvZiB0aGVzZSBjb2VmZmljaWVudHMuCkFkZGl0aW9uYWxseSwgd2UgYXJlIHVzaW5nIFtEU01DYWxpYnJhdGlvbkRhdGFdKGh0dHBzOi8vZ2l0aHViLmNvbS9DVlBJQS1PU0MvRFNNQ2FsaWJyYXRpb25EYXRhKQoqKk5FRUQgVE8gQlVJTEQgRE9DVU1FTlRBVElPTiBTSVRFUyBGT1IgVEhFU0UgQU5EIFVQREFURSBMSU5LUyoqCmBgYHtyfQpsaWJyYXJ5KEdBKQpsaWJyYXJ5KGZhbGxSdW5EU01DYWxpYnJhdGlvbikKbGlicmFyeShEU01DYWxpYnJhdGlvbkRhdGEpCmBgYAoKIyMgRGF0YQoKYGBge3J9CmZhbGxSdW5EU01DYWxpYnJhdGlvbjo6CmBgYAoKCiMjIEZpdG5lc3MgRnVuY3Rpb24KYGBge3J9CgpgYGAK</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiQ2FsaWJyYXRpbmcgRmFsbCBSdW4gRFNNIgpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sKLS0tCgojIyBPYmplY3RpdmUKCldlIGFyZSB1c2luZyBnZW5ldGljIGFsZ29yaXRobXMsIGEgdHlwZSBvZiBzdG9jaGFzdGljIG9wdGltaXphdGlvbiwgdG8gY2FsaWJyYXRlIHRoZSBmb2xsb3dpbmcgbW9kZWwgY29lZmZpY2llbnRzOgoKKiBgLi5zdXJ2X2FkdWx0X2Vucm91dGVfaW50YAoqIGAuLnN1cnZfYWR1bHRfcHJlc3Bhd25faW50YAoqIGAuLnN1cnZfZWdnX3RvX2ZyeV9pbnRgCiogYC4uc3Vydl9qdXZfcmVhcl9pbnRgCiogYC4uc3Vydl9qdXZfcmVhcl9jb250YWN0X3BvaW50c2AKKiBgLi5zdXJ2X2p1dl9yZWFyX3Byb3BfZGl2ZXJzaW9uc2AKKiBgLi5zdXJ2X2p1dl9yZWFyX3RvdGFsX2RpdmVyc2lvbnNgCiogYC4uc3Vydl9qdXZfYnlwYXNzX2ludGAKKiBgLi5zdXJ2X2p1dl9kZWx0YV9pbnRgCiogYC4uc3Vydl9qdXZfZGVsdGFfY29udGFjdF9wb2ludHNgCiogYC4uc3Vydl9qdXZfZGVsdGFfdG90YWxfZGl2ZXJ0ZWRgCiogYC4uc3Vydl9qdXZfb3V0bWlncmF0aW9uX3NqX2ludGAKKiBgLi5zdXJ2X2p1dl9vdXRtaWdyYXRpb25fc2FjX2ludF9vbmVgCiogYC4uc3Vydl9qdXZfb3V0bWlncmF0aW9uX3NhY19wcm9wX2RpdmVyc2lvbnNgCiogYC4uc3Vydl9qdXZfb3V0bWlncmF0aW9uX3NhY190b3RhbF9kaXZlcnNpb25zYAoqIGAuLnN1cnZfanV2X291dG1pZ3JhdGlvbl9zYWNfaW50X3R3b2AKKiBgLi5vY2Vhbl9lbnRyeV9zdWNjZXNzX2ludGAKCgojIyBQYWNrYWdlcwpgYGB7cn0KbGlicmFyeShHQSkKbGlicmFyeShmYWxsUnVuRFNNQ2FsaWJyYXRpb24pCmxpYnJhcnkoRFNNQ2FsaWJyYXRpb25EYXRhKQpsaWJyYXJ5KHRpZHl2ZXJzZSkKYGBgCldlIGFyZSB1c2luZyB0aGUgW0dBXShodHRwOi8vbHVjYS1zY3IuZ2l0aHViLmlvL0dBL2luZGV4Lmh0bWwpIFIgcGFja2FnZSB0byBpbXBsZW1lbnQgb3VyIGdlbmV0aWMgYWxnb3JpdGhtcyBzZWFyY2gKYW5kIHRoZSBbZmFsbFJ1bkRTTUNhbGlicmF0aW9uXShodHRwczovL2dpdGh1Yi5jb20vQ1ZQSUEtT1NDL2ZhbGxSdW5EU01DYWxpYnJhdGlvbikgUiBwYWNrYWdlIHRoYXQgY29udGFpbnMKYSB2ZXJzaW9uIG9mIFtmYWxsUnVuRFNNXShodHRwczovL2dpdGh1Yi5jb20vQ1ZQSUEtT1NDL2ZhbGxSdW5EU00pIHRoYXQgaGFzIGV4cG9zZWQgdGhlIGFib3ZlIG1vZGVsIGNvZWZmaWNpZW50cwppbiB0aGUgYGZhbGxfcnVuX21vZGVsYCBmdW5jdGlvbiB0byBlbmFibGUgb3B0aW1pemF0aW9uIG9mIHRoZXNlIGNvZWZmaWNpZW50cy4KQWRkaXRpb25hbGx5LCB3ZSBhcmUgdXNpbmcgW0RTTUNhbGlicmF0aW9uRGF0YV0oaHR0cHM6Ly9naXRodWIuY29tL0NWUElBLU9TQy9EU01DYWxpYnJhdGlvbkRhdGEpIHRvIGFjY2VzcyBjYWxpYnJhdGlvbgpyZWxhdGVkIGRhdGEuCgoqKk5FRUQgVE8gQlVJTEQgRE9DVU1FTlRBVElPTiBTSVRFUyBGT1IgVEhFU0UgQU5EIFVQREFURSBMSU5LUyoqCgoKIyMgQ2FsaWJyYXRpbmcgRGF0YQpXZSB3aWxsIGJlIG1pbmltaXppbmcgdGhlIGVycm9yIGJldHdlZW4gW0dyYW5kVGFiXShodHRwczovL3dpbGRsaWZlLmNhLmdvdi9Db25zZXJ2YXRpb24vRmlzaGVzL0NoaW5vb2stU2FsbW9uL0FuYWRyb21vdXMtQXNzZXNzbWVudCkgZXN0aW1hdGVkIGVzY2FwZW1lbnQgZGF0YSBmb3IgdGhlIHllYXJzIDE5OTgtMjAxNyBhbmQgZXNjYXBlbWVudCBwcmVkaWN0ZWQgYnkgdGhlIERTTS4gVGhlIGRhdGEgaW5wdXRzIHRvIHRoZSBEU00gYXJlIGZvciB5ZWFycyAxOTgwLTE5OTkuIFdlIHNlbGVjdGVkIHByb3h5IHllYXJzIGZvciAxOTk4LTIwMTcKZnJvbSB0aGUgMTk4MC0xOTk5IG1vZGVsIGlucHV0cyBieSBbY29tcGFyaW5nIHRoZSBEV1Igd2F0ZXIgeWVhciBpbmRpY2VzXShodHRwczovL2NkZWMud2F0ZXIuY2EuZ292L3JlcG9ydGFwcC9qYXZhcmVwb3J0cz9uYW1lPVdTSUhJU1QpIGluIHRoaXMgW2FuYWx5c2lzXShodHRwczovL2dpdGh1Yi5jb20vQ1ZQSUEtT1NDL0RTTUNhbGlicmF0aW9uRGF0YS9ibG9iL21haW4vZGF0YS1yYXcvc3ludGhldGljX3llYXJzLlIpLgoKIyMjIFNlbGVjdGVkIFByb3h5IFllYXJzCmBgYHtyIGVjaG89RkFMU0V9CnRpYmJsZSgKICBgQ2FsaWJyYXRpb24gWWVhcmAgPSBuYW1lcyhEU01DYWxpYnJhdGlvbkRhdGE6OmNhbGlicmF0aW9uX3llYXJfbG9va3VwKSwgCiAgYFNlbGVjdGVkIFByb3h5IFllYXJgID0gRFNNQ2FsaWJyYXRpb25EYXRhOjpjYWxpYnJhdGlvbl95ZWFyX2xvb2t1cCkgCmBgYAoKIyMjIEdyYW5kVGFiIERhdGEKd2hpY2ggd2F0ZXJzaGVkcz8KZGlzcGxheSB0YWJsZSBvZiBkYXRhCmBgYHtyfQoKYGBgCgoKIyMgRml0bmVzcyBGdW5jdGlvbgpgYGB7cn0KCmBgYAo=</div>
 
 
 

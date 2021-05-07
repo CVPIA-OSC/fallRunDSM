@@ -27,22 +27,38 @@ We are using genetic algorithms, a type of stochastic optimization, to calibrate
 
 
 ## Packages
-We are using the [GA](http://luca-scr.github.io/GA/index.html) R package to implement our genetic algorithms search
-and the [fallRunDSMCalibration](https://github.com/CVPIA-OSC/fallRunDSMCalibration) R package that contains
-a version of [fallRunDSM](https://github.com/CVPIA-OSC/fallRunDSM) that has exposed the above model coefficients
-in the `fall_run_model` function to enable optimization of these coefficients.
-Additionally, we are using [DSMCalibrationData](https://github.com/CVPIA-OSC/DSMCalibrationData)
-**NEED TO BUILD DOCUMENTATION SITES FOR THESE AND UPDATE LINKS**
 ```{r}
 library(GA)
 library(fallRunDSMCalibration)
 library(DSMCalibrationData)
+library(tidyverse)
+```
+We are using the [GA](http://luca-scr.github.io/GA/index.html) R package to implement our genetic algorithms search
+and the [fallRunDSMCalibration](https://github.com/CVPIA-OSC/fallRunDSMCalibration) R package that contains
+a version of [fallRunDSM](https://github.com/CVPIA-OSC/fallRunDSM) that has exposed the above model coefficients
+in the `fall_run_model` function to enable optimization of these coefficients.
+Additionally, we are using [DSMCalibrationData](https://github.com/CVPIA-OSC/DSMCalibrationData) to access calibration
+related data.
+
+**NEED TO BUILD DOCUMENTATION SITES FOR THESE AND UPDATE LINKS**
+
+
+## Calibrating Data
+We will be minimizing the error between [GrandTab](https://wildlife.ca.gov/Conservation/Fishes/Chinook-Salmon/Anadromous-Assessment) estimated escapement data for the years 1998-2017 and escapement predicted by the DSM. The data inputs to the DSM are for years 1980-1999. We selected proxy years for 1998-2017
+from the 1980-1999 model inputs by [comparing the DWR water year indices](https://cdec.water.ca.gov/reportapp/javareports?name=WSIHIST) in this [analysis](https://github.com/CVPIA-OSC/DSMCalibrationData/blob/main/data-raw/synthetic_years.R).
+
+### Selected Proxy Years
+```{r echo=FALSE}
+tibble(
+  `Calibration Year` = names(DSMCalibrationData::calibration_year_lookup), 
+  `Selected Proxy Year` = DSMCalibrationData::calibration_year_lookup) 
 ```
 
-## Data
-
+### GrandTab Data
+which watersheds?
+display table of data
 ```{r}
-fallRunDSMCalibration::
+
 ```
 
 
