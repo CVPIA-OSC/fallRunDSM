@@ -99,6 +99,7 @@ surv_juv_bypass <- function(max_temp_thresh, avg_temp_thresh, high_predation,
 #' @title Juvenile Delta Survival
 #' @description Calculates the juvenile rearing survival in the deltas
 #' @param avg_temp Variable representing average temperature in the delta
+#' @param max_temp_thresh Variable representing the probability of exceeding the max temperature
 #' @param avg_temp_thresh Variable representing the probability of exceeding the average temperature
 #' @param high_predation Variable representing an indicator for high predation in delta
 #' @param contact_points Variable representing the number of contact points in watershed
