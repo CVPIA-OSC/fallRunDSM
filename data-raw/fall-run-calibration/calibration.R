@@ -64,11 +64,6 @@ base_run <- fall_run_model(seeds = fr_seeds,..surv_juv_rear_int = base_surv_rear
 survival_betas
 base_run$spawners[1, ]
 
-mod1 <- fall_run_model(seeds = fr_seeds, ..surv_adult_enroute_int = 1.1, ..ocean_entry_success_int = ocean_betas)
-mod2 <- fall_run_model(seeds = fr_seeds, ..surv_adult_enroute_int = -1.1, ..ocean_entry_success_int = ocean_betas)
-mod1$spawners[1, ]
-
-
 row_normalize <- function(x) {
  t(apply(x, 1, function(d) {
    ifelse((v = sd(d)) == 0, 0, (d-mean(d))/v)
@@ -76,10 +71,72 @@ row_normalize <- function(x) {
   }))
 }
 
-fit <- function(adult_enroute, juv_rear, ws = 1:31) {
+fit <- function(adult_enroute,
+                x1,
+                x2,
+                x3,
+                x4,
+                x5,
+                x6,
+                x7,
+                x8,
+                x9,
+                x10,
+                x11,
+                x12,
+                x13,
+                x14,
+                x15,
+                x16,
+                x17,
+                x18,
+                x19,
+                x20,
+                x21,
+                x22,
+                x23,
+                x24,
+                x25,
+                x26,
+                x27,
+                x28,
+                x29,
+                x30,
+                x31,
+                ws = 1:31) {
   preds <- fall_run_model(seeds = fr_seeds,
                           ..surv_adult_enroute_int = adult_enroute,
-                          ..surv_juv_rear_int = juv_rear,
+                          ..surv_juv_rear_int = c(x1,
+                                                  x2,
+                                                  x3,
+                                                  x4,
+                                                  x5,
+                                                  x6,
+                                                  x7,
+                                                  x8,
+                                                  x9,
+                                                  x10,
+                                                  x11,
+                                                  x12,
+                                                  x13,
+                                                  x14,
+                                                  x15,
+                                                  x16,
+                                                  x17,
+                                                  x18,
+                                                  x19,
+                                                  x20,
+                                                  x21,
+                                                  x22,
+                                                  x23,
+                                                  x24,
+                                                  x25,
+                                                  x26,
+                                                  x27,
+                                                  x28,
+                                                  x29,
+                                                  x30,
+                                                  x31),
                           ..ocean_entry_success_int = ocean_betas)
 
   norm_base <- row_normalize(base_run$spawners[ws, , drop = FALSE])
@@ -87,13 +144,21 @@ fit <- function(adult_enroute, juv_rear, ws = 1:31) {
   sum((norm_base - norm_preds)^2)
 }
 
-fit(1, 1)
+fit(1, 1.5, 3.5, 3.5, 3.5, 3.5, -2.5, 3.5, 3.5, 3.5, -2.9, 3.5, -1.1092908,
+    3.5, 3.5, 3.5, -3.5, -3.5, 3.5, 3.5, -3.5, -3.5, -3.5, 2.5, -3.5,
+    -1.2, -1.2, 1.9999999, -0.2, -0.1081707, -3.4999959, -0.4)
 
 
 a <- ga(type = "real-valued",
-        fitness = function(x) -fit(x[1], x[2]),
-        lower = c(0, 0), upper = c(4, 4),
-        popSize = 10,
+        fitness = function(x) -fit(x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],
+                                   x[10],x[11],x[12],x[13],
+                                   x[14],x[15],x[16],x[17],
+                                   x[18],x[19],x[20],x[21],
+                                   x[22],x[23],x[24],x[25],
+                                   x[26],x[27],x[28],x[29],
+                                   x[30],x[31],x[32]),
+        lower = rep(0, 32), upper = rep(10, 32),
+        popSize = 50,
         monitor = TRUE,
         maxiter = 1000,
         run = 20,
