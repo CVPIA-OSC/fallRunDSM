@@ -22,7 +22,7 @@ library(tidyverse)
 
 seeds_frame <- read_csv("data-raw/fall-run-calibration/known-adults-2019.csv")
 seeds <- seeds_frame$seed
-known_adults <- seeds_frame[,]
+
 list2env(load_baseline_data(), .GlobalEnv)
 ocean_betas <- c(
   `Upper Sacramento River` = -0.5108849,
@@ -58,107 +58,121 @@ ocean_betas <- c(
   `San Joaquin River` = 1.2)
 
 fr_seeds <- fall_run_model(..ocean_entry_success_int = ocean_betas)
-
 base_surv_rear_int <- survival_betas$`2nd calibration adjustment`
+
 base_run <- fall_run_model(seeds = fr_seeds,..surv_juv_rear_int = base_surv_rear_int,  ..ocean_entry_success_int = ocean_betas)
-survival_betas
-base_run$spawners[1, ]
 
 row_normalize <- function(x) {
- t(apply(x, 1, function(d) {
-   ifelse((v = sd(d)) == 0, 0, (d-mean(d))/v)
-
-  }))
+  res <- (x - rowMeans(x)) / apply(x, 1, sd)
+  res[is.nan(res)] <- 0
+  return(res)
 }
 
-fit <- function(adult_enroute,
-                x1,
-                x2,
-                x3,
-                x4,
-                x5,
-                x6,
-                x7,
-                x8,
-                x9,
-                x10,
-                x11,
-                x12,
-                x13,
-                x14,
-                x15,
-                x16,
-                x17,
-                x18,
-                x19,
-                x20,
-                x21,
-                x22,
-                x23,
-                x24,
-                x25,
-                x26,
-                x27,
-                x28,
-                x29,
-                x30,
-                x31,
+# calibrate all of the intercepts
+# the fitness function must expose as argumnts all of the elements we want to optmize
+fit <- function(
+                # surv_adult_enroute_int,
+                # surv_adult_prespawn_int,
+                # surv_egg_to_fry_int,
+                surv_juv_rear_int,
+                # surv_juv_rear_contact_points,
+                # surv_juv_rear_prop_diversions,
+                # surv_juv_rear_total_diversions,
+                # surv_juv_bypass_int,
+                # surv_juv_delta_int,
+                # surv_juv_delta_contact_points,
+                # surv_juv_delta_total_diverted,
+                # surv_juv_outmigration_sj_int,
+                # surv_juv_outmigration_sac_int_one,
+                # surv_juv_outmigration_sac_prop_diversions,
+                # surv_juv_outmigration_sac_total_diversions,
+                # surv_juv_outmigration_sac_int_two,
+                # ocean_entry_success_int,
                 ws = 1:31) {
+
   preds <- fall_run_model(seeds = fr_seeds,
-                          ..surv_adult_enroute_int = adult_enroute,
-                          ..surv_juv_rear_int = c(x1,
-                                                  x2,
-                                                  x3,
-                                                  x4,
-                                                  x5,
-                                                  x6,
-                                                  x7,
-                                                  x8,
-                                                  x9,
-                                                  x10,
-                                                  x11,
-                                                  x12,
-                                                  x13,
-                                                  x14,
-                                                  x15,
-                                                  x16,
-                                                  x17,
-                                                  x18,
-                                                  x19,
-                                                  x20,
-                                                  x21,
-                                                  x22,
-                                                  x23,
-                                                  x24,
-                                                  x25,
-                                                  x26,
-                                                  x27,
-                                                  x28,
-                                                  x29,
-                                                  x30,
-                                                  x31),
-                          ..ocean_entry_success_int = ocean_betas)
+                          # ..surv_adult_enroute_int = surv_adult_enroute_int,
+                          # ..surv_adult_prespawn_int = surv_adult_prespawn_int,
+                          # ..surv_egg_to_fry_int = surv_egg_to_fry_int,
+                          ..surv_juv_rear_int = surv_juv_rear_int,
+                          # ..surv_juv_rear_contact_points = surv_juv_rear_contact_points,
+                          # ..surv_juv_rear_prop_diversions = surv_juv_rear_prop_diversions,
+                          # ..surv_juv_rear_total_diversions = surv_juv_rear_total_diversions,
+                          # ..surv_juv_bypass_int = surv_juv_bypass_int,
+                          # ..surv_juv_delta_int = surv_juv_delta_int,
+                          # ..surv_juv_delta_contact_points = surv_juv_delta_contact_points,
+                          # ..surv_juv_delta_total_diverted = surv_juv_delta_total_diverted,
+                          # ..surv_juv_outmigration_sj_int = surv_juv_outmigration_sj_int,
+                          # ..surv_juv_outmigration_sac_int_one = surv_juv_outmigration_sac_int_one,
+                          # ..surv_juv_outmigration_sac_prop_diversions = surv_juv_outmigration_sac_prop_diversions,
+                          # ..surv_juv_outmigration_sac_total_diversions = surv_juv_outmigration_sac_total_diversions,
+                          # ..surv_juv_outmigration_sac_int_two = surv_juv_outmigration_sac_int_two,
+                          ..ocean_entry_success_int = ocean_entry_success_int)
 
   norm_base <- row_normalize(base_run$spawners[ws, , drop = FALSE])
   norm_preds <- row_normalize(preds$spawners[ws, , drop = FALSE])
   sum((norm_base - norm_preds)^2)
 }
 
-fit(1, 1.5, 3.5, 3.5, 3.5, 3.5, -2.5, 3.5, 3.5, 3.5, -2.9, 3.5, -1.1092908,
-    3.5, 3.5, 3.5, -3.5, -3.5, 3.5, 3.5, -3.5, -3.5, -3.5, 2.5, -3.5,
-    -1.2, -1.2, 1.9999999, -0.2, -0.1081707, -3.4999959, -0.4)
+fit_rear_surv <- function(
+  upsac_surv_juv,
+  butte_surv_juv,
+  deer_surv_juv,
+  mill_surv_juv,
+  uppermidsac_surv_juv,
+  lowermidsac_surv_juv,
+  lowersac_surv_juv,
+  bear_surv_juv,
+  feather_surv_juv,
+  yuba_surv_juv,
+  american_surv_juv,
+  calaveras_surv_juv,
+  cosumnes_surv_juv,
+  moke_surv_juv,
+  merced_surv_juv,
+  stan_surv_juv,
+  tuol_surv_juv,
+  sj_surv_juv,
+  ws = ) {
 
+  surv_intercept_idx =c(1, 6, 10, 12, 16, 21, 24, 18, 19, 20, 23, 25, 26, 27, 28, 29, 30, 31)
+  surv_juv_rear_int <- rep(3.5, 31)
+  surv_juv_rear_int[surv_intercept_idx]
+
+  preds <- fall_run_model(seeds = fr_seeds,
+                          # ..surv_adult_enroute_int = surv_adult_enroute_int,
+                          # ..surv_adult_prespawn_int = surv_adult_prespawn_int,
+                          # ..surv_egg_to_fry_int = surv_egg_to_fry_int,
+                          ..surv_juv_rear_int = surv_juv_rear_int,
+                          # ..surv_juv_rear_contact_points = surv_juv_rear_contact_points,
+                          # ..surv_juv_rear_prop_diversions = surv_juv_rear_prop_diversions,
+                          # ..surv_juv_rear_total_diversions = surv_juv_rear_total_diversions,
+                          # ..surv_juv_bypass_int = surv_juv_bypass_int,
+                          # ..surv_juv_delta_int = surv_juv_delta_int,
+                          # ..surv_juv_delta_contact_points = surv_juv_delta_contact_points,
+                          # ..surv_juv_delta_total_diverted = surv_juv_delta_total_diverted,
+                          # ..surv_juv_outmigration_sj_int = surv_juv_outmigration_sj_int,
+                          # ..surv_juv_outmigration_sac_int_one = surv_juv_outmigration_sac_int_one,
+                          # ..surv_juv_outmigration_sac_prop_diversions = surv_juv_outmigration_sac_prop_diversions,
+                          # ..surv_juv_outmigration_sac_total_diversions = surv_juv_outmigration_sac_total_diversions,
+                          # ..surv_juv_outmigration_sac_int_two = surv_juv_outmigration_sac_int_two,
+                          ..ocean_entry_success_int = ocean_entry_success_int)
+
+  norm_base <- row_normalize(base_run$spawners[ws, , drop = FALSE])
+  norm_preds <- row_normalize(preds$spawners[ws, , drop = FALSE])
+  sum((norm_base - norm_preds)^2)
+}
+
+
+# fit(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ocean_betas)
 
 a <- ga(type = "real-valued",
         fitness = function(x) -fit(x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],
                                    x[10],x[11],x[12],x[13],
-                                   x[14],x[15],x[16],x[17],
-                                   x[18],x[19],x[20],x[21],
-                                   x[22],x[23],x[24],x[25],
-                                   x[26],x[27],x[28],x[29],
-                                   x[30],x[31],x[32]),
+                                   x[14],x[15],x[16],
+                                   ws = 1, ocean_entry_success_int = ocean_betas),
         lower = rep(0, 32), upper = rep(10, 32),
-        popSize = 50,
+        popSize = 100,
         monitor = TRUE,
         maxiter = 1000,
         run = 20,
