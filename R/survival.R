@@ -98,7 +98,8 @@ surv_juv_bypass <- function(max_temp_thresh, avg_temp_thresh, high_predation,
 
 #' @title Juvenile Delta Survival
 #' @description Calculates the juvenile rearing survival in the deltas
-#' @param max_temp_thresh Variable representing the probability of exceeding the max temp threshold
+#' @param avg_temp Variable representing average temperature in the delta
+#' @param max_temp_thresh Variable representing the probability of exceeding the max temperature
 #' @param avg_temp_thresh Variable representing the probability of exceeding the average temperature
 #' @param high_predation Variable representing an indicator for high predation in delta
 #' @param contact_points Variable representing the number of contact points in watershed
@@ -114,26 +115,34 @@ surv_juv_bypass <- function(max_temp_thresh, avg_temp_thresh, high_predation,
 #' @param .large parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
 #' @source IP-117068
 #' @export
-surv_juv_delta <- function(max_temp_thresh, avg_temp_thresh, high_predation, contact_points,
+surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_predation, contact_points,
                            prop_diverted, total_diverted, ..surv_juv_delta_int = 1.4,
                            .avg_temp_thresh = -0.717, .high_predation = -0.122,
                            ..surv_juv_delta_contact_points = 0.0358 * -0.189,
                            .prop_diverted = -3.51, ..surv_juv_delta_total_diverted = 0.5 * -0.0021,
                            .medium = 1.48, .large = 2.223){
+  # north delta
+  north_delta_surv <- rep((avg_temp <= 16.5)*.42 + (avg_temp > 16.5 & avg_temp < 19.5) * 0.42 / (1.55^(avg_temp-15.5)) + (avg_temp > 19.5 & avg_temp < 25)*0.035,4)
 
+  # south delta
   base_score <- ..surv_juv_delta_int +
-    .avg_temp_thresh * avg_temp_thresh +
-    .high_predation * high_predation +
-    ..surv_juv_delta_contact_points * contact_points * high_predation +
-    .prop_diverted * prop_diverted +
-    ..surv_juv_delta_total_diverted * total_diverted
+    .avg_temp_thresh * avg_temp_thresh[2] +
+    .high_predation * high_predation[2] +
+    ..surv_juv_delta_contact_points * contact_points[2] * high_predation[2] +
+    .prop_diverted * prop_diverted[2] +
+    ..surv_juv_delta_total_diverted * total_diverted[2]
 
-  s <- ifelse(max_temp_thresh, .0001, boot::inv.logit(base_score))
-  m <- ifelse(max_temp_thresh, .0001, boot::inv.logit(base_score + .medium))
-  l <- ifelse(max_temp_thresh, .0001, boot::inv.logit(base_score + .large))
+  s <- ifelse(max_temp_thresh[2], .0001, boot::inv.logit(base_score))
+  m <- ifelse(max_temp_thresh[2], .0001, boot::inv.logit(base_score + .medium))
+  l <- ifelse(max_temp_thresh[2], .0001, boot::inv.logit(base_score + .large))
 
-  cbind(s = s, m = m, l = l, vl = 1)
+  south_delta_surv <- cbind(s = s, m = m, l = l, vl = 1)
+  result <- rbind("north_delta" = north_delta_surv, "south_delta" = south_delta_surv)
+  row.names(result) <- c("North Delta", "South Delta")
+
+  result
 }
+
 
 #' @title Get Rearing Survival Rates
 #' @description Calculates the juvenile inchannel, floodplain, bypasses, and
@@ -226,7 +235,8 @@ get_rearing_survival_rates <- function(year, month, scenario,
   sutter_surv <- sqrt(bp_surv)
   yolo_surv <- sqrt(bp_surv)
 
-  delta_juv_surv <- surv_juv_delta(max_temp_thresh = maxT25D,
+  delta_juv_surv <- surv_juv_delta(avg_temp = avg_temp_delta[month, year, "North Delta"],
+                                   max_temp_thresh = maxT25D,
                                    avg_temp_thresh = aveT20D,
                                    high_predation = delta_high_predation,
                                    contact_points = delta_num_contact_points,
@@ -250,50 +260,12 @@ get_rearing_survival_rates <- function(year, month, scenario,
 #' @title Juvenile Mainstem Sacramento Outmigration Survival
 #' @description Calculates the Mainstem Sacramento juvenile out migration survival
 #' @param flow_cms Variable representing upper Sacramento River flow in cubic meters per second
-#' @param avg_temp Variable representing monthly mean temperature in celsius
-#' @param total_diversions Variable representing monthly mean total diversions in cubic feet per second
-#' @param prop_diversions Variable representing monthly mean proportion diverted
-#' @param ..surv_juv_outmigration_sac_int_one intercept for first model, source: calibration (varies by tributary)
-#' @param .flow_cms coefficient for flow_cms, source: empirical model fit to the 2014 late-fall-run Chinook salmon tag release data
-#' @param ..surv_juv_outmigration_sac_prop_diversions coefficient for prop_diversions, source: calibration
-#' @param ..surv_juv_outmigration_sac_total_diversions coefficient for total_diversions, source: calibration
-#' @param ..surv_juv_outmigration_sac_int_two intercept for second model, source: calibration (varies by tributary)
-#' @param .avg_temp coefficient for avg_temp, source: empirical model fit to the 2014 late-fall-run Chinook salmon tag release data
-#' @param .model_weight parameter describing how to weight the two models
-#' @param .medium parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
-#' @param .large parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
 #' @source IP-117068
 #' @export
-surv_juv_outmigration_sac <- function(flow_cms, avg_temp, total_diversions, prop_diversions,
-                                      ..surv_juv_outmigration_sac_int_one = 2.5, .flow_cms = 0.0092,
-                                      ..surv_juv_outmigration_sac_prop_diversions = -3.51 * 0.05,
-                                      ..surv_juv_outmigration_sac_total_diversions = -0.0021 * 0.215,
-                                      ..surv_juv_outmigration_sac_int_two = 0.3,
-                                      .avg_temp = 0.554,
-                                      .model_weight = .5,
-                                      .medium = 1.48, .large = 2.223){
+surv_juv_outmigration_sac <- function(flow_cms){
 
-
-  base_score1 <- ..surv_juv_outmigration_sac_int_one + .flow_cms * flow_cms +
-                 ..surv_juv_outmigration_sac_prop_diversions * prop_diversions +
-                 ..surv_juv_outmigration_sac_total_diversions * total_diversions
-  base_score2 <- ..surv_juv_outmigration_sac_int_two + .avg_temp * avg_temp +
-                 ..surv_juv_outmigration_sac_prop_diversions * prop_diversions +
-                 ..surv_juv_outmigration_sac_total_diversions * total_diversions
-  model_weighting <- .model_weight
-  model_weighting_compliment <- 1 - model_weighting
-
-  s <- boot::inv.logit(base_score1) * model_weighting +
-    boot::inv.logit(base_score2) * model_weighting_compliment
-
-  m <- boot::inv.logit(base_score1 + .medium) * model_weighting +
-    boot::inv.logit(base_score2 + .medium) * model_weighting_compliment
-
-  l <- vl <- boot::inv.logit(base_score1 + .large) * model_weighting +
-    boot::inv.logit(base_score2 + .large) * model_weighting_compliment
-
-  cbind(s = s, m = m, l = l, vl = vl)
-
+  result <- rep((flow_cms <= 122)*0.03 + (flow_cms > 122 & flow_cms <= 303)*0.189 + (flow_cms > 303)*0.508,4)
+  setNames(result, c("s", "m", "l", "vl"))
 }
 
 
@@ -552,38 +524,29 @@ get_migratory_survival_rates <- function(year, month,
   sj_migration_surv <- surv_juv_outmigration_san_joaquin(..surv_juv_outmigration_sj_int = ..surv_juv_outmigration_sj_int)
 
   # set up the regional survivals
-  uppermid_sac_migration_surv <- surv_juv_outmigration_sac(flow_cms = u_sac_flow,
-                                                       avg_temp = avg_temp[16, month, year],
-                                                       total_diversions = total_diverted[16],
-                                                       prop_diversions = proportion_diverted[16],
-                                                       ..surv_juv_outmigration_sac_int_one = ..surv_juv_outmigration_sac_int_one,
-                                                       ..surv_juv_outmigration_sac_prop_diversions = ..surv_juv_outmigration_sac_prop_diversions,
-                                                       ..surv_juv_outmigration_sac_total_diversions = ..surv_juv_outmigration_sac_total_diversions,
-                                                       ..surv_juv_outmigration_sac_int_two = ..surv_juv_outmigration_sac_int_two)^.5 # UM.Sac.S
+  # uppermid_sac_migration_surv <- surv_juv_outmigration_sac(flow_cms = u_sac_flow,
+  #                                                      avg_temp = avg_temp[16, month, year],
+  #                                                      total_diversions = total_diverted[16],
+  #                                                      prop_diversions = proportion_diverted[16])^.5 # UM.Sac.S
+  uppermid_sac_migration_surv <- surv_juv_outmigration_sac(flow_cms = u_sac_flow)
 
 
-  lowermid_sac_migration_surv <- surv_juv_outmigration_sac(flow_cms = u_sac_flow,
-                                                       avg_temp = avg_temp[21, month, year],
-                                                       total_diversions = total_diverted[21],
-                                                       prop_diversions = proportion_diverted[21],
-                                                       ..surv_juv_outmigration_sac_int_one = ..surv_juv_outmigration_sac_int_one,
-                                                       ..surv_juv_outmigration_sac_prop_diversions = ..surv_juv_outmigration_sac_prop_diversions,
-                                                       ..surv_juv_outmigration_sac_total_diversions = ..surv_juv_outmigration_sac_total_diversions,
-                                                       ..surv_juv_outmigration_sac_int_two = ..surv_juv_outmigration_sac_int_two)^.5 # LM.Sac.S
+  # lowermid_sac_migration_surv <- surv_juv_outmigration_sac(flow_cms = u_sac_flow,
+  #                                                      avg_temp = avg_temp[21, month, year],
+  #                                                      total_diversions = total_diverted[21],
+  #                                                      prop_diversions = proportion_diverted[21])^.5 # LM.Sac.S
+  lowermid_sac_migration_surv <- surv_juv_outmigration_sac(flow_cms = u_sac_flow)
 
 
-  lower_sac_migration_surv <- surv_juv_outmigration_sac(flow_cms = u_sac_flow,
-                                                    avg_temp = avg_temp[24, month, year],
-                                                    total_diversions = total_diverted[24],
-                                                    prop_diversions = proportion_diverted[24],
-                                                    ..surv_juv_outmigration_sac_int_one = ..surv_juv_outmigration_sac_int_one,
-                                                    ..surv_juv_outmigration_sac_prop_diversions = ..surv_juv_outmigration_sac_prop_diversions,
-                                                    ..surv_juv_outmigration_sac_total_diversions = ..surv_juv_outmigration_sac_total_diversions,
-                                                    ..surv_juv_outmigration_sac_int_two = ..surv_juv_outmigration_sac_int_two)^.5 # LL.Sac.S
+  # lower_sac_migration_surv <- surv_juv_outmigration_sac(flow_cms = u_sac_flow,
+  #                                                   avg_temp = avg_temp[24, month, year],
+  #                                                   total_diversions = total_diverted[24],
+  #                                                   prop_diversions = proportion_diverted[24])^.5 # LL.Sac.S
+  lower_sac_migration_surv <- surv_juv_outmigration_sac(flow_cms = u_sac_flow)
 
   sac_delta_migration_surv <- surv_juv_outmigration_sac_delta(delta_flow = delta_inflow[month, year, ],
                                                               avg_temp = avg_temp_delta[month, year, ],
-                                                              perc_diversions = delta_proportion_diverted * 100) #Sac.Delt.S
+                                                              perc_diversions = delta_proportion_diverted[month, year, ] * 100) #Sac.Delt.S
 
   bay_delta_migration_surv <- mean(c(0.43, 0.46, 0.26, 0.25, 0.39)) # Bay.S Chipps island to bay
 
