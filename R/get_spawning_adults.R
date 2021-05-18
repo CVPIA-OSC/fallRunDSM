@@ -7,7 +7,8 @@
 #' @source IP-117068
 #' @export
 get_spawning_adults <- function(year, adults, hatch_adults, seeds,
-                                month_return_proportions=fallRunDSM::month_return_proportions) {
+                                month_return_proportions=fallRunDSM::month_return_proportions,
+                                ..surv_adult_enroute_int) {
 
   # during the seeding stage just reuse the seed adults as the input, and apply no
   # en-route survival
@@ -78,7 +79,8 @@ get_spawning_adults <- function(year, adults, hatch_adults, seeds,
     adult_en_route_surv <- sapply(1:3, function(month) {
       adult_en_route_surv <- surv_adult_enroute(migratory_temp = en_route_temps[,month],
                                                 bypass_overtopped = bypass_is_overtopped[,month],
-                                                adult_harvest = adult_harvest_rate)
+                                                adult_harvest = adult_harvest_rate,
+                                                ..surv_adult_enroute_int = ..surv_adult_enroute_int)
     })
 
 

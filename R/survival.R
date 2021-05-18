@@ -152,7 +152,15 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
 #' @param scenario The current scenario
 #' @source IP-117068
 #' @export
-get_rearing_survival_rates <- function(year, month, scenario) {
+get_rearing_survival_rates <- function(year, month, scenario,
+                                       ..surv_juv_rear_int,
+                                       ..surv_juv_rear_contact_points,
+                                       ..surv_juv_rear_prop_diversions,
+                                       ..surv_juv_rear_total_diversions,
+                                       ..surv_juv_bypass_int,
+                                       ..surv_juv_delta_int,
+                                       ..surv_juv_delta_contact_points,
+                                       ..surv_juv_delta_total_diverted) {
   watershed_labels <- c("Upper Sacramento River", "Antelope Creek", "Battle Creek",
                         "Bear Creek", "Big Chico Creek", "Butte Creek", "Clear Creek",
                         "Cottonwood Creek", "Cow Creek", "Deer Creek", "Elder Creek",
@@ -194,9 +202,8 @@ get_rearing_survival_rates <- function(year, month, scenario) {
   delta_num_contact_points <- delta_contact_points
   delta_high_predation <- delta_prop_high_predation
 
-  # survival betas
-  betas <- as.matrix(survival_betas[, 3:16]) # extra col needed for floodplain betas
-  bp_survival_betas <- as.matrix(survival_betas[c(17, 22), c(3, 4, 5, 13, 14, 15)])
+  # replicate values if needed
+  if (length(..surv_juv_rear_int) == 1) ..surv_juv_rear_int <- rep(..surv_juv_rear_int, 31)
 
   rear_surv <- t(sapply(1:31, function(x) {
     surv_juv_rear(max_temp_thresh = maxT25[x],
@@ -207,7 +214,10 @@ get_rearing_survival_rates <- function(year, month, scenario) {
                   total_diversions = total_diverted[x],
                   stranded = ws_strand[x],
                   weeks_flooded = weeks_flood[x],
-                  ..surv_juv_rear_int = betas[x, 1])
+                  ..surv_juv_rear_int = ..surv_juv_rear_int[x],
+                  ..surv_juv_rear_contact_points = ..surv_juv_rear_contact_points,
+                  ..surv_juv_rear_prop_diversions = ..surv_juv_rear_prop_diversions,
+                  ..surv_juv_rear_total_diversions = ..surv_juv_rear_total_diversions)
   }))
 
   river_surv <- matrix(unlist(rear_surv[ , 1]), ncol = 4, byrow = TRUE)
@@ -219,7 +229,8 @@ get_rearing_survival_rates <- function(year, month, scenario) {
 
   bp_surv <- surv_juv_bypass(max_temp_thresh = maxT25[22],
                              avg_temp_thresh = aveT20[22],
-                             high_predation = 0)
+                             high_predation = 0,
+                             ..surv_juv_bypass_int = ..surv_juv_bypass_int)
 
   sutter_surv <- sqrt(bp_surv)
   yolo_surv <- sqrt(bp_surv)
@@ -230,7 +241,10 @@ get_rearing_survival_rates <- function(year, month, scenario) {
                                    high_predation = delta_high_predation,
                                    contact_points = delta_num_contact_points,
                                    prop_diverted = delta_proportion_diverted,
-                                   total_diverted = delta_total_diverted)
+                                   total_diverted = delta_total_diverted,
+                                   ..surv_juv_delta_int = ..surv_juv_delta_int,
+                                   ..surv_juv_delta_contact_points = ..surv_juv_delta_contact_points,
+                                   ..surv_juv_delta_total_diverted = ..surv_juv_delta_total_diverted)
 
   return(
     list(
@@ -481,7 +495,12 @@ surv_juv_outmigration_delta <- function(prop_DCC_closed, hor_barr, freeport_flow
 #' @param month The simulation month, 1-8
 #' @source IP-117068
 #' @export
-get_migratory_survival_rates <- function(year, month) {
+get_migratory_survival_rates <- function(year, month,
+                                         ..surv_juv_outmigration_sj_int = ..surv_juv_outmigration_sj_int,
+                                         ..surv_juv_outmigration_sac_int_one = ..surv_juv_outmigration_sac_int_one,
+                                         ..surv_juv_outmigration_sac_prop_diversions = ..surv_juv_outmigration_sac_prop_diversions,
+                                         ..surv_juv_outmigration_sac_total_diversions = ..surv_juv_outmigration_sac_total_diversions,
+                                         ..surv_juv_outmigration_sac_int_two = ..surv_juv_outmigration_sac_int_two) {
 
 
   aveT20 <- rbinom(31, 1, boot::inv.logit(-14.32252 + 0.72102 * avg_temp[ , month , year]))
@@ -502,7 +521,7 @@ get_migratory_survival_rates <- function(year, month) {
     trap_trans = 0) # newDsurv
 
   u_sac_flow <- upper_sacramento_flows[month, year]
-  sj_migration_surv <- surv_juv_outmigration_san_joaquin()
+  sj_migration_surv <- surv_juv_outmigration_san_joaquin(..surv_juv_outmigration_sj_int = ..surv_juv_outmigration_sj_int)
 
   # set up the regional survivals
   # uppermid_sac_migration_surv <- surv_juv_outmigration_sac(flow_cms = u_sac_flow,
