@@ -54,7 +54,7 @@ fall_run_model <- function(scenario = NULL, seeds = NULL){
     avg_ocean_transition_month <- ocean_transition_month() # 2
 
     hatch_adults <- rmultinom(1, size = round(runif(1, 83097.01,532203.1)), prob = hatchery_allocation)[ , 1]
-    spawners <- get_spawning_adults(year, round(adults[ , year]), hatch_adults)
+    spawners <- get_spawning_adults(year, round(adults), hatch_adults, seeds = seeds)
     init_adults <- spawners$init_adults
 
     output$spawners[ , year] <- init_adults
