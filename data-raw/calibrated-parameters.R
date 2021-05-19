@@ -105,3 +105,74 @@ usethis::use_data(survival_betas, overwrite = TRUE)
 #   `model weight` = .5,
 #   medium = 1.48, large = 2.223
 # )
+
+
+# 2019 Calibration Parameters ------------
+params <- list(
+  ..surv_adult_enroute_int = 3,
+  ..surv_adult_prespawn_int = 3,
+  ..surv_egg_to_fry_int = 0.041,
+  ..surv_juv_rear_int = c(`Upper Sacramento River` = 1.5, `Antelope Creek` = 3.5, `Battle Creek` = 3.5,
+                          `Bear Creek` = 3.5, `Big Chico Creek` = 3.5, `Butte Creek` = -2.5,
+                          `Clear Creek` = 3.5, `Cottonwood Creek` = 3.5, `Cow Creek` = 3.5,
+                          `Deer Creek` = -2.9, `Elder Creek` = 3.5, `Mill Creek` = -1.1092908,
+                          `Paynes Creek` = 3.5, `Stony Creek` = 3.5, `Thomes Creek` = 3.5,
+                          `Upper-mid Sacramento River` = -3.5, `Sutter Bypass` = -3.5,
+                          `Bear River` = 3.5, `Feather River` = 3.5, `Yuba River` = -3.5,
+                          `Lower-mid Sacramento River` = -3.5, `Yolo Bypass` = -3.5, `American River` = 2.5,
+                          `Lower Sacramento River` = -3.5, `Calaveras River` = -1.2, `Cosumnes River` = -1.2,
+                          `Mokelumne River` = 1.9999999, `Merced River` = -0.2, `Stanislaus River` = -0.1081707,
+                          `Tuolumne River` = -3.4999959, `San Joaquin River` = -0.4),
+  ..surv_juv_rear_contact_points = -0.0068,
+  ..surv_juv_rear_prop_diversions = -0.1755,
+  ..surv_juv_rear_total_diversions = -0.0005,
+  ..surv_juv_bypass_int = -3.5,
+  ..surv_juv_delta_int = 1.4,
+  ..surv_juv_delta_contact_points = (.0358 * -0.189),
+  ..surv_juv_delta_total_diverted = (.5 * -0.0021),
+  ..surv_juv_outmigration_sj_int = -3.5,
+  ..surv_juv_outmigration_sac_int_one = 2.5,
+  ..surv_juv_outmigration_sac_prop_diversions = (-3.51 * .05),
+  ..surv_juv_outmigration_sac_total_diversions = (-.0021 * .215),
+  ..surv_juv_outmigration_sac_int_two = 0.3,
+  ..ocean_entry_success_int = c(
+    `Upper Sacramento River` = -0.5108849,
+    `Antelope Creek` = 1.2,
+    `Battle Creek` = 1.2,
+    `Bear Creek` = 1.2,
+    `Big Chico Creek` = 1.2,
+    `Butte Creek` = -3.3233638,
+    `Clear Creek` = 1.2,
+    `Cottonwood Creek` = 1.2,
+    `Cow Creek` = 1.2,
+    `Deer Creek` = -3.2304288,
+    `Elder Creek` = 1.2,
+    `Mill Creek` = -3.4148335,
+    `Paynes Creek` = 1.2,
+    `Stony Creek` = 1.2,
+    `Thomes Creek` = 1.2,
+    `Upper-mid Sacramento River` = 1.2,
+    `Sutter Bypass` = 1.2,
+    `Bear River` = -3.5,
+    `Feather River` = -3.5,
+    `Yuba River` = -3.5,
+    `Lower-mid Sacramento River` = 1.2,
+    `Yolo Bypass` = 1.2,
+    `American River` = -1.308341,
+    `Lower Sacramento River` = 1.2,
+    `Calaveras River` = -1.9841364,
+    `Cosumnes River` = -1.9841364,
+    `Mokelumne River` = 2.5000007,
+    `Merced River` = -3.5,
+    `Stanislaus River` = -3,
+    `Tuolumne River` = -0.9,
+    `San Joaquin River` = 1.2)
+)
+
+usethis::use_data(params, overwrite = TRUE)
+
+
+
+
+
+
