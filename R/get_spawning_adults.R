@@ -6,15 +6,16 @@
 #' @param month_return_proportions the proportion of fish returning for each month
 #' @source IP-117068
 #' @export
-get_spawning_adults <- function(year, adults, hatch_adults, seeds,
+get_spawning_adults <- function(year, adults, hatch_adults, mode,
                                 month_return_proportions=fallRunDSM::month_return_proportions,
                                 ..surv_adult_enroute_int) {
 
   # during the seeding stage just reuse the seed adults as the input, and apply no
   # en-route survival
-  if (is.null(seeds)) {
+  if (mode %in% c("seed", "calibrate")) {
+    adult_index <- ifelse(mode == "seed", 1, year)
     adults_by_month <- t(sapply(1:31, function(watershed) {
-      rmultinom(1, adults[watershed, 1], month_return_proportions)
+      rmultinom(1, adults[watershed, adult_index], month_return_proportions)
     }))
 
     natural_adults_by_month <- sapply(1:3, function(month) {

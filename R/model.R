@@ -8,54 +8,55 @@
 #' @param ..params parameters derived from calibration
 #' @source IP-117068
 #' @export
-fall_run_model <- function(scenario = NULL, seeds = NULL, ..params = fallRunDSM::params){
+fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibrate"),
+                           seeds = NULL, ..params = fallRunDSM::params){
 
-  watershed_labels <- c("Upper Sacramento River", "Antelope Creek", "Battle Creek",
-                        "Bear Creek", "Big Chico Creek", "Butte Creek", "Clear Creek",
-                        "Cottonwood Creek", "Cow Creek", "Deer Creek", "Elder Creek",
-                        "Mill Creek", "Paynes Creek", "Stony Creek", "Thomes Creek",
-                        "Upper-mid Sacramento River", "Sutter Bypass", "Bear River",
-                        "Feather River", "Yuba River", "Lower-mid Sacramento River",
-                        "Yolo Bypass", "American River", "Lower Sacramento River", "Calaveras River",
-                        "Cosumnes River", "Mokelumne River", "Merced River", "Stanislaus River",
-                        "Tuolumne River", "San Joaquin River")
-
-  size_class_labels <- c('s', 'm', 'l', 'vl')
-
+  mode <- match.arg(mode)
   output <- list(
 
     # SIT METRICS
-    spawners = matrix(0, nrow = 31, ncol = 20, dimnames = list(watershed_labels, 1:20)),
-    natural_spawners = matrix(0, nrow = 31, ncol = 20, dimnames = list(watershed_labels, 1:20)),
-    juvenile_biomass = matrix(0, nrow = 31, ncol = 20, dimnames = list(watershed_labels, 1:20))
+    spawners = matrix(0, nrow = 31, ncol = 20, dimnames = list(fallRunDSM::watershed_labels, 1:20)),
+    natural_spawners = matrix(0, nrow = 31, ncol = 20, dimnames = list(fallRunDSM::watershed_labels, 1:20)),
+    juvenile_biomass = matrix(0, nrow = 31, ncol = 20, dimnames = list(fallRunDSM::watershed_labels, 1:20))
   )
 
   # initialise 31 x 4 matrices for natal fish, migrants, and ocean fish
-  lower_mid_sac_fish <- matrix(0, nrow = 31, ncol = 4, dimnames = list(watershed_labels, size_class_labels))
-  lower_sac_fish <- matrix(0, nrow = 31, ncol = 4, dimnames = list(watershed_labels, size_class_labels))
-  upper_mid_sac_fish <- matrix(0, nrow = 15, ncol = 4, dimnames = list(watershed_labels[1:15], size_class_labels))
-  sutter_fish <- matrix(0, nrow = 15, ncol = 4, dimnames = list(watershed_labels[1:15], size_class_labels))
-  yolo_fish <- matrix(0, nrow = 3, ncol = 4, dimnames = list(watershed_labels[18:20], size_class_labels))
-  san_joaquin_fish <- matrix(0, nrow = 3, ncol = 4, dimnames = list(watershed_labels[28:30], size_class_labels))
-  north_delta_fish <- matrix(0, nrow = 23, ncol = 4, dimnames = list(watershed_labels[1:23], size_class_labels))
-  south_delta_fish <- matrix(0, nrow = 31, ncol = 4, dimnames = list(watershed_labels, size_class_labels))
-  juveniles_at_chipps <- matrix(0, nrow = 31, ncol = 4, dimnames = list(watershed_labels, size_class_labels))
+  lower_mid_sac_fish <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
+  lower_sac_fish <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
+  upper_mid_sac_fish <- matrix(0, nrow = 15, ncol = 4, dimnames = list(fallRunDSM::watershed_labels[1:15], fallRunDSM::size_class_labels))
+  sutter_fish <- matrix(0, nrow = 15, ncol = 4, dimnames = list(fallRunDSM::watershed_labels[1:15], fallRunDSM::size_class_labels))
+  yolo_fish <- matrix(0, nrow = 3, ncol = 4, dimnames = list(fallRunDSM::watershed_labels[18:20], fallRunDSM::size_class_labels))
+  san_joaquin_fish <- matrix(0, nrow = 3, ncol = 4, dimnames = list(fallRunDSM::watershed_labels[28:30], fallRunDSM::size_class_labels))
+  north_delta_fish <- matrix(0, nrow = 23, ncol = 4, dimnames = list(fallRunDSM::watershed_labels[1:23], fallRunDSM::size_class_labels))
+  south_delta_fish <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
+  juveniles_at_chipps <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
   proportion_natural <- matrix(NA_real_, nrow = 31, ncol = 20)
 
   # calculate growth rates
   growth_rates <- growth()
   growth_rates_floodplain <- growth_floodplain()
 
-  adults <- if(is.null(seeds)) adult_seeds else seeds
-  simulation_length <- ifelse(is.null(seeds), 5, 20)
+  adults <- switch (model,
+                    "seed" = fallRunDSM::adult_seeds,
+                    "simulate" = seeds,
+                    "calibrate" = fallRunDSM::imputed_grandtab
+  )
+
+  simulation_length <- switch(mode,
+                       "seed" = 5,
+                       "simulate" = 20,
+                       "calibrate" = 20)
+  if (mode == "calibrate") {
+    adults_predicted <- matrix(0, nrow = 31, ncol = 24, dimnames = list(fallRunDSM::watershed_labels, 1998:2021))
+  }
 
   for (year in 1:simulation_length) {
     adults_in_ocean <- numeric(31)
-    annual_migrants <- matrix(0, nrow = 31, ncol = 4, dimnames = list(watershed_labels, size_class_labels))
+    annual_migrants <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
     avg_ocean_transition_month <- ocean_transition_month() # 2
 
     hatch_adults <- rmultinom(1, size = round(runif(1, 83097.01,532203.1)), prob = hatchery_allocation)[ , 1]
-    spawners <- get_spawning_adults(year, round(adults), hatch_adults, seeds = seeds,
+    spawners <- get_spawning_adults(year, round(adults), hatch_adults, mode = mode,
                                     ..surv_adult_enroute_int = ..params$..surv_adult_enroute_int)
     init_adults <- spawners$init_adults
 
@@ -103,7 +104,7 @@ fall_run_model <- function(scenario = NULL, seeds = NULL, ..params = fallRunDSM:
                                                          ..surv_juv_outmigration_sac_prop_diversions = ..params$..surv_juv_outmigration_sac_prop_diversions,
                                                          ..surv_juv_outmigration_sac_total_diversions = ..params$..surv_juv_outmigration_sac_total_diversions,
                                                          ..surv_juv_outmigration_sac_int_two = ..params$..surv_juv_outmigration_sac_int_two) #migratory_survival$uppermid_sac
-      migrants <- matrix(0, nrow = 31, ncol = 4, dimnames = list(watershed_labels, size_class_labels))
+      migrants <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
 
       if (month == 8) {
         # all remaining fish outmigrate
@@ -382,7 +383,11 @@ fall_run_model <- function(scenario = NULL, seeds = NULL, ..params = fallRunDSM:
     }))
 
     # distribute returning adults for future spawning
-    adults[1:31, (year + 2):(year + 4)] <- adults[1:31, (year + 2):(year + 4)] + adults_returning
+    if (mode == "calibrate") {
+      adults_predicted[1:31, (year + 2):(year + 4)] <- adults_predicted[1:31, (year + 2):(year + 4)] + adults_returning
+    } else {
+      adults[1:31, (year + 2):(year + 4)] <- adults[1:31, (year + 2):(year + 4)] + adults_returning
+    }
 
   } # end year for loop
 
