@@ -1,0 +1,12 @@
+title: fallRunDSM
+url: https://CVPIA-OSC.github.io/fallRunDSM/
+template:
+  params:
+    bootswatch: yeti
+
+home:
+  links:
+  - text: Fish and Wildlife Service's CVPIA website
+    href: https://www.fws.gov/lodi/anadromous_fish_restoration/afrp_index.htm
+  - text: Bureau of Reclamation's CVPIA website
+    href: https://www.usbr.gov/mp/cvpia/
