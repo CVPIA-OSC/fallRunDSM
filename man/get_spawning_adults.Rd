@@ -7,12 +7,25 @@
 IP-117068
 }
 \usage{
-get_spawning_adults(year, adults, hatch_adults)
+get_spawning_adults(
+  year,
+  adults,
+  hatch_adults,
+  mode,
+  month_return_proportions = fallRunDSM::month_return_proportions,
+  ..surv_adult_enroute_int
+)
 }
 \arguments{
 \item{year}{the year of simulation}
 
 \item{adults}{potential spawning adults for each watershed (length = 31) values must be integer}
+
+\item{hatch_adults}{total hatchery adults}
+
+\item{month_return_proportions}{the proportion of fish returning for each month}
+
+\item{seeds}{a value meant to be inherited to determine if model is in seeding stage or not}
 }
 \description{
 Get Spawning Adults

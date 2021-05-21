@@ -24,11 +24,10 @@ get_spawning_adults <- function(year, adults, hatch_adults, mode,
              prob = 1 - natural_adult_removal_rate)
     })
 
-    init_adults <- rowSums(natural_adults_by_month)
-    surviving_natural_adults <- rowSums(adults_by_month)
+    init_adults <- rowSums(adults_by_month)
+    surviving_natural_adults <- rowSums(natural_adults_by_month)
     proportion_natural <- 1 - proportion_hatchery
     init_adults_by_month <- natural_adults_by_month
-
 
   } else  {
 

@@ -7,7 +7,19 @@
 IP-117068
 }
 \usage{
-get_rearing_survival_rates(year, month, scenario)
+get_rearing_survival_rates(
+  year,
+  month,
+  scenario,
+  ..surv_juv_rear_int,
+  ..surv_juv_rear_contact_points,
+  ..surv_juv_rear_prop_diversions,
+  ..surv_juv_rear_total_diversions,
+  ..surv_juv_bypass_int,
+  ..surv_juv_delta_int,
+  ..surv_juv_delta_contact_points,
+  ..surv_juv_delta_total_diverted
+)
 }
 \arguments{
 \item{year}{The simulation year, 1-20}

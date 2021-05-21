@@ -7,7 +7,17 @@
 IP-117068
 }
 \usage{
-get_migratory_survival_rates(year, month)
+get_migratory_survival_rates(
+  year,
+  month,
+  ..surv_juv_outmigration_sj_int = ..surv_juv_outmigration_sj_int,
+  ..surv_juv_outmigration_sac_int_one = ..surv_juv_outmigration_sac_int_one,
+ 
+    ..surv_juv_outmigration_sac_prop_diversions = ..surv_juv_outmigration_sac_prop_diversions,
+ 
+    ..surv_juv_outmigration_sac_total_diversions = ..surv_juv_outmigration_sac_total_diversions,
+  ..surv_juv_outmigration_sac_int_two = ..surv_juv_outmigration_sac_int_two
+)
 }
 \arguments{
 \item{year}{The simulation year, 1-20}

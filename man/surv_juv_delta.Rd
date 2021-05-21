@@ -8,6 +8,7 @@ IP-117068
 }
 \usage{
 surv_juv_delta(
+  avg_temp,
   max_temp_thresh,
   avg_temp_thresh,
   high_predation,
@@ -25,7 +26,9 @@ surv_juv_delta(
 )
 }
 \arguments{
-\item{max_temp_thresh}{Variable representing the probability of exceeding the max temp threshold}
+\item{avg_temp}{Variable representing average temperature in the delta}
+
+\item{max_temp_thresh}{Variable representing the probability of exceeding the max temperature}
 
 \item{avg_temp_thresh}{Variable representing the probability of exceeding the average temperature}
 

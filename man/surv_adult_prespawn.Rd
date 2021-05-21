@@ -18,7 +18,7 @@ surv_adult_prespawn(
 
 \item{..surv_adult_prespawn_int}{Intercept, Source: Calibration Estimate}
 
-\item{.deg_day}{Coefficient for deg_day variable, source Colvin et al. (2018)}
+\item{.deg_day}{Coefficient for \code{deg_day} variable, source Colvin et al. (2018)}
 }
 \description{
 Calculate the adult prespawn survival

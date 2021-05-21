@@ -2,6 +2,7 @@
 #' @description Fall Run Chinook life cycle model used for CVPIA's Structured
 #' Decision Making Process
 #' @param scenario Model inputs, can be modified to test management actions
+#' @param mode
 #' @param seeds The default value is NULL runs the model in seeding mode,
 #' returning a 31 by 25 matrix with the first four years of seeded adults. This
 #' returned value can be fed into the model again as the value for the seeds argument
@@ -17,10 +18,11 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
     # SIT METRICS
     spawners = matrix(0, nrow = 31, ncol = 20, dimnames = list(fallRunDSM::watershed_labels, 1:20)),
     natural_spawners = matrix(0, nrow = 31, ncol = 20, dimnames = list(fallRunDSM::watershed_labels, 1:20)),
-    juvenile_biomass = matrix(0, nrow = 31, ncol = 20, dimnames = list(fallRunDSM::watershed_labels, 1:20))
+    juvenile_biomass = matrix(0, nrow = 31, ncol = 20, dimnames = list(fallRunDSM::watershed_labels, 1:20)),
+    proportion_natural = matrix(NA_real_, nrow = 31, ncol = 20, dimnames = list(fallRunDSM::watershed_labels, 1:20))
   )
 
-  # initialise 31 x 4 matrices for natal fish, migrants, and ocean fish
+  # initialize 31 x 4 matrices for natal fish, migrants, and ocean fish
   lower_mid_sac_fish <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
   lower_sac_fish <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
   upper_mid_sac_fish <- matrix(0, nrow = 15, ncol = 4, dimnames = list(fallRunDSM::watershed_labels[1:15], fallRunDSM::size_class_labels))
@@ -30,13 +32,9 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
   north_delta_fish <- matrix(0, nrow = 23, ncol = 4, dimnames = list(fallRunDSM::watershed_labels[1:23], fallRunDSM::size_class_labels))
   south_delta_fish <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
   juveniles_at_chipps <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
-  proportion_natural <- matrix(NA_real_, nrow = 31, ncol = 20)
+  proportion_natural <- matrix(NA_real_, nrow = 31, ncol = 20, dimnames = list(fallRunDSM::watershed_labels, 1:20))
 
-  # calculate growth rates
-  growth_rates <- growth()
-  growth_rates_floodplain <- growth_floodplain()
-
-  adults <- switch (model,
+  adults <- switch (mode,
                     "seed" = fallRunDSM::adult_seeds,
                     "simulate" = seeds,
                     "calibrate" = fallRunDSM::imputed_grandtab
@@ -46,9 +44,6 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                        "seed" = 5,
                        "simulate" = 20,
                        "calibrate" = 20)
-  if (mode == "calibrate") {
-    adults_predicted <- matrix(0, nrow = 31, ncol = 24, dimnames = list(fallRunDSM::watershed_labels, 1998:2021))
-  }
 
   for (year in 1:simulation_length) {
     adults_in_ocean <- numeric(31)
@@ -61,7 +56,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
     init_adults <- spawners$init_adults
 
     output$spawners[ , year] <- init_adults
-    proportion_natural[ , year] <- spawners$proportion_natural
+    output$proportion_natural[ , year] <- spawners$proportion_natural
     output$natural_spawners[ , year] <- spawners$natural_adults
 
     egg_to_fry_surv <- surv_egg_to_fry(
@@ -383,16 +378,16 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
     }))
 
     # distribute returning adults for future spawning
-    if (mode == "calibrate") {
-      adults_predicted[1:31, (year + 2):(year + 4)] <- adults_predicted[1:31, (year + 2):(year + 4)] + adults_returning
-    } else {
+    if (mode != "calibrate") {
       adults[1:31, (year + 2):(year + 4)] <- adults[1:31, (year + 2):(year + 4)] + adults_returning
     }
 
   } # end year for loop
 
-  if (is.null(seeds)) {
+  if (mode == "seed") {
     return(adults[ , 6:30])
+  } else if (mode == "calibrate") {
+    return(output)
   }
 
   spawn_change <- sapply(1:19, function(year) {
@@ -405,14 +400,9 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
     colSums(viable[which(diversity_group == group), ])
   })
 
-  output
+  return(output)
+
 }
-
-
-
-
-
-
 
 
 
