@@ -59,5 +59,8 @@
 #' @description TODO
 "diversity_group"
 
+#' @rdname growth
+"growth_rates"
 
-
+#' @rdname growth_floodplain
+"growth_rates_floodplain"
