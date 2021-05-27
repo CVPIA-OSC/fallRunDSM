@@ -82,7 +82,7 @@ load_baseline_data <- function() {
   vernalis_temps <- DSMtemperature::vernalis_temperature
   prisoners_point_temps <- DSMtemperature::prisoners_point_temperature
   degree_days <- DSMtemperature::degree_days
-  mean_egg_temp_effect <- DSMtemperature::egg_temperature_effect
+  mean_egg_temp_effect <- DSMtemperature::egg_temperature_effect$fall_run
   avg_temp <- DSMtemperature::stream_temperature
   avg_temp_delta <- DSMtemperature::delta_temperature
   migratory_temperature_proportion_over_20 <- DSMtemperature::migratory_temperature_proportion_over_20
