@@ -104,6 +104,26 @@ test_that('The migratory_juv_surv function for sac delta returns the expected va
                expected_sac_delta_mig_surv)
 })
 
-# Tests get_rearing_survival_rates function
-
+# tests the surv_juv_outmigration_delta function'
+expected_surv_juv_outmigration <- structure(c(0.266668614822945, 2.26283033759458e-26, 1.49657237445669e-25,
+                                              3.67469661043849e-14, 0.266668614822945, 2.26283033759458e-26,
+                                              1.49657237445669e-25, 3.67469661043849e-14, 0.266668614822945,
+                                              2.26283033759458e-26, 1.49657237445669e-25, 3.67469661043849e-14,
+                                              0.373914118050784, 4.49218800782043e-26, 2.2667851513676e-25,
+                                              8.17576203365024e-14), .Dim = c(4L, 4L),
+                                            .Dimnames = list(c("northern_fish", "cosumnes_mokelumne_fish", "calaveras_fish", "southern_fish"),
+                                                             c("s", "m", "l", "vl")))
+test_that('tests that the surv_juv_outmigration_delta function returns the correct value', {
+  expect_equal(surv_juv_outmigration_delta(prop_DCC_closed = test_data$cc_gates_prop_days_closed[month],
+                                           hor_barr = 0,
+                                           freeport_flow = test_data$freeport_flows[month, year],
+                                           vernalis_flow = test_data$vernalis_flows[month, year],
+                                           stockton_flow = test_data$stockton_flows[month, year],
+                                           vernalis_temperature = test_data$vernalis_temps[month, year],
+                                           prisoners_point_temperature = test_data$prisoners_point_temps[month, year],
+                                           CVP_exp = test_data$CVP_exports[month, year],
+                                           SWP_exp = test_data$SWP_exports[month, year],
+                                           trap_trans = 0),
+               expected_surv_juv_outmigration)
+})
 
