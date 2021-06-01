@@ -85,7 +85,7 @@ test_that('The pulse_movement function returns the expected values for year 1 mo
 })
 
 # Test that route south delta works as expected
-expected_south_delta_routing <- 0.00722884463202056
+expected_south_delta_routing <- 0.0106985684999263
 
 test_that('The south delta routing function returns the expected values for year 1 month 3', {
   expect_equal(route_south_delta(freeport_flow = test_data$freeport_flows[[month, year]] * 35.3147,
