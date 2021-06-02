@@ -2,6 +2,8 @@ library(testthat)
 library(fallRunDSM)
 # tests for survival functions
 # Lists inputs to use in testing
+list2env(load_baseline_data(), envir = .GlobalEnv)
+
 test_data <- fallRunDSM::load_baseline_data()
 year <- 1
 month <- 9
@@ -126,4 +128,83 @@ test_that('tests that the surv_juv_outmigration_delta function returns the corre
                                            trap_trans = 0),
                expected_surv_juv_outmigration)
 })
+
+## Tests survival functions with randomness (set.seed() for testing these)
+# Tests the rearing survival rates function
+expected_survival <- list(inchannel = structure(c(0.756926505860367, 1e-04, 1e-04,
+                                                  1e-04, 1e-04, 1e-04, 0.964770280794078, 1e-04, 1e-04, 1e-04,
+                                                  1e-04, 1e-04, 1e-04, 1e-04, 1e-04, 1e-04, 1e-04, 0.785446246229637,
+                                                  0.824933710087479, 1e-04, 1e-04, 1e-04, 1e-04, 1e-04, 0.0611581437755223,
+                                                  1e-04, 1e-04, 1e-04, 0.0501438996438266, 1e-04, 1e-04, 0.931878040026851,
+                                                  1e-04, 1e-04, 1e-04, 1e-04, 1e-04, 0.991756069935398, 1e-04,
+                                                  1e-04, 1e-04, 1e-04, 1e-04, 1e-04, 1e-04, 1e-04, 1e-04, 1e-04,
+                                                  0.941458354024566, 0.9539172542105, 1e-04, 1e-04, 1e-04, 1e-04,
+                                                  1e-04, 0.222495247023805, 1e-04, 1e-04, 1e-04, 0.188251208638889,
+                                                  1e-04, 1e-04, 0.966395147184063, 1e-04, 1e-04, 1e-04, 1e-04,
+                                                  1e-04, 0.99606146444774, 1e-04, 1e-04, 1e-04, 1e-04, 1e-04, 1e-04,
+                                                  1e-04, 1e-04, 1e-04, 1e-04, 0.971270811872851, 0.977536378532867,
+                                                  1e-04, 1e-04, 1e-04, 1e-04, 1e-04, 0.3756193306119, 1e-04, 1e-04,
+                                                  1e-04, 0.327742406925741, 1e-04, 1e-04, 1, 1, 1, 1, 1, 1, 1,
+                                                  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+                                                  1, 1, 1), .Dim = c(31L, 4L)),
+                          floodplain = structure(c(0.808642588247137, 1e-04, 1e-04, 1e-04, 1e-04, 1e-04, 0.971920053418542, 1e-04,
+                                                 1e-04, 1e-04, 1e-04, 1e-04, 1e-04, 1e-04, 1e-04, 1e-04, 1e-04,
+                                                 0.785446246229637, 0.979122811970951, 1e-04, 1e-04, 1e-04, 1e-04,
+                                                 1e-04, 0.0611581437755223, 1e-04, 1e-04, 1e-04, 0.0501438996438266,
+                                                 1e-04, 1e-04, 0.948479631384221, 1e-04, 1e-04, 1e-04, 1e-04,
+                                                 1e-04, 0.993461407501329, 1e-04, 1e-04, 1e-04, 1e-04, 1e-04,
+                                                 1e-04, 1e-04, 1e-04, 1e-04, 1e-04, 0.941458354024566, 0.995169677417565,
+                                                 1e-04, 1e-04, 1e-04, 1e-04, 1e-04, 0.222495247023805, 1e-04,
+                                                 1e-04, 1e-04, 0.188251208638889, 1e-04, 1e-04, 0.974774175179683,
+                                                 1e-04, 1e-04, 1e-04, 1e-04, 1e-04, 0.996878624716637, 1e-04,
+                                                 1e-04, 1e-04, 1e-04, 1e-04, 1e-04, 1e-04, 1e-04, 1e-04, 1e-04,
+                                                 0.971270811872851, 0.9976964553768, 1e-04, 1e-04, 1e-04, 1e-04,
+                                                 1e-04, 0.3756193306119, 1e-04, 1e-04, 1e-04, 0.327742406925741,
+                                                 1e-04, 1e-04, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+                                                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1), .Dim = c(31L, 4L
+                                                 )),
+                          sutter = structure(c(0.01, 0.01, 0.01, 1),
+                                             .Dim = c(1L, 4L),
+                                             .Dimnames = list(NULL, c("s", "m", "l", "vl"))),
+                          yolo = structure(c(0.01, 0.01, 0.01, 1), .Dim = c(1L, 4L), .Dimnames = list(NULL, c("s",  "m", "l", "vl"))),
+                          delta = structure(c(0.035, 1e-04, 0.035, 1e-04,  0.035, 1e-04, 0.035, 1), .Dim = c(2L, 4L),
+                                            .Dimnames = list(c("North Delta", "South Delta"), c("s", "m", "l", "vl"))))
+
+test_that("get_rearing_survival returns the expected result", {
+  set.seed(2021)
+  survival <- get_rearing_survival_rates(year = year, month = month, scenario = 0)
+  expect_equal(survival, expected_survival)
+})
+
+expected_migratory_survival <- list(delta = structure(c(0.266668614822945, 2.26283033759458e-26,
+                                                        1.49657237445669e-25, 3.67469661043849e-14, 0.266668614822945,
+                                                        2.26283033759458e-26, 1.49657237445669e-25, 3.67469661043849e-14,
+                                                        0.266668614822945, 2.26283033759458e-26, 1.49657237445669e-25,
+                                                        3.67469661043849e-14, 0.373914118050784, 4.49218800782043e-26,
+                                                        2.2667851513676e-25, 8.17576203365024e-14), .Dim = c(4L, 4L), .Dimnames = list(
+                                                          c("northern_fish", "cosumnes_mokelumne_fish", "calaveras_fish",
+                                                            "southern_fish"), c("s", "m", "l", "vl"))),
+                                    san_joaquin = structure(c(0.0293122307513563, 0.117118990875781, 0.218061322644411, 0.218061322644411),
+                                                            .Dim = c(1L,  4L),
+                                                            .Dimnames = list(NULL, c("s", "m", "l", "vl"))),
+                                    uppermid_sac = c(s = 0.189, m = 0.189, l = 0.189, vl = 0.189),
+                                    lowermid_sac = c(s = 0.189,  m = 0.189, l = 0.189, vl = 0.189),
+                                    lower_sac = c(s = 0.189, m = 0.189,  l = 0.189, vl = 0.189),
+                                    sutter = structure(c(0.01, 0.01, 0.01, 1),
+                                                       .Dim = c(1L, 4L),
+                                                       .Dimnames = list(NULL, c("s", "m", "l",  "vl"))),
+                                    yolo = structure(c(0.01, 0.01, 0.01, 1), .Dim = c(1L,  4L),
+                                                     .Dimnames = list(NULL, c("s", "m", "l", "vl"))),
+                                    sac_delta = structure(c(0.361475693542451,  0.347852745753957, 0.440086951822039, 0.38940055329485, 0.521502814849562,  0.433870203071194, 0.521502814849562, 0.433870203071194),
+                                                          .Dim = c(2L,  4L), .Dimnames = list(c("North Delta", "South Delta"), c("s",  "m", "l", "vl"))),
+                                    bay_delta = 0.358)
+
+test_that("get_migratory_survival returns the expected result", {
+  set.seed(2021)
+  migratory_survival <- get_migratory_survival_rates(year = year, month = month)
+  expect_equal(migratory_survival, expected_migratory_survival)
+})
+
+
+
 
