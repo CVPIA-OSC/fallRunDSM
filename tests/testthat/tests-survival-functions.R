@@ -4,7 +4,6 @@ library(fallRunDSM)
 # Lists inputs to use in testing
 list2env(load_baseline_data(), envir = .GlobalEnv)
 
-test_data <- fallRunDSM::load_baseline_data()
 year <- 1
 month <- 9
 aveT20 <- c(0L, 0L, 0L, 1L, 1L, 0L, 0L, 0L, 1L, 0L, 0L, 1L, 0L, 1L, 0L,
@@ -34,11 +33,11 @@ test_that('The surv_juv_rear function returns the expected values for year 1 mon
   expect_equal(surv_juv_rear(max_temp_thresh = maxT25[1],
                              avg_temp_thresh = aveT20[1],
                              high_predation = high_predation[1],
-                             contact_points = test_data$contact_points[1],
-                             prop_diversions = test_data$proportion_diverted[1],
-                             total_diversions = test_data$total_diverted[1],
+                             contact_points = contact_points[1],
+                             prop_diversions = proportion_diverted[1],
+                             total_diversions = total_diverted[1],
                              stranded = ws_strand[1],
-                             weeks_flooded = test_data$weeks_flooded[, month, year][1],
+                             weeks_flooded = weeks_flooded[, month, year][1],
                              ..surv_juv_rear_int = betas[1, 1],
                              ..surv_juv_rear_contact_points = -0.0067662,
                              ..surv_juv_rear_prop_diversions = -0.1755,
@@ -53,13 +52,13 @@ expected_delta_juv_surv <- structure(c(0.035, 1e-04, 0.035, 1e-04, 0.035, 1e-04,
                                                       c("s", "m", "l", "vl")))
 
 test_that('The delta_juv_surv function returns the expected values for year 1 month 9', {
-  expect_equal(surv_juv_delta(avg_temp = test_data$avg_temp_delta[month, year, "North Delta"],
+  expect_equal(surv_juv_delta(avg_temp = avg_temp_delta[month, year, "North Delta"],
                               max_temp_thresh = maxT25D,
                               avg_temp_thresh = aveT20D,
-                              high_predation = test_data$delta_prop_high_predation,
-                              contact_points = test_data$delta_contact_points,
-                              prop_diverted = test_data$delta_proportion_diverted,
-                              total_diverted = test_data$delta_total_diverted),
+                              high_predation = delta_prop_high_predation,
+                              contact_points = delta_contact_points,
+                              prop_diverted = delta_proportion_diverted,
+                              total_diverted = delta_total_diverted),
                expected_delta_juv_surv)
 })
 
@@ -79,7 +78,7 @@ test_that('The bypass_juv_surv function returns the expected values for year 1 m
 expected_lms_mig_surv <- c(s = 0.189, m = 0.189, l = 0.189, vl = 0.189)
 
 test_that('The migratory_juv_surv function for lower mid sac returns the expected values for year 1 month 9', {
-  expect_equal(surv_juv_outmigration_sac(flow_cms = test_data$upper_sacramento_flows[month, year]),
+  expect_equal(surv_juv_outmigration_sac(flow_cms = upper_sacramento_flows[month, year]),
                expected_lms_mig_surv)
 })
 
@@ -100,9 +99,9 @@ test_that('The migratory_juv_surv function for lower mid sac returns the expecte
 expected_sac_delta_mig_surv <- c(s = 0.362285441652534, m = 0.44305372307621, l = 0.526441379341886,
                                  vl = 0.526441379341886)
 test_that('The migratory_juv_surv function for sac delta returns the expected values for row one of year 1 month 9', {
-  expect_equal(surv_juv_outmigration_sac_delta(delta_flow = test_data$delta_inflow[month, year, ],
-                                               avg_temp = test_data$avg_temp_delta[month, year, ],
-                                               perc_diversions = test_data$delta_proportion_diverted * 100)[1,],
+  expect_equal(surv_juv_outmigration_sac_delta(delta_flow = delta_inflow[month, year, ],
+                                               avg_temp = avg_temp_delta[month, year, ],
+                                               perc_diversions = delta_proportion_diverted * 100)[1,],
                expected_sac_delta_mig_surv)
 })
 
@@ -116,15 +115,15 @@ expected_surv_juv_outmigration <- structure(c(0.266668614822945, 2.2628303375945
                                             .Dimnames = list(c("northern_fish", "cosumnes_mokelumne_fish", "calaveras_fish", "southern_fish"),
                                                              c("s", "m", "l", "vl")))
 test_that('tests that the surv_juv_outmigration_delta function returns the correct value', {
-  expect_equal(surv_juv_outmigration_delta(prop_DCC_closed = test_data$cc_gates_prop_days_closed[month],
+  expect_equal(surv_juv_outmigration_delta(prop_DCC_closed = cc_gates_prop_days_closed[month],
                                            hor_barr = 0,
-                                           freeport_flow = test_data$freeport_flows[month, year],
-                                           vernalis_flow = test_data$vernalis_flows[month, year],
-                                           stockton_flow = test_data$stockton_flows[month, year],
-                                           vernalis_temperature = test_data$vernalis_temps[month, year],
-                                           prisoners_point_temperature = test_data$prisoners_point_temps[month, year],
-                                           CVP_exp = test_data$CVP_exports[month, year],
-                                           SWP_exp = test_data$SWP_exports[month, year],
+                                           freeport_flow = freeport_flows[month, year],
+                                           vernalis_flow = vernalis_flows[month, year],
+                                           stockton_flow = stockton_flows[month, year],
+                                           vernalis_temperature = vernalis_temps[month, year],
+                                           prisoners_point_temperature = prisoners_point_temps[month, year],
+                                           CVP_exp = CVP_exports[month, year],
+                                           SWP_exp = SWP_exports[month, year],
                                            trap_trans = 0),
                expected_surv_juv_outmigration)
 })

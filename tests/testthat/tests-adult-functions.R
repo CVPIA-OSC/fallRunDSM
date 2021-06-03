@@ -2,14 +2,14 @@ library(testthat)
 library(fallRunDSM)
 # tests for adult functions
 # Lists inputs to use in testing
-test_data <- fallRunDSM::load_baseline_data()
+list2env(load_baseline_data(), envir = .GlobalEnv)
 year <- 1
 month <- 9
-bypass_is_overtopped <- as.logical(test_data$tisdale_bypass_watershed + test_data$yolo_bypass_watershed)
-avg_migratory_temp <- rowMeans(test_data$migratory_temperature_proportion_over_20[ , 10:12])
-accumulated_degree_days <- cbind(oct = rowSums(test_data$degree_days[ , 10:12, year]),
-                                 nov = rowSums(test_data$degree_days[ , 11:12, year]),
-                                 dec = test_data$degree_days[ , 12, year])
+bypass_is_overtopped <- as.logical(tisdale_bypass_watershed + yolo_bypass_watershed)
+avg_migratory_temp <- rowMeans(migratory_temperature_proportion_over_20[ , 10:12])
+accumulated_degree_days <- cbind(oct = rowSums(degree_days[ , 10:12, year]),
+                                 nov = rowSums(degree_days[ , 11:12, year]),
+                                 dec = degree_days[ , 12, year])
 average_degree_days <- apply(accumulated_degree_days, 1, weighted.mean, month_return_proportions)
 
 # Tests adult straying function
@@ -32,9 +32,9 @@ expected_straying_output <- c(`Upper Sacramento River` = 0.0179218144440285, `An
 
 test_that('The straying function returns the expected values for year 1', {
   expect_equal(adult_stray(wild = 1,
-                           natal_flow = test_data$prop_flow_natal[ , year],
-                           south_delta_watershed = test_data$south_delta_routed_watersheds,
-                           cross_channel_gates_closed = test_data$cc_gates_days_closed[10]),
+                           natal_flow = prop_flow_natal[ , year],
+                           south_delta_watershed = south_delta_routed_watersheds,
+                           cross_channel_gates_closed = cc_gates_days_closed[10]),
                expected_straying_output)
 })
 
@@ -105,8 +105,8 @@ expected_egg_surv <- c(`Upper Sacramento River` = 0.508283676958069, `Antelope C
 
 test_that('The egg_to_fry survival function returns the expected values for year 1', {
   expect_equal(egg_to_fry_surv <- surv_egg_to_fry(proportion_natural = 1 - proportion_hatchery,
-                                                  scour = test_data$prob_nest_scoured,
-                                                  temperature_effect = test_data$mean_egg_temp_effect),
+                                                  scour = prob_nest_scoured,
+                                                  temperature_effect = mean_egg_temp_effect),
                expected_egg_surv)
 })
 
@@ -217,7 +217,7 @@ test_that("Get spawning adults returns the expected values", {
 
 # Tests spawn success function
 init_adults <- expected_spawners$init_adults
-min_spawn_habitat <- apply(test_data$spawning_habitat[ , 10:12, year], 1, min)
+min_spawn_habitat <- apply(spawning_habitat[ , 10:12, year], 1, min)
 
 expected_juveniles <- structure(c(23562632.6818975, 95877.4873630614, 400486.276147004,
                                   14696.4466670538, 15466.5250672724, 1230801.9983072, 11392333.5307564,
@@ -244,7 +244,7 @@ test_that("spawn success function returns the expected value", {
   juveniles <- spawn_success(escapement = init_adults,
                              adult_prespawn_survival = expected_prespawn_surv,
                              egg_to_fry_survival = expected_egg_surv,
-                             prob_scour = test_data$prob_nest_scoured,
+                             prob_scour = prob_nest_scoured,
                              spawn_habitat = min_spawn_habitat)
   expect_equal(juveniles, expected_juveniles)
 })

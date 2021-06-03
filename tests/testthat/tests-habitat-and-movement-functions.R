@@ -4,7 +4,6 @@ library(fallRunDSM)
 
 # Lists inputs to use in testing
 list2env(load_baseline_data(), envir = .GlobalEnv)
-test_data <- fallRunDSM::load_baseline_data()
 migrants_at_golden_gate <- structure(c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -204,7 +203,7 @@ expected_pulse_movement <- structure(c(0.000453375580564798, 0.00045004799330693
                                                                                                     )))
 
 test_that('The pulse_movement function returns the expected values for year 1 month 3', {
-  expect_equal(pulse_movement(test_data$prop_pulse_flows[ , month]),
+  expect_equal(pulse_movement(prop_pulse_flows[ , month]),
                expected_pulse_movement)
 })
 # Test routing functions
@@ -270,7 +269,7 @@ expected_route <- list(inchannel = structure(c(5706730, 95829.4873630614, 212275
 test_that('The route() function returns the expected values for year 1 month 3', {
   set.seed(2021)
   route <- route(year = year, month = month, juveniles = juveniles, inchannel_habitat = expected_habitat$inchannel, floodplain_habitat = expected_habitat$floodplain,
-                 prop_pulse_flows = test_data$prop_pulse_flows)
+                 prop_pulse_flows = prop_pulse_flows)
   expect_equal(route, expected_route)
 })
 
@@ -341,7 +340,7 @@ test_that('The route_regional() function returns the expected values for year 1 
                           migrants = sutter_fish,
                           inchannel_habitat = expected_habitat$inchannel[16],
                           floodplain_habitat = expected_habitat$floodplain[16],
-                          prop_pulse_flows = test_data$prop_pulse_flows[16, , drop = FALSE],
+                          prop_pulse_flows = prop_pulse_flows[16, , drop = FALSE],
                           migration_survival_rate = migratory_survival$uppermid_sac)
   expect_equal(route, expected_route_regional)
 })
@@ -350,8 +349,8 @@ test_that('The route_regional() function returns the expected values for year 1 
 expected_south_delta_routing <- 0.0106985684999263
 
 test_that('The south delta routing function returns the expected values for year 1 month 3', {
-  expect_equal(route_south_delta(freeport_flow = test_data$freeport_flows[[month, year]] * 35.3147,
-                                 dcc_closed = test_data$cc_gates_days_closed[month],
+  expect_equal(route_south_delta(freeport_flow = freeport_flows[[month, year]] * 35.3147,
+                                 dcc_closed = cc_gates_days_closed[month],
                                  month = month),
                expected_south_delta_routing)
 })

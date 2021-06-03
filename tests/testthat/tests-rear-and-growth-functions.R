@@ -1,7 +1,7 @@
 library(testthat)
 library(fallRunDSM)
 
-test_data <- fallRunDSM::load_baseline_data()
+
 survival_rate <- structure(c(0.970687769248644, 0.926162679369688, 0.0292171120559602,
                               0.993172867577862, 0.982175316206257, 0.116773215187387, 0.996740770796031,
                               0.991441080750038, 0.217490944447593, 1, 1, 1), .Dim = 3:4)
