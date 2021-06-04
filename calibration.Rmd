@@ -276,8 +276,8 @@ fall_run_fitness <- function(
 
 list2env(load_baseline_data(), .GlobalEnv)
 
-fr <- fall_run_model()
-
+fr_seeds <- fall_run_model(mode = "seed")
+fr_calib 
 # calibration method: random uniform
 res <- fall_run_fitness(seeds = fr, 
                         -1.58237238018773, 0.69242465053685, 0.547911047004163, 3.24953947332688, 
