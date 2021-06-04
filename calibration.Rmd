@@ -7,23 +7,30 @@ output: html_notebook
 
 We are using genetic algorithms, a type of stochastic optimization, to calibrate the following model coefficients:
 
-* `..surv_adult_enroute_int` `surv_adult_enroute`
-* `..surv_adult_prespawn_int`
-* `..surv_egg_to_fry_int`
-* `..surv_juv_rear_int`
-* `..surv_juv_rear_contact_points`
-* `..surv_juv_rear_prop_diversions`
-* `..surv_juv_rear_total_diversions`
-* `..surv_juv_bypass_int`
-* `..surv_juv_delta_int`
-* `..surv_juv_delta_contact_points`
-* `..surv_juv_delta_total_diverted`
-* `..surv_juv_outmigration_sj_int`
-* `..surv_juv_outmigration_sac_int_one`
-* `..surv_juv_outmigration_sac_prop_diversions`
-* `..surv_juv_outmigration_sac_total_diversions`
-* `..surv_juv_outmigration_sac_int_two`
-* `..ocean_entry_success_int`
+* `..surv_adult_enroute_int` used in submodel `surv_adult_enroute`
+* `..surv_adult_prespawn_int` used in submodel `surv_adult_prespawn`
+* `..surv_egg_to_fry_int` used in submodel `surv_egg_to_fry`
+* `..surv_juv_rear_int` used in submodel `surv_juv_rear`
+* `..surv_juv_rear_contact_points` used in submodel `surv_juv_rear`
+* `..surv_juv_rear_prop_diversions` used in submodel `surv_juv_rear`
+* `..surv_juv_rear_total_diversions` used in submodel `surv_juv_rear`
+* `..surv_juv_bypass_int` used in submodel `surv_juv_bypass`
+* `..surv_juv_delta_int` used in submodel `surv_juv_delta`
+* `..surv_juv_delta_contact_points` used in submodel `surv_juv_delta`
+* `..surv_juv_delta_total_diverted` used in submodel `surv_juv_delta`
+* `..surv_juv_outmigration_sj_int` used in submodel `surv_juv_outmigration_san_joaquin`
+* `..surv_juv_outmigration_sac_int_one` used in submodel `get_migratory_survival_rates`
+* `..surv_juv_outmigration_sac_prop_diversions` used in submodel `get_migratory_survival_rates`
+* `..surv_juv_outmigration_sac_total_diversions` used in submodel `get_migratory_survival_rates`
+* `..surv_juv_outmigration_sac_int_two` used in submodel `get_migratory_survival_rates`
+* `..ocean_entry_success_int`  used in submodel `ocean_entry_success`
+
+Each model coefficient is documented within its submodel and can be viewed using the internal R documentation. For example:
+
+```{r, eval=FALSE}
+?surv_adult_enroute
+```
+
 
 
 ## Packages
@@ -52,52 +59,16 @@ This will allow us to compare predicted natural spawners to psuedo GrandTab natu
 
 For calibration, we have prepared the GrandTab data in two ways:
 
-1. `r grandtab_observed` - This data will be used in the fitness function to measure the difference between model predictions and observed escapement. Missing values are NA and we made all records less than 100 NA to account for a lack of confidence for counts less than 100. 
+1. `DSMCalibrationData::grandtab_observed` - This data will be used in the fitness function to measure the difference between model predictions and observed escapement. Missing values are NA and we made all records less than 100 NA to account for a lack of confidence for counts less than 100. 
 
-2. `r grandtab_imputed` - This data will be used to calculate the number of juveniles during the 20 year simulation. The GrandTab data is incomplete for many watersheds during the 20 year period of calibration. For watersheds with no GrandTab data, we used 40 as the default escapement value. For watersheds with incomplete data, we used the mean escapement value. 
+2. `DSMCalibrationData::grandtab_imputed` - This data will be used to calculate the number of juveniles during the 20 year simulation. The GrandTab data is incomplete for many watersheds during the 20 year period of calibration. For watersheds with no GrandTab data, we used 40 as the default escapement value. For watersheds with incomplete data, we used the mean escapement value. 
 
-NEED TO STOP DOING THIS - We filtered out years with escapement less than 100 observations and replaced those values with the mean escapement.
+```{r}
+grandtab_observed
+```
 
-
-```{r warning=FALSE, message=FALSE}
-grandtab_raw <- read_csv("data-raw/fall-run-calibration/known-adults-2019.csv", 
-                         col_names = c("watershed", "order", "1998", "1999", 
-                                       "2000", "2001", "2002", "2003", "2004", 
-                                       "2005", "2006", "2007", "2008", "2009", 
-                                       "2010", "2011", "2012", "2013", "2014",
-                                       "2015", "2016", "2017"), skip = 1)
-
-grandtab_imputed <- grandtab_raw %>% 
-  gather(year, count, -watershed, -order) %>% 
-  # filter(count >= 100) %>% 
-  group_by(watershed) %>% 
-  mutate(
-    count = as.numeric(count),
-    mean = mean(count, na.rm = TRUE),
-    count2 = case_when(
-      is.nan(mean) ~ 40,
-      is.na(count) | count <= 100 ~ mean,
-      TRUE ~ count
-    )) %>%
-  ungroup() %>%
-  select(watershed, count = count2, year, order) %>% 
-  spread(year, count) %>% 
-  arrange(order) %>% 
-  select(-watershed, -order) %>% 
-  as.matrix() 
-
-rownames(grandtab_imputed) <- watershed_attributes$watershed
-
-grandtab_observed <- grandtab_raw %>% 
-  gather(year, count, -watershed, -order) %>% 
-  mutate(count = as.numeric(count)) %>% 
-  filter(count > 100 | is.na(count)) %>% 
-  spread(year, count) %>% 
-  arrange(order) %>% 
-  select(-watershed, -order) %>% 
-  as.matrix()
-
-rownames(grandtab_observed) <- watershed_attributes$watershed
+```{r}
+grandtab_imputed
 ```
 
 ### Selected Proxy Years
@@ -110,20 +81,19 @@ R package.
 ```{r echo=FALSE}
 tibble::tibble(
   `Calibration Year` = names(DSMCalibrationData::calibration_year_lookup), 
-  `Selected Proxy Year` = DSMCalibrationData::calibration_year_lookup) 
+  `Selected Proxy Year` = DSMCalibrationData::calibration_year_lookup) %>% 
+  knitr::kable()
 ```
 
 
 ## Fitness Function
 
-The fitness function used during the 2019 calibration was a total sum of squares error computed from the predicted 
-and known values for each of the watersheds above. In addition to this, extra penalizing terms in the form of total 
-correlation between predicted and known was added. This correlation portion is a little unclear as to what its purpose
-is within the fitness function since minimizing correlation as a penalty will create negative correlation or worse 0 
-correlation.
+Sum of squared errors of simulated natural adults and grandtab adults scaled using 
+simualted proportion natural, normalized by mean escapement. The purpose of normalizing is
+to prevent watersheds with large escapement values from dominating the calibration.
 
-The fitness function used with the GA function must expose the values we are seeking to optimize as function 
-arguments.
+All intercepts that need calibration are described in the Objective section of this document.
+Note, `..surv_adult_enroute_int` and `..ocean_entry_success_int` are vectors and expanded within the fitness function arguments.
 
 ```{r}
 fall_run_fitness <- function(
@@ -267,7 +237,7 @@ fall_run_fitness <- function(
 ```
 
 
-```{r}
+```{r, eval=FALSE}
 
 
 list2env(load_baseline_data(), .GlobalEnv)
@@ -288,8 +258,6 @@ res <- fall_run_fitness(seeds = fr,
                         -0.286132822744548, 1.87164844037034, 3.1336920496542, 1.99737431155518, 
                         1.16786763840355, -0.680227355100214, 1.82930355984718, 2.98046222748235, 
                         1.58190411003307)
-
-
 
 ```
 
