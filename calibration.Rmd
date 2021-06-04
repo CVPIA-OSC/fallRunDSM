@@ -3,12 +3,6 @@ title: "Calibrating Fall Run DSM"
 output: html_notebook
 ---
 
-## Questions for Jim and Adam
-
-1. In calibrate mode what parts of the pre spawning routine should occur? apply enroute survial and straying?
-2. How to articulate rationale for 40 as default escapement value and filtering of counts less than 100?
-3. Did you remove observations >100 before taking the mean escapement for imputation?
-
 ## Objective
 
 We are using genetic algorithms, a type of stochastic optimization, to calibrate the following model coefficients:
@@ -45,7 +39,6 @@ Additionally, we are using [DSMCalibrationData](https://github.com/CVPIA-OSC/DSM
 
 **NEED TO BUILD DOCUMENTATION SITES FOR THESE AND UPDATE LINKS**
 
-
 ## Calibrating Data
 
 ### GrandTab
@@ -61,16 +54,18 @@ For calibration, we have prepared the GrandTab data in two ways:
 
 1. `r grandtab_observed` - This data will be used in the fitness function to measure the difference between model predictions and observed escapement. Missing values are NA and we made all records less than 100 NA to account for a lack of confidence for counts less than 100. 
 
-2. `r grandtab_imputed` - This data will be used to calculate the number of juveniles during the 20 year simulation. The GrandTab data is incomplete for many watersheds during the 20 year period of calibration. For watersheds with no GrandTab data, we used 40 as the default escapement value. For watersheds with incomplete data, we used the mean escapement value. We filtered out years with escapement less than 100 observations and replaced those values with the mean escapement.
+2. `r grandtab_imputed` - This data will be used to calculate the number of juveniles during the 20 year simulation. The GrandTab data is incomplete for many watersheds during the 20 year period of calibration. For watersheds with no GrandTab data, we used 40 as the default escapement value. For watersheds with incomplete data, we used the mean escapement value. 
+
+NEED TO STOP DOING THIS - We filtered out years with escapement less than 100 observations and replaced those values with the mean escapement.
 
 
 ```{r warning=FALSE, message=FALSE}
 grandtab_raw <- read_csv("data-raw/fall-run-calibration/known-adults-2019.csv", 
-                          col_names = c("watershed", "order", "1998", "1999", 
-                                        "2000", "2001", "2002", "2003", "2004", 
-                                        "2005", "2006", "2007", "2008", "2009", 
-                                        "2010", "2011", "2012", "2013", "2014",
-                                        "2015", "2016", "2017"), skip = 1)
+                         col_names = c("watershed", "order", "1998", "1999", 
+                                       "2000", "2001", "2002", "2003", "2004", 
+                                       "2005", "2006", "2007", "2008", "2009", 
+                                       "2010", "2011", "2012", "2013", "2014",
+                                       "2015", "2016", "2017"), skip = 1)
 
 grandtab_imputed <- grandtab_raw %>% 
   gather(year, count, -watershed, -order) %>% 
@@ -79,11 +74,11 @@ grandtab_imputed <- grandtab_raw %>%
   mutate(
     count = as.numeric(count),
     mean = mean(count, na.rm = TRUE),
-         count2 = case_when(
-           is.nan(mean) ~ 40,
-           is.na(count) | count <= 100 ~ mean,
-           TRUE ~ count
-         )) %>%
+    count2 = case_when(
+      is.nan(mean) ~ 40,
+      is.na(count) | count <= 100 ~ mean,
+      TRUE ~ count
+    )) %>%
   ungroup() %>%
   select(watershed, count = count2, year, order) %>% 
   spread(year, count) %>% 
@@ -266,7 +261,8 @@ fall_run_fitness <- function(
                           seeds = seeds,
                           ..params = params)
   
-  sum(((preds$natural_adults - (known_adults * preds$proportion_natural))/rowMean(known_adults))^2)
+  sum(((preds$natural_adults - (known_adults * preds$proportion_natural)) / 
+         rowMeans(known_adults, na.rm = TRUE)) ^ 2, na.rm = TRUE)
 }
 ```
 
@@ -281,17 +277,17 @@ fr <- fall_run_model()
 # calibration method: random uniform
 res <- fall_run_fitness(seeds = fr, 
                         -1.58237238018773, 0.69242465053685, 0.547911047004163, 3.24953947332688, 
--2.60139458812773, -1.77459052228369, 1.37481784983538, 1.81681571574882, 
--1.89281405741349, -2.10046693566255, 0.959760472178459, 0.29393222508952, 
--1.42802732321434, -2.04492410412058, 3.02062905975617, -2.02917007915676, 
--1.0894597757142, -3.25650308071636, -0.356537831714377, 1.14620552933775, 
--3.06538275070488, -0.125882726162672, -1.00182074634358, 0.419130359077826, 
-0.130164961097762, -0.275444792583585, 2.57036253204569, -0.348846448585391, 
--2.99958411906846, 3.05890744552016, 3.40577717358246, -0.612491697072983, 
-1.325736960629, -3.13401527120732, 1.44230719725601, -1.63610807503574, 
--0.286132822744548, 1.87164844037034, 3.1336920496542, 1.99737431155518, 
-1.16786763840355, -0.680227355100214, 1.82930355984718, 2.98046222748235, 
-1.58190411003307)
+                        -2.60139458812773, -1.77459052228369, 1.37481784983538, 1.81681571574882, 
+                        -1.89281405741349, -2.10046693566255, 0.959760472178459, 0.29393222508952, 
+                        -1.42802732321434, -2.04492410412058, 3.02062905975617, -2.02917007915676, 
+                        -1.0894597757142, -3.25650308071636, -0.356537831714377, 1.14620552933775, 
+                        -3.06538275070488, -0.125882726162672, -1.00182074634358, 0.419130359077826, 
+                        0.130164961097762, -0.275444792583585, 2.57036253204569, -0.348846448585391, 
+                        -2.99958411906846, 3.05890744552016, 3.40577717358246, -0.612491697072983, 
+                        1.325736960629, -3.13401527120732, 1.44230719725601, -1.63610807503574, 
+                        -0.286132822744548, 1.87164844037034, 3.1336920496542, 1.99737431155518, 
+                        1.16786763840355, -0.680227355100214, 1.82930355984718, 2.98046222748235, 
+                        1.58190411003307)
 
 
 
