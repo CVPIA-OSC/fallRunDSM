@@ -13,6 +13,32 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                            seeds = NULL, ..params = fallRunDSM::params){
 
   mode <- match.arg(mode)
+
+  if (mode == "simulate") {
+    if (is.null(scenario)) {
+      # the do nothing scenario to force habitat degration
+      scenario <- DSMscenario::scenarios$NO_ACTION
+    }
+
+    habitats <- list(
+      spawning_habitat = spawning_habitat,
+      inchannel_habitat_fry = inchannel_habitat_fry,
+      inchannel_habitat_juvenile = inchannel_habitat_juvenile,
+      floodplain_habitat = floodplain_habitat,
+      weeks_flooded = weeks_flooded
+    )
+
+    scenario_data <- DSMscenario::load_scenario(scenario,
+                                   habitat_inputs = habitats,
+                                   species = DSMscenario::species$FALL_RUN)
+
+    spawning_habitat <- scenario_data$spawning_habitat
+    inchannel_habitat_fry <- scenario_data$inchannel_habitat_fry
+    inchannel_habitat_juvenile <- scenario_data$inchannel_habitat_juvenile
+    floodplain_habitat <- scenario_data$floodplain_habitat
+    weeks_flooded <- scenario_data$weeks_flooded
+  }
+
   output <- list(
 
     # SIT METRICS
