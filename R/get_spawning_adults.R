@@ -4,6 +4,13 @@
 #' @param hatch_adults total hatchery adults
 #' @param seeds a value meant to be inherited to determine if model is in seeding stage or not
 #' @param month_return_proportions the proportion of fish returning for each month
+#' @param prop_flow_natal
+#' @param south_delta_routed_watersheds
+#' @param cc_gates_days_closed
+#' @param gates_overtopped
+#' @param tisdale_bypass_watershed
+#' @param yolo_bypass_watershed
+#' @param migratory_temperature_proportion_over_20
 #' @param ..surv_adult_enroute_int TODO
 #' @param .adult_stray_intercept TODO
 #' @param .adult_stray_wild TODO
@@ -16,6 +23,13 @@
 #' @export
 get_spawning_adults <- function(year, adults, hatch_adults, mode,
                                 month_return_proportions=fallRunDSM::month_return_proportions,
+                                prop_flow_natal,
+                                south_delta_routed_watersheds,
+                                cc_gates_days_closed,
+                                gates_overtopped,
+                                tisdale_bypass_watershed,
+                                yolo_bypass_watershed,
+                                migratory_temperature_proportion_over_20,
                                 ..surv_adult_enroute_int,
                                 .adult_stray_intercept,
                                 .adult_stray_wild,
