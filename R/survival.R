@@ -22,8 +22,10 @@
 #' @export
 surv_juv_rear <- function(max_temp_thresh, avg_temp_thresh, high_predation,
                           contact_points, prop_diversions, total_diversions,
-                          stranded, weeks_flooded, ..surv_juv_rear_int = 3.5,
-                          .avg_temp_thresh = -0.717, .high_predation = -0.122,
+                          stranded, weeks_flooded,
+                          ..surv_juv_rear_int = 3.5,
+                          .avg_temp_thresh = -0.717,
+                          .high_predation = -0.122,
                           ..surv_juv_rear_contact_points = -0.0068,
                           ..surv_juv_rear_prop_diversions = -0.1755,
                           ..surv_juv_rear_total_diversions = -0.0005,
@@ -160,7 +162,13 @@ get_rearing_survival_rates <- function(year, month, scenario,
                                        ..surv_juv_bypass_int,
                                        ..surv_juv_delta_int,
                                        ..surv_juv_delta_contact_points,
-                                       ..surv_juv_delta_total_diverted) {
+                                       ..surv_juv_delta_total_diverted,
+                                       .surv_juv_rear_avg_temp_thresh,
+                                       .surv_juv_rear_high_predation,
+                                       .surv_juv_rear_stranded,
+                                       .surv_juv_rear_medium,
+                                       .surv_juv_rear_large,
+                                       .surv_juv_rear_floodplain) {
   watershed_labels <- c("Upper Sacramento River", "Antelope Creek", "Battle Creek",
                         "Bear Creek", "Big Chico Creek", "Butte Creek", "Clear Creek",
                         "Cottonwood Creek", "Cow Creek", "Deer Creek", "Elder Creek",
@@ -217,7 +225,13 @@ get_rearing_survival_rates <- function(year, month, scenario,
                   ..surv_juv_rear_int = ..surv_juv_rear_int[x],
                   ..surv_juv_rear_contact_points = ..surv_juv_rear_contact_points,
                   ..surv_juv_rear_prop_diversions = ..surv_juv_rear_prop_diversions,
-                  ..surv_juv_rear_total_diversions = ..surv_juv_rear_total_diversions)
+                  ..surv_juv_rear_total_diversions = ..surv_juv_rear_total_diversions,
+                  .surv_juv_rear_avg_temp_thresh = .surv_juv_rear_avg_temp_thresh,
+                  .surv_juv_rear_high_predation = .surv_juv_rear_high_predation,
+                  .surv_juv_rear_stranded = .surv_juv_rear_stranded,
+                  .surv_juv_rear_medium = .surv_juv_rear_medium,
+                  .surv_juv_rear_large = .surv_juv_rear_large,
+                  .surv_juv_rear_floodplain = .surv_juv_rear_floodplain)
   }))
 
   river_surv <- matrix(unlist(rear_surv[ , 1]), ncol = 4, byrow = TRUE)
