@@ -113,7 +113,8 @@ params <- list(
   # adults
 
   # growth
-
+  .ocean_entry_success_length = c(-0.0897309864, -0.0709704348, -0.0208590732, 0.0732620916),
+  .ocean_entry_success_months = 0.35,
   # rear
 
   ..surv_adult_enroute_int = 3,
