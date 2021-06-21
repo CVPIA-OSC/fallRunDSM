@@ -1,19 +1,16 @@
 library(tidyverse)
 library(DSMscenario)
 library(tictoc)
-library(fallRunDSM)
-library(furrr)
 
 library(parallel)
-cores <- detectCores()
-plan(multisession, workers = 8)
+cores <- detectCores() - 1
 # check what version of packagea are installed
 # use packageVersion() to check version of package installed
 
 # load data
+list2env(load_baseline_data(), .GlobalEnv)
 
 run_model <- function(scenario = NULL) {
-  list2env(load_baseline_data(), .GlobalEnv)
   fall_run_seeds <- fall_run_model(mode = "seed")
   fall_run_model(scenario = scenario, mode = "simulate", seeds = fall_run_seeds)
 }
@@ -23,9 +20,7 @@ fall_run_seeds <- fall_run_model(mode = "seed")
 
 base_runs <- parallel::mclapply(X = 1:10, run_model, mc.cores = cores)
 
-tic("start model")
-base_runs <- future_map(1:10, ~run_model(), seed=NULL)
-toc()
+base_runs <- lapply(X = 1:2, run_model)
 
 base_runs <- replicate(10, {
   fall_run_seeds <- fall_run_model(mode = "seed")
