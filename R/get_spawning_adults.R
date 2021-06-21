@@ -4,6 +4,13 @@
 #' @param hatch_adults total hatchery adults
 #' @param seeds a value meant to be inherited to determine if model is in seeding stage or not
 #' @param month_return_proportions the proportion of fish returning for each month
+#' @param ..surv_adult_enroute_int TODO
+#' @param .adult_stray_intercept TODO
+#' @param .adult_stray_wild TODO
+#' @param .adult_stray_natal_flow TODO
+#' @param .adult_stray_cross_channel_gates_closed TODO
+#' @param .adult_stray_prop_bay_trans TODO
+#' @param .adult_stray_prop_delta_trans TODO
 #' @source IP-117068
 #' @export
 get_spawning_adults <- function(year, adults, hatch_adults, mode,
