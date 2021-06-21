@@ -84,7 +84,10 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                     .adult_stray_natal_flow = ..params$.adult_stray_natal_flow,
                                     .adult_stray_cross_channel_gates_closed = ..params$.adult_stray_cross_channel_gates_closed,
                                     .adult_stray_prop_bay_trans = ..params$.adult_stray_prop_bay_trans,
-                                    .adult_stray_prop_delta_trans = ..params$.adult_stray_prop_delta_trans)
+                                    .adult_stray_prop_delta_trans = ..params$.adult_stray_prop_delta_trans,
+                                    .adult_en_route_migratory_temp = ..params$.adult_en_route_migratory_temp,
+                                    .adult_en_route_bypass_overtopped = ..params$.adult_en_route_bypass_overtopped,
+                                    .adult_en_route_adult_harvest_rate = ..params$.adult_en_route_adult_harvest_rate)
     init_adults <- spawners$init_adults
 
     output$spawners[ , year] <- init_adults
@@ -106,7 +109,8 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
     average_degree_days <- apply(accumulated_degree_days, 1, weighted.mean, month_return_proportions)
     prespawn_survival <- surv_adult_prespawn(average_degree_days,
-                                             ..surv_adult_prespawn_int = ..params$..surv_adult_prespawn_int)
+                                             ..surv_adult_prespawn_int = ..params$..surv_adult_prespawn_int,
+                                             .deg_day = ..params$.adult_prespawn_deg_day)
 
     juveniles <- spawn_success(escapement = init_adults,
                                adult_prespawn_survival = prespawn_survival,

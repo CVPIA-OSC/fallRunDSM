@@ -11,6 +11,7 @@
 #' @param .adult_stray_cross_channel_gates_closed TODO
 #' @param .adult_stray_prop_bay_trans TODO
 #' @param .adult_stray_prop_delta_trans TODO
+#' @param .adult_en_route_adult_harvest_rate TODO
 #' @source IP-117068
 #' @export
 get_spawning_adults <- function(year, adults, hatch_adults, mode,
@@ -21,7 +22,10 @@ get_spawning_adults <- function(year, adults, hatch_adults, mode,
                                 .adult_stray_natal_flow,
                                 .adult_stray_cross_channel_gates_closed,
                                 .adult_stray_prop_bay_trans,
-                                .adult_stray_prop_delta_trans) {
+                                .adult_stray_prop_delta_trans,
+                                .adult_en_route_migratory_temp,
+                                .adult_en_route_bypass_overtopped,
+                                .adult_en_route_adult_harvest_rate) {
 
   # during the seeding stage just reuse the seed adults as the input, and apply no
   # en-route survival
@@ -99,7 +103,9 @@ get_spawning_adults <- function(year, adults, hatch_adults, mode,
       adult_en_route_surv <- surv_adult_enroute(migratory_temp = en_route_temps[,month],
                                                 bypass_overtopped = bypass_is_overtopped[,month],
                                                 adult_harvest = adult_harvest_rate,
-                                                ..surv_adult_enroute_int = ..surv_adult_enroute_int)
+                                                ..surv_adult_enroute_int = ..surv_adult_enroute_int,
+                                                .migratory_temp = .adult_en_route_migratory_temp,
+                                                .bypass_overtopped = .adult_en_route_bypass_overtopped)
     })
 
 

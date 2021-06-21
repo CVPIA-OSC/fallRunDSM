@@ -111,7 +111,16 @@ usethis::use_data(survival_betas, overwrite = TRUE)
 params <- list(
 
   # adults
-
+  .adult_stray_intercept = 3,
+  .adult_stray_wild = -5.5,
+  .adult_stray_natal_flow = -1.99,
+  .adult_stray_cross_channel_gates_closed = -0.174,
+  .adult_stray_prop_bay_trans = 2.09,
+  .adult_stray_prop_delta_trans = 2.89,
+  .adult_en_route_migratory_temp = -0.26,
+  .adult_en_route_bypass_overtopped = -0.019,
+  .adult_en_route_adult_harvest_rate = fallRunDSM::adult_harvest_rate,
+  .adult_prespawn_deg_day = -0.000669526,
   # growth
   .ocean_entry_success_length = c(-0.0897309864, -0.0709704348, -0.0208590732, 0.0732620916),
   .ocean_entry_success_months = 0.35,
