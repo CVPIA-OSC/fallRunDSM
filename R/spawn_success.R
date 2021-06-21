@@ -13,7 +13,9 @@
 
 spawn_success <- function(escapement, adult_prespawn_survival, egg_to_fry_survival,
                           prob_scour, spawn_habitat,
-                          sex_ratio = 0.5, redd_size = 9.29, fecundity = 5522){
+                          sex_ratio = 0.5,
+                          redd_size = 9.29,
+                          fecundity = 5522){
 
   capacity <- spawn_habitat / redd_size
   spawner_potential <- escapement * adult_prespawn_survival * sex_ratio
