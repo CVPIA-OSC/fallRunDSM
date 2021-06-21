@@ -48,6 +48,7 @@ surv_juv_rear <- function(max_temp_thresh, avg_temp_thresh, high_predation,
   base_score_floodplain <- ..surv_juv_rear_int + .floodplain +
     (.avg_temp_thresh  * avg_temp_thresh) + (.high_predation * high_predation)
 
+  # hi.tmp is emebeded here needs to be exposed so that it van be varied
   s1 <- ifelse(max_temp_thresh, .0001, boot::inv.logit(base_score_inchannel))
   m1 <- ifelse(max_temp_thresh, .0001, boot::inv.logit(base_score_inchannel + .medium))
   l1 <- ifelse(max_temp_thresh, .0001, boot::inv.logit(base_score_inchannel  + .large))
@@ -83,8 +84,11 @@ surv_juv_rear <- function(max_temp_thresh, avg_temp_thresh, high_predation,
 #' @source IP-117068
 #' @export
 surv_juv_bypass <- function(max_temp_thresh, avg_temp_thresh, high_predation,
-                            ..surv_juv_bypass_int = -3.5, .avg_temp_thresh = -0.717,
-                            .high_predation = -0.122, .medium = 1.48, .large = 2.223,
+                            ..surv_juv_bypass_int = -3.5,
+                            .avg_temp_thresh = -0.717,
+                            .high_predation = -0.122,
+                            .medium = 1.48,
+                            .large = 2.223,
                             .floodplain = 0.47){
 
   base_score <- ..surv_juv_bypass_int + .floodplain +
@@ -118,11 +122,15 @@ surv_juv_bypass <- function(max_temp_thresh, avg_temp_thresh, high_predation,
 #' @source IP-117068
 #' @export
 surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_predation, contact_points,
-                           prop_diverted, total_diverted, ..surv_juv_delta_int = 1.4,
-                           .avg_temp_thresh = -0.717, .high_predation = -0.122,
+                           prop_diverted, total_diverted,
+                           ..surv_juv_delta_int = 1.4,
+                           .avg_temp_thresh = -0.717,
+                           .high_predation = -0.122,
                            ..surv_juv_delta_contact_points = 0.0358 * -0.189,
-                           .prop_diverted = -3.51, ..surv_juv_delta_total_diverted = 0.5 * -0.0021,
-                           .medium = 1.48, .large = 2.223){
+                           .prop_diverted = -3.51,
+                           ..surv_juv_delta_total_diverted = 0.5 * -0.0021,
+                           .medium = 1.48,
+                           .large = 2.223){
   # north delta
   north_delta_surv <- rep((avg_temp <= 16.5)*.42 + (avg_temp > 16.5 & avg_temp < 19.5) * 0.42 / (1.55^(avg_temp-15.5)) + (avg_temp > 19.5 & avg_temp < 25)*0.035,4)
 
@@ -152,6 +160,24 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
 #' @param year The simulation year, 1-20
 #' @param month The simulation month, 1-8
 #' @param scenario The current scenario
+#' @param ..surv_juv_rear_int TODO
+#' @param ..surv_juv_rear_contact_points TODO
+#' @param ..surv_juv_rear_prop_diversions TODO
+#' @param ..surv_juv_rear_total_diversions TODO
+#' @param ..surv_juv_bypass_int TODO
+#' @param ..surv_juv_delta_int TODO
+#' @param ..surv_juv_delta_contact_points TODO
+#' @param ..surv_juv_delta_total_diverted TODO
+#' @param .surv_juv_rear_avg_temp_thresh TODO
+#' @param .surv_juv_rear_high_predation TODO
+#' @param .surv_juv_rear_stranded TODO
+#' @param .surv_juv_rear_medium TODO
+#' @param .surv_juv_rear_large TODO
+#' @param .surv_juv_rear_floodplain TODO
+#' @param .surv_juv_bypass_avg_temp_thresh
+#' @param .surv_juv_bypass_high_predation
+#' @param .surv_juv_bypass_medium
+#' @param .surv_juv_bypass_large
 #' @source IP-117068
 #' @export
 get_rearing_survival_rates <- function(year, month, scenario,
@@ -168,7 +194,11 @@ get_rearing_survival_rates <- function(year, month, scenario,
                                        .surv_juv_rear_stranded,
                                        .surv_juv_rear_medium,
                                        .surv_juv_rear_large,
-                                       .surv_juv_rear_floodplain) {
+                                       .surv_juv_rear_floodplain,
+                                       .surv_juv_bypass_avg_temp_thresh,
+                                       .surv_juv_bypass_high_predation,
+                                       .surv_juv_bypass_medium,
+                                       .surv_juv_bypass_large) {
   watershed_labels <- c("Upper Sacramento River", "Antelope Creek", "Battle Creek",
                         "Bear Creek", "Big Chico Creek", "Butte Creek", "Clear Creek",
                         "Cottonwood Creek", "Cow Creek", "Deer Creek", "Elder Creek",
@@ -226,12 +256,12 @@ get_rearing_survival_rates <- function(year, month, scenario,
                   ..surv_juv_rear_contact_points = ..surv_juv_rear_contact_points,
                   ..surv_juv_rear_prop_diversions = ..surv_juv_rear_prop_diversions,
                   ..surv_juv_rear_total_diversions = ..surv_juv_rear_total_diversions,
-                  .surv_juv_rear_avg_temp_thresh = .surv_juv_rear_avg_temp_thresh,
-                  .surv_juv_rear_high_predation = .surv_juv_rear_high_predation,
-                  .surv_juv_rear_stranded = .surv_juv_rear_stranded,
-                  .surv_juv_rear_medium = .surv_juv_rear_medium,
-                  .surv_juv_rear_large = .surv_juv_rear_large,
-                  .surv_juv_rear_floodplain = .surv_juv_rear_floodplain)
+                  .avg_temp_thresh = .surv_juv_rear_avg_temp_thresh,
+                  .high_predation = .surv_juv_rear_high_predation,
+                  .stranded = .surv_juv_rear_stranded,
+                  .medium = .surv_juv_rear_medium,
+                  .large = .surv_juv_rear_large,
+                  .floodplain = .surv_juv_rear_floodplain)
   }))
 
   river_surv <- matrix(unlist(rear_surv[ , 1]), ncol = 4, byrow = TRUE)
@@ -244,7 +274,12 @@ get_rearing_survival_rates <- function(year, month, scenario,
   bp_surv <- surv_juv_bypass(max_temp_thresh = maxT25[22],
                              avg_temp_thresh = aveT20[22],
                              high_predation = 0,
-                             ..surv_juv_bypass_int = ..surv_juv_bypass_int)
+                             ..surv_juv_bypass_int = ..surv_juv_bypass_int,
+                             .avg_temp_thresh = .surv_juv_bypass_avg_temp_thresh,
+                             .high_predation = .surv_juv_bypass_high_predation,
+                             .medium = .surv_juv_bypass_medium,
+                             .large = .surv_juv_bypass_large,
+                             .floodplain = .surv_juv_bypass_floodplain)
 
   sutter_surv <- sqrt(bp_surv)
   yolo_surv <- sqrt(bp_surv)

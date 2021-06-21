@@ -143,6 +143,18 @@ params <- list(
 
   proportion_hatchery = fallRunDSM::proportion_hatchery,
 
+  # survival
+  .surv_juv_rear_avg_temp_thresh = -0.717,
+  .surv_juv_rear_high_predation = -0.122,
+  .surv_juv_rear_stranded = -1.939,
+  .surv_juv_rear_medium = 1.48,
+  .surv_juv_rear_large = 2.223,
+  .surv_juv_rear_floodplain = 0.47,
+  .surv_juv_bypass_avg_temp_thresh = -0.717,
+  .surv_juv_bypass_high_predation = -0.122,
+  .surv_juv_bypass_medium = 1.48,
+  .surv_juv_bypass_large = 2.223,
+
   ### load baseline data
   # DSMflow variables -----
   freeport_flows = DSMflow::freeport_flow,
