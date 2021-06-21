@@ -315,10 +315,14 @@ surv_juv_outmigration_san_joaquin <- function(..surv_juv_outmigration_sj_int = -
 #' @source IP-117068
 #' @export
 surv_juv_outmigration_sac_delta <- function(delta_flow, avg_temp, perc_diversions,
-                                            .intercept_one = -3.5, .intercept_two =  0.3,
-                                            .intercept_three = -3.5, .delta_flow = 0.0013,
-                                            .avg_temp = 0.386, .perc_diversions = -0.033,
-                                            .medium = 1.48, .large = 2.223){
+                                            .intercept_one = -3.5,
+                                            .intercept_two =  0.3,
+                                            .intercept_three = -3.5,
+                                            .delta_flow = 0.0013,
+                                            .avg_temp = 0.386,
+                                            .perc_diversions = -0.033,
+                                            .medium = 1.48,
+                                            .large = 2.223){
 
   model_weight <- 1/3
 
@@ -538,6 +542,14 @@ get_migratory_survival_rates <- function(year, month,
                                          delta_inflow,
                                          avg_temp_delta,
                                          delta_proportion_diverted,
+                                         surv_juv_outmigration_sac_intercept_one,
+                                         surv_juv_outmigration_sac_intercept_two,
+                                         surv_juv_outmigration_sac_intercept_three,
+                                         surv_juv_outmigration_sac_delta_flow,
+                                         surv_juv_outmigration_sac_avg_temp,
+                                         surv_juv_outmigration_sac_perc_diversions,
+                                         surv_juv_outmigration_sac_medium,
+                                         surv_juv_outmigration_sac_large,
                                          ..surv_juv_outmigration_sj_int = ..surv_juv_outmigration_sj_int,
                                          ..surv_juv_outmigration_sac_int_one = ..surv_juv_outmigration_sac_int_one,
                                          ..surv_juv_outmigration_sac_prop_diversions = ..surv_juv_outmigration_sac_prop_diversions,
@@ -584,7 +596,15 @@ get_migratory_survival_rates <- function(year, month,
   #                                                   avg_temp = avg_temp[24, month, year],
   #                                                   total_diversions = total_diverted[24],
   #                                                   prop_diversions = proportion_diverted[24])^.5 # LL.Sac.S
-  lower_sac_migration_surv <- surv_juv_outmigration_sac(flow_cms = u_sac_flow)
+  lower_sac_migration_surv <- surv_juv_outmigration_sac(flow_cms = u_sac_flow,
+                                                        .intercept_one = surv_juv_outmigration_sac_intercept_one,
+                                                        .intercept_two = surv_juv_outmigration_sac_intercept_two,
+                                                        .intercept_three = surv_juv_outmigration_sac_intercept_three,
+                                                        .delta_flow = surv_juv_outmigration_sac_delta_flow,
+                                                        .avg_temp = surv_juv_outmigration_sac_avg_temp,
+                                                        .perc_diversions = surv_juv_outmigration_sac_perc_diversions,
+                                                        .medium = surv_juv_outmigration_sac_medium,
+                                                        .large = surv_juv_outmigration_sac_large)
 
   sac_delta_migration_surv <- surv_juv_outmigration_sac_delta(delta_flow = delta_inflow[month, year, ],
                                                               avg_temp = avg_temp_delta[month, year, ],

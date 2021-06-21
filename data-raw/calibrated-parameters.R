@@ -141,6 +141,24 @@ params <- list(
   surv_egg_to_fry_proportion_natural = 0.533,
   surv_egg_to_fry_scour = -0.655,
 
+  surv_juv_outmigration_sac_delta_intercept_one = -3.5,
+  surv_juv_outmigration_sac_delta_intercept_two =  0.3,
+  surv_juv_outmigration_sac_delta_intercept_three = -3.5,
+  surv_juv_outmigration_sac_delta_delta_flow = 0.0013,
+  surv_juv_outmigration_sac_delta_avg_temp = 0.386,
+  surv_juv_outmigration_sac_delta_perc_diversions = -0.033,
+  surv_juv_outmigration_sac_delta_medium = 1.48,
+  surv_juv_outmigration_sac_delta_large = 2.223
+
+
+
+
+
+
+
+
+
+
   proportion_hatchery = fallRunDSM::proportion_hatchery,
 
   ### load baseline data
