@@ -154,6 +154,11 @@ params <- list(
   .surv_juv_bypass_high_predation = -0.122,
   .surv_juv_bypass_medium = 1.48,
   .surv_juv_bypass_large = 2.223,
+  .surv_juv_delta_avg_temp_thresh = -0.717,
+  .surv_juv_delta_high_predation = -0.122,
+  .surv_juv_delta_prop_diverted = -3.51,
+  .surv_juv_delta_medium = 1.48,
+  .surv_juv_delta_large = 2.223,
 
   ### load baseline data
   # DSMflow variables -----

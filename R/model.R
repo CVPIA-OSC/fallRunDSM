@@ -156,7 +156,22 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                                      ..surv_juv_bypass_int = ..params$..surv_juv_bypass_int,
                                                      ..surv_juv_delta_int = ..params$..surv_juv_delta_int,
                                                      ..surv_juv_delta_contact_points = ..params$..surv_juv_delta_contact_points,
-                                                     ..surv_juv_delta_total_diverted = ..params$..surv_juv_delta_total_diverted) # rearing_survival$inchannel
+                                                     ..surv_juv_delta_total_diverted = ..params$..surv_juv_delta_total_diverted,
+                                                     .surv_juv_rear_avg_temp_thresh = ..params$.surv_juv_rear_avg_temp_thresh,
+                                                     .surv_juv_rear_high_predation = ..params$.surv_juv_rear_high_predation,
+                                                     .surv_juv_rear_stranded = ..params$.surv_juv_rear_stranded,
+                                                     .surv_juv_rear_medium = ..params$.surv_juv_rear_medium,
+                                                     .surv_juv_rear_large = ..params$.surv_juv_rear_large,
+                                                     .surv_juv_rear_floodplain = ..params$.surv_juv_rear_floodplain,
+                                                     .surv_juv_bypass_avg_temp_thresh = ..params$.surv_juv_bypass_avg_temp_thresh,
+                                                     .surv_juv_bypass_high_predation = ..params$.surv_juv_bypass_high_predation,
+                                                     .surv_juv_bypass_medium = ..params$.surv_juv_bypass_medium,
+                                                     .surv_juv_bypass_large = ..params$.surv_juv_bypass_large,
+                                                     .surv_juv_delta_avg_temp_thresh = ..params$.surv_juv_delta_avg_temp_thresh,
+                                                     .surv_juv_delta_high_predation = ..params$.surv_juv_delta_high_predation,
+                                                     .surv_juv_delta_prop_diverted = ..params$.surv_juv_delta_prop_diverted,
+                                                     .surv_juv_delta_medium = ..params$.surv_juv_delta_medium,
+                                                     .surv_juv_delta_large = ..params$.surv_juv_delta_large)
 
       migratory_survival <- get_migratory_survival_rates(year, month,
                                                          cc_gates_prop_days_closed = ..params$cc_gates_prop_days_closed,

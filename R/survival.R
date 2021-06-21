@@ -174,10 +174,15 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
 #' @param .surv_juv_rear_medium TODO
 #' @param .surv_juv_rear_large TODO
 #' @param .surv_juv_rear_floodplain TODO
-#' @param .surv_juv_bypass_avg_temp_thresh
-#' @param .surv_juv_bypass_high_predation
-#' @param .surv_juv_bypass_medium
-#' @param .surv_juv_bypass_large
+#' @param .surv_juv_bypass_avg_temp_thresh TODO
+#' @param .surv_juv_bypass_high_predation TODO
+#' @param .surv_juv_bypass_medium TODO
+#' @param .surv_juv_bypass_large TODO
+#' @param .surv_juv_delta_avg_temp_thresh TODO
+#' @param .surv_juv_delta_high_predation TODO
+#' @param .surv_juv_delta_prop_diverted TODO
+#' @param .surv_juv_delta_medium TODO
+#' @param .surv_juv_delta_large TODO
 #' @source IP-117068
 #' @export
 get_rearing_survival_rates <- function(year, month, scenario,
@@ -211,7 +216,12 @@ get_rearing_survival_rates <- function(year, month, scenario,
                                        .surv_juv_bypass_avg_temp_thresh,
                                        .surv_juv_bypass_high_predation,
                                        .surv_juv_bypass_medium,
-                                       .surv_juv_bypass_large) {
+                                       .surv_juv_bypass_large,
+                                       .surv_juv_delta_avg_temp_thresh,
+                                       .surv_juv_delta_high_predation,
+                                       .surv_juv_delta_prop_diverted,
+                                       .surv_juv_delta_medium,
+                                       .surv_juv_delta_large) {
   watershed_labels <- c("Upper Sacramento River", "Antelope Creek", "Battle Creek",
                         "Bear Creek", "Big Chico Creek", "Butte Creek", "Clear Creek",
                         "Cottonwood Creek", "Cow Creek", "Deer Creek", "Elder Creek",
@@ -297,6 +307,7 @@ get_rearing_survival_rates <- function(year, month, scenario,
   sutter_surv <- sqrt(bp_surv)
   yolo_surv <- sqrt(bp_surv)
 
+  # TODO hi.tmp is an embeded value need to expose?
   delta_juv_surv <- surv_juv_delta(avg_temp = avg_temp_delta[month, year, "North Delta"],
                                    max_temp_thresh = maxT25D,
                                    avg_temp_thresh = aveT20D,
@@ -306,7 +317,12 @@ get_rearing_survival_rates <- function(year, month, scenario,
                                    total_diverted = delta_total_diverted,
                                    ..surv_juv_delta_int = ..surv_juv_delta_int,
                                    ..surv_juv_delta_contact_points = ..surv_juv_delta_contact_points,
-                                   ..surv_juv_delta_total_diverted = ..surv_juv_delta_total_diverted)
+                                   ..surv_juv_delta_total_diverted = ..surv_juv_delta_total_diverted,
+                                   .avg_temp_thresh = .surv_juv_delta_avg_temp_thresh,
+                                   .high_predation = .surv_juv_delta_high_predation,
+                                   .prop_diverted = .surv_juv_delta_prop_diverted,
+                                   .medium = .surv_juv_delta_medium,
+                                   .large = .surv_juv_delta_large)
 
   return(
     list(
