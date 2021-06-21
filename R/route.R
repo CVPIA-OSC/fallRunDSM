@@ -230,6 +230,8 @@ route_south_delta <- function(freeport_flow, dcc_closed, month,
 #' @export
 route_and_rear_deltas <- function(year, month, migrants, north_delta_fish, south_delta_fish,
                          north_delta_habitat, south_delta_habitat,
+                         freeport_flows,
+                         cc_gates_days_closed,
                          rearing_survival_delta, migratory_survival_delta,
                          migratory_survival_sac_delta, migratory_survival_bay_delta,
                          juveniles_at_chipps, growth_rates,
