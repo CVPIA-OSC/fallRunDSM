@@ -181,6 +181,19 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
 #' @source IP-117068
 #' @export
 get_rearing_survival_rates <- function(year, month, scenario,
+                                       avg_temp,
+                                       avg_temp_delta,
+                                       prob_strand_early,
+                                       prob_strand_late,
+                                       proportion_diverted,
+                                       total_diverted,
+                                       delta_proportion_diverted,
+                                       delta_total_diverted,
+                                       weeks_flooded,
+                                       prop_high_predation,
+                                       contact_points,
+                                       delta_contact_points,
+                                       delta_prop_high_predation,
                                        ..surv_juv_rear_int,
                                        ..surv_juv_rear_contact_points,
                                        ..surv_juv_rear_prop_diversions,
@@ -542,9 +555,38 @@ surv_juv_outmigration_delta <- function(prop_DCC_closed, hor_barr, freeport_flow
 #' regions for a month and year of the simulation
 #' @param year The simulation year, 1-20
 #' @param month The simulation month, 1-8
+#' @param cc_gates_prop_days_closed
+#' @param freeport_flows
+#' @param vernalis_flows
+#' @param stockton_flows
+#' @param vernalis_temps
+#' @param prisoners_point_temps
+#' @param CVP_exports
+#' @param SWP_exports
+#' @param ..surv_juv_outmigration_sj_int
+#' @param ..surv_juv_outmigration_sac_int_one
+#' @param ..surv_juv_outmigration_sac_prop_diversions
+#' @param ..surv_juv_outmigration_sac_total_diversions
+#' @param ..surv_juv_outmigration_sac_int_two
 #' @source IP-117068
 #' @export
+#'
+#' cc_gates_prop_days_closed
+
+
 get_migratory_survival_rates <- function(year, month,
+                                         cc_gates_prop_days_closed,
+                                         freeport_flows,
+                                         vernalis_flows,
+                                         stockton_flows,
+                                         vernalis_temps,
+                                         prisoners_point_temps,
+                                         CVP_exports,
+                                         SWP_exports,
+                                         upper_sacramento_flows,
+                                         delta_inflow,
+                                         avg_temp_delta,
+                                         delta_proportion_diverted,
                                          ..surv_juv_outmigration_sj_int = ..surv_juv_outmigration_sj_int,
                                          ..surv_juv_outmigration_sac_int_one = ..surv_juv_outmigration_sac_int_one,
                                          ..surv_juv_outmigration_sac_prop_diversions = ..surv_juv_outmigration_sac_prop_diversions,
