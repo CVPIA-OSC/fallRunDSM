@@ -584,6 +584,8 @@ surv_juv_outmigration_delta <- function(prop_DCC_closed, hor_barr, freeport_flow
 #' @param ..surv_juv_outmigration_sac_prop_diversions
 #' @param ..surv_juv_outmigration_sac_total_diversions
 #' @param ..surv_juv_outmigration_sac_int_two
+#' @param .surv_juv_outmigration_san_joquin_medium TODO
+#' @param .surv_juv_outmigration_san_joaquin_large TODO
 #' @source IP-117068
 #' @export
 #'
@@ -607,7 +609,9 @@ get_migratory_survival_rates <- function(year, month,
                                          ..surv_juv_outmigration_sac_int_one = ..surv_juv_outmigration_sac_int_one,
                                          ..surv_juv_outmigration_sac_prop_diversions = ..surv_juv_outmigration_sac_prop_diversions,
                                          ..surv_juv_outmigration_sac_total_diversions = ..surv_juv_outmigration_sac_total_diversions,
-                                         ..surv_juv_outmigration_sac_int_two = ..surv_juv_outmigration_sac_int_two) {
+                                         ..surv_juv_outmigration_sac_int_two = ..surv_juv_outmigration_sac_int_two,
+                                         .surv_juv_outmigration_san_joquin_medium,
+                                         .surv_juv_outmigration_san_joaquin_large) {
 
 
   aveT20 <- rbinom(31, 1, boot::inv.logit(-14.32252 + 0.72102 * avg_temp[ , month , year]))
@@ -628,7 +632,9 @@ get_migratory_survival_rates <- function(year, month,
     trap_trans = 0) # newDsurv
 
   u_sac_flow <- upper_sacramento_flows[month, year]
-  sj_migration_surv <- surv_juv_outmigration_san_joaquin(..surv_juv_outmigration_sj_int = ..surv_juv_outmigration_sj_int)
+  sj_migration_surv <- surv_juv_outmigration_san_joaquin(..surv_juv_outmigration_sj_int = ..surv_juv_outmigration_sj_int,
+                                                         .medium = .surv_juv_outmigration__san_joquin_medium,
+                                                         .large = .surv_juv_outmigration_san_joaquin_large)
 
   # set up the regional survivals
   # uppermid_sac_migration_surv <- surv_juv_outmigration_sac(flow_cms = u_sac_flow,

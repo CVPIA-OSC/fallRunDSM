@@ -160,6 +160,9 @@ params <- list(
   .surv_juv_delta_medium = 1.48,
   .surv_juv_delta_large = 2.223,
 
+  .surv_juv_outmigration_san_joquin_medium = 1.48,
+  .surv_juv_outmigration_san_joaquin_large = 2.223,
+
   ### load baseline data
   # DSMflow variables -----
   freeport_flows = DSMflow::freeport_flow,
