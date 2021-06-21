@@ -115,6 +115,74 @@ params <- list(
   # growth
 
   # rear
+  .pulse_movement_intercept = -7.70744,
+  .pulse_movement_proportion_pulse = 0.26579,
+  .pulse_movement_medium = 1.66845,
+  .pulse_movement_large = 0.5706,
+  .pulse_movement_vlarge = -4.305,
+  .pulse_movement_medium_pulse = -0.25477,
+  .pulse_movement_large_pulse = -0.44778,
+  .pulse_movement_very_large_pulse = 0.329,
+
+  spawn_success_sex_ratio = 0.5,
+  spawn_success_redd_size = 9.29,
+  spawn_success_fecundity = 5522,
+
+  surv_egg_to_fry_proportion_natural = 0.533,
+  surv_egg_to_fry_scour = -0.655,
+
+  proportion_hatchery = fallRunDSM::proportion_hatchery,
+
+  ### load baseline data
+  # DSMflow variables -----
+  freeport_flows = DSMflow::freeport_flow,
+  vernalis_flows = DSMflow::vernalis_flow,
+  stockton_flows = DSMflow::stockton_flow,
+  CVP_exports = DSMflow::cvp_exports,
+  SWP_exports = DSMflow::swp_exports,
+  proportion_diverted = DSMflow::proportion_diverted,
+  total_diverted = DSMflow::total_diverted,
+  delta_proportion_diverted = DSMflow::delta_proportion_diverted,
+  delta_total_diverted = DSMflow::delta_total_diverted,
+  prop_pulse_flows = DSMflow::proportion_pulse_flows,
+  prop_flow_natal = DSMflow::proportion_flow_natal,
+  upper_sacramento_flows = DSMflow::upper_sacramento_flows,
+  delta_inflow = DSMflow::delta_inflow,
+  cc_gates_days_closed = DSMflow::delta_cross_channel_closed["count", ],
+  cc_gates_prop_days_closed = DSMflow::delta_cross_channel_closed["proportion", ],
+  proportion_flow_bypass = DSMflow::proportion_flow_bypasses,
+  gates_overtopped = DSMflow::gates_overtopped,
+
+  # DSMtemperature variables -----
+  vernalis_temps = DSMtemperature::vernalis_temperature,
+  prisoners_point_temps = DSMtemperature::prisoners_point_temperature,
+  degree_days = DSMtemperature::degree_days,
+  mean_egg_temp_effect = DSMtemperature::egg_temperature_effect$fall_run,
+  avg_temp = DSMtemperature::stream_temperature,
+  avg_temp_delta = DSMtemperature::delta_temperature,
+  migratory_temperature_proportion_over_20 = DSMtemperature::migratory_temperature_proportion_over_20,
+
+  # DSMhabitat variables -----
+  spawning_habitat = DSMhabitat::fr_spawn,
+  inchannel_habitat_fry = DSMhabitat::fr_fry,
+  inchannel_habitat_juvenile = DSMhabitat::fr_juv,
+  floodplain_habitat = DSMhabitat::fr_fp,
+  weeks_flooded = DSMhabitat::weeks_flooded,
+  delta_habitat = DSMhabitat::delta_habitat,
+  sutter_habitat = DSMhabitat::sutter_habitat,
+  yolo_habitat = DSMhabitat::yolo_habitat,
+  tisdale_bypass_watershed = DSMhabitat::tisdale_bypass_watershed,
+  yolo_bypass_watershed = DSMhabitat::yolo_bypass_watershed,
+  south_delta_routed_watersheds = DSMhabitat::south_delta_routed_watersheds,
+  prop_high_predation = DSMhabitat::prop_high_predation,
+  contact_points = DSMhabitat::contact_points,
+  delta_contact_points = DSMhabitat::delta_contact_points,
+  delta_prop_high_predation = DSMhabitat::delta_prop_high_predation,
+  prob_strand_early = DSMhabitat::prob_strand_early,
+  prob_strand_late = DSMhabitat::prob_strand_late,
+  prob_nest_scoured = DSMhabitat::prob_nest_scoured,
+
+  # existing
 
   ..surv_adult_enroute_int = 3,
   ..surv_adult_prespawn_int = 3,

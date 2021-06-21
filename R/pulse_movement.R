@@ -13,9 +13,14 @@
 #' @param .very_large_pulse Additional coefficient for proportion_pulse variable for very large size fish, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.
 #' @source IP-117068
 #' @export
-pulse_movement <- function(proportion_pulse, .intercept = -7.70744, .proportion_pulse = 0.26579,
-                           .medium = 1.66845, .large = 0.5706, .vlarge = -4.305,
-                           .medium_pulse = -0.25477, .large_pulse = -0.44778,
+pulse_movement <- function(proportion_pulse,
+                           .intercept = -7.70744,
+                           .proportion_pulse = 0.26579,
+                           .medium = 1.66845,
+                           .large = 0.5706,
+                           .vlarge = -4.305,
+                           .medium_pulse = -0.25477,
+                           .large_pulse = -0.44778,
                            .very_large_pulse = 0.329){
 
   s <- boot::inv.logit(.intercept + .proportion_pulse * proportion_pulse)
