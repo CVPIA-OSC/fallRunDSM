@@ -15,8 +15,10 @@
 #' @source IP-117068
 #' @export
 adult_stray <- function(wild, natal_flow, south_delta_watershed, cross_channel_gates_closed,
-                        prop_bay_trans = 0, prop_delta_trans = 0, .intercept = 3,
-                        .wild = -5.5, .natal_flow = -1.99,
+                        prop_bay_trans = 0, prop_delta_trans = 0,
+                        .intercept = 3,
+                        .wild = -5.5,
+                        .natal_flow = -1.99,
                         .cross_channel_gates_closed = -0.174,
                         .prop_bay_trans = 2.09,
                         .prop_delta_trans = 2.89){

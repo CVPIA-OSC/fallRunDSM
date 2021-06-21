@@ -109,6 +109,13 @@ usethis::use_data(survival_betas, overwrite = TRUE)
 
 # 2019 Calibration Parameters ------------
 params <- list(
+
+  # adults
+
+  # growth
+
+  # rear
+
   ..surv_adult_enroute_int = 3,
   ..surv_adult_prespawn_int = 3,
   ..surv_egg_to_fry_int = 0.041,

@@ -8,7 +8,13 @@
 #' @export
 get_spawning_adults <- function(year, adults, hatch_adults, mode,
                                 month_return_proportions=fallRunDSM::month_return_proportions,
-                                ..surv_adult_enroute_int) {
+                                ..surv_adult_enroute_int,
+                                .adult_stray_intercept,
+                                .adult_stray_wild,
+                                .adult_stray_natal_flow,
+                                .adult_stray_cross_channel_gates_closed,
+                                .adult_stray_prop_bay_trans,
+                                .adult_stray_prop_delta_trans) {
 
   # during the seeding stage just reuse the seed adults as the input, and apply no
   # en-route survival
@@ -44,7 +50,13 @@ get_spawning_adults <- function(year, adults, hatch_adults, mode,
       adult_stray(wild = 1,
                   natal_flow = prop_flow_natal[ , year],
                   south_delta_watershed = south_delta_routed_watersheds,
-                  cross_channel_gates_closed = cc_gates_days_closed[month])
+                  cross_channel_gates_closed = cc_gates_days_closed[month],
+                  .intercept = .adult_stray_intercept,
+                  .wild = .adult_stray_wild,
+                  .natal_flow = .adult_stray_natal_flow,
+                  .cross_channel_gates_closed = .adult_stray_cross_channel_gates_closed,
+                  .prop_bay_trans = .adult_stray_prop_bay_trans,
+                  .prop_delta_trans = .adult_stray_prop_delta_trans)
     })
 
     straying_adults <- sapply(1:3, function(month) {
