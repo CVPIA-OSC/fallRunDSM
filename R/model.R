@@ -113,9 +113,9 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
     min_spawn_habitat <- apply(..params$spawning_habitat[ , 10:12, year], 1, min)
 
-    accumulated_degree_days <- cbind(oct = rowSums(degree_days[ , 10:12, year]),
-                                     nov = rowSums(degree_days[ , 11:12, year]),
-                                     dec = degree_days[ , 12, year])
+    accumulated_degree_days <- cbind(oct = rowSums(..params$degree_days[ , 10:12, year]),
+                                     nov = rowSums(..params$degree_days[ , 11:12, year]),
+                                     dec = ..params$degree_days[ , 12, year])
 
     average_degree_days <- apply(accumulated_degree_days, 1, weighted.mean, month_return_proportions)
 
@@ -126,7 +126,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
     juveniles <- spawn_success(escapement = init_adults,
                                adult_prespawn_survival = prespawn_survival,
                                egg_to_fry_survival = egg_to_fry_surv,
-                               prob_scour = prob_nest_scoured,
+                               prob_scour = ..params$prob_nest_scoured,
                                spawn_habitat = min_spawn_habitat,
                                sex_ratio = ..params$spawn_success_sex_ratio,
                                redd_size = ..params$spawn_success_redd_size,
@@ -139,8 +139,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                              floodplain_habitat = ..params$floodplain_habitat,
                              sutter_habitat = ..params$sutter_habitat,
                              yolo_habitat = ..params$yolo_habitat,
-                             north_delta_habitat = ..params$north_delta_habitat,
-                             south_delta_habitat = ..params$south_delta_habitat)
+                             delta_habitat = ..params$delta_habitat)
 
       rearing_survival <- get_rearing_survival_rates(year, month, scenario,
                                                      avg_temp = ..params$avg_temp,
@@ -174,6 +173,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                                      .surv_juv_bypass_high_predation = ..params$.surv_juv_bypass_high_predation,
                                                      .surv_juv_bypass_medium = ..params$.surv_juv_bypass_medium,
                                                      .surv_juv_bypass_large = ..params$.surv_juv_bypass_large,
+                                                     .surv_juv_bypass_floodplain = ..params$.surv_juv_bypass_floodplain,
                                                      .surv_juv_delta_avg_temp_thresh = ..params$.surv_juv_delta_avg_temp_thresh,
                                                      .surv_juv_delta_high_predation = ..params$.surv_juv_delta_high_predation,
                                                      .surv_juv_delta_prop_diverted = ..params$.surv_juv_delta_prop_diverted,
@@ -192,20 +192,8 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                                          upper_sacramento_flows = ..params$upper_sacramento_flows,
                                                          delta_inflow = ..params$delta_inflow,
                                                          avg_temp_delta = ..params$avg_temp_delta,
+                                                         avg_temp = ..params$avg_temp,
                                                          delta_proportion_diverted = ..params$delta_proportion_diverted,
-                                                         surv_juv_outmigration_sac_delta_intercept_one = ..params$surv_juv_outmigration_sac_delta_intercept_one,
-                                                         surv_juv_outmigration_sac_delta_intercept_two = ..params$surv_juv_outmigration_sac_delta_intercept_two,
-                                                         surv_juv_outmigration_sac_delta_intercept_three = ..params$surv_juv_outmigration_sac_delta_intercept_three,
-                                                         surv_juv_outmigration_sac_delta_delta_flow = ..params$surv_juv_outmigration_sac_delta_delta_flow,
-                                                         surv_juv_outmigration_sac_delta_avg_temp = ..params$surv_juv_outmigration_sac_delta_avg_temp,
-                                                         surv_juv_outmigration_sac_delta_perc_diversions = ..params$surv_juv_outmigration_sac_delta_perc_diversions,
-                                                         surv_juv_outmigration_sac_delta_medium = ..params$surv_juv_outmigration_sac_delta_medium,
-                                                         surv_juv_outmigration_sac_delta_large = ..params$surv_juv_outmigration_sac_delta_large,
-                                                         ..surv_juv_outmigration_sj_int = ..params$..surv_juv_outmigration_sj_int,
-                                                         ..surv_juv_outmigration_sac_int_one = ..params$..surv_juv_outmigration_sac_int_one,
-                                                         ..surv_juv_outmigration_sac_prop_diversions = ..params$..surv_juv_outmigration_sac_prop_diversions,
-                                                         ..surv_juv_outmigration_sac_total_diversions = ..params$..surv_juv_outmigration_sac_total_diversions,
-                                                         ..surv_juv_outmigration_sac_int_two = ..params$..surv_juv_outmigration_sac_int_two,
                                                          .surv_juv_outmigration_sac_delta_intercept_one = ..params$.surv_juv_outmigration_sac_delta_intercept_one,
                                                          .surv_juv_outmigration_sac_delta_intercept_two = ..params$.surv_juv_outmigration_sac_delta_intercept_two,
                                                          .surv_juv_outmigration_sac_delta_intercept_three = ..params$.surv_juv_outmigration_sac_delta_intercept_three,
@@ -214,6 +202,11 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                                          .surv_juv_outmigration_sac_delta_perc_diversions = ..params$.surv_juv_outmigration_sac_delta_perc_diversions,
                                                          .surv_juv_outmigration_sac_delta_medium = ..params$.surv_juv_outmigration_sac_delta_medium,
                                                          .surv_juv_outmigration_sac_delta_large = ..params$.surv_juv_outmigration_sac_delta_large,
+                                                         ..surv_juv_outmigration_sj_int = ..params$..surv_juv_outmigration_sj_int,
+                                                         ..surv_juv_outmigration_sac_int_one = ..params$..surv_juv_outmigration_sac_int_one,
+                                                         ..surv_juv_outmigration_sac_prop_diversions = ..params$..surv_juv_outmigration_sac_prop_diversions,
+                                                         ..surv_juv_outmigration_sac_total_diversions = ..params$..surv_juv_outmigration_sac_total_diversions,
+                                                         ..surv_juv_outmigration_sac_int_two = ..params$..surv_juv_outmigration_sac_int_two,
                                                          .surv_juv_outmigration_san_joquin_medium = ..params$.surv_juv_outmigration_san_joquin_medium,
                                                          .surv_juv_outmigration_san_joaquin_large = ..params$.surv_juv_outmigration_san_joaquin_large) #migratory_survival$uppermid_sac
 
@@ -263,7 +256,16 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                       inchannel_habitat = habitat$inchannel[1:15],
                                       floodplain_habitat = habitat$floodplain[1:15],
                                       prop_pulse_flows = ..params$prop_pulse_flows[1:15, ],
-                                      detour = 'sutter')
+                                      proportion_flow_bypass = ..params$proportion_flow_bypass,
+                                      detour = 'sutter',
+                                      .pulse_movement_intercept = ..params$.pulse_movement_intercept,
+                                      .pulse_movement_proportion_pulse = ..params$.pulse_movement_proportion_pulse,
+                                      .pulse_movement_medium = ..params$.pulse_movement_medium,
+                                      .pulse_movement_large = ..params$.pulse_movement_large,
+                                      .pulse_movement_vlarge = ..params$.pulse_movement_vlarge,
+                                      .pulse_movement_medium_pulse = ..params$.pulse_movement_medium_pulse,
+                                      .pulse_movement_large_pulse = ..params$.pulse_movement_large_pulse,
+                                      .pulse_movement_very_large_pulse = ..params$.pulse_movement_very_large_pulse)
 
         upper_sac_trib_rear <- rear(juveniles = upper_sac_trib_fish$inchannel,
                                     survival_rate = rearing_survival$inchannel[1:15, ],
@@ -271,7 +273,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                     floodplain_juveniles = upper_sac_trib_fish$floodplain,
                                     floodplain_survival_rate = rearing_survival$floodplain[1:15, ],
                                     floodplain_growth = growth_rates_floodplain,
-                                    weeks_flooded = weeks_flooded[1:15, month, year])
+                                    weeks_flooded = ..params$weeks_flooded[1:15, month, year])
 
         juveniles[1:15, ] <- upper_sac_trib_rear$inchannel + upper_sac_trib_rear$floodplain
 
@@ -302,7 +304,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                    floodplain_juveniles = upper_mid_sac_fish$floodplain,
                                    floodplain_survival_rate = rearing_survival$floodplain[16, ],
                                    floodplain_growth = growth_rates_floodplain,
-                                   weeks_flooded = rep(weeks_flooded[16, month, year], nrow(upper_mid_sac_fish$inchannel)))
+                                   weeks_flooded = rep(..params$weeks_flooded[16, month, year], nrow(upper_mid_sac_fish$inchannel)))
 
         upper_mid_sac_fish <- upper_mid_sac_fish$inchannel + upper_mid_sac_fish$floodplain
 
@@ -315,7 +317,16 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                          inchannel_habitat = habitat$inchannel[18:20],
                                          floodplain_habitat = habitat$floodplain[18:20],
                                          prop_pulse_flows =  ..params$prop_pulse_flows[18:20, ],
-                                         detour = 'yolo')
+                                         proportion_flow_bypass = ..params$proportion_flow_bypass,
+                                         detour = 'yolo',
+                                         .pulse_movement_intercept = ..params$.pulse_movement_intercept,
+                                         .pulse_movement_proportion_pulse = ..params$.pulse_movement_proportion_pulse,
+                                         .pulse_movement_medium = ..params$.pulse_movement_medium,
+                                         .pulse_movement_large = ..params$.pulse_movement_large,
+                                         .pulse_movement_vlarge = ..params$.pulse_movement_vlarge,
+                                         .pulse_movement_medium_pulse = ..params$.pulse_movement_medium_pulse,
+                                         .pulse_movement_large_pulse = ..params$.pulse_movement_large_pulse,
+                                         .pulse_movement_very_large_pulse = ..params$.pulse_movement_very_large_pulse)
 
         lower_mid_sac_trib_rear <- rear(juveniles = lower_mid_sac_trib_fish$inchannel,
                                         survival_rate = rearing_survival$inchannel[18:20, ],
@@ -323,7 +334,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                         floodplain_juveniles = lower_mid_sac_trib_fish$floodplain,
                                         floodplain_survival_rate = rearing_survival$floodplain[18:20, ],
                                         floodplain_growth = growth_rates_floodplain,
-                                        weeks_flooded = weeks_flooded[18:20, month, year])
+                                        weeks_flooded = ..params$weeks_flooded[18:20, month, year])
 
         juveniles[18:20, ] <- lower_mid_sac_trib_rear$inchannel + lower_mid_sac_trib_rear$floodplain
 
@@ -353,7 +364,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                    floodplain_juveniles = lower_mid_sac_fish$floodplain,
                                    floodplain_survival_rate = rearing_survival$floodplain[21, ],
                                    floodplain_growth = growth_rates_floodplain,
-                                   weeks_flooded = rep(weeks_flooded[21, month, year], nrow(lower_mid_sac_fish$inchannel)))
+                                   weeks_flooded = rep(..params$weeks_flooded[21, month, year], nrow(lower_mid_sac_fish$inchannel)))
 
         lower_mid_sac_fish <- lower_mid_sac_fish$inchannel + lower_mid_sac_fish$floodplain
 
@@ -365,7 +376,15 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                      juveniles = juveniles[23, , drop = FALSE],
                                      inchannel_habitat = habitat$inchannel[23],
                                      floodplain_habitat = habitat$floodplain[23],
-                                     prop_pulse_flows =  ..params$prop_pulse_flows[23, , drop = FALSE])
+                                     prop_pulse_flows =  ..params$prop_pulse_flows[23, , drop = FALSE],
+                                     .pulse_movement_intercept = ..params$.pulse_movement_intercept,
+                                     .pulse_movement_proportion_pulse = ..params$.pulse_movement_proportion_pulse,
+                                     .pulse_movement_medium = ..params$.pulse_movement_medium,
+                                     .pulse_movement_large = ..params$.pulse_movement_large,
+                                     .pulse_movement_vlarge = ..params$.pulse_movement_vlarge,
+                                     .pulse_movement_medium_pulse = ..params$.pulse_movement_medium_pulse,
+                                     .pulse_movement_large_pulse = ..params$.pulse_movement_large_pulse,
+                                     .pulse_movement_very_large_pulse = ..params$.pulse_movement_very_large_pulse)
 
         lower_sac_trib_rear <- rear(juveniles = lower_sac_trib_fish$inchannel,
                                     survival_rate = rearing_survival$inchannel[23, , drop = FALSE],
@@ -373,7 +392,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                     floodplain_juveniles = lower_sac_trib_fish$floodplain,
                                     floodplain_survival_rate = rearing_survival$floodplain[23, , drop = FALSE],
                                     floodplain_growth = growth_rates_floodplain,
-                                    weeks_flooded = weeks_flooded[23, month, year])
+                                    weeks_flooded = ..params$weeks_flooded[23, month, year])
 
         juveniles[23, ] <- lower_sac_trib_rear$inchannel + lower_sac_trib_rear$floodplain
 
@@ -394,7 +413,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                floodplain_juveniles = lower_sac_fish$floodplain,
                                floodplain_survival_rate = rearing_survival$floodplain[24, ],
                                floodplain_growth = growth_rates_floodplain,
-                               weeks_flooded = rep(weeks_flooded[24, month, year], nrow(lower_sac_fish$inchannel)))
+                               weeks_flooded = rep(..params$weeks_flooded[24, month, year], nrow(lower_sac_fish$inchannel)))
 
         lower_sac_fish <- lower_sac_fish$inchannel + lower_sac_fish$floodplain
 
@@ -408,7 +427,15 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                        juveniles = juveniles[25:27, ],
                                        inchannel_habitat = habitat$inchannel[25:27],
                                        floodplain_habitat = habitat$floodplain[25:27],
-                                       prop_pulse_flows =  ..params$prop_pulse_flows[25:27, ])
+                                       prop_pulse_flows =  ..params$prop_pulse_flows[25:27, ],
+                                       .pulse_movement_intercept = ..params$.pulse_movement_intercept,
+                                       .pulse_movement_proportion_pulse = ..params$.pulse_movement_proportion_pulse,
+                                       .pulse_movement_medium = ..params$.pulse_movement_medium,
+                                       .pulse_movement_large = ..params$.pulse_movement_large,
+                                       .pulse_movement_vlarge = ..params$.pulse_movement_vlarge,
+                                       .pulse_movement_medium_pulse = ..params$.pulse_movement_medium_pulse,
+                                       .pulse_movement_large_pulse = ..params$.pulse_movement_large_pulse,
+                                       .pulse_movement_very_large_pulse = ..params$.pulse_movement_very_large_pulse)
 
         south_delta_trib_rear <- rear(juveniles = south_delta_trib_fish$inchannel,
                                       survival_rate = rearing_survival$inchannel[25:27, ],
@@ -416,7 +443,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                       floodplain_juveniles = south_delta_trib_fish$floodplain,
                                       floodplain_survival_rate = rearing_survival$floodplain[25:27, ],
                                       floodplain_growth = growth_rates_floodplain,
-                                      weeks_flooded = weeks_flooded[25:27, month, year])
+                                      weeks_flooded = ..params$weeks_flooded[25:27, month, year])
 
         juveniles[25:27, ] <- south_delta_trib_rear$inchannel + south_delta_trib_rear$floodplain
 
@@ -431,7 +458,15 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                        juveniles = juveniles[28:30, ],
                                        inchannel_habitat = habitat$inchannel[28:30],
                                        floodplain_habitat = habitat$floodplain[28:30],
-                                       prop_pulse_flows =  ..params$prop_pulse_flows[28:30, ])
+                                       prop_pulse_flows =  ..params$prop_pulse_flows[28:30, ],
+                                       .pulse_movement_intercept = ..params$.pulse_movement_intercept,
+                                       .pulse_movement_proportion_pulse = ..params$.pulse_movement_proportion_pulse,
+                                       .pulse_movement_medium = ..params$.pulse_movement_medium,
+                                       .pulse_movement_large = ..params$.pulse_movement_large,
+                                       .pulse_movement_vlarge = ..params$.pulse_movement_vlarge,
+                                       .pulse_movement_medium_pulse = ..params$.pulse_movement_medium_pulse,
+                                       .pulse_movement_large_pulse = ..params$.pulse_movement_large_pulse,
+                                       .pulse_movement_very_large_pulse = ..params$.pulse_movement_very_large_pulse)
 
         san_joaquin_trib_rear <- rear(juveniles = san_joaquin_trib_fish$inchannel,
                                       survival_rate = rearing_survival$inchannel[28:30, ],
@@ -439,7 +474,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                       floodplain_juveniles = san_joaquin_trib_fish$floodplain,
                                       floodplain_survival_rate = rearing_survival$floodplain[28:30, ],
                                       floodplain_growth = growth_rates_floodplain,
-                                      weeks_flooded = weeks_flooded[28:30, month, year])
+                                      weeks_flooded = ..params$weeks_flooded[28:30, month, year])
 
         juveniles[28:30, ] <- san_joaquin_trib_rear$inchannel + san_joaquin_trib_rear$floodplain
 
@@ -458,7 +493,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                  floodplain_juveniles = san_joaquin_fish$floodplain,
                                  floodplain_survival_rate = rearing_survival$floodplain[31, ],
                                  floodplain_growth = growth_rates_floodplain,
-                                 weeks_flooded = rep(weeks_flooded[31, month, year], nrow(san_joaquin_fish$inchannel)))
+                                 weeks_flooded = rep(..params$weeks_flooded[31, month, year], nrow(san_joaquin_fish$inchannel)))
 
         san_joaquin_fish <- san_joaquin_fish$inchannel + san_joaquin_fish$floodplain
 

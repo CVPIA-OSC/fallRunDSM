@@ -16,8 +16,7 @@ get_habitat <- function(year, month,
                         floodplain_habitat,
                         sutter_habitat,
                         yolo_habitat,
-                        north_delta_habitat,
-                        south_delta_habitat) {
+                        delta_habitat) {
   # set monthly habitat values
   ic_habitat <- if (month < 4) inchannel_habitat_fry[ , month, year] else inchannel_habitat_juvenile[ , month, year]
   floodplain_activation <- matrix(0, nrow = 31, ncol = 12)
