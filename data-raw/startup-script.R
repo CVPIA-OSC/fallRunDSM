@@ -1,30 +1,28 @@
+
+# install required libraries
+remotes::install_github("CVPIA-OSC/DSMflow") # main branch
+remotes::install_github("CVPIA-OSC/DSMtemperature") # main
+remotes::install_github("CVPIA-OSC/DSMhabitat") #
+remotes::install_github("CVPIA-OSC/DSMscenario@main")
+
 library(tidyverse)
-library(DSMscenario)
-library(tictoc)
-
 library(parallel)
+library(remotes)
+library(DSMscenario)
+# set up for parallel processing
 cores <- detectCores() - 1
-# check what version of packagea are installed
-# use packageVersion() to check version of package installed
 
-# load data
-list2env(load_baseline_data(), .GlobalEnv)
-
-fallRunDSM::params
-
-fall_run_seeds <- fall_run_model(mode = "seed")
-
-fall_run_run <- fall_run_model(mode = "simulate", seeds = fall_run_seeds)
-
+# model run --------------
+# seed and run a model
 run_model <- function(scenario = NULL) {
   fall_run_seeds <- fall_run_model(mode = "seed")
   fall_run_model(scenario = scenario, mode = "simulate", seeds = fall_run_seeds)
 }
 
-# set the seeds
-fall_run_seeds <- fall_run_model(mode = "seed")
+test_run <- run_model()
 
-base_runs <- parallel::mclapply(X = 1:10, run_model, mc.cores = cores)
+# set the seeds
+base_runs <- parallel::pvec(1:10, run_model, mc.cores = 1)
 
 base_runs <- lapply(X = 1:2, run_model)
 
@@ -117,23 +115,6 @@ biomass_results %>%
   mutate(diff = `scenario one` - base) %>%
   filter(diff < 0) %>% View()
 
-
-
-
-
-
-
-# get library support needed to run the code
-clusterEvalQ(cl,library(MASS))
-# put objects in place that might be needed for the code
-myData <- data.frame(x=1:10, y=rnorm(10))
-clusterExport(cl,c("myData"))
-# Set a different seed on each member of the cluster (just in case)
-clusterSetRNGStream(cl)
-#... then parallel replicate...
-parSapply(cl, 1:10000, function(i,...) { x <- rnorm(10); mean(x)/sd(x) } )
-#stop the cluster
-stopCluster(cl)
 
 
 
