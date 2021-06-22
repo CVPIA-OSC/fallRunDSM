@@ -11,6 +11,19 @@ get_rearing_survival_rates(
   year,
   month,
   scenario,
+  avg_temp,
+  avg_temp_delta,
+  prob_strand_early,
+  prob_strand_late,
+  proportion_diverted,
+  total_diverted,
+  delta_proportion_diverted,
+  delta_total_diverted,
+  weeks_flooded,
+  prop_high_predation,
+  contact_points,
+  delta_contact_points,
+  delta_prop_high_predation,
   ..surv_juv_rear_int,
   ..surv_juv_rear_contact_points,
   ..surv_juv_rear_prop_diversions,
@@ -18,7 +31,22 @@ get_rearing_survival_rates(
   ..surv_juv_bypass_int,
   ..surv_juv_delta_int,
   ..surv_juv_delta_contact_points,
-  ..surv_juv_delta_total_diverted
+  ..surv_juv_delta_total_diverted,
+  .surv_juv_rear_avg_temp_thresh,
+  .surv_juv_rear_high_predation,
+  .surv_juv_rear_stranded,
+  .surv_juv_rear_medium,
+  .surv_juv_rear_large,
+  .surv_juv_rear_floodplain,
+  .surv_juv_bypass_avg_temp_thresh,
+  .surv_juv_bypass_high_predation,
+  .surv_juv_bypass_medium,
+  .surv_juv_bypass_large,
+  .surv_juv_delta_avg_temp_thresh,
+  .surv_juv_delta_high_predation,
+  .surv_juv_delta_prop_diverted,
+  .surv_juv_delta_medium,
+  .surv_juv_delta_large
 )
 }
 \arguments{
@@ -27,6 +55,52 @@ get_rearing_survival_rates(
 \item{month}{The simulation month, 1-8}
 
 \item{scenario}{The current scenario}
+
+\item{..surv_juv_rear_int}{TODO}
+
+\item{..surv_juv_rear_contact_points}{TODO}
+
+\item{..surv_juv_rear_prop_diversions}{TODO}
+
+\item{..surv_juv_rear_total_diversions}{TODO}
+
+\item{..surv_juv_bypass_int}{TODO}
+
+\item{..surv_juv_delta_int}{TODO}
+
+\item{..surv_juv_delta_contact_points}{TODO}
+
+\item{..surv_juv_delta_total_diverted}{TODO}
+
+\item{.surv_juv_rear_avg_temp_thresh}{TODO}
+
+\item{.surv_juv_rear_high_predation}{TODO}
+
+\item{.surv_juv_rear_stranded}{TODO}
+
+\item{.surv_juv_rear_medium}{TODO}
+
+\item{.surv_juv_rear_large}{TODO}
+
+\item{.surv_juv_rear_floodplain}{TODO}
+
+\item{.surv_juv_bypass_avg_temp_thresh}{TODO}
+
+\item{.surv_juv_bypass_high_predation}{TODO}
+
+\item{.surv_juv_bypass_medium}{TODO}
+
+\item{.surv_juv_bypass_large}{TODO}
+
+\item{.surv_juv_delta_avg_temp_thresh}{TODO}
+
+\item{.surv_juv_delta_high_predation}{TODO}
+
+\item{.surv_juv_delta_prop_diverted}{TODO}
+
+\item{.surv_juv_delta_medium}{TODO}
+
+\item{.surv_juv_delta_large}{TODO}
 }
 \description{
 Calculates the juvenile inchannel, floodplain, bypasses, and

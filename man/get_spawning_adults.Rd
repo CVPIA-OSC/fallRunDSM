@@ -13,7 +13,23 @@ get_spawning_adults(
   hatch_adults,
   mode,
   month_return_proportions = fallRunDSM::month_return_proportions,
-  ..surv_adult_enroute_int
+  prop_flow_natal,
+  south_delta_routed_watersheds,
+  cc_gates_days_closed,
+  gates_overtopped,
+  tisdale_bypass_watershed,
+  yolo_bypass_watershed,
+  migratory_temperature_proportion_over_20,
+  ..surv_adult_enroute_int,
+  .adult_stray_intercept,
+  .adult_stray_wild,
+  .adult_stray_natal_flow,
+  .adult_stray_cross_channel_gates_closed,
+  .adult_stray_prop_bay_trans,
+  .adult_stray_prop_delta_trans,
+  .adult_en_route_migratory_temp,
+  .adult_en_route_bypass_overtopped,
+  .adult_en_route_adult_harvest_rate
 )
 }
 \arguments{
@@ -24,6 +40,22 @@ get_spawning_adults(
 \item{hatch_adults}{total hatchery adults}
 
 \item{month_return_proportions}{the proportion of fish returning for each month}
+
+\item{..surv_adult_enroute_int}{TODO}
+
+\item{.adult_stray_intercept}{TODO}
+
+\item{.adult_stray_wild}{TODO}
+
+\item{.adult_stray_natal_flow}{TODO}
+
+\item{.adult_stray_cross_channel_gates_closed}{TODO}
+
+\item{.adult_stray_prop_bay_trans}{TODO}
+
+\item{.adult_stray_prop_delta_trans}{TODO}
+
+\item{.adult_en_route_adult_harvest_rate}{TODO}
 
 \item{seeds}{a value meant to be inherited to determine if model is in seeding stage or not}
 }

@@ -11,9 +11,9 @@ ocean_entry_success(
   migrants,
   month,
   avg_ocean_transition_month,
-  length = c(-0.0897309864, -0.0709704348, -0.0208590732, 0.0732620916),
+  .ocean_entry_success_length,
   ..ocean_entry_success_int = ..ocean_entry_success_int,
-  .months = 0.35
+  .ocean_entry_success_months
 )
 }
 \arguments{
@@ -23,9 +23,9 @@ ocean_entry_success(
 
 \item{avg_ocean_transition_month}{Variable representing the average month juveniles transition to the ocean}
 
-\item{length}{Variable representing the fork lengths for each size classes. \href{https://dsm-docs.s3-us-west-2.amazonaws.com/Satterthwaite_et_al_2014.pdf}{Satterthwaite et al. (2014)}}
-
 \item{..ocean_entry_success_int}{Intercept, source: Calibration (Varies by tributary )}
+
+\item{length}{Variable representing the fork lengths for each size classes. \href{https://dsm-docs.s3-us-west-2.amazonaws.com/Satterthwaite_et_al_2014.pdf}{Satterthwaite et al. (2014)}}
 
 \item{.month}{Coefficient for month variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/Satterthwaite_et_al_2014.pdf}{Satterthwaite et al. (2014)}}
 }

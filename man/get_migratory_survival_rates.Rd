@@ -10,19 +10,50 @@ IP-117068
 get_migratory_survival_rates(
   year,
   month,
+  cc_gates_prop_days_closed = cc_gates_prop_days_closed,
+  freeport_flows = freeport_flows,
+  vernalis_flows = vernalis_flows,
+  stockton_flows = stockton_flows,
+  vernalis_temps = vernalis_temps,
+  prisoners_point_temps = prisoners_point_temps,
+  CVP_exports = CVP_exports,
+  SWP_exports = SWP_exports,
+  upper_sacramento_flows = upper_sacramento_flows,
+  delta_inflow = delta_inflow,
+  avg_temp_delta = avg_temp_delta,
+  delta_proportion_diverted = delta_proportion_diverted,
+ 
+    .surv_juv_outmigration_sac_delta_intercept_one = .surv_juv_outmigration_sac_delta_intercept_one,
+ 
+    .surv_juv_outmigration_sac_delta_intercept_two = .surv_juv_outmigration_sac_delta_intercept_two,
+ 
+    .surv_juv_outmigration_sac_delta_intercept_three = .surv_juv_outmigration_sac_delta_intercept_three,
+ 
+    .surv_juv_outmigration_sac_delta_delta_flow = .surv_juv_outmigration_sac_delta_delta_flow,
+  .surv_juv_outmigration_sac_delta_avg_temp = .surv_juv_outmigration_sac_delta_avg_temp,
+ 
+    .surv_juv_outmigration_sac_delta_perc_diversions = .surv_juv_outmigration_sac_delta_perc_diversions,
+  .surv_juv_outmigration_sac_delta_medium = .surv_juv_outmigration_sac_delta_medium,
+  .surv_juv_outmigration_sac_delta_large = .surv_juv_outmigration_sac_delta_large,
   ..surv_juv_outmigration_sj_int = ..surv_juv_outmigration_sj_int,
   ..surv_juv_outmigration_sac_int_one = ..surv_juv_outmigration_sac_int_one,
  
     ..surv_juv_outmigration_sac_prop_diversions = ..surv_juv_outmigration_sac_prop_diversions,
  
     ..surv_juv_outmigration_sac_total_diversions = ..surv_juv_outmigration_sac_total_diversions,
-  ..surv_juv_outmigration_sac_int_two = ..surv_juv_outmigration_sac_int_two
+  ..surv_juv_outmigration_sac_int_two = ..surv_juv_outmigration_sac_int_two,
+  .surv_juv_outmigration_san_joquin_medium = .surv_juv_outmigration_san_joquin_medium,
+  .surv_juv_outmigration_san_joaquin_large = .surv_juv_outmigration_san_joaquin_large
 )
 }
 \arguments{
 \item{year}{The simulation year, 1-20}
 
 \item{month}{The simulation month, 1-8}
+
+\item{.surv_juv_outmigration_san_joquin_medium}{TODO}
+
+\item{.surv_juv_outmigration_san_joaquin_large}{TODO}
 }
 \description{
 Calculates the juvenile out migration survival rates in all
