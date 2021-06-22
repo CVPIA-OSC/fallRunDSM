@@ -172,6 +172,7 @@ params <- list(
   .surv_juv_bypass_high_predation = -0.122,
   .surv_juv_bypass_medium = 1.48,
   .surv_juv_bypass_large = 2.223,
+  .surv_juv_bypass_floodplain = 0.47,
   .surv_juv_delta_avg_temp_thresh = -0.717,
   .surv_juv_delta_high_predation = -0.122,
   .surv_juv_delta_prop_diverted = -3.51,
@@ -229,6 +230,8 @@ params <- list(
   prob_strand_early = DSMhabitat::prob_strand_early,
   prob_strand_late = DSMhabitat::prob_strand_late,
   prob_nest_scoured = DSMhabitat::prob_nest_scoured,
+
+
 
   # existing
 

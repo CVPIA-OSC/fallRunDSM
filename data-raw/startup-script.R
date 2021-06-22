@@ -10,6 +10,12 @@ cores <- detectCores() - 1
 # load data
 list2env(load_baseline_data(), .GlobalEnv)
 
+fallRunDSM::params
+
+fall_run_seeds <- fall_run_model(mode = "seed")
+
+fall_run_run <- fall_run_model(mode = "simulate", seeds = fall_run_seeds)
+
 run_model <- function(scenario = NULL) {
   fall_run_seeds <- fall_run_model(mode = "seed")
   fall_run_model(scenario = scenario, mode = "simulate", seeds = fall_run_seeds)

@@ -58,7 +58,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
   north_delta_fish <- matrix(0, nrow = 23, ncol = 4, dimnames = list(fallRunDSM::watershed_labels[1:23], fallRunDSM::size_class_labels))
   south_delta_fish <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
   juveniles_at_chipps <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
-  proportion_natural <- matrix(NA_real_, nrow = 31, ncol = 20, dimnames = list(fallRunDSM::watershed_labels, 1:20))
+  # proportion_natural <- matrix(NA_real_, nrow = 31, ncol = 20, dimnames = list(fallRunDSM::watershed_labels, 1:20))
 
   adults <- switch (mode,
                     "seed" = fallRunDSM::adult_seeds,
@@ -553,7 +553,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
     output$spawners[ , year] / (output$spawners[ , year + 1] + 1)
   })
 
-  viable <- spawn_change >= 1 & proportion_natural[ , -1] >= 0.9 & output$spawners[ , -1] >= 833
+  viable <- spawn_change >= 1 & output$proportion_natural[ , -1] >= 0.9 & output$spawners[ , -1] >= 833
 
   output$viability_metrics <- sapply(1:4, function(group) {
     colSums(viable[which(diversity_group == group), ])
