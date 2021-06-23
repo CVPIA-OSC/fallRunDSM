@@ -110,7 +110,9 @@ usethis::use_data(survival_betas, overwrite = TRUE)
 # 2019 Calibration Parameters ------------
 params <- list(
 
+  # items that were in the fall run package only
   hatchery_allocation = fallRunDSM::hatchery_allocation,
+  natural_adult_removal_rate = fallRunDSM::natural_adult_removal_rate,
   # adults
   .adult_stray_intercept = 3,
   .adult_stray_wild = -5.5,
