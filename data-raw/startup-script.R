@@ -1,139 +1,98 @@
+
+# install required libraries
+remotes::install_github("CVPIA-OSC/DSMflow@main") # main branch
+remotes::install_github("CVPIA-OSC/DSMtemperature@main") # main
+remotes::install_github("CVPIA-OSC/DSMhabitat@main") #
+remotes::install_github("CVPIA-OSC/DSMscenario@main")
+install.packages("doParallel")
+
 library(tidyverse)
-library(DSMscenario)
-library(tictoc)
-
 library(parallel)
-cores <- detectCores() - 1
-# check what version of packagea are installed
-# use packageVersion() to check version of package installed
+library(doParallel)
+library(remotes)
+library(fallRunDSM)
+# set up for parallel processing
+no_cores <- detectCores(logical = TRUE)
+cl <- makeCluster(no_cores-1)
+registerDoParallel(cl)
 
-# load data
-list2env(load_baseline_data(), .GlobalEnv)
-
-fallRunDSM::params
-
-fall_run_seeds <- fall_run_model(mode = "seed")
-
-fall_run_run <- fall_run_model(mode = "simulate", seeds = fall_run_seeds)
-
-run_model <- function(scenario = NULL) {
+# model run --------------
+# seed and run a model
+run_model <- function(...) {
   fall_run_seeds <- fall_run_model(mode = "seed")
-  fall_run_model(scenario = scenario, mode = "simulate", seeds = fall_run_seeds)
+  fall_run_model(scenario = DSMscenario::scenarios$NO_ACTION, mode = "simulate", seeds = fall_run_seeds)
 }
 
-# set the seeds
-fall_run_seeds <- fall_run_model(mode = "seed")
-
-base_runs <- parallel::mclapply(X = 1:10, run_model, mc.cores = cores)
-
-base_runs <- lapply(X = 1:2, run_model)
-
-base_runs <- replicate(10, {
+run_scenario7_model <- function(...) {
   fall_run_seeds <- fall_run_model(mode = "seed")
-  fall_run_model(mode = "simulate", seeds = fall_run_seeds)
-  })
+  fall_run_model(scenario = DSMscenario::scenarios$SEVEN, mode = "simulate", seeds = fall_run_seeds)
+}
 
-tic("scenario run")
-scenario_run <- replicate(10, {
-  fall_run_seeds <- fall_run_model(mode = "seed")
-  fall_run_model(scenario = DSMscenario::scenarios$ONE,
-                               mode = "simulate",
-                               seeds = fall_run_seeds)
-  })
-toc()
 
-base_run_spawn <- map_df(1:10, function(i) {
-  as_tibble(base_runs["spawners", i][[1]]) %>%
+clusterExport(cl, list('run_model',
+                       'run_scenario7_model',
+                       'fall_run_model',
+                       'natural_adult_removal_rate',
+                       'proportion_hatchery',
+                       'month_return_proportions',
+                       'survival_betas',
+                       'growth_rates',
+                       'growth_rates_floodplain',
+                       'mass_by_size_class',
+                       'cross_channel_stray_rate',
+                       'stray_rate',
+                       'adult_harvest_rate',
+                       'diversity_group'))
+
+system.time(
+  base_runs <- parLapply(cl, 1:250, fun = run_model)
+)
+
+system.time(
+  scenario_runs <- parLapply(cl, 1:250, fun = run_scenario7_model)
+)
+
+
+
+
+base_run_nat_spawn <- map_df(1:250, function(i) {
+  as_tibble(base_runs[[i]]$natural_spawners) %>%
     mutate(run = i,
            watershed = DSMscenario::watershed_labels) %>%
-    gather(year, spawner, -run, -watershed) %>%
+    gather(year, nat_spawners, -run, -watershed) %>%
     mutate(year = as.numeric(year))
 }) %>%
   mutate(scenario = "base")
 
-
-scenario_run_spawn <- map_df(1:10, function(i) {
-  as_tibble(scenario_run["spawners", i][[1]]) %>%
+scenario_run_nat_spawn <- map_df(1:250, function(i) {
+  as_tibble(scenario_runs[[i]]$natural_spawners) %>%
     mutate(run = i,
            watershed = DSMscenario::watershed_labels) %>%
-    gather(year, spawner, -run, -watershed) %>%
+    gather(year, nat_spawners, -run, -watershed) %>%
     mutate(year = as.numeric(year))
 }) %>%
-  mutate(scenario = "scenario one")
+  mutate(scenario = "scenario7")
 
-spawn_results <- bind_rows(
-  base_run_spawn,
-  scenario_run_spawn
-)
-
-spawn_results %>%
+base_run_nat_spawn %>%
   filter(watershed == "Upper Sacramento River") %>%
-  ggplot(aes(year, spawner, color = scenario, group = run)) + geom_line()
+  ggplot(aes(year, nat_spawners, group = run)) + geom_line(alpha=.1)
 
-
-
-base_run_biomass <- map_df(1:10, function(i) {
-  as_tibble(base_runs["juvenile_biomass", i][[1]]) %>%
-    mutate(run = i,
-           watershed = DSMscenario::watershed_labels) %>%
-    gather(year, biomass, -run, -watershed) %>%
-    mutate(year = as.numeric(year))
-}) %>%
-  mutate(scenario = "base")
-
-
-scenario_run_biomass <- map_df(1:10, function(i) {
-  as_tibble(scenario_run["juvenile_biomass", i][[1]]) %>%
-    mutate(run = i,
-           watershed = DSMscenario::watershed_labels) %>%
-    gather(year, biomass, -run, -watershed) %>%
-    mutate(year = as.numeric(year))
-}) %>%
-  mutate(scenario = "scenario one")
-
-biomass_results <- bind_rows(
-  base_run_biomass,
-  scenario_run_biomass
-)
-
-biomass_results %>%
+scenario_run_nat_spawn %>%
   filter(watershed == "Upper Sacramento River") %>%
-  mutate(group_name = paste(run, scenario)) %>%
-  ggplot(aes(year, biomass, color = scenario, group = group_name)) + geom_line()
+  ggplot(aes(year, nat_spawners, group = run)) + geom_line(alpha=.1)
 
-
-biomass_results %>%
-  group_by(watershed, scenario)
-
-
-
-biomass_results %>%
-  filter(year == 20) %>%
-  group_by(watershed, scenario) %>%
+nat_spawn_results <- bind_rows(
+  base_run_nat_spawn,
+  scenario_run_nat_spawn
+) %>%
+  group_by(year, watershed, scenario) %>%
   summarise(
-    avg_biomass = mean(biomass)
-  ) %>% ungroup() %>%
-  spread(scenario, avg_biomass) %>%
-  mutate(diff = `scenario one` - base) %>%
-  filter(diff < 0) %>% View()
+    avg_nat_spawners = mean(nat_spawners)
+  ) %>% ungroup()
 
-
-
-
-
-
-
-# get library support needed to run the code
-clusterEvalQ(cl,library(MASS))
-# put objects in place that might be needed for the code
-myData <- data.frame(x=1:10, y=rnorm(10))
-clusterExport(cl,c("myData"))
-# Set a different seed on each member of the cluster (just in case)
-clusterSetRNGStream(cl)
-#... then parallel replicate...
-parSapply(cl, 1:10000, function(i,...) { x <- rnorm(10); mean(x)/sd(x) } )
-#stop the cluster
-stopCluster(cl)
+nat_spawn_results %>%
+  filter(watershed == "Upper Sacramento River") %>%
+  ggplot(aes(year, avg_nat_spawners, color = scenario)) + geom_line()
 
 
 
