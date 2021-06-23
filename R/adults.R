@@ -16,12 +16,12 @@
 #' @export
 adult_stray <- function(wild, natal_flow, south_delta_watershed, cross_channel_gates_closed,
                         prop_bay_trans = 0, prop_delta_trans = 0,
-                        .intercept = 3,
-                        .wild = -5.5,
-                        .natal_flow = -1.99,
-                        .cross_channel_gates_closed = -0.174,
-                        .prop_bay_trans = 2.09,
-                        .prop_delta_trans = 2.89){
+                        .intercept = fallRunDSM::params$.adult_stray_intercept,
+                        .wild = fallRunDSM::params$.adult_stray_wild,
+                        .natal_flow = fallRunDSM::params$.adult_stray_natal_flow,
+                        .cross_channel_gates_closed = fallRunDSM::params$.adult_stray_cross_channel_gates_closed,
+                        .prop_bay_trans = fallRunDSM::params$.adult_stray_prop_bay_trans,
+                        .prop_delta_trans = fallRunDSM::params$.adult_stray_prop_delta_trans){
 
   boot::inv.logit(
     .intercept +
@@ -47,8 +47,8 @@ adult_stray <- function(wild, natal_flow, south_delta_watershed, cross_channel_g
 
 surv_adult_enroute <- function(migratory_temp, bypass_overtopped, adult_harvest,
                                ..surv_adult_enroute_int = 3,
-                               .migratory_temp = -0.26,
-                               .bypass_overtopped = -0.019) {
+                               .migratory_temp = fallRunDSM::params$.adult_en_route_migratory_temp,
+                               .bypass_overtopped = fallRunDSM::params$.adult_en_route_bypass_overtopped) {
 
   pmax(boot::inv.logit(..surv_adult_enroute_int +
                        .migratory_temp * migratory_temp +
@@ -62,7 +62,7 @@ surv_adult_enroute <- function(migratory_temp, bypass_overtopped, adult_harvest,
 #' @param .deg_day Coefficient for \code{deg_day} variable, source Colvin et al. (2018)
 #' @source IP-117068
 #' @export
-surv_adult_prespawn <- function(deg_day, ..surv_adult_prespawn_int = 3, .deg_day = -0.000669526){
+surv_adult_prespawn <- function(deg_day, ..surv_adult_prespawn_int = 3, .deg_day = fallRunDSM::params$.adult_prespawn_deg_day){
 
   boot::inv.logit(..surv_adult_prespawn_int + .deg_day * deg_day)
 }
