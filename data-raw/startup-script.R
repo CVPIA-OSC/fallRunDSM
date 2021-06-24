@@ -1,10 +1,10 @@
 
 # install required libraries
-remotes::install_github("CVPIA-OSC/DSMflow@main") # main branch
-remotes::install_github("CVPIA-OSC/DSMtemperature@main") # main
-remotes::install_github("CVPIA-OSC/DSMhabitat@main") #
+remotes::install_github("CVPIA-OSC/DSMflow@main")
+remotes::install_github("CVPIA-OSC/DSMtemperature@main")
+remotes::install_github("CVPIA-OSC/DSMhabitat@main")
 remotes::install_github("CVPIA-OSC/DSMscenario@main")
-install.packages("doParallel")
+install.packages("doParallel") # needed for parallel processing
 
 library(tidyverse)
 library(parallel)
@@ -12,29 +12,23 @@ library(doParallel)
 library(remotes)
 library(fallRunDSM)
 
-# set up for parallel processing
+# set up for parallel processing ----------------------------------
 no_cores <- detectCores(logical = TRUE)
 cl <- makeCluster(no_cores-1)
 registerDoParallel(cl)
 
 # model run --------------
 # seed and run a model
-run_model <- function(...) {
+run_model <- function(scenario=NULL) {
   fall_run_seeds <- fall_run_model(mode = "seed")
-  fall_run_model(scenario = DSMscenario::scenarios$NO_ACTION, mode = "simulate", seeds = fall_run_seeds)
+  fall_run_model(scenario = scenario, mode = "simulate", seeds = fall_run_seeds)
 }
 
-run_scenario7_model <- function(...) {
-  fall_run_seeds <- fall_run_model(mode = "seed")
-  fall_run_model(scenario = DSMscenario::scenarios$SEVEN, mode = "simulate", seeds = fall_run_seeds)
-}
-
-
-clusterExport(cl, list('run_model',
-                       'fall_run_model'))
+# register the functions for use in parallel mode
+clusterExport(cl, list('run_model', 'fall_run_model'))
 
 system.time(
-  base_runs <- parLapply(cl, 1:2, fun = run_model)
+  base_runs <- parLapply(cl, 1:2, fun = run_model, scenario = NULL)
 )
 
 system.time(
