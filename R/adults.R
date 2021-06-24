@@ -46,7 +46,7 @@ adult_stray <- function(wild, natal_flow, south_delta_watershed, cross_channel_g
 #' @export
 
 surv_adult_enroute <- function(migratory_temp, bypass_overtopped, adult_harvest,
-                               ..surv_adult_enroute_int = 3,
+                               ..surv_adult_enroute_int = fallRunDSM::params$..surv_adult_enroute_int,
                                .migratory_temp = fallRunDSM::params$.adult_en_route_migratory_temp,
                                .bypass_overtopped = fallRunDSM::params$.adult_en_route_bypass_overtopped) {
 
@@ -62,7 +62,9 @@ surv_adult_enroute <- function(migratory_temp, bypass_overtopped, adult_harvest,
 #' @param .deg_day Coefficient for \code{deg_day} variable, source Colvin et al. (2018)
 #' @source IP-117068
 #' @export
-surv_adult_prespawn <- function(deg_day, ..surv_adult_prespawn_int = 3, .deg_day = fallRunDSM::params$.adult_prespawn_deg_day){
+surv_adult_prespawn <- function(deg_day,
+                                ..surv_adult_prespawn_int = fallRunDSM::params$..surv_adult_prespawn_int,
+                                .deg_day = fallRunDSM::params$.adult_prespawn_deg_day){
 
   boot::inv.logit(..surv_adult_prespawn_int + .deg_day * deg_day)
 }
