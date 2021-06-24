@@ -141,7 +141,9 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                              yolo_habitat = ..params$yolo_habitat,
                              delta_habitat = ..params$delta_habitat)
 
-      rearing_survival <- get_rearing_survival_rates(year, month, scenario,
+      rearing_survival <- get_rearing_survival_rates(year, month,
+                                                     survival_adjustment = scenario_data$survival_adjustment,
+                                                     mode = mode,
                                                      avg_temp = ..params$avg_temp,
                                                      avg_temp_delta = ..params$avg_temp_delta,
                                                      prob_strand_early = ..params$prob_strand_early,

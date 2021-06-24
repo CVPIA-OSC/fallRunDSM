@@ -185,7 +185,9 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
 #' @param .surv_juv_delta_large TODO
 #' @source IP-117068
 #' @export
-get_rearing_survival_rates <- function(year, month, scenario,
+get_rearing_survival_rates <- function(year, month,
+                                       survival_adjustment,
+                                       mode,
                                        avg_temp,
                                        avg_temp_delta,
                                        prob_strand_early,
@@ -291,8 +293,10 @@ get_rearing_survival_rates <- function(year, month, scenario,
   river_surv <- matrix(unlist(rear_surv[ , 1]), ncol = 4, byrow = TRUE)
   flood_surv <- matrix(unlist(rear_surv[ , 2]), ncol = 4, byrow = TRUE)
 
-  if (!is.null(scenario)) {
-    survival_increase <- matrix(0, nrow = 31, ncol = 4)
+
+  if (mode != "seed") {
+    river_surv <- pmin(river_surv * survival_adjustment[, year], 1)
+    flood_surv <- pmin(flood_surv * survival_adjustment[, year], 1)
   }
 
   bp_surv <- surv_juv_bypass(max_temp_thresh = maxT25[22],
