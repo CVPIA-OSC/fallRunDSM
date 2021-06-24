@@ -627,8 +627,6 @@ get_migratory_survival_rates <- function(year, month,
   aveT20 <- rbinom(31, 1, boot::inv.logit(-14.32252 + 0.72102 * avg_temp[ , month , year]))
   maxT25 <- rbinom(31, 1, boot::inv.logit(-23.1766 + 1.4566 * avg_temp[ , month, year]))
 
-  bp_survival_betas <- as.matrix(survival_betas[c(17, 22), c(3, 4, 5, 13, 14, 15)])
-
   delta_survival <- surv_juv_outmigration_delta(
     prop_DCC_closed = cc_gates_prop_days_closed[month],
     hor_barr = 0,
