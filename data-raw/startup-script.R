@@ -11,6 +11,7 @@ library(parallel)
 library(doParallel)
 library(remotes)
 library(fallRunDSM)
+
 # set up for parallel processing
 no_cores <- detectCores(logical = TRUE)
 cl <- makeCluster(no_cores-1)
@@ -30,22 +31,10 @@ run_scenario7_model <- function(...) {
 
 
 clusterExport(cl, list('run_model',
-                       'run_scenario7_model',
-                       'fall_run_model',
-                       'natural_adult_removal_rate',
-                       'proportion_hatchery',
-                       'month_return_proportions',
-                       'survival_betas',
-                       'growth_rates',
-                       'growth_rates_floodplain',
-                       'mass_by_size_class',
-                       'cross_channel_stray_rate',
-                       'stray_rate',
-                       'adult_harvest_rate',
-                       'diversity_group'))
+                       'fall_run_model'))
 
 system.time(
-  base_runs <- parLapply(cl, 1:250, fun = run_model)
+  base_runs <- parLapply(cl, 1:2, fun = run_model)
 )
 
 system.time(
