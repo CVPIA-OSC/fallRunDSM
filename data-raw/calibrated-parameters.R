@@ -110,7 +110,21 @@ usethis::use_data(survival_betas, overwrite = TRUE)
 # 2019 Calibration Parameters ------------
 params <- list(
 
+  # items that were in dsm package
   hatchery_allocation = fallRunDSM::hatchery_allocation,
+  natural_adult_removal_rate = fallRunDSM::natural_adult_removal_rate,
+  proportion_hatchery = fallRunDSM::proportion_hatchery,
+  month_return_proportions = fallRunDSM::month_return_proportions,
+  survival_betas = fallRunDSM::survival_betas,
+  growth_rates = fallRunDSM::growth_rates,
+  growth_rates_floodplain = fallRunDSM::growth_rates_floodplain,
+  mass_by_size_class = fallRunDSM::mass_by_size_class,
+  cross_channel_stray_rate = fallRunDSM::cross_channel_stray_rate,
+  stray_rate = fallRunDSM::stray_rate,
+  adult_harvest_rate = fallRunDSM::adult_harvest_rate,
+  diversity_group = fallRunDSM::diversity_group,
+
+
   # adults
   .adult_stray_intercept = 3,
   .adult_stray_wild = -5.5,
@@ -135,12 +149,12 @@ params <- list(
   .pulse_movement_large_pulse = -0.44778,
   .pulse_movement_very_large_pulse = 0.329,
 
-  spawn_success_sex_ratio = 0.5,
-  spawn_success_redd_size = 9.29,
-  spawn_success_fecundity = 5522,
+  .spawn_success_sex_ratio = 0.5,
+  .spawn_success_redd_size = 9.29,
+  .spawn_success_fecundity = 5522,
 
-  surv_egg_to_fry_proportion_natural = 0.533,
-  surv_egg_to_fry_scour = -0.655,
+  .surv_egg_to_fry_proportion_natural = 0.533,
+  .surv_egg_to_fry_scour = -0.655,
 
   .surv_juv_outmigration_sac_delta_intercept_one = -3.5,
   .surv_juv_outmigration_sac_delta_intercept_two =  0.3,
