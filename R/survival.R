@@ -23,16 +23,16 @@
 surv_juv_rear <- function(max_temp_thresh, avg_temp_thresh, high_predation,
                           contact_points, prop_diversions, total_diversions,
                           stranded, weeks_flooded,
-                          ..surv_juv_rear_int = 3.5,
-                          .avg_temp_thresh = -0.717,
-                          .high_predation = -0.122,
-                          ..surv_juv_rear_contact_points = -0.0068,
-                          ..surv_juv_rear_prop_diversions = -0.1755,
-                          ..surv_juv_rear_total_diversions = -0.0005,
-                          .stranded = -1.939,
-                          .medium = 1.48,
-                          .large = 2.223,
-                          .floodplain = 0.47){
+                          ..surv_juv_rear_int = fallRunDSM::params$..surv_juv_rear_int,
+                          .avg_temp_thresh = fallRunDSM::params$.surv_juv_rear_avg_temp_thresh,
+                          .high_predation = fallRunDSM::params$.surv_juv_rear_high_predation,
+                          ..surv_juv_rear_contact_points = fallRunDSM::params$..surv_juv_rear_contact_points,
+                          ..surv_juv_rear_prop_diversions = fallRunDSM::params$..surv_juv_rear_prop_diversions,
+                          ..surv_juv_rear_total_diversions = fallRunDSM::params$..surv_juv_rear_total_diversions,
+                          .stranded = fallRunDSM::params$.surv_juv_rear_stranded,
+                          .medium = fallRunDSM::params$.surv_juv_rear_medium,
+                          .large = fallRunDSM::params$.surv_juv_rear_large,
+                          .floodplain = fallRunDSM::params$.surv_juv_rear_floodplain){
   # determine the proportion of weeks when flooded vs not
   prop_ic <-ifelse(weeks_flooded > 0, (4 - weeks_flooded) / 4, 1)
   prop_fp <- 1 - prop_ic
@@ -84,12 +84,12 @@ surv_juv_rear <- function(max_temp_thresh, avg_temp_thresh, high_predation,
 #' @source IP-117068
 #' @export
 surv_juv_bypass <- function(max_temp_thresh, avg_temp_thresh, high_predation,
-                            ..surv_juv_bypass_int = -3.5,
-                            .avg_temp_thresh = -0.717,
-                            .high_predation = -0.122,
-                            .medium = 1.48,
-                            .large = 2.223,
-                            .floodplain = 0.47){
+                            ..surv_juv_bypass_int = fallRunDSM::params$..surv_juv_bypass_int,
+                            .avg_temp_thresh = fallRunDSM::params$.surv_juv_bypass_avg_temp_thresh,
+                            .high_predation = fallRunDSM::params$.surv_juv_bypass_high_predation,
+                            .medium = fallRunDSM::params$.surv_juv_bypass_medium,
+                            .large = fallRunDSM::params$.surv_juv_bypass_large,
+                            .floodplain = fallRunDSM::params$.surv_juv_bypass_floodplain){
 
   base_score <- ..surv_juv_bypass_int + .floodplain +
                 .avg_temp_thresh * avg_temp_thresh +
@@ -123,14 +123,14 @@ surv_juv_bypass <- function(max_temp_thresh, avg_temp_thresh, high_predation,
 #' @export
 surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_predation, contact_points,
                            prop_diverted, total_diverted,
-                           ..surv_juv_delta_int = 1.4,
-                           .avg_temp_thresh = -0.717,
-                           .high_predation = -0.122,
-                           ..surv_juv_delta_contact_points = 0.0358 * -0.189,
-                           .prop_diverted = -3.51,
-                           ..surv_juv_delta_total_diverted = 0.5 * -0.0021,
-                           .medium = 1.48,
-                           .large = 2.223){
+                           ..surv_juv_delta_int = fallRunDSM::params$..surv_juv_delta_int,
+                           .avg_temp_thresh = fallRunDSM::params$.surv_juv_delta_avg_temp_thresh,
+                           .high_predation = fallRunDSM::params$.surv_juv_delta_high_predation,
+                           ..surv_juv_delta_contact_points = fallRunDSM::params$..surv_juv_delta_contact_points,
+                           .prop_diverted = fallRunDSM::params$.surv_juv_delta_prop_diverted,
+                           ..surv_juv_delta_total_diverted = fallRunDSM::params$..surv_juv_delta_total_diverted,
+                           .medium = fallRunDSM::params$.surv_juv_delta_medium,
+                           .large =  fallRunDSM::params$.surv_juv_delta_large){
   # north delta
   north_delta_surv <- rep((avg_temp <= 16.5)*.42 + (avg_temp > 16.5 & avg_temp < 19.5) * 0.42 / (1.55^(avg_temp-15.5)) + (avg_temp > 19.5 & avg_temp < 25)*0.035,4)
 
@@ -278,16 +278,16 @@ get_rearing_survival_rates <- function(year, month,
                   total_diversions = total_diverted[x],
                   stranded = ws_strand[x],
                   weeks_flooded = weeks_flood[x],
-                  ..surv_juv_rear_int = ..surv_juv_rear_int[x],
-                  ..surv_juv_rear_contact_points = ..surv_juv_rear_contact_points,
-                  ..surv_juv_rear_prop_diversions = ..surv_juv_rear_prop_diversions,
-                  ..surv_juv_rear_total_diversions = ..surv_juv_rear_total_diversions,
-                  .avg_temp_thresh = .surv_juv_rear_avg_temp_thresh,
-                  .high_predation = .surv_juv_rear_high_predation,
-                  .stranded = .surv_juv_rear_stranded,
-                  .medium = .surv_juv_rear_medium,
-                  .large = .surv_juv_rear_large,
-                  .floodplain = .surv_juv_rear_floodplain)
+                  ..surv_juv_rear_int = fallRunDSM::params$..surv_juv_rear_int[x],
+                  ..surv_juv_rear_contact_points = fallRunDSM::params$..surv_juv_rear_contact_points,
+                  ..surv_juv_rear_prop_diversions = fallRunDSM::params$..surv_juv_rear_prop_diversions,
+                  ..surv_juv_rear_total_diversions = fallRunDSM::params$..surv_juv_rear_total_diversions,
+                  .avg_temp_thresh = fallRunDSM::params$.surv_juv_rear_avg_temp_thresh,
+                  .high_predation = fallRunDSM::params$.surv_juv_rear_high_predation,
+                  .stranded = fallRunDSM::params$.surv_juv_rear_stranded,
+                  .medium = fallRunDSM::params$.surv_juv_rear_medium,
+                  .large = fallRunDSM::params$.surv_juv_rear_large,
+                  .floodplain = fallRunDSM::params$.surv_juv_rear_floodplain)
   }))
 
   river_surv <- matrix(unlist(rear_surv[ , 1]), ncol = 4, byrow = TRUE)
@@ -320,14 +320,14 @@ get_rearing_survival_rates <- function(year, month,
                                    contact_points = delta_num_contact_points,
                                    prop_diverted = delta_proportion_diverted,
                                    total_diverted = delta_total_diverted,
-                                   ..surv_juv_delta_int = ..surv_juv_delta_int,
-                                   ..surv_juv_delta_contact_points = ..surv_juv_delta_contact_points,
-                                   ..surv_juv_delta_total_diverted = ..surv_juv_delta_total_diverted,
-                                   .avg_temp_thresh = .surv_juv_delta_avg_temp_thresh,
-                                   .high_predation = .surv_juv_delta_high_predation,
-                                   .prop_diverted = .surv_juv_delta_prop_diverted,
-                                   .medium = .surv_juv_delta_medium,
-                                   .large = .surv_juv_delta_large)
+                                   ..surv_juv_delta_int = fallRunDSM::params$..surv_juv_delta_int,
+                                   ..surv_juv_delta_contact_points = fallRunDSM::params$..surv_juv_delta_contact_points,
+                                   ..surv_juv_delta_total_diverted = fallRunDSM::params$..surv_juv_delta_total_diverted,
+                                   .avg_temp_thresh = fallRunDSM::params$.surv_juv_delta_avg_temp_thresh,
+                                   .high_predation = fallRunDSM::params$.surv_juv_delta_high_predation,
+                                   .prop_diverted = fallRunDSM::params$.surv_juv_delta_prop_diverted,
+                                   .medium = fallRunDSM::params$.surv_juv_delta_medium,
+                                   .large = fallRunDSM::params$.surv_juv_delta_large)
 
   return(
     list(
@@ -359,8 +359,9 @@ surv_juv_outmigration_sac <- function(flow_cms){
 #' @param .large parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
 #' @source IP-117068
 #' @export
-surv_juv_outmigration_san_joaquin <- function(..surv_juv_outmigration_sj_int = -3.5,
-                                              .medium = 1.48, .large = 2.223){
+surv_juv_outmigration_san_joaquin <- function(..surv_juv_outmigration_sj_int = fallRunDSM::params$..surv_juv_outmigration_sj_int,
+                                              .medium = fallRunDSM::params$.surv_juv_outmigration_san_joaquin_medium,
+                                              .large = fallRunDSM::params$.surv_juv_outmigration_san_joaquin_large){
 
   s <- boot::inv.logit(..surv_juv_outmigration_sj_int)
   m <- boot::inv.logit(..surv_juv_outmigration_sj_int + .medium)
@@ -385,14 +386,14 @@ surv_juv_outmigration_san_joaquin <- function(..surv_juv_outmigration_sj_int = -
 #' @source IP-117068
 #' @export
 surv_juv_outmigration_sac_delta <- function(delta_flow, avg_temp, perc_diversions,
-                                            .intercept_one = -3.5,
-                                            .intercept_two =  0.3,
-                                            .intercept_three = -3.5,
-                                            .delta_flow = 0.0013,
-                                            .avg_temp = 0.386,
-                                            .perc_diversions = -0.033,
-                                            .medium = 1.48,
-                                            .large = 2.223){
+                                            .intercept_one = fallRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_one,
+                                            .intercept_two = fallRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_two,
+                                            .intercept_three = fallRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_three,
+                                            .delta_flow = fallRunDSM::params$.surv_juv_outmigration_sac_delta_delta_flow,
+                                            .avg_temp = fallRunDSM::params$.surv_juv_outmigration_sac_delta_avg_temp,
+                                            .perc_diversions = fallRunDSM::params$.surv_juv_outmigration_sac_delta_perc_diversions,
+                                            .medium = fallRunDSM::params$.surv_juv_outmigration_sac_delta_medium,
+                                            .large = fallRunDSM::params$.surv_juv_outmigration_sac_delta_large){
 
   model_weight <- 1/3
 
@@ -611,21 +612,21 @@ get_migratory_survival_rates <- function(year, month,
                                          avg_temp_delta = avg_temp_delta,
                                          avg_temp = avg_temp,
                                          delta_proportion_diverted = delta_proportion_diverted,
-                                         .surv_juv_outmigration_sac_delta_intercept_one = .surv_juv_outmigration_sac_delta_intercept_one,
-                                         .surv_juv_outmigration_sac_delta_intercept_two = .surv_juv_outmigration_sac_delta_intercept_two,
-                                         .surv_juv_outmigration_sac_delta_intercept_three = .surv_juv_outmigration_sac_delta_intercept_three,
-                                         .surv_juv_outmigration_sac_delta_delta_flow = .surv_juv_outmigration_sac_delta_delta_flow,
-                                         .surv_juv_outmigration_sac_delta_avg_temp = .surv_juv_outmigration_sac_delta_avg_temp,
-                                         .surv_juv_outmigration_sac_delta_perc_diversions = .surv_juv_outmigration_sac_delta_perc_diversions,
-                                         .surv_juv_outmigration_sac_delta_medium = .surv_juv_outmigration_sac_delta_medium,
-                                         .surv_juv_outmigration_sac_delta_large = .surv_juv_outmigration_sac_delta_large,
-                                         ..surv_juv_outmigration_sj_int = ..surv_juv_outmigration_sj_int,
-                                         ..surv_juv_outmigration_sac_int_one = ..surv_juv_outmigration_sac_int_one,
-                                         ..surv_juv_outmigration_sac_prop_diversions = ..surv_juv_outmigration_sac_prop_diversions,
-                                         ..surv_juv_outmigration_sac_total_diversions = ..surv_juv_outmigration_sac_total_diversions,
-                                         ..surv_juv_outmigration_sac_int_two = ..surv_juv_outmigration_sac_int_two,
-                                         .surv_juv_outmigration_san_joquin_medium = .surv_juv_outmigration_san_joquin_medium,
-                                         .surv_juv_outmigration_san_joaquin_large = .surv_juv_outmigration_san_joaquin_large) {
+                                         .surv_juv_outmigration_sac_delta_intercept_one = fallRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_one,
+                                         .surv_juv_outmigration_sac_delta_intercept_two = fallRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_two,
+                                         .surv_juv_outmigration_sac_delta_intercept_three = fallRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_three,
+                                         .surv_juv_outmigration_sac_delta_delta_flow = fallRunDSM::params$.surv_juv_outmigration_sac_delta_delta_flow,
+                                         .surv_juv_outmigration_sac_delta_avg_temp = fallRunDSM::params$.surv_juv_outmigration_sac_delta_avg_temp,
+                                         .surv_juv_outmigration_sac_delta_perc_diversions = fallRunDSM::params$.surv_juv_outmigration_sac_delta_perc_diversions,
+                                         .surv_juv_outmigration_sac_delta_medium = fallRunDSM::params$.surv_juv_outmigration_sac_delta_medium,
+                                         .surv_juv_outmigration_sac_delta_large = fallRunDSM::params$.surv_juv_outmigration_sac_delta_large,
+                                         ..surv_juv_outmigration_sj_int = fallRunDSM::params$..surv_juv_outmigration_sj_int,
+                                         ..surv_juv_outmigration_sac_int_one = fallRunDSM::params$..surv_juv_outmigration_sac_int_one,
+                                         ..surv_juv_outmigration_sac_prop_diversions = fallRunDSM::params$..surv_juv_outmigration_sac_prop_diversions,
+                                         ..surv_juv_outmigration_sac_total_diversions = fallRunDSM::params$..surv_juv_outmigration_sac_total_diversions,
+                                         ..surv_juv_outmigration_sac_int_two = fallRunDSM::params$..surv_juv_outmigration_sac_int_two,
+                                         .surv_juv_outmigration_san_joquin_medium = fallRunDSM::params$.surv_juv_outmigration_san_joquin_medium,
+                                         .surv_juv_outmigration_san_joaquin_large = fallRunDSM::params$.surv_juv_outmigration_san_joaquin_large) {
 
 
   aveT20 <- rbinom(31, 1, boot::inv.logit(-14.32252 + 0.72102 * avg_temp[ , month , year]))
