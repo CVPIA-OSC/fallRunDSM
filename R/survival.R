@@ -9,7 +9,7 @@
 #' @param stranded variable representing stranding rate per watershed
 #' @param weeks_flooded variable representing total weeks flooded per watershed
 #' @param ..surv_juv_rear_int  intercept, source: calibration (varies by tributary)
-#' @param .avg_temp_thresh coefficient for avg_temp_thresh variable, source: \href{https://www.noaa.gov/sites/default/files/atoms/files/07354626766.pdf}{Marine and Chech (2004)}
+#' @param .avg_temp_thresh coefficient for avg_temp_thresh variable
 #' @param .high_predation coefficient for high_predation variable, source: \href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}
 #' @param ..surv_juv_rear_contact_points coefficient for contact_points variable, source: calibration
 #' @param ..surv_juv_rear_prop_diversions coefficient for prop_diversions variable, source: calibration

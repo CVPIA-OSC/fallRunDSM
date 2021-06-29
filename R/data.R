@@ -64,3 +64,12 @@
 
 #' @rdname growth_floodplain
 "growth_rates_floodplain"
+
+#' @title Model Parameters
+#' @description A list containing all parameters needed for the fallRunDSM model
+#' @details
+#' \itemize{
+#'   \item \strong{hatchery_allocation}: More details at \code{\link{hatchery_allocation}}
+#'   \item \strong{.avg_temp_thresh}: Coefficient for avg_temp_thresh variable, source: \href{https://www.noaa.gov/sites/default/files/atoms/files/07354626766.pdf}{Marine and Chech (2004)}
+#' }
+"params"

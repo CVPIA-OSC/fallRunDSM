@@ -6,7 +6,7 @@
 #' @param seeds The default value is NULL runs the model in seeding mode,
 #' returning a 31 by 25 matrix with the first four years of seeded adults. This
 #' returned value can be fed into the model again as the value for the seeds argument
-#' @param ..params parameters derived from calibration
+#' @param ..params parameters for model and submodels
 #' @source IP-117068
 #' @export
 fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibrate"),
@@ -16,7 +16,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
   if (mode == "simulate") {
     if (is.null(scenario)) {
-      # the do nothing scenario to force habitat degration
+      # the do nothing scenario to force habitat degradation
       scenario <- DSMscenario::scenarios$NO_ACTION
     }
 

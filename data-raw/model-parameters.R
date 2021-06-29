@@ -107,7 +107,7 @@ usethis::use_data(survival_betas, overwrite = TRUE)
 # )
 
 
-# 2019 Model Parameters ------------
+# 2019 Calibration Parameters ------------
 params <- list(
 
   # items that were in dsm package
