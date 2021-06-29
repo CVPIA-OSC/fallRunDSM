@@ -146,7 +146,7 @@
 #'   \item \code{.surv_juv_bypass_medium}
 #'   \item \code{.surv_juv_bypass_large}
 #'   \item \code{.surv_juv_bypass_floodplain}
-#'   \item \code{.surv_juv_delta_avg_temp_thresh}
+#'   \item \code{.surv_juv_delta_avg_temp_thresh} Coefficient for avg_temp_thresh variable, source: \href{https://www.noaa.gov/sites/default/files/atoms/files/07354626766.pdf}{Marine and Chech (2004)}
 #'   \item \code{.surv_juv_delta_high_predation}
 #'   \item \code{.surv_juv_delta_prop_diverted}
 #'   \item \code{.surv_juv_delta_medium}
@@ -203,5 +203,17 @@
 #'   \item \code{.pulse_movement_very_large_pulse}
 #' }
 #' @section Rearing
+#' \itemize{
+#'   \item \code{growth_rates}: More details at: \code{\link{growth_rates}
+#'   \item \code{growth_rates_floodplain}
+#'   \item \code{weeks_flooded}
+#'
+#' }
+#' @section Ocean Entry Success
+#' \itemize{
+#'   \item \code{.ocean_entry_success_length}
+#'   \item \code{..ocean_entry_success_int}
+#'   \item \code{.ocean_entry_success_months}
+#' }
 #'
 "params"
