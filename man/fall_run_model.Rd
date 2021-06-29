@@ -21,7 +21,7 @@ fall_run_model(
 returning a 31 by 25 matrix with the first four years of seeded adults. This
 returned value can be fed into the model again as the value for the seeds argument}
 
-\item{..params}{parameters derived from calibration}
+\item{..params}{parameters for model and submodels}
 }
 \description{
 Fall Run Chinook life cycle model used for CVPIA's Structured

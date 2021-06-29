@@ -15,8 +15,7 @@ get_habitat(
   floodplain_habitat,
   sutter_habitat,
   yolo_habitat,
-  north_delta_habitat,
-  south_delta_habitat
+  delta_habitat
 )
 }
 \arguments{
