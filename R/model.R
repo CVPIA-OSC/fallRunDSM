@@ -106,8 +106,8 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
       proportion_natural = 1 - ..params$proportion_hatchery,
       scour = ..params$prob_nest_scoured,
       temperature_effect = ..params$mean_egg_temp_effect,
-      .proportion_natural = ..params$.surv_egg_to_fry_proportion_natural,
-      .scour = ..params$.surv_egg_to_fry_scour,
+      .proportion_natural = ..params$surv_egg_to_fry_proportion_natural,
+      .scour = ..params$surv_egg_to_fry_scour,
       ..surv_egg_to_fry_int = ..params$..surv_egg_to_fry_int
     )
 
@@ -128,9 +128,9 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                egg_to_fry_survival = egg_to_fry_surv,
                                prob_scour = ..params$prob_nest_scoured,
                                spawn_habitat = min_spawn_habitat,
-                               sex_ratio = ..params$.spawn_success_sex_ratio,
-                               redd_size = ..params$.spawn_success_redd_size,
-                               fecundity = ..params$.spawn_success_fecundity)
+                               sex_ratio = ..params$spawn_success_sex_ratio,
+                               redd_size = ..params$spawn_success_redd_size,
+                               fecundity = ..params$spawn_success_fecundity)
 
     for (month in 1:8) {
       habitat <- get_habitat(year, month,
