@@ -23,13 +23,13 @@ A list containing all parameters needed for running the \code{\link{fall_run_mod
 \section{Spawning Adults}{
 
 \itemize{
-  \item \code{prop_flow_natal}
+  \item \code{prop_flow_natal}: More details at \code{\link[DSMflow]{proportion_flow_natal}}
   \item \code{south_delta_routed_watersheds}
   \item \code{cc_gates_days_closed}
   \item \code{gates_overtopped}
   \item \code{tisdale_bypass_watershed}
   \item \code{yolo_bypass_watershed}
-  \item \code{migratory_temperature_proportion_over_20}
+  \item \code{migratory_temperature_proportion_over_20}: More details at \code{\link[DSMtemperature]{migratory_temperature_proportion_over_20}}
   \item \code{..surv_adult_enroute_int}
   \item \code{.adult_stray_intercept}
   \item \code{.adult_stray_wild}
@@ -98,7 +98,7 @@ A list containing all parameters needed for running the \code{\link{fall_run_mod
   \item \code{.surv_juv_bypass_medium}
   \item \code{.surv_juv_bypass_large}
   \item \code{.surv_juv_bypass_floodplain}
-  \item \code{.surv_juv_delta_avg_temp_thresh}
+  \item \code{.surv_juv_delta_avg_temp_thresh} Coefficient for avg_temp_thresh variable, source: \href{https://www.noaa.gov/sites/default/files/atoms/files/07354626766.pdf}{Marine and Chech (2004)}
   \item \code{.surv_juv_delta_high_predation}
   \item \code{.surv_juv_delta_prop_diverted}
   \item \code{.surv_juv_delta_medium}
@@ -140,8 +140,42 @@ A list containing all parameters needed for running the \code{\link{fall_run_mod
 }
 }
 
-\section{Rearing}{
-NA
+\section{Delta Routing and Rearing}{
+
+\itemize{
+  \item \code{freeport_flows}
+  \item \code{cc_gates_days_closed}
+  \item \code{growth_rates}
+}
+}
+
+\section{Routing}{
+
+\itemize{
+  \item \code{prop_pulse_flows}
+  \item \code{proportion_flow_bypass}
+  \item \code{.pulse_movement_intercept}
+  \item \code{.pulse_movement_proportion_pulse}
+  \item \code{.pulse_movement_medium}
+  \item \code{.pulse_movement_large}
+  \item \code{.pulse_movement_vlarge}
+  \item \code{.pulse_movement_medium_pulse}
+  \item \code{.pulse_movement_large_pulse}
+  \item \code{.pulse_movement_very_large_pulse}
+}
+}
+
+\section{NA}{
+
+\itemize{
+  \item \code{spawning_habitat}: More details at \code{\link[DSMhabitat]{fr_spawn}}
+  \item \code{inchannel_habitat_fry}: More details at \code{\link[DSMhabitat]{}}
+  \item \code{inchannel_habitat_juvenile}: More details at \code{\link[DSMhabitat]{}}
+  \item \code{floodplain_habitat}: More details at \code{\link[DSMhabitat]{}}
+  \item \code{sutter_habitat}: More details at \code{\link[DSMhabitat]{}}
+  \item \code{yolo_habitat}: More details at \code{\link[DSMhabitat]{}}
+  \item \code{delta_habitat}: More details at \code{\link[DSMhabitat]{}}
+}
 }
 
 \keyword{datasets}

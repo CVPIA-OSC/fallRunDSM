@@ -77,13 +77,13 @@
 #' }
 #' @section Spawning Adults:
 #' \itemize{
-#'   \item \code{prop_flow_natal}
+#'   \item \code{prop_flow_natal}: More details at \code{\link[DSMflow]{proportion_flow_natal}}
 #'   \item \code{south_delta_routed_watersheds}
 #'   \item \code{cc_gates_days_closed}
 #'   \item \code{gates_overtopped}
 #'   \item \code{tisdale_bypass_watershed}
 #'   \item \code{yolo_bypass_watershed}
-#'   \item \code{migratory_temperature_proportion_over_20}
+#'   \item \code{migratory_temperature_proportion_over_20}: More details at \code{\link[DSMtemperature]{migratory_temperature_proportion_over_20}}
 #'   \item \code{..surv_adult_enroute_int}
 #'   \item \code{.adult_stray_intercept}
 #'   \item \code{.adult_stray_wild}
@@ -183,13 +183,13 @@
 #'   \item \code{.surv_juv_outmigration_san_joquin_medium}
 #'   \item \code{.surv_juv_outmigration_san_joaquin_large}
 #' }
-#' @section Delta Routing and Rearing
+#' @section Delta Routing and Rearing:
 #' \itemize{
 #'   \item \code{freeport_flows}
 #'   \item \code{cc_gates_days_closed}
 #'   \item \code{growth_rates}
 #' }
-#' @section Routing
+#' @section Routing:
 #' \itemize{
 #'   \item \code{prop_pulse_flows}
 #'   \item \code{proportion_flow_bypass}
@@ -202,7 +202,7 @@
 #'   \item \code{.pulse_movement_large_pulse}
 #'   \item \code{.pulse_movement_very_large_pulse}
 #' }
-#' @section Rearing
+#' @section Rearing:
 #' \itemize{
 #'   \item \code{growth_rates}: More details at: \code{\link{growth_rates}
 #'   \item \code{growth_rates_floodplain}
