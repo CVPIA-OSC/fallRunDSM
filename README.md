@@ -1,4 +1,4 @@
-# Fall Chinook Salmon Science Iintegration Team Model
+# Fall Chinook Salmon Science Integration Team Model
 
 ## Primary Authors:                                                     
                                                                      
@@ -61,6 +61,11 @@ fallRunDSM::fall_run_model(scenario = scenario_df,
 ```
 
 ## Details on Supporting Data
+
+### Dependencies
+The `fallRunDSM` package uses data from several other packages within the [CVPIA Open Science Collaborative](https://github.com/CVPIA-OSC). These relationships are visualized in the dependency graph below. 
+
+<img src="man/figures/dependencyChain.svg" width="100%"/>
 
 ### Flow, Habitat, and Temperature Data
 
