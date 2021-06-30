@@ -23,8 +23,8 @@ IP-117068
 ## Usage
 
 ### Package Installation
-
-Describe install from github and remotes package
+`fallRunDSM` works as part of a larger set of packages developed by `CVPIA-OSC`. 
+To install `fallRunDSM` and additional `CVPIA-OSC` packages use the `remotes::install_github()` function. 
 
 ```r
 remotes::install_github("CVPIA-OSC/DSMflow")
@@ -36,8 +36,11 @@ remotes::install_github("CVPIA-OSC/fallRunDSM")
 ```
 
 ### Run Model
+The fall run DSM is a life cycle model with a monthly time step. Running the model 
+simulates Fall Run Chinook population dynamics across 31 watersheds in California over a 20 year period. 
+View the `fall_run_model()` documenation for addtional information on running the `fall_run_model`.
 
-Run model with SIT defined scenaro 1:
+The following code runs the fall run model with SIT defined scenaro 1 and `fall_run_seeds`:
 ```r
 fall_run_seeds <- fallRunDSM::fall_run_model(mode = "seed")
 fallRunDSM::fall_run_model(scenario = DSMscenario::scenarios$ONE,
@@ -45,7 +48,7 @@ fallRunDSM::fall_run_model(scenario = DSMscenario::scenarios$ONE,
                            seeds = fall_run_seeds)
 ```
 
-Run model with custom scenaro:
+The following code runs the fall run model with a custom defined scenario and `fall_run_seeds`:
 ```r
 scenario_df <- data.frame(watershed = c("Upper Sacramento River", "Battle Creek"),
                           action = c(3, 2),
@@ -69,9 +72,11 @@ The `fallRunDSM` package uses data from several other packages within the [CVPIA
 
 ### Flow, Habitat, and Temperature Data
 
-`fallRunDSM::params` is composed using data objects from the following packages
-Describe top level description of purpose and sources of the data
-Provide links to package websites
+All data used in the `fallRunDSM` is passed in as a argument to `fall_run_model()` from a `fallRunDSM::params` data list. `fallRunDSM::params` is composed using data objects from the following packages:
+
+* **Flow Data**: View detailed documentation of flow data inputs at [DSMflow](https://cvpia-osc.github.io/DSMflow/). Flow inputs to the `fallRunDSM` are matrices generated using CALSIM data and are used to determine fish movement. 
+* **Habitat Data**: View detailed documentation of habitat data inputs at [DSMhabitat](https://cvpia-osc.github.io/DSMhabitat/). Habitat inputs to `fallRunDSM` are matrices based on expert opinion and modeled results for tributaries in the central valley. Habitat data informs the amount of fish that can spawn or rear in a given tributary. 
+* **Temperature Data**: View detailed documentation of temperature data inputs at [DSMtemperature](https://cvpia-osc.github.io/DSMtemperature/). Temperature inputs to `fallRunDSM` are matrices and are modeled based on NOAA air temperature data. Temperature data informs survival rates of fish. 
 
 ```r
 library(DSMflow)
@@ -81,14 +86,18 @@ library(DSMtemperature)
 
 ### Scenario Functionality
 
-Describe purpose of scenarios and the SIT has developed some and link to docs
+Scenario functionality within the `fallRunDSM` test our the effect of restoration actions on Fall run Chinook. 
+The [CVPIA SIT (Science Integration Team)](http://cvpia.scienceintegrationteam.com/) has developed restoration action portfolios. 
 
+There are seven predefined scenarios that were developed by the CVPIA SIT. Additional scenarios can be defined by creating a `scenario_df` that describes restoration actions preformed on tributaries over a number of years. For additional description on how to build a scenario view `r ?DSMscenario::load_scenario()` documentation. 
+ #TODO figure out link 
 ```r
 library(DSMscenario)
 ```
 
 ### Calibration Data
 
+GrandTab data is used to calibrate the fallRunDSM model.
 Describe calibration use (contains proxy years, grandtab data etc) readme for package to link and point to calibration notebook
 
 ```r 
