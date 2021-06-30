@@ -16,7 +16,7 @@ surv_adult_prespawn(
 \arguments{
 \item{deg_day}{Variable describing average degree days}
 
-\item{..surv_adult_prespawn_int}{Intercept, Source: Calibration Estimate}
+\item{..surv_adult_prespawn_int}{Intercept}
 
 \item{.deg_day}{Coefficient for \code{deg_day} variable, source Colvin et al. (2018)}
 }

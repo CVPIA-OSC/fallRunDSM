@@ -13,12 +13,12 @@
 #' @param migratory_temperature_proportion_over_20
 #' @param ..surv_adult_enroute_int TODO
 #' @param .adult_stray_intercept TODO
-#' @param .adult_stray_wild TODO
-#' @param .adult_stray_natal_flow TODO
-#' @param .adult_stray_cross_channel_gates_closed TODO
-#' @param .adult_stray_prop_bay_trans TODO
-#' @param .adult_stray_prop_delta_trans TODO
-#' @param .adult_en_route_adult_harvest_rate TODO
+#' @param .adult_stray_wild  TODO
+#' @param .adult_stray_natal_flow  TODO
+#' @param .adult_stray_cross_channel_gates_closed  TODO
+#' @param .adult_stray_prop_bay_trans  TODO
+#' @param .adult_stray_prop_delta_trans  TODO
+#' @param .adult_en_route_adult_harvest_rate  TODO
 #' @source IP-117068
 #' @export
 get_spawning_adults <- function(year, adults, hatch_adults, mode,

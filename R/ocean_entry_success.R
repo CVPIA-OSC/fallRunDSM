@@ -3,7 +3,7 @@
 #' @param migrants Variable representing the number of juveniles at golden gate bridge
 #' @param month Variable representing the current simulation month
 #' @param avg_ocean_transition_month Variable representing the average month juveniles transition to the ocean
-#' @param length Variable representing the fork lengths for each size classes. \href{https://dsm-docs.s3-us-west-2.amazonaws.com/Satterthwaite_et_al_2014.pdf}{Satterthwaite et al. (2014)}
+#' @param length Variable representing the fork lengths for each size classes.
 #' @param ..ocean_entry_success_int Intercept, source: Calibration (Varies by tributary )
 #' @param .month Coefficient for month variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/Satterthwaite_et_al_2014.pdf}{Satterthwaite et al. (2014)}
 #' @source IP-117068

@@ -25,7 +25,7 @@ ocean_entry_success(
 
 \item{..ocean_entry_success_int}{Intercept, source: Calibration (Varies by tributary )}
 
-\item{length}{Variable representing the fork lengths for each size classes. \href{https://dsm-docs.s3-us-west-2.amazonaws.com/Satterthwaite_et_al_2014.pdf}{Satterthwaite et al. (2014)}}
+\item{length}{Variable representing the fork lengths for each size classes.}
 
 \item{.month}{Coefficient for month variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/Satterthwaite_et_al_2014.pdf}{Satterthwaite et al. (2014)}}
 }

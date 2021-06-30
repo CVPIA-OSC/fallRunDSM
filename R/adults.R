@@ -6,7 +6,7 @@
 #' @param cross_channel_gates_closed Variable describing number of days gates are closed for each month
 #' @param prop_bay_trans Variable describing proportion transport to the bay
 #' @param prop_delta_trans Variable describing proportion transport to the delta
-#' @param .intercept Intercept, source: Empirical model fit using 2008–2011 tagging data provided by East Bay Municipal Utility District
+#' @param .intercept Intercept
 #' @param .wild Coefficient for \code{wild} variable, source: Estimated with coded wire tag data 2010–2013 \href{https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&usg= AOvVaw0VgMOwD7knFfSxRZy6k8RG}{(Kormos et al. 2012, Palmer-Zwahlen & Kormos 2013-2015, Palmer-Zwahlen et al. 2018)}
 #' @param .natal_flow Coefficient for \code{natal_flow} variable, source: Empirical model fit using 2008–2011 tagging data provided by East Bay Municipal Utility District
 #' @param .cross_channel_gates_closed Coefficient for \code{cross_channel_gates_closed} variable, Source: Empirical model fit using  2008–2011 tagging data provided by East Bay Municipal Utility District.
@@ -39,7 +39,7 @@ adult_stray <- function(wild, natal_flow, south_delta_watershed, cross_channel_g
 #' @param migratory_temp variable representing proportion of migratory corridor temperature above  20°C
 #' @param bypass_overtopped Indicator for bypass overtopped
 #' @param adult_harvest Adult harvest rate (Estimated with Coded Wire Tag data 2012–2013 (Palmer-Zwahlen & Kormos 2015; Palmer-Zwahlen et al. 2018))
-#' @param ..surv_adult_enroute_int intercept, source: calibration
+#' @param ..surv_adult_enroute_int Intercept
 #' @param .migratory_temp coefficient for \code{migratory_temp} variable, source: \href{https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&usg= AOvVaw0VgMOwD7knFfSxRZy6k8RG}{Schreck et al. (1994)}
 #' @param .bypass_overtopped coefficient for \code{bypass_overtopped} variable, source: Expert opinion Ted Sommer, California Department of Water Resources (tributaries above bypasses only)
 #' @source IP-117068
@@ -58,7 +58,7 @@ surv_adult_enroute <- function(migratory_temp, bypass_overtopped, adult_harvest,
 #' @title Adult Prespawn Survival
 #' @description Calculate the adult prespawn survival
 #' @param deg_day Variable describing average degree days
-#' @param ..surv_adult_prespawn_int Intercept, Source: Calibration Estimate
+#' @param ..surv_adult_prespawn_int Intercept
 #' @param .deg_day Coefficient for \code{deg_day} variable, source Colvin et al. (2018)
 #' @source IP-117068
 #' @export

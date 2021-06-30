@@ -11,12 +11,12 @@ A list containing all parameters needed for running the \code{\link{fall_run_mod
 
 \itemize{
   \item \code{spawning_habitat}: More details at \code{\link[DSMhabitat]{fr_spawn}}
-  \item \code{inchannel_habitat_fry}: More details at \code{\link[DSMhabitat]{}}
-  \item \code{inchannel_habitat_juvenile}: More details at \code{\link[DSMhabitat]{}}
-  \item \code{floodplain_habitat}: More details at \code{\link[DSMhabitat]{}}
-  \item \code{sutter_habitat}: More details at \code{\link[DSMhabitat]{}}
-  \item \code{yolo_habitat}: More details at \code{\link[DSMhabitat]{}}
-  \item \code{delta_habitat}: More details at \code{\link[DSMhabitat]{}}
+  \item \code{inchannel_habitat_fry}: More details at \code{\link[DSMhabitat]{fr_fry}}
+  \item \code{inchannel_habitat_juvenile}: More details at \code{\link[DSMhabitat]{fr_juv}}
+  \item \code{floodplain_habitat}: More details at \code{\link[DSMhabitat]{fr_fp}}
+  \item \code{sutter_habitat}: More details at \code{\link[DSMhabitat]{sutter_habitat}}
+  \item \code{yolo_habitat}: More details at \code{\link[DSMhabitat]{yolo_habitat}}
+  \item \code{delta_habitat}: More details at \code{\link[DSMhabitat]{delta_habitat}}
 }
 }
 
@@ -24,30 +24,30 @@ A list containing all parameters needed for running the \code{\link{fall_run_mod
 
 \itemize{
   \item \code{prop_flow_natal}: More details at \code{\link[DSMflow]{proportion_flow_natal}}
-  \item \code{south_delta_routed_watersheds}
-  \item \code{cc_gates_days_closed}
-  \item \code{gates_overtopped}
-  \item \code{tisdale_bypass_watershed}
-  \item \code{yolo_bypass_watershed}
+  \item \code{south_delta_routed_watersheds}: More details at \code{\link[DSMhabitat]{south_delta_routed_watersheds}}
+  \item \code{cc_gates_days_closed}: More details at \code{\link[DSMflow]{delta_cross_channel_closed}}
+  \item \code{gates_overtopped}: More details at \code{\link[DSMflow]{gates_overtopped}}
+  \item \code{tisdale_bypass_watershed}: More details at \code{\link[DSMhabitat]{tisdale_bypass_watershed}}
+  \item \code{yolo_bypass_watershed}: More details at \code{\link[DSMhabitat]{yolo_bypass_watershed}}
   \item \code{migratory_temperature_proportion_over_20}: More details at \code{\link[DSMtemperature]{migratory_temperature_proportion_over_20}}
-  \item \code{..surv_adult_enroute_int}
-  \item \code{.adult_stray_intercept}
-  \item \code{.adult_stray_wild}
-  \item \code{.adult_stray_natal_flow}
-  \item \code{.adult_stray_cross_channel_gates_closed}
-  \item \code{.adult_stray_prop_bay_trans}
-  \item \code{.adult_stray_prop_delta_trans}
-  \item \code{.adult_en_route_migratory_temp}
-  \item \code{.adult_en_route_bypass_overtopped}
-  \item \code{.adult_en_route_adult_harvest_rate}
-  \item \code{degree_days}
-  \item \code{month_return_proportions}
-  \item \code{..surv_adult_prespawn_int}
-  \item \code{.adult_prespawn_deg_day}
-  \item \code{prob_nest_scoured}
-  \item \code{spawn_success_sex_ratio}
-  \item \code{spawn_success_redd_size}
-  \item \code{spawn_success_fecundity}
+  \item \code{..surv_adult_enroute_int}:  Intercept, Source: calibration
+  \item \code{.adult_stray_intercept}: Empirical model fit using 2008–2011 tagging data provided by East Bay Municipal Utility District
+  \item \code{.adult_stray_wild} TODO
+  \item \code{.adult_stray_natal_flow} TODO
+  \item \code{.adult_stray_cross_channel_gates_closed} TODO
+  \item \code{.adult_stray_prop_bay_trans} TODO
+  \item \code{.adult_stray_prop_delta_trans} TODO
+  \item \code{.adult_en_route_migratory_temp} TODO
+  \item \code{.adult_en_route_bypass_overtopped} TODO
+  \item \code{.adult_en_route_adult_harvest_rate} TODO
+  \item \code{degree_days}: More details at \code{\link[DSMtemperature]{degree_days}}
+  \item \code{month_return_proportions}: More details at \code{\link[fallRunDSM]{month_return_proportions}}
+  \item \code{..surv_adult_prespawn_int}:  Intercept, Source: Calibration Estimate
+  \item \code{.adult_prespawn_deg_day} TODO
+  \item \code{prob_nest_scoured}: More details at \code{\link[DSMhabitat]{prob_nest_scoured}}
+  \item \code{spawn_success_sex_ratio} TODO
+  \item \code{spawn_success_redd_size} TODO
+  \item \code{spawn_success_fecundity} TODO
 }
 }
 
@@ -165,16 +165,22 @@ A list containing all parameters needed for running the \code{\link{fall_run_mod
 }
 }
 
-\section{NA}{
+\section{Rearing}{
 
 \itemize{
-  \item \code{spawning_habitat}: More details at \code{\link[DSMhabitat]{fr_spawn}}
-  \item \code{inchannel_habitat_fry}: More details at \code{\link[DSMhabitat]{}}
-  \item \code{inchannel_habitat_juvenile}: More details at \code{\link[DSMhabitat]{}}
-  \item \code{floodplain_habitat}: More details at \code{\link[DSMhabitat]{}}
-  \item \code{sutter_habitat}: More details at \code{\link[DSMhabitat]{}}
-  \item \code{yolo_habitat}: More details at \code{\link[DSMhabitat]{}}
-  \item \code{delta_habitat}: More details at \code{\link[DSMhabitat]{}}
+  \item \code{growth_rates}: More details at: \code{\link{growth_rates}}
+  \item \code{growth_rates_floodplain}
+  \item \code{weeks_flooded}
+
+}
+}
+
+\section{Ocean Entry Success}{
+
+\itemize{
+  \item \code{.ocean_entry_success_length}: Variable representing the fork lengths for each size classes: More details at: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/Satterthwaite_et_al_2014.pdf}{Satterthwaite et al. (2014)}
+  \item \code{..ocean_entry_success_int}
+  \item \code{.ocean_entry_success_months}
 }
 }
 

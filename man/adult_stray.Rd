@@ -35,7 +35,7 @@ adult_stray(
 
 \item{prop_delta_trans}{Variable describing proportion transport to the delta}
 
-\item{.intercept}{Intercept, source: Empirical model fit using 2008–2011 tagging data provided by East Bay Municipal Utility District}
+\item{.intercept}{Intercept}
 
 \item{.wild}{Coefficient for \code{wild} variable, source: Estimated with coded wire tag data 2010–2013 \href{https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&usg= AOvVaw0VgMOwD7knFfSxRZy6k8RG}{(Kormos et al. 2012, Palmer-Zwahlen & Kormos 2013-2015, Palmer-Zwahlen et al. 2018)}}
 
