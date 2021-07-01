@@ -105,52 +105,52 @@
 #' }
 #' @section Egg to Fry Survival:
 #' \itemize{
-#'   \item \code{proportion_hatchery}
-#'   \item \code{prob_nest_scoured}
-#'   \item \code{mean_egg_temp_effect}
-#'   \item \code{surv_egg_to_fry_proportion_natural}
-#'   \item \code{surv_egg_to_fry_scour}
-#'   \item \code{..surv_egg_to_fry_int}
+#'   \item \code{proportion_hatchery}: More details at \code{\link[fallRunDSM]{proportion_hatchery}}
+#'   \item \code{prob_nest_scoured}: More details at \code{\link[DSMhabitat]{prob_nest_scoured}}
+#'   \item \code{mean_egg_temp_effect}: More details at \code{\link[DSMtemperature]{egg_temperature_effect}}
+#'   \item \code{surv_egg_to_fry_proportion_natural} TODO
+#'   \item \code{surv_egg_to_fry_scour} TODO
+#'   \item \code{..surv_egg_to_fry_int}:  Intercept, Source: Calibration
 #' }
 #' @section Rearing Survival:
 #' \itemize{
-#'   \item \code{avg_temp}
-#'   \item \code{avg_temp_delta}
-#'   \item \code{prob_strand_early}
-#'   \item \code{prob_strand_late}
-#'   \item \code{proportion_diverted}
-#'   \item \code{total_diverted}
-#'   \item \code{delta_proportion_diverted}
-#'   \item \code{delta_total_diverted}
-#'   \item \code{weeks_flooded}
-#'   \item \code{prop_high_predation}
-#'   \item \code{contact_points}
-#'   \item \code{delta_contact_points}
-#'   \item \code{delta_prop_high_predation}
-#'   \item \code{.surv_juv_rear_int}
-#'   \item \code{.surv_juv_rear_contact_points}
-#'   \item \code{.surv_juv_rear_prop_diversions}
-#'   \item \code{.surv_juv_rear_total_diversions}
-#'   \item \code{..surv_juv_bypass_int}
-#'   \item \code{..surv_juv_delta_int}
-#'   \item \code{..surv_juv_delta_contact_points}
-#'   \item \code{..surv_juv_delta_total_diverted}
-#'   \item \code{.surv_juv_rear_avg_temp_thresh}
-#'   \item \code{.surv_juv_rear_high_predation}
-#'   \item \code{.surv_juv_rear_stranded}
-#'   \item \code{.surv_juv_rear_medium}
-#'   \item \code{.surv_juv_rear_large}
-#'   \item \code{.surv_juv_rear_floodplain}
-#'   \item \code{.surv_juv_bypass_avg_temp_thresh}
-#'   \item \code{.surv_juv_bypass_high_predation}
-#'   \item \code{.surv_juv_bypass_medium}
-#'   \item \code{.surv_juv_bypass_large}
-#'   \item \code{.surv_juv_bypass_floodplain}
-#'   \item \code{.surv_juv_delta_avg_temp_thresh} Coefficient for avg_temp_thresh variable, source: \href{https://www.noaa.gov/sites/default/files/atoms/files/07354626766.pdf}{Marine and Chech (2004)}
-#'   \item \code{.surv_juv_delta_high_predation}
-#'   \item \code{.surv_juv_delta_prop_diverted}
-#'   \item \code{.surv_juv_delta_medium}
-#'   \item \code{.surv_juv_delta_large}
+#'   \item \code{avg_temp}: More details at \code{\link[DSMtemperature]{stream_temperature}}
+#'   \item \code{avg_temp_delta}: More details at \code{\link[DSMtemperature]{delta_temperature}}
+#'   \item \code{prob_strand_early}: More details at \code{\link[DSMhabitat]{prob_strand_early}}
+#'   \item \code{prob_strand_late}: More details at \code{\link[DSMhabitat]{prob_strand_late}}
+#'   \item \code{proportion_diverted}: More details at \code{\link[DSMflow]{proportion_diverted}}
+#'   \item \code{total_diverted}: More details at \code{\link[DSMflow]{total_diverted}}
+#'   \item \code{delta_proportion_diverted}: More details at \code{\link[DSMflow]{delta_proportion_diverted}}
+#'   \item \code{delta_total_diverted}: More details at \code{\link[DSMflow]{delta_total_diverted}}
+#'   \item \code{weeks_flooded}: More details at \code{\link[DSMhabitat]{weeks_flooded}}
+#'   \item \code{prop_high_predation}: More details at \code{\link[DSMhabitat]{prop_high_predation}}
+#'   \item \code{contact_points}: More details at \code{\link[DSMhabitat]{contact_points}}
+#'   \item \code{delta_contact_points}: More details at \code{\link[DSMhabitat]{delta_contact_points}}
+#'   \item \code{delta_prop_high_predation}: More details at \code{\link[DSMhabitat]{delta_prop_high_predation}}
+#'   \item \code{.surv_juv_rear_int}: Intercept, Source: calibration (varies by tributary)
+#'   \item \code{.surv_juv_rear_contact_points}: Coefficient for contact_points variable, Source: calibration
+#'   \item \code{.surv_juv_rear_prop_diversions}: Coefficient for prop_diversions variable, Source: calibration
+#'   \item \code{.surv_juv_rear_total_diversions}: Coefficient for total_diversions variable, Source: calibration
+#'   \item \code{..surv_juv_bypass_int}: Intercept, Source: calibration
+#'   \item \code{..surv_juv_delta_int}: Intercept, Source: calibration
+#'   \item \code{..surv_juv_delta_contact_points}: Coefficient for contact_points variable, Source: calibration
+#'   \item \code{..surv_juv_delta_total_diverted}: Coefficient for total_diversions variable, Source: calibration
+#'   \item \code{.surv_juv_rear_avg_temp_thresh} TODO
+#'   \item \code{.surv_juv_rear_high_predation} TODO
+#'   \item \code{.surv_juv_rear_stranded} TODO
+#'   \item \code{.surv_juv_rear_medium} TODO
+#'   \item \code{.surv_juv_rear_large} TODO
+#'   \item \code{.surv_juv_rear_floodplain} TODO
+#'   \item \code{.surv_juv_bypass_avg_temp_thresh} TODO
+#'   \item \code{.surv_juv_bypass_high_predation} TODO
+#'   \item \code{.surv_juv_bypass_medium} TODO
+#'   \item \code{.surv_juv_bypass_large} TODO
+#'   \item \code{.surv_juv_bypass_floodplain} TODO
+#'   \item \code{.surv_juv_delta_avg_temp_thresh} Coefficient for avg_temp_thresh variable, Source: \href{https://www.noaa.gov/sites/default/files/atoms/files/07354626766.pdf}{Marine and Chech (2004)}
+#'   \item \code{.surv_juv_delta_high_predation} TODO
+#'   \item \code{.surv_juv_delta_prop_diverted} TODO
+#'   \item \code{.surv_juv_delta_medium} TODO
+#'   \item \code{.surv_juv_delta_large} TODO
 #' }
 #' @section Migratory Survival:
 #' \itemize{
