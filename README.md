@@ -23,10 +23,11 @@ IP-117068
 ## Usage
 
 ### Package Installation
-`fallRunDSM` works as part of a larger set of packages developed by `CVPIA-OSC`. 
+`fallRunDSM` works as part of a larger set of packages developed by the [CVPIA Open Science Collaborative](https://github.com/CVPIA-OSC). 
 To install `fallRunDSM` and additional `CVPIA-OSC` packages use the `remotes::install_github()` function. 
 
 ```r
+# install.packages("remotes")
 remotes::install_github("CVPIA-OSC/DSMflow")
 remotes::install_github("CVPIA-OSC/DSMhabitat")
 remotes::install_github("CVPIA-OSC/DSMtemperature")
@@ -36,11 +37,11 @@ remotes::install_github("CVPIA-OSC/fallRunDSM")
 ```
 
 ### Run Model
-The fall run DSM is a life cycle model with a monthly time step. Running the model 
-simulates Fall Run Chinook population dynamics across 31 watersheds in California over a 20 year period. 
-View the `fall_run_model()` documenation for addtional information on running the `fall_run_model`.
+The `fallrunDSM` is a Fall Run Chinook life cycle model used for CVPIA's Structured Decision Making Process.
+Running the model simulates Fall Run Chinook population dynamics across 31 watersheds in California over a 20 year period. 
+View the [fall_run_model()](docs/reference/fall_run_model.html) documentation for additional information on running the `fall_run_model`.
 
-The following code runs the fall run model with SIT defined scenaro 1 and `fall_run_seeds`:
+The following code runs the fall run model with SIT defined scenario 1 and `fall_run_seeds`:
 ```r
 fall_run_seeds <- fallRunDSM::fall_run_model(mode = "seed")
 fallRunDSM::fall_run_model(scenario = DSMscenario::scenarios$ONE,
@@ -48,7 +49,7 @@ fallRunDSM::fall_run_model(scenario = DSMscenario::scenarios$ONE,
                            seeds = fall_run_seeds)
 ```
 
-The following code runs the fall run model with a custom defined scenario and `fall_run_seeds`:
+The following code runs the fall run model with a custom scenario defined in `scenario_df` and `fall_run_seeds`:
 ```r
 scenario_df <- data.frame(watershed = c("Upper Sacramento River", "Battle Creek"),
                           action = c(3, 2),
@@ -86,11 +87,11 @@ library(DSMtemperature)
 
 ### Scenario Functionality
 
-Scenario functionality within the `fallRunDSM` test our the effect of restoration actions on Fall run Chinook. 
-The [CVPIA SIT (Science Integration Team)](http://cvpia.scienceintegrationteam.com/) has developed restoration action portfolios. 
+Scenario functionality within the `fallRunDSM` models the effect of restoration actions on Fall run Chinook. 
+The [CVPIA SIT (Science Integration Team)](http://cvpia.scienceintegrationteam.com/) has developed restoration action portfolios that actions preformed on watersheds over a set time period. 
 
-There are seven predefined scenarios that were developed by the CVPIA SIT. Additional scenarios can be defined by creating a `scenario_df` that describes restoration actions preformed on tributaries over a number of years. For additional description on how to build a scenario view `r ?DSMscenario::load_scenario()` documentation. 
- #TODO figure out link 
+There are seven predefined scenarios that were developed by the CVPIA SIT. Additional scenarios can be defined by creating a `scenario_df` describing watershed, action, start year, end year, and units of effort. For additional description on how to build a scenario view `load_scenario` documentation by searching `?DSMscenario::load_scenario()`  
+
 ```r
 library(DSMscenario)
 ```
@@ -100,6 +101,13 @@ library(DSMscenario)
 GrandTab data is used to calibrate the fallRunDSM model.
 Describe calibration use (contains proxy years, grandtab data etc) readme for package to link and point to calibration notebook
 
+To calibrate our `fallRunDSM` model we prepare the following data:
+
+1. [GrandTab](https://wildlife.ca.gov/Conservation/Fishes/Chinook-Salmon/Anadromous-Assessment) estimated escapement data for the years 1998-2017. The GrandTab data is prepared as `DSMCalibrationData::grandtab_observed` and is used to measure the difference between model predictions and observed escapements. Grandtab data is additionally prepared as `DSMCalibrationData::grandtab_imputed` and is used to calculate the number of juveniles during the 20 year simulation.
+
+2. Proxy years are used to select Habitat, Flow, and Temperature data for 1998-2017 to correspond with the years of GrandTab escapement data. The data inputs to the DSM are for years 1980-1999. We selected proxy years for 1998-2017 from the 1980-1999 model inputs by [comparing the DWR water year indices](https://cdec.water.ca.gov/reportapp/javareports?name=WSIHIST).
+
+For a detailed overview of the calibration process see the [calibration markdown.](calibration.Rmd)
 ```r 
 library(DSMCalibrationData)
 ```
