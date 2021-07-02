@@ -73,11 +73,11 @@ The `fallRunDSM` package uses data from several other packages within the [CVPIA
 
 ### Flow, Habitat, and Temperature Data
 
-All data used in the `fallRunDSM` is passed in as a argument to `fall_run_model()` from a `fallRunDSM::params` data list. `fallRunDSM::params` is composed using data objects from the following packages:
+All data used in the `fallRunDSM` is passed in as a argument to `fall_run_model()` from a `fallRunDSM::params` data list. [`fallRunDSM::params`](docs/reference/params.html) is composed using data objects from the following packages:
 
-* **Flow Data**: View detailed documentation of flow data inputs at [DSMflow](https://cvpia-osc.github.io/DSMflow/). Flow inputs to the `fallRunDSM` are matrices generated using CALSIM data and are used to determine fish movement. 
-* **Habitat Data**: View detailed documentation of habitat data inputs at [DSMhabitat](https://cvpia-osc.github.io/DSMhabitat/). Habitat inputs to `fallRunDSM` are matrices based on expert opinion and modeled results for tributaries in the central valley. Habitat data informs the amount of fish that can spawn or rear in a given tributary. 
-* **Temperature Data**: View detailed documentation of temperature data inputs at [DSMtemperature](https://cvpia-osc.github.io/DSMtemperature/). Temperature inputs to `fallRunDSM` are matrices and are modeled based on NOAA air temperature data. Temperature data informs survival rates of fish. 
+* **Flow Data**: View detailed documentation of flow data inputs at [DSMflow](https://cvpia-osc.github.io/DSMflow/). Flow inputs to the `fallRunDSM` are matrices generated using CALSIM data.
+* **Habitat Data**: View detailed documentation of habitat data inputs at [DSMhabitat](https://cvpia-osc.github.io/DSMhabitat/). Habitat inputs to `fallRunDSM` are matrices based on expert opinion and modeled results for tributaries in the central valley.
+* **Temperature Data**: View detailed documentation of temperature data inputs at [DSMtemperature](https://cvpia-osc.github.io/DSMtemperature/). Temperature inputs to `fallRunDSM` are matrices and are modeled temperature inputs based on NOAA air temperature data.
 
 ```r
 library(DSMflow)
@@ -88,7 +88,7 @@ library(DSMtemperature)
 ### Scenario Functionality
 
 Scenario functionality within the `fallRunDSM` models the effect of restoration actions on Fall run Chinook. 
-The [CVPIA SIT (Science Integration Team)](http://cvpia.scienceintegrationteam.com/) has developed restoration action portfolios that actions preformed on watersheds over a set time period. 
+The [CVPIA SIT (Science Integration Team)](http://cvpia.scienceintegrationteam.com/) has developed restoration action portfolioscomposed of actions preformed on watersheds over a set time period. 
 
 There are seven predefined scenarios that were developed by the CVPIA SIT. Additional scenarios can be defined by creating a `scenario_df` describing watershed, action, start year, end year, and units of effort. For additional description on how to build a scenario view `load_scenario` documentation by searching `?DSMscenario::load_scenario()`  
 
@@ -98,10 +98,7 @@ library(DSMscenario)
 
 ### Calibration Data
 
-GrandTab data is used to calibrate the fallRunDSM model.
-Describe calibration use (contains proxy years, grandtab data etc) readme for package to link and point to calibration notebook
-
-To calibrate our `fallRunDSM` model we prepare the following data:
+For `fallRunDSM` model calibration we prepared addtional datasets in a `DSMCalibration` package:
 
 1. [GrandTab](https://wildlife.ca.gov/Conservation/Fishes/Chinook-Salmon/Anadromous-Assessment) estimated escapement data for the years 1998-2017. The GrandTab data is prepared as `DSMCalibrationData::grandtab_observed` and is used to measure the difference between model predictions and observed escapements. Grandtab data is additionally prepared as `DSMCalibrationData::grandtab_imputed` and is used to calculate the number of juveniles during the 20 year simulation.
 
