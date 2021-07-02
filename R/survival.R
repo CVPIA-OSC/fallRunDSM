@@ -8,16 +8,16 @@
 #' @param total_diversions variable representing total amount of water diverted
 #' @param stranded variable representing stranding rate per watershed
 #' @param weeks_flooded variable representing total weeks flooded per watershed
-#' @param ..surv_juv_rear_int  intercept
-#' @param .avg_temp_thresh coefficient for avg_temp_thresh variable
-#' @param .high_predation coefficient for high_predation variable, source: \href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}
-#' @param ..surv_juv_rear_contact_points coefficient for contact_points variable
-#' @param ..surv_juv_rear_prop_diversions coefficient for prop_diversions variable
-#' @param ..surv_juv_rear_total_diversions coefficient for total_diversions variable
-#' @param .stranded coefficient for stranded variable, source: \href{#}{USFWS (2006) and CDWR (2006)}
-#' @param .medium parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
-#' @param .large parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
-#' @param .floodplain parameter for floodplain rearing benefit, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/SOMMER_T-SDWA+180+Floodplain+rearing+of+juvenile+chinook+salmon+evidence+of+enhanced+growth+and+survival+.pdf}{Sommer et al. (2001)}
+#' @param ..surv_juv_rear_int Intercept
+#' @param .avg_temp_thresh Coefficient for \code{avg_temp_thresh} variable
+#' @param .high_predation Coefficient for \code{high_predation} variable
+#' @param ..surv_juv_rear_contact_points Coefficient for \code{contact_points} variable
+#' @param ..surv_juv_rear_prop_diversions Coefficient for \code{prop_diversions} variable
+#' @param ..surv_juv_rear_total_diversions Coefficient for \code{total_diversions} variable
+#' @param .stranded Coefficient for \code{stranded} variable
+#' @param .medium parameter for medium sized fish
+#' @param .large parameter for large sized fish
+#' @param .floodplain parameter for floodplain rearing benefit
 #' @source IP-117068
 #' @export
 surv_juv_rear <- function(max_temp_thresh, avg_temp_thresh, high_predation,
@@ -75,11 +75,11 @@ surv_juv_rear <- function(max_temp_thresh, avg_temp_thresh, high_predation,
 #' @param avg_temp_thresh Variable representing the probability of exceeding the average temperature
 #' @param high_predation Variable representing an indicator for high predation in watershed
 #' @param ..surv_juv_bypass_int intercept
-#' @param .avg_temp_thresh coefficient for avg_temp_thresh variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/marine_cech_water_temp_effects.pdf}{Marine and Chech (2004)}
-#' @param .high_predation coefficient for high_predation variable, source:\href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}
-#' @param .medium parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
-#' @param .large parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
-#' @param .floodplain parameter for floodplain rearing benefit, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/SOMMER_T-SDWA+180+Floodplain+rearing+of+juvenile+chinook+salmon+evidence+of+enhanced+growth+and+survival+.pdf}{Sommer et al. (2001)}
+#' @param .avg_temp_thresh coefficient for \code{avg_temp_thresh} variable
+#' @param .high_predation coefficient for \code{high_predation} variable
+#' @param .medium parameter for medium sized fish
+#' @param .large parameter for large sized fish
+#' @param .floodplain parameter for floodplain rearing benefit
 #'
 #' @source IP-117068
 #' @export
@@ -112,13 +112,13 @@ surv_juv_bypass <- function(max_temp_thresh, avg_temp_thresh, high_predation,
 #' @param prop_diverted Variable representing the proportion of water diverted
 #' @param total_diverted Variable representing the total diversions
 #' @param ..surv_juv_delta_int intercept
-#' @param .avg_temp_thresh Coefficient for avg_temp_thresh variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/marine_cech_water_temp_effects.pdf}{Marine and Chech (2004)}
-#' @param .high_predation Coefficient for high_predation variable, source: \href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}
-#' @param ..surv_juv_delta_contact_points Coefficient for contact_points variable
-#' @param .prop_diverted Coefficient for prop_diversions variable, source: Newman and Brandes (2010)
-#' @param ..surv_juv_delta_total_diverted Coefficient for total_diversions variable
-#' @param .medium parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
-#' @param .large parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+#' @param .avg_temp_thresh Coefficient for \code{avg_temp_thresh} variable
+#' @param .high_predation Coefficient for \code{high_predation} variable
+#' @param ..surv_juv_delta_contact_points Coefficient for \code{contact_points} variable
+#' @param .prop_diverted Coefficient for \code{prop_diversions} variable
+#' @param ..surv_juv_delta_total_diverted Coefficient for \code{total_diversions} variable
+#' @param .medium parameter for medium sized fish
+#' @param .large parameter for large sized fish
 #' @source IP-117068
 #' @export
 surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_predation, contact_points,
@@ -160,29 +160,30 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
 #' @param year The simulation year, 1-20
 #' @param month The simulation month, 1-8
 #' @param scenario The current scenario
-#' @param ..surv_juv_rear_int TODO
-#' @param ..surv_juv_rear_contact_points TODO
-#' @param ..surv_juv_rear_prop_diversions TODO
-#' @param ..surv_juv_rear_total_diversions TODO
-#' @param ..surv_juv_bypass_int TODO
-#' @param ..surv_juv_delta_int TODO
-#' @param ..surv_juv_delta_contact_points TODO
-#' @param ..surv_juv_delta_total_diverted TODO
-#' @param .surv_juv_rear_avg_temp_thresh TODO
-#' @param .surv_juv_rear_high_predation TODO
-#' @param .surv_juv_rear_stranded TODO
-#' @param .surv_juv_rear_medium TODO
-#' @param .surv_juv_rear_large TODO
-#' @param .surv_juv_rear_floodplain TODO
-#' @param .surv_juv_bypass_avg_temp_thresh TODO
-#' @param .surv_juv_bypass_high_predation TODO
-#' @param .surv_juv_bypass_medium TODO
-#' @param .surv_juv_bypass_large TODO
-#' @param .surv_juv_delta_avg_temp_thresh TODO
-#' @param .surv_juv_delta_high_predation TODO
-#' @param .surv_juv_delta_prop_diverted TODO
-#' @param .surv_juv_delta_medium TODO
-#' @param .surv_juv_delta_large TODO
+#' @param ..surv_juv_rear_int Intercept for \code{\link{surv_juv_rear}}
+#' @param ..surv_juv_rear_contact_points Coefficient for \code{\link{surv_juv_rear}} \code{contact_points} variable
+#' @param ..surv_juv_rear_prop_diversions Coefficient for \code{\link{surv_juv_rear}} \code{prop_diversions} variable
+#' @param ..surv_juv_rear_total_diversions Coefficient for \code{\link{surv_juv_rear}} \code{total_diversions} variable
+#' @param ..surv_juv_bypass_int Intercept for \code{\link{surv_juv_bypass}}
+#' @param ..surv_juv_delta_int Intercept for \code{\link{surv_juv_delta}}
+#' @param ..surv_juv_delta_contact_points Coefficient for \code{\link{surv_juv_delta}} contact_points variable
+#' @param ..surv_juv_delta_total_diverted Coefficient for \code{\link{surv_juv_delta}} total_diversions variable
+#' @param .surv_juv_rear_avg_temp_thresh Coefficient for \code{\link{surv_juv_rear}} \code{avg_temp_thresh} variable
+#' @param .surv_juv_rear_high_predation Coefficient for \code{\link{surv_juv_rear}} \code{high_predation} variable
+#' @param .surv_juv_rear_stranded Coefficient for \code{\link{surv_juv_rear}} \code{stranded} variable
+#' @param .surv_juv_rear_medium parameter for \code{\link{surv_juv_rear}} medium sized fish
+#' @param .surv_juv_rear_large parameter for \code{\link{surv_juv_rear}} large sized fish
+#' @param .surv_juv_rear_floodplain parameter for \code{\link{surv_juv_rear}} floodplain rearing benefit
+#' @param .surv_juv_bypass_avg_temp_thresh coefficient for \code{\link{surv_juv_bypass}} \code{avg_temp_thresh} variable
+#' @param .surv_juv_bypass_high_predation coefficient for \code{\link{surv_juv_bypass}} \code{high_predation} variableTODO
+#' @param .surv_juv_bypass_medium parameter for \code{\link{surv_juv_bypass}} medium sized fish
+#' @param .surv_juv_bypass_large parameter for \code{\link{surv_juv_bypass}} large sized fish
+#' @param .surv_juv_bypass_floodplain parameter for \code{\link{surv_juv_bypass}} floodplain rearing benefit
+#' @param .surv_juv_delta_avg_temp_thresh Coefficient for \code{\link{surv_juv_delta}} \code{avg_temp_thresh} variable
+#' @param .surv_juv_delta_high_predation Coefficient for \code{\link{surv_juv_delta}} \code{high_predation} variable
+#' @param .surv_juv_delta_prop_diverted Coefficient for \code{\link{surv_juv_delta}} \code{prop_diversions} variable
+#' @param .surv_juv_delta_medium parameter for \code{\link{surv_juv_delta}} medium sized fish
+#' @param .surv_juv_delta_large parameter for \code{\link{surv_juv_delta}} large sized fish
 #' @source IP-117068
 #' @export
 get_rearing_survival_rates <- function(year, month,

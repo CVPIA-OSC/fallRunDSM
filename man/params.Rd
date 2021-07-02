@@ -79,30 +79,30 @@ A list containing all parameters needed for running the \code{\link{fall_run_mod
   \item \code{contact_points}: More details at \code{\link[DSMhabitat]{contact_points}}
   \item \code{delta_contact_points}: More details at \code{\link[DSMhabitat]{delta_contact_points}}
   \item \code{delta_prop_high_predation}: More details at \code{\link[DSMhabitat]{delta_prop_high_predation}}
-  \item \code{.surv_juv_rear_int}: Intercept, Source: calibration (varies by tributary)
-  \item \code{.surv_juv_rear_contact_points}: Coefficient for contact_points variable, Source: calibration
-  \item \code{.surv_juv_rear_prop_diversions}: Coefficient for prop_diversions variable, Source: calibration
-  \item \code{.surv_juv_rear_total_diversions}: Coefficient for total_diversions variable, Source: calibration
+  \item \code{..surv_juv_rear_int}: Intercept, Source: calibration (varies by tributary)
+  \item \code{..surv_juv_rear_contact_points}: Coefficient for contact_points variable, Source: calibration
+  \item \code{..surv_juv_rear_prop_diversions}: Coefficient for prop_diversions variable, Source: calibration
+  \item \code{..surv_juv_rear_total_diversions}: Coefficient for total_diversions variable, Source: calibration
   \item \code{..surv_juv_bypass_int}: Intercept, Source: calibration
   \item \code{..surv_juv_delta_int}: Intercept, Source: calibration
   \item \code{..surv_juv_delta_contact_points}: Coefficient for contact_points variable, Source: calibration
   \item \code{..surv_juv_delta_total_diverted}: Coefficient for total_diversions variable, Source: calibration
-  \item \code{.surv_juv_rear_avg_temp_thresh} TODO
-  \item \code{.surv_juv_rear_high_predation} TODO
-  \item \code{.surv_juv_rear_stranded} TODO
-  \item \code{.surv_juv_rear_medium} TODO
-  \item \code{.surv_juv_rear_large} TODO
-  \item \code{.surv_juv_rear_floodplain} TODO
-  \item \code{.surv_juv_bypass_avg_temp_thresh} TODO
-  \item \code{.surv_juv_bypass_high_predation} TODO
-  \item \code{.surv_juv_bypass_medium} TODO
-  \item \code{.surv_juv_bypass_large} TODO
-  \item \code{.surv_juv_bypass_floodplain} TODO
-  \item \code{.surv_juv_delta_avg_temp_thresh} Coefficient for avg_temp_thresh variable, Source: \href{https://www.noaa.gov/sites/default/files/atoms/files/07354626766.pdf}{Marine and Chech (2004)}
-  \item \code{.surv_juv_delta_high_predation} TODO
-  \item \code{.surv_juv_delta_prop_diverted} TODO
-  \item \code{.surv_juv_delta_medium} TODO
-  \item \code{.surv_juv_delta_large} TODO
+  \item \code{.surv_juv_rear_avg_temp_thresh}  Coefficient for \code{avg_temp_thresh} variable, Source: TODO
+  \item \code{.surv_juv_rear_high_predation} Coefficient for \code{high_predation} variable, source: \href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}
+  \item \code{.surv_juv_rear_stranded} Coefficient for \code{stranded} variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/DWR-1140+USFWS+2006.pdf}{USFWS (2006) and CDWR (2006)}
+  \item \code{.surv_juv_rear_medium} Parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+  \item \code{.surv_juv_rear_large} parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+  \item \code{.surv_juv_rear_floodplain} parameter for floodplain rearing benefit, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/SOMMER_T-SDWA+180+Floodplain+rearing+of+juvenile+chinook+salmon+evidence+of+enhanced+growth+and+survival+.pdf}{Sommer et al. (2001)}
+  \item \code{.surv_juv_bypass_avg_temp_thresh} Coefficient for \code{avg_temp_thresh} variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/marine_cech_water_temp_effects.pdf}{Marine and Chech (2004)}
+  \item \code{.surv_juv_bypass_high_predation} Coefficient for \code{high_predation} variable, source:\href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}
+  \item \code{.surv_juv_bypass_medium} Parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+  \item \code{.surv_juv_bypass_large} Parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+  \item \code{.surv_juv_bypass_floodplain} Parameter for floodplain rearing benefit, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/SOMMER_T-SDWA+180+Floodplain+rearing+of+juvenile+chinook+salmon+evidence+of+enhanced+growth+and+survival+.pdf}{Sommer et al. (2001)}
+  \item \code{.surv_juv_delta_avg_temp_thresh} Coefficient for \code{avg_temp_thresh} variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/marine_cech_water_temp_effects.pdf}{Marine and Chech (2004)}
+  \item \code{.surv_juv_delta_high_predation} Coefficient for \code{high_predation} variable, source: \href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}
+  \item \code{.surv_juv_delta_prop_diverted} Coefficient for \code{prop_diversions} variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/Hierarchical_Modeling_of_Juvenile_Chinook_Salmon_S+(1).pdf}{Newman and Brandes (2010)}
+  \item \code{.surv_juv_delta_medium} parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+  \item \code{.surv_juv_delta_large} parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
 }
 }
 
