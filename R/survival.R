@@ -123,7 +123,7 @@ surv_juv_bypass <- function(max_temp_thresh, avg_temp_thresh, high_predation,
 #' @export
 surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_predation, contact_points,
                            prop_diverted, total_diverted,
-                           ..surv_juv_delta_int = 1.4,
+                           ..surv_juv_delta_int = fallRunDSM::params$..surv_juv_delta_int,
                            .avg_temp_thresh = -0.717,
                            .high_predation = -0.122,
                            ..surv_juv_delta_contact_points = 0.0358 * -0.189,
