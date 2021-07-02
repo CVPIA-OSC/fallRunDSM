@@ -45,17 +45,17 @@ surv_juv_rear(
 
 \item{weeks_flooded}{variable representing total weeks flooded per watershed}
 
-\item{..surv_juv_rear_int}{intercept, source: calibration (varies by tributary)}
+\item{..surv_juv_rear_int}{intercept}
 
 \item{.avg_temp_thresh}{coefficient for avg_temp_thresh variable}
 
 \item{.high_predation}{coefficient for high_predation variable, source: \href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}}
 
-\item{..surv_juv_rear_contact_points}{coefficient for contact_points variable, source: calibration}
+\item{..surv_juv_rear_contact_points}{coefficient for contact_points variable}
 
-\item{..surv_juv_rear_prop_diversions}{coefficient for prop_diversions variable, source: calibration}
+\item{..surv_juv_rear_prop_diversions}{coefficient for prop_diversions variable}
 
-\item{..surv_juv_rear_total_diversions}{coefficient for total_diversions variable, source: calibration}
+\item{..surv_juv_rear_total_diversions}{coefficient for total_diversions variable}
 
 \item{.stranded}{coefficient for stranded variable, source: \href{#}{USFWS (2006) and CDWR (2006)}}
 

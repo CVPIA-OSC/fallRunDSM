@@ -39,23 +39,9 @@ get_spawning_adults(
 
 \item{hatch_adults}{total hatchery adults}
 
-\item{month_return_proportions}{the proportion of fish returning for each month}
+\item{month_return_proportions}{The proportion of fish returning for each month}
 
-\item{..surv_adult_enroute_int}{TODO}
-
-\item{.adult_stray_intercept}{TODO}
-
-\item{.adult_stray_wild}{TODO}
-
-\item{.adult_stray_natal_flow}{TODO}
-
-\item{.adult_stray_cross_channel_gates_closed}{TODO}
-
-\item{.adult_stray_prop_bay_trans}{TODO}
-
-\item{.adult_stray_prop_delta_trans}{TODO}
-
-\item{.adult_en_route_adult_harvest_rate}{TODO}
+\item{migratory_temperature_proportion_over_20}{TODO}
 
 \item{seeds}{a value meant to be inherited to determine if model is in seeding stage or not}
 }

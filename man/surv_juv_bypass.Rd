@@ -26,7 +26,7 @@ surv_juv_bypass(
 
 \item{high_predation}{Variable representing an indicator for high predation in watershed}
 
-\item{..surv_juv_bypass_int}{intercept, source: calibration}
+\item{..surv_juv_bypass_int}{intercept}
 
 \item{.avg_temp_thresh}{coefficient for avg_temp_thresh variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/marine_cech_water_temp_effects.pdf}{Marine and Chech (2004)}}
 
