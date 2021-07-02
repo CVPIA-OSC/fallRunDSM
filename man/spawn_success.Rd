@@ -29,11 +29,11 @@ spawn_success(
 
 \item{spawn_habitat}{The available spawning habitat in square meters}
 
-\item{sex_ratio}{The female to male spawning ratio, default 0.5}
+\item{sex_ratio}{The female to male spawning ratio}
 
-\item{redd_size}{The size of redds including defensible space, default value 9.29 square meters}
+\item{redd_size}{The size of redds including defensible space}
 
-\item{fecundity}{The number of eggs per female, default value 5522}
+\item{fecundity}{The number of eggs per female}
 }
 \description{
 Calculates the annual reproductive success.

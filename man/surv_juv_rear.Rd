@@ -45,25 +45,25 @@ surv_juv_rear(
 
 \item{weeks_flooded}{variable representing total weeks flooded per watershed}
 
-\item{..surv_juv_rear_int}{intercept, source: calibration (varies by tributary)}
+\item{..surv_juv_rear_int}{Intercept}
 
-\item{.avg_temp_thresh}{coefficient for avg_temp_thresh variable}
+\item{.avg_temp_thresh}{Coefficient for \code{avg_temp_thresh} variable}
 
-\item{.high_predation}{coefficient for high_predation variable, source: \href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}}
+\item{.high_predation}{Coefficient for \code{high_predation} variable}
 
-\item{..surv_juv_rear_contact_points}{coefficient for contact_points variable, source: calibration}
+\item{..surv_juv_rear_contact_points}{Coefficient for \code{contact_points} variable}
 
-\item{..surv_juv_rear_prop_diversions}{coefficient for prop_diversions variable, source: calibration}
+\item{..surv_juv_rear_prop_diversions}{Coefficient for \code{prop_diversions} variable}
 
-\item{..surv_juv_rear_total_diversions}{coefficient for total_diversions variable, source: calibration}
+\item{..surv_juv_rear_total_diversions}{Coefficient for \code{total_diversions} variable}
 
-\item{.stranded}{coefficient for stranded variable, source: \href{#}{USFWS (2006) and CDWR (2006)}}
+\item{.stranded}{Coefficient for \code{stranded} variable}
 
-\item{.medium}{parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}}
+\item{.medium}{parameter for medium sized fish}
 
-\item{.large}{parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}}
+\item{.large}{parameter for large sized fish}
 
-\item{.floodplain}{parameter for floodplain rearing benefit, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/SOMMER_T-SDWA+180+Floodplain+rearing+of+juvenile+chinook+salmon+evidence+of+enhanced+growth+and+survival+.pdf}{Sommer et al. (2001)}}
+\item{.floodplain}{parameter for floodplain rearing benefit}
 }
 \description{
 Calculates the juvenile rearing survival inchannel and on the floodplain

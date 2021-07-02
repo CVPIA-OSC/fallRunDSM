@@ -7,11 +7,11 @@
 #' @param prop_bay_trans Variable describing proportion transport to the bay
 #' @param prop_delta_trans Variable describing proportion transport to the delta
 #' @param .intercept Intercept
-#' @param .wild Coefficient for \code{wild} variable, source: Estimated with coded wire tag data 2010–2013 \href{https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&usg= AOvVaw0VgMOwD7knFfSxRZy6k8RG}{(Kormos et al. 2012, Palmer-Zwahlen & Kormos 2013-2015, Palmer-Zwahlen et al. 2018)}
-#' @param .natal_flow Coefficient for \code{natal_flow} variable, source: Empirical model fit using 2008–2011 tagging data provided by East Bay Municipal Utility District
-#' @param .cross_channel_gates_closed Coefficient for \code{cross_channel_gates_closed} variable, Source: Empirical model fit using  2008–2011 tagging data provided by East Bay Municipal Utility District.
-#' @param .prop_bay_trans Coefficient for \code{prop_bay_trans} variable, source: Estimated with coded wire tag data 2010–2013 \href{https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&usg= AOvVaw0VgMOwD7knFfSxRZy6k8RG}{(Kormos et al. 2012, Palmer-Zwahlen & Kormos 2013-2015, Palmer-Zwahlen et al. 2018)}
-#' @param .prop_delta_trans Coefficient for \code{prop_delta_trans} variable, source: Estimated with coded wire tag data 2010–2013 \href{https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&usg= AOvVaw0VgMOwD7knFfSxRZy6k8RG}{(Kormos et al. 2012, Palmer-Zwahlen & Kormos 2013-2015, Palmer-Zwahlen et al. 2018)}
+#' @param .wild Coefficient for \code{wild} variable
+#' @param .natal_flow Coefficient for \code{natal_flow} variable
+#' @param .cross_channel_gates_closed Coefficient for \code{cross_channel_gates_closed} variable
+#' @param .prop_bay_trans Coefficient for \code{prop_bay_trans} variable
+#' @param .prop_delta_trans Coefficient for \code{prop_delta_trans} variable
 #' @source IP-117068
 #' @export
 adult_stray <- function(wild, natal_flow, south_delta_watershed, cross_channel_gates_closed,
@@ -38,10 +38,10 @@ adult_stray <- function(wild, natal_flow, south_delta_watershed, cross_channel_g
 #' @description Calculate adult survival en route to spawning grounds
 #' @param migratory_temp variable representing proportion of migratory corridor temperature above  20°C
 #' @param bypass_overtopped Indicator for bypass overtopped
-#' @param adult_harvest Adult harvest rate (Estimated with Coded Wire Tag data 2012–2013 (Palmer-Zwahlen & Kormos 2015; Palmer-Zwahlen et al. 2018))
+#' @param adult_harvest Adult harvest rate
 #' @param ..surv_adult_enroute_int Intercept
-#' @param .migratory_temp coefficient for \code{migratory_temp} variable, source: \href{https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&usg= AOvVaw0VgMOwD7knFfSxRZy6k8RG}{Schreck et al. (1994)}
-#' @param .bypass_overtopped coefficient for \code{bypass_overtopped} variable, source: Expert opinion Ted Sommer, California Department of Water Resources (tributaries above bypasses only)
+#' @param .migratory_temp Coefficient for \code{migratory_temp} variable
+#' @param .bypass_overtopped Coefficient for \code{bypass_overtopped} variable
 #' @source IP-117068
 #' @export
 
@@ -59,7 +59,7 @@ surv_adult_enroute <- function(migratory_temp, bypass_overtopped, adult_harvest,
 #' @description Calculate the adult prespawn survival
 #' @param deg_day Variable describing average degree days
 #' @param ..surv_adult_prespawn_int Intercept
-#' @param .deg_day Coefficient for \code{deg_day} variable, source Colvin et al. (2018)
+#' @param .deg_day Coefficient for \code{deg_day} variable
 #' @source IP-117068
 #' @export
 surv_adult_prespawn <- function(deg_day, ..surv_adult_prespawn_int = 3, .deg_day = -0.000669526){
