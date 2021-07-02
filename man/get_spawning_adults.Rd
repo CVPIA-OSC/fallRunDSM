@@ -41,19 +41,19 @@ get_spawning_adults(
 
 \item{month_return_proportions}{The proportion of fish returning for each month}
 
-\item{prop_flow_natal}{Flow data:  More details at \code{\link[DSMflow]{proportion_flow_natal}}}
+\item{prop_flow_natal}{More details at \code{\link[DSMflow]{proportion_flow_natal}}}
 
-\item{south_delta_routed_watersheds}{Habitat data:  More details at \code{\link[DSMhabitat]{south_delta_routed_watersheds}}}
+\item{south_delta_routed_watersheds}{More details at \code{\link[DSMhabitat]{south_delta_routed_watersheds}}}
 
-\item{cc_gates_days_closed}{Flow data:  More details at \code{\link[DSMflow]{delta_cross_channel_closed}}}
+\item{cc_gates_days_closed}{More details at \code{\link[DSMflow]{delta_cross_channel_closed}}}
 
-\item{gates_overtopped}{Flow data:  More details at \code{\link[DSMflow]{gates_overtopped}}}
+\item{gates_overtopped}{More details at \code{\link[DSMflow]{gates_overtopped}}}
 
-\item{tisdale_bypass_watershed}{Habitat data: More details at \code{\link[DSMhabitat]{tisdale_bypass_watershed}}}
+\item{tisdale_bypass_watershed}{More details at \code{\link[DSMhabitat]{tisdale_bypass_watershed}}}
 
-\item{yolo_bypass_watershed}{Habitat data: More details at \code{\link[DSMhabitat]{yolo_bypass_watershed}}}
+\item{yolo_bypass_watershed}{More details at \code{\link[DSMhabitat]{yolo_bypass_watershed}}}
 
-\item{migratory_temperature_proportion_over_20}{Temperature data: More details at \code{\link[DSMtemperature]{migratory_temperature_proportion_over_20}}}
+\item{migratory_temperature_proportion_over_20}{More details at \code{\link[DSMtemperature]{migratory_temperature_proportion_over_20}}}
 
 \item{..surv_adult_enroute_int}{Intercept for \code{\link{surv_adult_enroute}}}
 
