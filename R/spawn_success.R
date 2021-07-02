@@ -5,9 +5,9 @@
 #' @param egg_to_fry_survival The egg to fry survival rate
 #' @param prob_scour The probability of nest scouring
 #' @param spawn_habitat The available spawning habitat in square meters
-#' @param sex_ratio The female to male spawning ratio, default 0.5
-#' @param redd_size The size of redds including defensible space, default value 9.29 square meters
-#' @param fecundity The number of eggs per female, default value 5522
+#' @param sex_ratio The female to male spawning ratio
+#' @param redd_size The size of redds including defensible space
+#' @param fecundity The number of eggs per female
 #' @source IP-117068
 #' @export
 
