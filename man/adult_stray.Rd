@@ -14,12 +14,13 @@ adult_stray(
   cross_channel_gates_closed,
   prop_bay_trans = 0,
   prop_delta_trans = 0,
-  .intercept = 3,
-  .wild = -5.5,
-  .natal_flow = -1.99,
-  .cross_channel_gates_closed = -0.174,
-  .prop_bay_trans = 2.09,
-  .prop_delta_trans = 2.89
+  .intercept = fallRunDSM::params$.adult_stray_intercept,
+  .wild = fallRunDSM::params$.adult_stray_wild,
+  .natal_flow = fallRunDSM::params$.adult_stray_natal_flow,
+ 
+    .cross_channel_gates_closed = fallRunDSM::params$.adult_stray_cross_channel_gates_closed,
+  .prop_bay_trans = fallRunDSM::params$.adult_stray_prop_bay_trans,
+  .prop_delta_trans = fallRunDSM::params$.adult_stray_prop_delta_trans
 )
 }
 \arguments{

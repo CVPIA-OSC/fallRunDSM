@@ -11,14 +11,16 @@ surv_juv_outmigration_sac_delta(
   delta_flow,
   avg_temp,
   perc_diversions,
-  .intercept_one = -3.5,
-  .intercept_two = 0.3,
-  .intercept_three = -3.5,
-  .delta_flow = 0.0013,
-  .avg_temp = 0.386,
-  .perc_diversions = -0.033,
-  .medium = 1.48,
-  .large = 2.223
+  .intercept_one = fallRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_one,
+  .intercept_two = fallRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_two,
+ 
+    .intercept_three = fallRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_three,
+  .delta_flow = fallRunDSM::params$.surv_juv_outmigration_sac_delta_delta_flow,
+  .avg_temp = fallRunDSM::params$.surv_juv_outmigration_sac_delta_avg_temp,
+ 
+    .perc_diversions = fallRunDSM::params$.surv_juv_outmigration_sac_delta_perc_diversions,
+  .medium = fallRunDSM::params$.surv_juv_outmigration_sac_delta_medium,
+  .large = fallRunDSM::params$.surv_juv_outmigration_sac_delta_large
 )
 }
 \arguments{

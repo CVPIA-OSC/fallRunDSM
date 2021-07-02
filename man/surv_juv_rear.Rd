@@ -16,16 +16,17 @@ surv_juv_rear(
   total_diversions,
   stranded,
   weeks_flooded,
-  ..surv_juv_rear_int = 3.5,
-  .avg_temp_thresh = -0.717,
-  .high_predation = -0.122,
-  ..surv_juv_rear_contact_points = -0.0068,
-  ..surv_juv_rear_prop_diversions = -0.1755,
-  ..surv_juv_rear_total_diversions = -5e-04,
-  .stranded = -1.939,
-  .medium = 1.48,
-  .large = 2.223,
-  .floodplain = 0.47
+  ..surv_juv_rear_int = fallRunDSM::params$..surv_juv_rear_int,
+  .avg_temp_thresh = fallRunDSM::params$.surv_juv_rear_avg_temp_thresh,
+  .high_predation = fallRunDSM::params$.surv_juv_rear_high_predation,
+  ..surv_juv_rear_contact_points = fallRunDSM::params$..surv_juv_rear_contact_points,
+  ..surv_juv_rear_prop_diversions = fallRunDSM::params$..surv_juv_rear_prop_diversions,
+ 
+    ..surv_juv_rear_total_diversions = fallRunDSM::params$..surv_juv_rear_total_diversions,
+  .stranded = fallRunDSM::params$.surv_juv_rear_stranded,
+  .medium = fallRunDSM::params$.surv_juv_rear_medium,
+  .large = fallRunDSM::params$.surv_juv_rear_large,
+  .floodplain = fallRunDSM::params$.surv_juv_rear_floodplain
 )
 }
 \arguments{

@@ -24,27 +24,34 @@ get_migratory_survival_rates(
   avg_temp = avg_temp,
   delta_proportion_diverted = delta_proportion_diverted,
  
-    .surv_juv_outmigration_sac_delta_intercept_one = .surv_juv_outmigration_sac_delta_intercept_one,
+    .surv_juv_outmigration_sac_delta_intercept_one = fallRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_one,
  
-    .surv_juv_outmigration_sac_delta_intercept_two = .surv_juv_outmigration_sac_delta_intercept_two,
+    .surv_juv_outmigration_sac_delta_intercept_two = fallRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_two,
  
-    .surv_juv_outmigration_sac_delta_intercept_three = .surv_juv_outmigration_sac_delta_intercept_three,
+    .surv_juv_outmigration_sac_delta_intercept_three = fallRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_three,
  
-    .surv_juv_outmigration_sac_delta_delta_flow = .surv_juv_outmigration_sac_delta_delta_flow,
-  .surv_juv_outmigration_sac_delta_avg_temp = .surv_juv_outmigration_sac_delta_avg_temp,
+    .surv_juv_outmigration_sac_delta_delta_flow = fallRunDSM::params$.surv_juv_outmigration_sac_delta_delta_flow,
  
-    .surv_juv_outmigration_sac_delta_perc_diversions = .surv_juv_outmigration_sac_delta_perc_diversions,
-  .surv_juv_outmigration_sac_delta_medium = .surv_juv_outmigration_sac_delta_medium,
-  .surv_juv_outmigration_sac_delta_large = .surv_juv_outmigration_sac_delta_large,
-  ..surv_juv_outmigration_sj_int = ..surv_juv_outmigration_sj_int,
-  ..surv_juv_outmigration_sac_int_one = ..surv_juv_outmigration_sac_int_one,
+    .surv_juv_outmigration_sac_delta_avg_temp = fallRunDSM::params$.surv_juv_outmigration_sac_delta_avg_temp,
  
-    ..surv_juv_outmigration_sac_prop_diversions = ..surv_juv_outmigration_sac_prop_diversions,
+    .surv_juv_outmigration_sac_delta_perc_diversions = fallRunDSM::params$.surv_juv_outmigration_sac_delta_perc_diversions,
  
-    ..surv_juv_outmigration_sac_total_diversions = ..surv_juv_outmigration_sac_total_diversions,
-  ..surv_juv_outmigration_sac_int_two = ..surv_juv_outmigration_sac_int_two,
-  .surv_juv_outmigration_san_joquin_medium = .surv_juv_outmigration_san_joquin_medium,
-  .surv_juv_outmigration_san_joaquin_large = .surv_juv_outmigration_san_joaquin_large
+    .surv_juv_outmigration_sac_delta_medium = fallRunDSM::params$.surv_juv_outmigration_sac_delta_medium,
+ 
+    .surv_juv_outmigration_sac_delta_large = fallRunDSM::params$.surv_juv_outmigration_sac_delta_large,
+  ..surv_juv_outmigration_sj_int = fallRunDSM::params$..surv_juv_outmigration_sj_int,
+ 
+    ..surv_juv_outmigration_sac_int_one = fallRunDSM::params$..surv_juv_outmigration_sac_int_one,
+ 
+    ..surv_juv_outmigration_sac_prop_diversions = fallRunDSM::params$..surv_juv_outmigration_sac_prop_diversions,
+ 
+    ..surv_juv_outmigration_sac_total_diversions = fallRunDSM::params$..surv_juv_outmigration_sac_total_diversions,
+ 
+    ..surv_juv_outmigration_sac_int_two = fallRunDSM::params$..surv_juv_outmigration_sac_int_two,
+ 
+    .surv_juv_outmigration_san_joquin_medium = fallRunDSM::params$.surv_juv_outmigration_san_joquin_medium,
+ 
+    .surv_juv_outmigration_san_joaquin_large = fallRunDSM::params$.surv_juv_outmigration_san_joaquin_large
 )
 }
 \arguments{

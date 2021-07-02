@@ -15,14 +15,14 @@ surv_juv_delta(
   contact_points,
   prop_diverted,
   total_diverted,
-  ..surv_juv_delta_int = 1.4,
-  .avg_temp_thresh = -0.717,
-  .high_predation = -0.122,
-  ..surv_juv_delta_contact_points = 0.0358 * -0.189,
-  .prop_diverted = -3.51,
-  ..surv_juv_delta_total_diverted = 0.5 * -0.0021,
-  .medium = 1.48,
-  .large = 2.223
+  ..surv_juv_delta_int = fallRunDSM::params$..surv_juv_delta_int,
+  .avg_temp_thresh = fallRunDSM::params$.surv_juv_delta_avg_temp_thresh,
+  .high_predation = fallRunDSM::params$.surv_juv_delta_high_predation,
+  ..surv_juv_delta_contact_points = fallRunDSM::params$..surv_juv_delta_contact_points,
+  .prop_diverted = fallRunDSM::params$.surv_juv_delta_prop_diverted,
+  ..surv_juv_delta_total_diverted = fallRunDSM::params$..surv_juv_delta_total_diverted,
+  .medium = fallRunDSM::params$.surv_juv_delta_medium,
+  .large = fallRunDSM::params$.surv_juv_delta_large
 )
 }
 \arguments{

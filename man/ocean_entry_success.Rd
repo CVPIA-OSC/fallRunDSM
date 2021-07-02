@@ -11,9 +11,9 @@ ocean_entry_success(
   migrants,
   month,
   avg_ocean_transition_month,
-  .ocean_entry_success_length,
-  ..ocean_entry_success_int = ..ocean_entry_success_int,
-  .ocean_entry_success_months
+  .ocean_entry_success_length = fallRunDSM::params$.ocean_entry_success_length,
+  ..ocean_entry_success_int = fallRunDSM::params$..ocean_entry_success_int,
+  .ocean_entry_success_months = fallRunDSM::params$.ocean_entry_success_months
 )
 }
 \arguments{
@@ -23,11 +23,11 @@ ocean_entry_success(
 
 \item{avg_ocean_transition_month}{Variable representing the average month juveniles transition to the ocean}
 
+\item{.ocean_entry_success_length}{Variable representing the fork lengths for each size classes. \href{https://dsm-docs.s3-us-west-2.amazonaws.com/Satterthwaite_et_al_2014.pdf}{Satterthwaite et al. (2014)}}
+
 \item{..ocean_entry_success_int}{Intercept, source: Calibration (Varies by tributary )}
 
-\item{length}{Variable representing the fork lengths for each size classes.}
-
-\item{.month}{Coefficient for month variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/Satterthwaite_et_al_2014.pdf}{Satterthwaite et al. (2014)}}
+\item{.ocean_entry_success_months}{Coefficient for month variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/Satterthwaite_et_al_2014.pdf}{Satterthwaite et al. (2014)}}
 }
 \description{
 Calculates the number of juveniles that survive entering the ocean

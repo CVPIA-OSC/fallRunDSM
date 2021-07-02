@@ -11,12 +11,12 @@ surv_juv_bypass(
   max_temp_thresh,
   avg_temp_thresh,
   high_predation,
-  ..surv_juv_bypass_int = -3.5,
-  .avg_temp_thresh = -0.717,
-  .high_predation = -0.122,
-  .medium = 1.48,
-  .large = 2.223,
-  .floodplain = 0.47
+  ..surv_juv_bypass_int = fallRunDSM::params$..surv_juv_bypass_int,
+  .avg_temp_thresh = fallRunDSM::params$.surv_juv_bypass_avg_temp_thresh,
+  .high_predation = fallRunDSM::params$.surv_juv_bypass_high_predation,
+  .medium = fallRunDSM::params$.surv_juv_bypass_medium,
+  .large = fallRunDSM::params$.surv_juv_bypass_large,
+  .floodplain = fallRunDSM::params$.surv_juv_bypass_floodplain
 )
 }
 \arguments{
