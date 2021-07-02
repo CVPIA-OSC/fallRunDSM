@@ -56,6 +56,32 @@ get_rearing_survival_rates(
 
 \item{month}{The simulation month, 1-8}
 
+\item{avg_temp}{More details at \code{\link[DSMtemperature]{stream_tempetature}}}
+
+\item{avg_temp_delta}{More details at \code{\link[DSMtempetature]{delta_temprature}}}
+
+\item{prob_strand_early}{More details at \code{\link[DSMhabitat]{prop_strand_early}}}
+
+\item{prob_strand_late}{More details at \code{\link[DSMhabitat]{prop_strand_late}}}
+
+\item{proportion_diverted}{More details at \code{\link[DSMflow]{proportion_diverted}}}
+
+\item{total_diverted}{More details at \code{\link[DSMflow]{total_diverted}}}
+
+\item{delta_proportion_diverted}{More details at \code{\link[DSMflow]{delta_proportion_diverted}}}
+
+\item{delta_total_diverted}{More details at \code{\link[DSMflow]{delta_total_diverted}}}
+
+\item{weeks_flooded}{More details at \code{\link[DSMflow]{weeks_flooded}}}
+
+\item{prop_high_predation}{More details at \code{\link[DSMhabitat]{prop_high_predation}}}
+
+\item{contact_points}{More details at \code{\link[DSMhabitat]{contact_points}}}
+
+\item{delta_contact_points}{More details at \code{\link[DSMhabitat]{delta_contact_points}}}
+
+\item{delta_prop_high_predation}{More details at \code{\link[DSMhabitat]{delta_prop_high_predation}}}
+
 \item{..surv_juv_rear_int}{Intercept for \code{\link{surv_juv_rear}}}
 
 \item{..surv_juv_rear_contact_points}{Coefficient for \code{\link{surv_juv_rear}} \code{contact_points} variable}
@@ -78,21 +104,21 @@ get_rearing_survival_rates(
 
 \item{.surv_juv_rear_stranded}{Coefficient for \code{\link{surv_juv_rear}} \code{stranded} variable}
 
-\item{.surv_juv_rear_medium}{parameter for \code{\link{surv_juv_rear}} medium sized fish}
+\item{.surv_juv_rear_medium}{Parameter for \code{\link{surv_juv_rear}} medium sized fish}
 
-\item{.surv_juv_rear_large}{parameter for \code{\link{surv_juv_rear}} large sized fish}
+\item{.surv_juv_rear_large}{Parameter for \code{\link{surv_juv_rear}} large sized fish}
 
-\item{.surv_juv_rear_floodplain}{parameter for \code{\link{surv_juv_rear}} floodplain rearing benefit}
+\item{.surv_juv_rear_floodplain}{Parameter for \code{\link{surv_juv_rear}} floodplain rearing benefit}
 
-\item{.surv_juv_bypass_avg_temp_thresh}{coefficient for \code{\link{surv_juv_bypass}} \code{avg_temp_thresh} variable}
+\item{.surv_juv_bypass_avg_temp_thresh}{Coefficient for \code{\link{surv_juv_bypass}} \code{avg_temp_thresh} variable}
 
-\item{.surv_juv_bypass_high_predation}{coefficient for \code{\link{surv_juv_bypass}} \code{high_predation} variableTODO}
+\item{.surv_juv_bypass_high_predation}{Coefficient for \code{\link{surv_juv_bypass}} \code{high_predation} variableTODO}
 
-\item{.surv_juv_bypass_medium}{parameter for \code{\link{surv_juv_bypass}} medium sized fish}
+\item{.surv_juv_bypass_medium}{Parameter for \code{\link{surv_juv_bypass}} medium sized fish}
 
-\item{.surv_juv_bypass_large}{parameter for \code{\link{surv_juv_bypass}} large sized fish}
+\item{.surv_juv_bypass_large}{Parameter for \code{\link{surv_juv_bypass}} large sized fish}
 
-\item{.surv_juv_bypass_floodplain}{parameter for \code{\link{surv_juv_bypass}} floodplain rearing benefit}
+\item{.surv_juv_bypass_floodplain}{Parameter for \code{\link{surv_juv_bypass}} floodplain rearing benefit}
 
 \item{.surv_juv_delta_avg_temp_thresh}{Coefficient for \code{\link{surv_juv_delta}} \code{avg_temp_thresh} variable}
 
@@ -100,9 +126,9 @@ get_rearing_survival_rates(
 
 \item{.surv_juv_delta_prop_diverted}{Coefficient for \code{\link{surv_juv_delta}} \code{prop_diversions} variable}
 
-\item{.surv_juv_delta_medium}{parameter for \code{\link{surv_juv_delta}} medium sized fish}
+\item{.surv_juv_delta_medium}{Parameter for \code{\link{surv_juv_delta}} medium sized fish}
 
-\item{.surv_juv_delta_large}{parameter for \code{\link{surv_juv_delta}} large sized fish}
+\item{.surv_juv_delta_large}{Parameter for \code{\link{surv_juv_delta}} large sized fish}
 
 \item{scenario}{The current scenario}
 }

@@ -160,6 +160,19 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
 #' @param year The simulation year, 1-20
 #' @param month The simulation month, 1-8
 #' @param scenario The current scenario
+#' @param avg_temp More details at \code{\link[DSMtemperature]{stream_tempetature}}
+#' @param avg_temp_delta More details at \code{\link[DSMtempetature]{delta_temprature}}
+#' @param prob_strand_early More details at \code{\link[DSMhabitat]{prop_strand_early}}
+#' @param prob_strand_late More details at \code{\link[DSMhabitat]{prop_strand_late}}
+#' @param proportion_diverted More details at \code{\link[DSMflow]{proportion_diverted}}
+#' @param total_diverted More details at \code{\link[DSMflow]{total_diverted}}
+#' @param delta_proportion_diverted More details at \code{\link[DSMflow]{delta_proportion_diverted}}
+#' @param delta_total_diverted More details at \code{\link[DSMflow]{delta_total_diverted}}
+#' @param weeks_flooded More details at \code{\link[DSMflow]{weeks_flooded}}
+#' @param prop_high_predation More details at \code{\link[DSMhabitat]{prop_high_predation}}
+#' @param contact_points More details at \code{\link[DSMhabitat]{contact_points}}
+#' @param delta_contact_points More details at \code{\link[DSMhabitat]{delta_contact_points}}
+#' @param delta_prop_high_predation More details at \code{\link[DSMhabitat]{delta_prop_high_predation}}
 #' @param ..surv_juv_rear_int Intercept for \code{\link{surv_juv_rear}}
 #' @param ..surv_juv_rear_contact_points Coefficient for \code{\link{surv_juv_rear}} \code{contact_points} variable
 #' @param ..surv_juv_rear_prop_diversions Coefficient for \code{\link{surv_juv_rear}} \code{prop_diversions} variable
@@ -171,19 +184,19 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
 #' @param .surv_juv_rear_avg_temp_thresh Coefficient for \code{\link{surv_juv_rear}} \code{avg_temp_thresh} variable
 #' @param .surv_juv_rear_high_predation Coefficient for \code{\link{surv_juv_rear}} \code{high_predation} variable
 #' @param .surv_juv_rear_stranded Coefficient for \code{\link{surv_juv_rear}} \code{stranded} variable
-#' @param .surv_juv_rear_medium parameter for \code{\link{surv_juv_rear}} medium sized fish
-#' @param .surv_juv_rear_large parameter for \code{\link{surv_juv_rear}} large sized fish
-#' @param .surv_juv_rear_floodplain parameter for \code{\link{surv_juv_rear}} floodplain rearing benefit
-#' @param .surv_juv_bypass_avg_temp_thresh coefficient for \code{\link{surv_juv_bypass}} \code{avg_temp_thresh} variable
-#' @param .surv_juv_bypass_high_predation coefficient for \code{\link{surv_juv_bypass}} \code{high_predation} variableTODO
-#' @param .surv_juv_bypass_medium parameter for \code{\link{surv_juv_bypass}} medium sized fish
-#' @param .surv_juv_bypass_large parameter for \code{\link{surv_juv_bypass}} large sized fish
-#' @param .surv_juv_bypass_floodplain parameter for \code{\link{surv_juv_bypass}} floodplain rearing benefit
+#' @param .surv_juv_rear_medium Parameter for \code{\link{surv_juv_rear}} medium sized fish
+#' @param .surv_juv_rear_large Parameter for \code{\link{surv_juv_rear}} large sized fish
+#' @param .surv_juv_rear_floodplain Parameter for \code{\link{surv_juv_rear}} floodplain rearing benefit
+#' @param .surv_juv_bypass_avg_temp_thresh Coefficient for \code{\link{surv_juv_bypass}} \code{avg_temp_thresh} variable
+#' @param .surv_juv_bypass_high_predation Coefficient for \code{\link{surv_juv_bypass}} \code{high_predation} variableTODO
+#' @param .surv_juv_bypass_medium Parameter for \code{\link{surv_juv_bypass}} medium sized fish
+#' @param .surv_juv_bypass_large Parameter for \code{\link{surv_juv_bypass}} large sized fish
+#' @param .surv_juv_bypass_floodplain Parameter for \code{\link{surv_juv_bypass}} floodplain rearing benefit
 #' @param .surv_juv_delta_avg_temp_thresh Coefficient for \code{\link{surv_juv_delta}} \code{avg_temp_thresh} variable
 #' @param .surv_juv_delta_high_predation Coefficient for \code{\link{surv_juv_delta}} \code{high_predation} variable
 #' @param .surv_juv_delta_prop_diverted Coefficient for \code{\link{surv_juv_delta}} \code{prop_diversions} variable
-#' @param .surv_juv_delta_medium parameter for \code{\link{surv_juv_delta}} medium sized fish
-#' @param .surv_juv_delta_large parameter for \code{\link{surv_juv_delta}} large sized fish
+#' @param .surv_juv_delta_medium Parameter for \code{\link{surv_juv_delta}} medium sized fish
+#' @param .surv_juv_delta_large Parameter for \code{\link{surv_juv_delta}} large sized fish
 #' @source IP-117068
 #' @export
 get_rearing_survival_rates <- function(year, month,
