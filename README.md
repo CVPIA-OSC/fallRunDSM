@@ -39,7 +39,7 @@ remotes::install_github("CVPIA-OSC/fallRunDSM")
 ### Run Model
 The `fallrunDSM` is a Fall Run Chinook life cycle model used for CVPIA's Structured Decision Making Process.
 Running the model simulates Fall Run Chinook population dynamics across 31 watersheds in California over a 20 year period. 
-View the [fall_run_model()](docs/reference/fall_run_model.html) documentation for additional information on running the `fall_run_model`.
+View the [fall_run_model()](https://cvpia-osc.github.io/fallRunDSM/reference/fall_run_model.html) documentation for additional information on running the `fall_run_model`.
 
 The following code runs the fall run model with SIT defined scenario 1 and `fall_run_seeds`:
 ```r
@@ -73,7 +73,7 @@ The `fallRunDSM` package uses data from several other packages within the [CVPIA
 
 ### Flow, Habitat, and Temperature Data
 
-All data used in the `fallRunDSM` is passed in as a argument to `fall_run_model()` from a `fallRunDSM::params` data list. [`fallRunDSM::params`](docs/reference/params.html) is composed using data objects from the following packages:
+All data used in the `fallRunDSM` is passed in as a argument to `fall_run_model()` from a `fallRunDSM::params` data list. [`fallRunDSM::params`](https://cvpia-osc.github.io/fallRunDSM/reference/params.html) is composed using data objects from the following packages:
 
 * **Flow Data**: View detailed documentation of flow data inputs at [DSMflow](https://cvpia-osc.github.io/DSMflow/). Flow inputs to the `fallRunDSM` are matrices generated using CALSIM data.
 * **Habitat Data**: View detailed documentation of habitat data inputs at [DSMhabitat](https://cvpia-osc.github.io/DSMhabitat/). Habitat inputs to `fallRunDSM` are matrices based on expert opinion and modeled results for tributaries in the central valley.
