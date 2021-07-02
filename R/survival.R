@@ -595,37 +595,37 @@ surv_juv_outmigration_delta <- function(prop_DCC_closed, hor_barr, freeport_flow
 #' regions for a month and year of the simulation
 #' @param year The simulation year, 1-20
 #' @param month The simulation month, 1-8
-#' @param cc_gates_prop_days_closed
-#' @param freeport_flows
-#' @param vernalis_flows
-#' @param stockton_flows
-#' @param vernalis_temps
-#' @param prisoners_point_temps
-#' @param CVP_exports
-#' @param SWP_exports
-#' @param ..surv_juv_outmigration_sj_int
-#' @param ..surv_juv_outmigration_sac_int_one
-#' @param ..surv_juv_outmigration_sac_prop_diversions
-#' @param ..surv_juv_outmigration_sac_total_diversions
-#' @param ..surv_juv_outmigration_sac_int_two
-#' @param .surv_juv_outmigration_san_joquin_medium TODO
-#' @param .surv_juv_outmigration_san_joaquin_large TODO
+#' @param cc_gates_prop_days_closed More details at \code{\link[DSMflow]{delta_cross_channel_closed}}
+#' @param freeport_flows More details at \code{\link[DSMflow]{freeport_flow}}
+#' @param vernalis_flows More details at \code{\link[DSMflow]{vernalis_flow}}
+#' @param stockton_flows More details at \code{\link[DSMflow]{stockton_flow}}
+#' @param vernalis_temps More details at \code{\link[DSMtemperature]{vernalis_temperature}}
+#' @param prisoners_point_temps More details at \code{\link[DSMtemperature]{prisoners_point_temperature}}
+#' @param CVP_exports More details at \code{\link[DSMflow]{cvp_exports}}
+#' @param SWP_exports More details at \code{\link[DSMflow]{swp_exports}}
+#' @param ..surv_juv_outmigration_sj_int Intercept for \code{\link{surv_juv_outmigration_san_joaquin}}
+#' @param ..surv_juv_outmigration_sac_int_one Intercept one for \code{\link{surv_juv_outmigration_sac_delta}}
+#' @param ..surv_juv_outmigration_sac_prop_diversions Coefficent for code{\link{surv_juv_outmigration_sac_delta}} \code{prop_diversion} variable
+#' @param ..surv_juv_outmigration_sac_total_diversions Coefficent for code{\link{surv_juv_outmigration_sac_delta}} \code{total_diversion} variable #TODO (do we use this variable?)
+#' @param ..surv_juv_outmigration_sac_int_two Intercept one for \code{\link{surv_juv_outmigration_sac_delta}}
+#' @param .surv_juv_outmigration_san_joquin_medium parameter for \code{\link{surv_juv_outmigration_san_joaquin}} medium sized fish
+#' @param .surv_juv_outmigration_san_joaquin_large parameter for \code{\link{surv_juv_outmigration_san_joaquin}} large sized fish
 #' @source IP-117068
 #' @export
 get_migratory_survival_rates <- function(year, month,
-                                         cc_gates_prop_days_closed = cc_gates_prop_days_closed,
-                                         freeport_flows = freeport_flows,
-                                         vernalis_flows = vernalis_flows,
-                                         stockton_flows = stockton_flows,
-                                         vernalis_temps = vernalis_temps,
-                                         prisoners_point_temps = prisoners_point_temps,
-                                         CVP_exports = CVP_exports,
-                                         SWP_exports = SWP_exports,
-                                         upper_sacramento_flows = upper_sacramento_flows,
-                                         delta_inflow = delta_inflow,
-                                         avg_temp_delta = avg_temp_delta,
-                                         avg_temp = avg_temp,
-                                         delta_proportion_diverted = delta_proportion_diverted,
+                                         cc_gates_prop_days_closed = fallRunDSM::params$cc_gates_prop_days_closed,
+                                         freeport_flows = fallRunDSM::params$freeport_flows,
+                                         vernalis_flows = fallRunDSM::params$vernalis_flows,
+                                         stockton_flows = fallRunDSM::params$stockton_flows,
+                                         vernalis_temps = fallRunDSM::params$vernalis_temps,
+                                         prisoners_point_temps = fallRunDSM::params$prisoners_point_temps,
+                                         CVP_exports = fallRunDSM::params$CVP_exports,
+                                         SWP_exports = fallRunDSM::params$SWP_exports,
+                                         upper_sacramento_flows = fallRunDSM::params$upper_sacramento_flows,
+                                         delta_inflow = fallRunDSM::params$delta_inflow,
+                                         avg_temp_delta = fallRunDSM::params$avg_temp_delta,
+                                         avg_temp = fallRunDSM::params$avg_temp,
+                                         delta_proportion_diverted = fallRunDSM::params$delta_proportion_diverted,
                                          .surv_juv_outmigration_sac_delta_intercept_one = fallRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_one,
                                          .surv_juv_outmigration_sac_delta_intercept_two = fallRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_two,
                                          .surv_juv_outmigration_sac_delta_intercept_three = fallRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_three,
