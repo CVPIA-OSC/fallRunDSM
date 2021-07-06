@@ -110,7 +110,7 @@ usethis::use_data(survival_betas, overwrite = TRUE)
 # 2019 Calibration Parameters ------------
 params <- list(
 
-  # items that were in dsm package
+  # items from dsm package
   hatchery_allocation = fallRunDSM::hatchery_allocation,
   natural_adult_removal_rate = fallRunDSM::natural_adult_removal_rate,
   proportion_hatchery = fallRunDSM::proportion_hatchery,
@@ -123,7 +123,6 @@ params <- list(
   stray_rate = fallRunDSM::stray_rate,
   adult_harvest_rate = fallRunDSM::adult_harvest_rate,
   diversity_group = fallRunDSM::diversity_group,
-
 
   # adults
   .adult_stray_intercept = 3,
@@ -165,17 +164,6 @@ params <- list(
   .surv_juv_outmigration_sac_delta_medium = 1.48,
   .surv_juv_outmigration_sac_delta_large = 2.223,
 
-
-
-
-
-
-
-
-
-
-  proportion_hatchery = fallRunDSM::proportion_hatchery,
-
   # survival
   .surv_juv_rear_avg_temp_thresh = -0.717,
   .surv_juv_rear_high_predation = -0.122,
@@ -193,7 +181,6 @@ params <- list(
   .surv_juv_delta_prop_diverted = -3.51,
   .surv_juv_delta_medium = 1.48,
   .surv_juv_delta_large = 2.223,
-
   .surv_juv_outmigration_san_joquin_medium = 1.48,
   .surv_juv_outmigration_san_joaquin_large = 2.223,
 
@@ -246,9 +233,6 @@ params <- list(
   prob_strand_late = DSMhabitat::prob_strand_late,
   prob_nest_scoured = DSMhabitat::prob_nest_scoured,
 
-
-
-  # existing
 
   ..surv_adult_enroute_int = 3,
   ..surv_adult_prespawn_int = 3,

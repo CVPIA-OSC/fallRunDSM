@@ -47,7 +47,7 @@ surv_juv_rear(
 
 \item{..surv_juv_rear_int}{intercept, source: calibration (varies by tributary)}
 
-\item{.avg_temp_thresh}{coefficient for avg_temp_thresh variable, source: \href{https://www.noaa.gov/sites/default/files/atoms/files/07354626766.pdf}{Marine and Chech (2004)}}
+\item{.avg_temp_thresh}{coefficient for avg_temp_thresh variable}
 
 \item{.high_predation}{coefficient for high_predation variable, source: \href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}}
 

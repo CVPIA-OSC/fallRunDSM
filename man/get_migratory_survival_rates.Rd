@@ -21,6 +21,7 @@ get_migratory_survival_rates(
   upper_sacramento_flows = upper_sacramento_flows,
   delta_inflow = delta_inflow,
   avg_temp_delta = avg_temp_delta,
+  avg_temp = avg_temp,
   delta_proportion_diverted = delta_proportion_diverted,
  
     .surv_juv_outmigration_sac_delta_intercept_one = .surv_juv_outmigration_sac_delta_intercept_one,

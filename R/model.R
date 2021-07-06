@@ -6,7 +6,7 @@
 #' @param seeds The default value is NULL runs the model in seeding mode,
 #' returning a 31 by 25 matrix with the first four years of seeded adults. This
 #' returned value can be fed into the model again as the value for the seeds argument
-#' @param ..params parameters derived from calibration
+#' @param ..params parameters for model and submodels
 #' @source IP-117068
 #' @export
 fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibrate"),
@@ -16,7 +16,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
   if (mode == "simulate") {
     if (is.null(scenario)) {
-      # the do nothing scenario to force habitat degration
+      # the do nothing scenario to force habitat degradation
       scenario <- DSMscenario::scenarios$NO_ACTION
     }
 
@@ -244,7 +244,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                             migratory_survival_sac_delta = migratory_survival$sac_delta,
                                             migratory_survival_bay_delta = migratory_survival$bay_delta,
                                             juveniles_at_chipps = juveniles_at_chipps,
-                                            growth_rates = fallRunDSM::params$growth_rates)
+                                            growth_rates = ..params$growth_rates)
 
 
         migrants_at_golden_gate <- delta_fish$migrants_at_golden_gate
@@ -272,10 +272,10 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
         upper_sac_trib_rear <- rear(juveniles = upper_sac_trib_fish$inchannel,
                                     survival_rate = rearing_survival$inchannel[1:15, ],
-                                    growth = fallRunDSM::params$growth_rates,
+                                    growth = ..params$growth_rates,
                                     floodplain_juveniles = upper_sac_trib_fish$floodplain,
                                     floodplain_survival_rate = rearing_survival$floodplain[1:15, ],
-                                    floodplain_growth = fallRunDSM::params$growth_rates_floodplain,
+                                    floodplain_growth = ..params$growth_rates_floodplain,
                                     weeks_flooded = ..params$weeks_flooded[1:15, month, year])
 
         juveniles[1:15, ] <- upper_sac_trib_rear$inchannel + upper_sac_trib_rear$floodplain

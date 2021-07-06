@@ -14,6 +14,7 @@ route(
   inchannel_habitat,
   floodplain_habitat,
   prop_pulse_flows,
+  proportion_flow_bypass,
   detour = NULL,
   .pulse_movement_intercept,
   .pulse_movement_proportion_pulse,
