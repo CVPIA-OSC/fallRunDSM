@@ -23,21 +23,21 @@ pulse_movement(
 \item{proportion_pulse}{The proportion of flow that is a pulse, estimated
 by the standard deviation of flow divided by the median flow for each month}
 
-\item{.intercept}{Intercept, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.}
+\item{.intercept}{Intercept}
 
-\item{.proportion_pulse}{Coefficient for the proportion_pulse variable, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.}
+\item{.proportion_pulse}{Coefficient for the proportion_pulse variable}
 
-\item{.medium}{parameter for medium sized fish, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.}
+\item{.medium}{Parameter for medium sized fish}
 
-\item{.large}{parameter for large sized fish, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.}
+\item{.large}{Parameter for large sized fish}
 
-\item{.vlarge}{parameter for very large sized fish, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.}
+\item{.vlarge}{Parameter for very large sized fish}
 
-\item{.medium_pulse}{Additional coefficient for proportion_pulse variable for medium size fish, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.}
+\item{.medium_pulse}{Additional coefficient for proportion_pulse variable for medium size fish}
 
-\item{.large_pulse}{Additional coefficient for proportion_pulse variable for large size fish, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.}
+\item{.large_pulse}{Additional coefficient for proportion_pulse variable for large size fish}
 
-\item{.very_large_pulse}{Additional coefficient for proportion_pulse variable for very large size fish, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.}
+\item{.very_large_pulse}{Additional coefficient for proportion_pulse variable for very large size fish}
 }
 \description{
 Calculates the proportion of juveniles in each size class that

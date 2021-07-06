@@ -30,21 +30,21 @@ surv_juv_outmigration_sac_delta(
 
 \item{perc_diversions}{Variable describing monthly mean percent diverted}
 
-\item{.intercept_one}{Intercept for model one, source: TODO}
+\item{.intercept_one}{Intercept for model one}
 
-\item{.intercept_two}{Intercept for model two, source: TODO}
+\item{.intercept_two}{Intercept for model two}
 
-\item{.intercept_three}{Intercept for model three, source: TODO}
+\item{.intercept_three}{Intercept for model three}
 
-\item{.delta_flow}{Coefficient for delta_flow variable, source: TODO}
+\item{.delta_flow}{Coefficient for delta_flow variable}
 
-\item{.avg_temp}{Coefficient for avg_temp variable, source: TODO}
+\item{.avg_temp}{Coefficient for avg_temp variable}
 
-\item{.perc_diversions}{Coefficient for perc_diversions variable, source: TODO}
+\item{.perc_diversions}{Coefficient for perc_diversions variable}
 
-\item{.medium}{parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}}
+\item{.medium}{parameter for medium sized fish}
 
-\item{.large}{parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}}
+\item{.large}{parameter for large sized fish}
 }
 \description{
 Calculates the Sacramento Delta juvenile out migration survival
