@@ -22,7 +22,7 @@
 #' @source IP-117068
 #' @export
 get_spawning_adults <- function(year, adults, hatch_adults, mode,
-                                month_return_proportions=fallRunDSM::month_return_proportions,
+                                month_return_proportions=fallRunDSM::params$month_return_proportions,
                                 prop_flow_natal,
                                 south_delta_routed_watersheds,
                                 cc_gates_days_closed,
@@ -52,12 +52,12 @@ get_spawning_adults <- function(year, adults, hatch_adults, mode,
     natural_adults_by_month <- sapply(1:3, function(month) {
       rbinom(n = 31,
              size = round(adults_by_month[, month]),
-             prob = 1 - natural_adult_removal_rate)
+             prob = 1 - fallRunDSM::params$natural_adult_removal_rate)
     })
 
     init_adults <- rowSums(adults_by_month)
     surviving_natural_adults <- rowSums(natural_adults_by_month)
-    proportion_natural <- 1 - proportion_hatchery
+    proportion_natural <- 1 - fallRunDSM::params$proportion_hatchery
     init_adults_by_month <- natural_adults_by_month
 
   } else  {
@@ -90,12 +90,12 @@ get_spawning_adults <- function(year, adults, hatch_adults, mode,
 
     south_delta_routed_adults <- round(colSums(straying_adults * south_delta_routed_watersheds))
     south_delta_stray_adults <- sapply(1:3, function(month) {
-      as.vector(rmultinom(1, south_delta_routed_adults[month], cross_channel_stray_rate))
+      as.vector(rmultinom(1, south_delta_routed_adults[month], fallRunDSM::params$cross_channel_stray_rate))
     })
 
     remaining_stray_adults <- round(colSums(straying_adults * (1 - south_delta_routed_watersheds)))
     stray_adults <- sapply(1:3, function(month) {
-      as.vector(rmultinom(1, remaining_stray_adults[month], stray_rate))
+      as.vector(rmultinom(1, remaining_stray_adults[month], fallRunDSM::params$stray_rate))
     })
 
 
@@ -116,7 +116,7 @@ get_spawning_adults <- function(year, adults, hatch_adults, mode,
     adult_en_route_surv <- sapply(1:3, function(month) {
       adult_en_route_surv <- surv_adult_enroute(migratory_temp = en_route_temps[,month],
                                                 bypass_overtopped = bypass_is_overtopped[,month],
-                                                adult_harvest = adult_harvest_rate,
+                                                adult_harvest = .adult_en_route_adult_harvest_rate,
                                                 ..surv_adult_enroute_int = ..surv_adult_enroute_int,
                                                 .migratory_temp = .adult_en_route_migratory_temp,
                                                 .bypass_overtopped = .adult_en_route_bypass_overtopped)
@@ -128,7 +128,7 @@ get_spawning_adults <- function(year, adults, hatch_adults, mode,
     })
 
     surviving_natural_adults_by_month <- sapply(1:3, function(month) {
-      rbinom(31, round(adults_survived_to_spawning[, month]), (1 - natural_adult_removal_rate))
+      rbinom(31, round(adults_survived_to_spawning[, month]), (1 - fallRunDSM::params$natural_adult_removal_rate))
     })
 
     surviving_hatchery_adults_by_month <- sapply(1:3, function(month) {
