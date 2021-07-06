@@ -187,7 +187,7 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
 #' @param .surv_juv_delta_prop_diverted TODO
 #' @param .surv_juv_delta_medium TODO
 #' @param .surv_juv_delta_large TODO
-#' @param min_survival_rate
+#' @param min_survival_rate TODO
 #' @source IP-117068
 #' @export
 get_rearing_survival_rates <- function(year, month,
