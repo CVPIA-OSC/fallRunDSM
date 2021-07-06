@@ -131,10 +131,6 @@ A list containing all parameters needed for running the \code{\link{fall_run_mod
   \item \code{.surv_juv_outmigration_sac_delta_medium} Parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
   \item \code{.surv_juv_outmigration_sac_delta_large} Parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
   \item \code{..surv_juv_outmigration_sj_int} Intercept, source: calibration
-  \item \code{..surv_juv_outmigration_sac_int_one} ##Figure out whats happening for these 4
-  \item \code{..surv_juv_outmigration_sac_prop_diversions}
-  \item \code{..surv_juv_outmigration_sac_total_diversions}
-  \item \code{..surv_juv_outmigration_sac_int_two}
   \item \code{.surv_juv_outmigration_san_joquin_medium} Parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
   \item \code{.surv_juv_outmigration_san_joaquin_large} Parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
 }

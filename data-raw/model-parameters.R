@@ -256,10 +256,6 @@ params <- list(
   ..surv_juv_delta_contact_points = (.0358 * -0.189),
   ..surv_juv_delta_total_diverted = (.5 * -0.0021),
   ..surv_juv_outmigration_sj_int = -3.5,
-  ..surv_juv_outmigration_sac_int_one = 2.5,
-  ..surv_juv_outmigration_sac_prop_diversions = (-3.51 * .05),
-  ..surv_juv_outmigration_sac_total_diversions = (-.0021 * .215),
-  ..surv_juv_outmigration_sac_int_two = 0.3,
   ..ocean_entry_success_int = c(
     `Upper Sacramento River` = -0.5108849,
     `Antelope Creek` = 1.2,
