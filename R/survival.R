@@ -18,6 +18,7 @@
 #' @param .medium parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
 #' @param .large parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
 #' @param .floodplain parameter for floodplain rearing benefit, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/SOMMER_T-SDWA+180+Floodplain+rearing+of+juvenile+chinook+salmon+evidence+of+enhanced+growth+and+survival+.pdf}{Sommer et al. (2001)}
+#' @param min_survival_rate estimated survival rate if temperature threshold is exceeded, source: expert opinion
 #' @source IP-117068
 #' @export
 surv_juv_rear <- function(max_temp_thresh, avg_temp_thresh, high_predation,
@@ -32,7 +33,8 @@ surv_juv_rear <- function(max_temp_thresh, avg_temp_thresh, high_predation,
                           .stranded = -1.939,
                           .medium = 1.48,
                           .large = 2.223,
-                          .floodplain = 0.47){
+                          .floodplain = 0.47,
+                          min_survival_rate){
   # determine the proportion of weeks when flooded vs not
   prop_ic <-ifelse(weeks_flooded > 0, (4 - weeks_flooded) / 4, 1)
   prop_fp <- 1 - prop_ic
@@ -48,14 +50,13 @@ surv_juv_rear <- function(max_temp_thresh, avg_temp_thresh, high_predation,
   base_score_floodplain <- ..surv_juv_rear_int + .floodplain +
     (.avg_temp_thresh  * avg_temp_thresh) + (.high_predation * high_predation)
 
-  # hi.tmp is emebeded here needs to be exposed so that it van be varied
-  s1 <- ifelse(max_temp_thresh, .0001, boot::inv.logit(base_score_inchannel))
-  m1 <- ifelse(max_temp_thresh, .0001, boot::inv.logit(base_score_inchannel + .medium))
-  l1 <- ifelse(max_temp_thresh, .0001, boot::inv.logit(base_score_inchannel  + .large))
+  s1 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_inchannel))
+  m1 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_inchannel + .medium))
+  l1 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_inchannel  + .large))
 
-  s2 <- ifelse(max_temp_thresh, .0001, boot::inv.logit(base_score_floodplain)) ^ prop_fp
-  m2 <- ifelse(max_temp_thresh, .0001, boot::inv.logit(base_score_floodplain + .medium)) ^ prop_fp
-  l2 <- ifelse(max_temp_thresh, .0001, boot::inv.logit(base_score_floodplain + .large)) ^ prop_fp
+  s2 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_floodplain)) ^ prop_fp
+  m2 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_floodplain + .medium)) ^ prop_fp
+  l2 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_floodplain + .large)) ^ prop_fp
 
   list(
     inchannel = cbind(s = s1,
@@ -80,7 +81,7 @@ surv_juv_rear <- function(max_temp_thresh, avg_temp_thresh, high_predation,
 #' @param .medium parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
 #' @param .large parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
 #' @param .floodplain parameter for floodplain rearing benefit, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/SOMMER_T-SDWA+180+Floodplain+rearing+of+juvenile+chinook+salmon+evidence+of+enhanced+growth+and+survival+.pdf}{Sommer et al. (2001)}
-#'
+#' @param min_survival_rate estimated survival rate if temperature threshold is exceeded, source: expert opinion
 #' @source IP-117068
 #' @export
 surv_juv_bypass <- function(max_temp_thresh, avg_temp_thresh, high_predation,
@@ -89,15 +90,16 @@ surv_juv_bypass <- function(max_temp_thresh, avg_temp_thresh, high_predation,
                             .high_predation = -0.122,
                             .medium = 1.48,
                             .large = 2.223,
-                            .floodplain = 0.47){
+                            .floodplain = 0.47,
+                            min_survival_rate){
 
   base_score <- ..surv_juv_bypass_int + .floodplain +
                 .avg_temp_thresh * avg_temp_thresh +
                 .high_predation * high_predation
 
-  s <- ifelse(max_temp_thresh, .0001, boot::inv.logit(base_score))
-  m <- ifelse(max_temp_thresh, .0001, boot::inv.logit(base_score + .medium))
-  l <- ifelse(max_temp_thresh, .0001, boot::inv.logit(base_score + .large))
+  s <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score))
+  m <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score + .medium))
+  l <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score + .large))
 
   cbind(s = s, m = m, l = l, vl = 1)
 }
@@ -119,6 +121,7 @@ surv_juv_bypass <- function(max_temp_thresh, avg_temp_thresh, high_predation,
 #' @param ..surv_juv_delta_total_diverted Coefficient for total_diversions variable, source: calibration
 #' @param .medium parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
 #' @param .large parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+#' @param min_survival_rate estimated survival rate if temperature threshold is exceeded, source: expert opinion
 #' @source IP-117068
 #' @export
 surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_predation, contact_points,
@@ -130,7 +133,8 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
                            .prop_diverted = -3.51,
                            ..surv_juv_delta_total_diverted = 0.5 * -0.0021,
                            .medium = 1.48,
-                           .large = 2.223){
+                           .large = 2.223,
+                           min_survival_rate){
   # north delta
   north_delta_surv <- rep((avg_temp <= 16.5)*.42 + (avg_temp > 16.5 & avg_temp < 19.5) * 0.42 / (1.55^(avg_temp-15.5)) + (avg_temp > 19.5 & avg_temp < 25)*0.035,4)
 
@@ -142,9 +146,9 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
     .prop_diverted * prop_diverted[2] +
     ..surv_juv_delta_total_diverted * total_diverted[2]
 
-  s <- ifelse(max_temp_thresh[2], .0001, boot::inv.logit(base_score))
-  m <- ifelse(max_temp_thresh[2], .0001, boot::inv.logit(base_score + .medium))
-  l <- ifelse(max_temp_thresh[2], .0001, boot::inv.logit(base_score + .large))
+  s <- ifelse(max_temp_thresh[2], min_survival_rate, boot::inv.logit(base_score))
+  m <- ifelse(max_temp_thresh[2], min_survival_rate, boot::inv.logit(base_score + .medium))
+  l <- ifelse(max_temp_thresh[2], min_survival_rate, boot::inv.logit(base_score + .large))
 
   south_delta_surv <- cbind(s = s, m = m, l = l, vl = 1)
   result <- rbind("north_delta" = north_delta_surv, "south_delta" = south_delta_surv)
@@ -183,6 +187,7 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
 #' @param .surv_juv_delta_prop_diverted TODO
 #' @param .surv_juv_delta_medium TODO
 #' @param .surv_juv_delta_large TODO
+#' @param min_survival_rate
 #' @source IP-117068
 #' @export
 get_rearing_survival_rates <- function(year, month,
@@ -224,7 +229,8 @@ get_rearing_survival_rates <- function(year, month,
                                        .surv_juv_delta_high_predation,
                                        .surv_juv_delta_prop_diverted,
                                        .surv_juv_delta_medium,
-                                       .surv_juv_delta_large) {
+                                       .surv_juv_delta_large,
+                                       min_survival_rate) {
   watershed_labels <- c("Upper Sacramento River", "Antelope Creek", "Battle Creek",
                         "Bear Creek", "Big Chico Creek", "Butte Creek", "Clear Creek",
                         "Cottonwood Creek", "Cow Creek", "Deer Creek", "Elder Creek",
@@ -287,7 +293,8 @@ get_rearing_survival_rates <- function(year, month,
                   .stranded = .surv_juv_rear_stranded,
                   .medium = .surv_juv_rear_medium,
                   .large = .surv_juv_rear_large,
-                  .floodplain = .surv_juv_rear_floodplain)
+                  .floodplain = .surv_juv_rear_floodplain,
+                  min_survival_rate = min_survival_rate)
   }))
 
   river_surv <- matrix(unlist(rear_surv[ , 1]), ncol = 4, byrow = TRUE)
@@ -307,7 +314,8 @@ get_rearing_survival_rates <- function(year, month,
                              .high_predation = .surv_juv_bypass_high_predation,
                              .medium = .surv_juv_bypass_medium,
                              .large = .surv_juv_bypass_large,
-                             .floodplain = .surv_juv_bypass_floodplain)
+                             .floodplain = .surv_juv_bypass_floodplain,
+                             min_survival_rate = min_survival_rate)
 
   sutter_surv <- sqrt(bp_surv)
   yolo_surv <- sqrt(bp_surv)
@@ -327,7 +335,8 @@ get_rearing_survival_rates <- function(year, month,
                                    .high_predation = .surv_juv_delta_high_predation,
                                    .prop_diverted = .surv_juv_delta_prop_diverted,
                                    .medium = .surv_juv_delta_medium,
-                                   .large = .surv_juv_delta_large)
+                                   .large = .surv_juv_delta_large,
+                                   min_survival_rate = min_survival_rate)
 
   return(
     list(
