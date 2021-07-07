@@ -180,7 +180,8 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                                      .surv_juv_delta_high_predation = ..params$.surv_juv_delta_high_predation,
                                                      .surv_juv_delta_prop_diverted = ..params$.surv_juv_delta_prop_diverted,
                                                      .surv_juv_delta_medium = ..params$.surv_juv_delta_medium,
-                                                     .surv_juv_delta_large = ..params$.surv_juv_delta_large)
+                                                     .surv_juv_delta_large = ..params$.surv_juv_delta_large,
+                                                     min_survival_rate = ..params$min_survival_rate)
 
       migratory_survival <- get_migratory_survival_rates(year, month,
                                                          cc_gates_prop_days_closed = ..params$cc_gates_prop_days_closed,
@@ -210,7 +211,8 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                                          ..surv_juv_outmigration_sac_total_diversions = ..params$..surv_juv_outmigration_sac_total_diversions,
                                                          ..surv_juv_outmigration_sac_int_two = ..params$..surv_juv_outmigration_sac_int_two,
                                                          .surv_juv_outmigration_san_joquin_medium = ..params$.surv_juv_outmigration_san_joquin_medium,
-                                                         .surv_juv_outmigration_san_joaquin_large = ..params$.surv_juv_outmigration_san_joaquin_large) #migratory_survival$uppermid_sac
+                                                         .surv_juv_outmigration_san_joaquin_large = ..params$.surv_juv_outmigration_san_joaquin_large,
+                                                         min_survival_rate = ..params$min_survival_rate)
 
       migrants <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
 
