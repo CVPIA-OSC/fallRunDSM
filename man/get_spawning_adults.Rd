@@ -12,7 +12,7 @@ get_spawning_adults(
   adults,
   hatch_adults,
   mode,
-  month_return_proportions,
+  month_return_proportions = fallRunDSM::month_return_proportions,
   prop_flow_natal,
   south_delta_routed_watersheds,
   cc_gates_days_closed,
