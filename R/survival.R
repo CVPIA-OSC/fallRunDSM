@@ -76,12 +76,12 @@ surv_juv_rear <- function(max_temp_thresh, avg_temp_thresh, high_predation,
 #' @param avg_temp_thresh Variable representing the probability of exceeding the average temperature
 #' @param high_predation Variable representing an indicator for high predation in watershed
 #' @param ..surv_juv_bypass_int intercept, source: calibration
-#' @param .avg_temp_thresh coefficient for avg_temp_thresh variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/marine_cech_water_temp_effects.pdf}{Marine and Chech (2004)}
-#' @param .high_predation coefficient for high_predation variable, source:\href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}
-#' @param .medium parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
-#' @param .large parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
-#' @param .floodplain parameter for floodplain rearing benefit, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/SOMMER_T-SDWA+180+Floodplain+rearing+of+juvenile+chinook+salmon+evidence+of+enhanced+growth+and+survival+.pdf}{Sommer et al. (2001)}
-#' @param min_survival_rate estimated survival rate if temperature threshold is exceeded, source: expert opinion
+#' @param .avg_temp_thresh coefficient for avg_temp_thresh variable
+#' @param .high_predation coefficient for high_predation variable
+#' @param .medium parameter for medium sized fish
+#' @param .large parameter for large sized fish
+#' @param .floodplain parameter for floodplain rearing benefit
+#' @param min_survival_rate estimated survival rate if temperature threshold is exceeded
 #' @source IP-117068
 #' @export
 surv_juv_bypass <- function(max_temp_thresh, avg_temp_thresh, high_predation,
@@ -114,14 +114,14 @@ surv_juv_bypass <- function(max_temp_thresh, avg_temp_thresh, high_predation,
 #' @param prop_diverted Variable representing the proportion of water diverted
 #' @param total_diverted Variable representing the total diversions
 #' @param ..surv_juv_delta_int intercept, source: calibration
-#' @param .avg_temp_thresh Coefficient for avg_temp_thresh variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/marine_cech_water_temp_effects.pdf}{Marine and Chech (2004)}
-#' @param .high_predation Coefficient for high_predation variable, source: \href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}
-#' @param ..surv_juv_delta_contact_points Coefficient for contact_points variable, source: calibration
-#' @param .prop_diverted Coefficient for prop_diversions variable, source: Newman and Brandes (2010)
-#' @param ..surv_juv_delta_total_diverted Coefficient for total_diversions variable, source: calibration
-#' @param .medium parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
-#' @param .large parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
-#' @param min_survival_rate estimated survival rate if temperature threshold is exceeded, source: expert opinion
+#' @param .avg_temp_thresh Coefficient for avg_temp_thresh variable
+#' @param .high_predation Coefficient for high_predation variable
+#' @param ..surv_juv_delta_contact_points Coefficient for contact_points variable
+#' @param .prop_diverted Coefficient for prop_diversions variable
+#' @param ..surv_juv_delta_total_diverted Coefficient for total_diversions variable
+#' @param .medium parameter for medium sized fish
+#' @param .large parameter for large sized fish
+#' @param min_survival_rate estimated survival rate if temperature threshold is exceeded
 #' @source IP-117068
 #' @export
 surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_predation, contact_points,

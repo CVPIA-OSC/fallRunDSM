@@ -43,21 +43,21 @@ surv_juv_delta(
 
 \item{..surv_juv_delta_int}{intercept, source: calibration}
 
-\item{.avg_temp_thresh}{Coefficient for avg_temp_thresh variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/marine_cech_water_temp_effects.pdf}{Marine and Chech (2004)}}
+\item{.avg_temp_thresh}{Coefficient for avg_temp_thresh variable}
 
-\item{.high_predation}{Coefficient for high_predation variable, source: \href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}}
+\item{.high_predation}{Coefficient for high_predation variable}
 
-\item{..surv_juv_delta_contact_points}{Coefficient for contact_points variable, source: calibration}
+\item{..surv_juv_delta_contact_points}{Coefficient for contact_points variable}
 
-\item{.prop_diverted}{Coefficient for prop_diversions variable, source: Newman and Brandes (2010)}
+\item{.prop_diverted}{Coefficient for prop_diversions variable}
 
-\item{..surv_juv_delta_total_diverted}{Coefficient for total_diversions variable, source: calibration}
+\item{..surv_juv_delta_total_diverted}{Coefficient for total_diversions variable}
 
-\item{.medium}{parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}}
+\item{.medium}{parameter for medium sized fish}
 
-\item{.large}{parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}}
+\item{.large}{parameter for large sized fish}
 
-\item{min_survival_rate}{estimated survival rate if temperature threshold is exceeded, source: expert opinion}
+\item{min_survival_rate}{estimated survival rate if temperature threshold is exceeded}
 }
 \description{
 Calculates the juvenile rearing survival in the deltas
