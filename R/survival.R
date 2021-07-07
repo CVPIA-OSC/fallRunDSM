@@ -10,14 +10,14 @@
 #' @param weeks_flooded variable representing total weeks flooded per watershed
 #' @param ..surv_juv_rear_int  intercept, source: calibration (varies by tributary)
 #' @param .avg_temp_thresh coefficient for avg_temp_thresh variable
-#' @param .high_predation coefficient for high_predation variable, source: \href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}
-#' @param ..surv_juv_rear_contact_points coefficient for contact_points variable, source: calibration
-#' @param ..surv_juv_rear_prop_diversions coefficient for prop_diversions variable, source: calibration
-#' @param ..surv_juv_rear_total_diversions coefficient for total_diversions variable, source: calibration
-#' @param .stranded coefficient for stranded variable, source: \href{#}{USFWS (2006) and CDWR (2006)}
-#' @param .medium parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
-#' @param .large parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
-#' @param .floodplain parameter for floodplain rearing benefit, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/SOMMER_T-SDWA+180+Floodplain+rearing+of+juvenile+chinook+salmon+evidence+of+enhanced+growth+and+survival+.pdf}{Sommer et al. (2001)}
+#' @param .high_predation coefficient for high_predation variable
+#' @param ..surv_juv_rear_contact_points coefficient for contact_points variable
+#' @param ..surv_juv_rear_prop_diversions coefficient for prop_diversions variable
+#' @param ..surv_juv_rear_total_diversions coefficient for total_diversions variable
+#' @param .stranded coefficient for stranded variable
+#' @param .medium parameter for medium sized fish
+#' @param .large parameter for large sized fish
+#' @param .floodplain parameter for floodplain rearing benefit
 #' @param min_survival_rate estimated survival rate if temperature threshold is exceeded, source: expert opinion
 #' @source IP-117068
 #' @export
