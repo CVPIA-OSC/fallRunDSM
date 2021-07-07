@@ -18,10 +18,17 @@ spawn_success <- function(escapement, adult_prespawn_survival, egg_to_fry_surviv
                           fecundity = fallRunDSM::params$spawn_success_fecundity){
 
   capacity <- spawn_habitat / redd_size
-  spawner_potential <- escapement * adult_prespawn_survival * sex_ratio
+
+  spawner_potential <- ifelse(max(escapement) <= 1000000000,
+                              rbinom(31, round(escapement), (adult_prespawn_survival * sex_ratio)),
+                              round(escapement * adult_prespawn_survival * sex_ratio))
 
   spawners <- ifelse(spawner_potential > capacity, capacity, spawner_potential)
   fry <- spawners * (1 - prob_scour) * fecundity * egg_to_fry_survival
+
+  fry <- ifelse(max(fry) <= 1000000000,
+                pmax(round(rnorm(31, fry, (sqrt(fry) / 2))), 0),
+                round(fry))
 
   zeros <- matrix(0, nrow = length(escapement), ncol = 3)
   cbind(fry, zeros)

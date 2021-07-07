@@ -12,7 +12,7 @@
 #' @export
 surv_egg_to_fry <- function(proportion_natural,
                             scour,
-                            temperature_effect,
+                            temperature_effect = fallRunDSM::params$mean_egg_temp_effect,
                             ..surv_egg_to_fry_int = fallRunDSM::params$..surv_egg_to_fry_int,
                             .proportion_natural = fallRunDSM::params$surv_egg_to_fry_proportion_natural,
                             .scour = fallRunDSM::params$surv_egg_to_fry_scour){
@@ -21,10 +21,3 @@ surv_egg_to_fry <- function(proportion_natural,
                   .scour * scour) * temperature_effect
 }
 
-# TODO need to implement some api for sensitivity analysis
-# tmp.eff = temperature_effect
-# if(sum(vary == "egg.viab")){
-#   viab<-log((tmp.eff+ 0.000001)/((1-tmp.eff)+0.0000001))
-#   viab<- viab*pctil[vary == "egg.viab"]
-#   tmp.eff<-inv.logit(viab)
-# }
