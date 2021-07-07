@@ -4,29 +4,61 @@
 #' @param hatch_adults total hatchery adults
 #' @param seeds a value meant to be inherited to determine if model is in seeding stage or not
 #' @param month_return_proportions the proportion of fish returning for each month
+#' @param prop_flow_natal
+#' @param south_delta_routed_watersheds
+#' @param cc_gates_days_closed
+#' @param gates_overtopped
+#' @param tisdale_bypass_watershed
+#' @param yolo_bypass_watershed
+#' @param migratory_temperature_proportion_over_20
+#' @param ..surv_adult_enroute_int TODO
+#' @param .adult_stray_intercept TODO
+#' @param .adult_stray_wild TODO
+#' @param .adult_stray_natal_flow TODO
+#' @param .adult_stray_cross_channel_gates_closed TODO
+#' @param .adult_stray_prop_bay_trans TODO
+#' @param .adult_stray_prop_delta_trans TODO
+#' @param .adult_en_route_adult_harvest_rate TODO
 #' @source IP-117068
 #' @export
-get_spawning_adults <- function(year, adults, hatch_adults, seeds,
-                                month_return_proportions=fallRunDSM::month_return_proportions) {
+get_spawning_adults <- function(year, adults, hatch_adults, mode,
+                                month_return_proportions=fallRunDSM::params$month_return_proportions,
+                                prop_flow_natal,
+                                south_delta_routed_watersheds,
+                                cc_gates_days_closed,
+                                gates_overtopped,
+                                tisdale_bypass_watershed,
+                                yolo_bypass_watershed,
+                                migratory_temperature_proportion_over_20,
+                                ..surv_adult_enroute_int,
+                                .adult_stray_intercept,
+                                .adult_stray_wild,
+                                .adult_stray_natal_flow,
+                                .adult_stray_cross_channel_gates_closed,
+                                .adult_stray_prop_bay_trans,
+                                .adult_stray_prop_delta_trans,
+                                .adult_en_route_migratory_temp,
+                                .adult_en_route_bypass_overtopped,
+                                .adult_en_route_adult_harvest_rate) {
 
   # during the seeding stage just reuse the seed adults as the input, and apply no
   # en-route survival
-  if (is.null(seeds)) {
+  if (mode %in% c("seed", "calibrate")) {
+    adult_index <- ifelse(mode == "seed", 1, year)
     adults_by_month <- t(sapply(1:31, function(watershed) {
-      rmultinom(1, adults[watershed, 1], month_return_proportions)
+      rmultinom(1, adults[watershed, adult_index], month_return_proportions)
     }))
 
     natural_adults_by_month <- sapply(1:3, function(month) {
       rbinom(n = 31,
              size = round(adults_by_month[, month]),
-             prob = 1 - natural_adult_removal_rate)
+             prob = 1 - fallRunDSM::params$natural_adult_removal_rate)
     })
 
-    init_adults <- rowSums(natural_adults_by_month)
-    surviving_natural_adults <- rowSums(adults_by_month)
-    proportion_natural <- 1 - proportion_hatchery
+    init_adults <- rowSums(adults_by_month)
+    surviving_natural_adults <- rowSums(natural_adults_by_month)
+    proportion_natural <- 1 - fallRunDSM::params$proportion_hatchery
     init_adults_by_month <- natural_adults_by_month
-
 
   } else  {
 
@@ -43,7 +75,13 @@ get_spawning_adults <- function(year, adults, hatch_adults, seeds,
       adult_stray(wild = 1,
                   natal_flow = prop_flow_natal[ , year],
                   south_delta_watershed = south_delta_routed_watersheds,
-                  cross_channel_gates_closed = cc_gates_days_closed[month])
+                  cross_channel_gates_closed = cc_gates_days_closed[month],
+                  .intercept = .adult_stray_intercept,
+                  .wild = .adult_stray_wild,
+                  .natal_flow = .adult_stray_natal_flow,
+                  .cross_channel_gates_closed = .adult_stray_cross_channel_gates_closed,
+                  .prop_bay_trans = .adult_stray_prop_bay_trans,
+                  .prop_delta_trans = .adult_stray_prop_delta_trans)
     })
 
     straying_adults <- sapply(1:3, function(month) {
@@ -52,12 +90,12 @@ get_spawning_adults <- function(year, adults, hatch_adults, seeds,
 
     south_delta_routed_adults <- round(colSums(straying_adults * south_delta_routed_watersheds))
     south_delta_stray_adults <- sapply(1:3, function(month) {
-      as.vector(rmultinom(1, south_delta_routed_adults[month], cross_channel_stray_rate))
+      as.vector(rmultinom(1, south_delta_routed_adults[month], fallRunDSM::params$cross_channel_stray_rate))
     })
 
     remaining_stray_adults <- round(colSums(straying_adults * (1 - south_delta_routed_watersheds)))
     stray_adults <- sapply(1:3, function(month) {
-      as.vector(rmultinom(1, remaining_stray_adults[month], stray_rate))
+      as.vector(rmultinom(1, remaining_stray_adults[month], fallRunDSM::params$stray_rate))
     })
 
 
@@ -78,7 +116,10 @@ get_spawning_adults <- function(year, adults, hatch_adults, seeds,
     adult_en_route_surv <- sapply(1:3, function(month) {
       adult_en_route_surv <- surv_adult_enroute(migratory_temp = en_route_temps[,month],
                                                 bypass_overtopped = bypass_is_overtopped[,month],
-                                                adult_harvest = adult_harvest_rate)
+                                                adult_harvest = .adult_en_route_adult_harvest_rate,
+                                                ..surv_adult_enroute_int = ..surv_adult_enroute_int,
+                                                .migratory_temp = .adult_en_route_migratory_temp,
+                                                .bypass_overtopped = .adult_en_route_bypass_overtopped)
     })
 
 
@@ -87,7 +128,7 @@ get_spawning_adults <- function(year, adults, hatch_adults, seeds,
     })
 
     surviving_natural_adults_by_month <- sapply(1:3, function(month) {
-      rbinom(31, round(adults_survived_to_spawning[, month]), (1 - natural_adult_removal_rate))
+      rbinom(31, round(adults_survived_to_spawning[, month]), (1 - fallRunDSM::params$natural_adult_removal_rate))
     })
 
     surviving_hatchery_adults_by_month <- sapply(1:3, function(month) {

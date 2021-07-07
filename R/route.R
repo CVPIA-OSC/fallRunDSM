@@ -8,16 +8,41 @@
 #' @param floodplain_habitat A vector of available floodplain habitat in square meters
 #' @param prop_pulse_flows The proportion of pulse flows
 #' @param detour Values can be 'sutter' or 'yolo' if some juveniles are detoured on to that bypass, otherwise NULL
+#' @param .pulse_movement_intercept TODO
+#' @param .pulse_movement_proportion_pulse TODO
+#' @param .pulse_movement_medium TODO
+#' @param .pulse_movement_large TODO
+#' @param .pulse_movement_vlarge TODO
+#' @param .pulse_movement_medium_pulse TODO
+#' @param .pulse_movement_large_pulse TODO
+#' @param .pulse_movement_very_large_pulse TODO
 #' @source IP-117068
 #' @export
-route <- function(year, month, juveniles, inchannel_habitat, floodplain_habitat, prop_pulse_flows, detour = NULL) {
+route <- function(year, month, juveniles, inchannel_habitat, floodplain_habitat,
+                  prop_pulse_flows, proportion_flow_bypass, detour = NULL,
+                  .pulse_movement_intercept,
+                  .pulse_movement_proportion_pulse,
+                  .pulse_movement_medium,
+                  .pulse_movement_large,
+                  .pulse_movement_vlarge,
+                  .pulse_movement_medium_pulse,
+                  .pulse_movement_large_pulse,
+                  .pulse_movement_very_large_pulse) {
 
   natal_watersheds <- fill_natal(juveniles = juveniles,
                                  inchannel_habitat = inchannel_habitat,
                                  floodplain_habitat = floodplain_habitat)
 
   # estimate probability leaving as function of pulse flow
-  prob_pulse_leave <- pulse_movement(prop_pulse_flows[ , month])
+  prob_pulse_leave <- pulse_movement(prop_pulse_flows[ , month],
+                                     .intercept = .pulse_movement_intercept,
+                                     .proportion_pulse = .pulse_movement_proportion_pulse,
+                                     .medium = .pulse_movement_medium,
+                                     .large = .pulse_movement_large,
+                                     .vlarge = .pulse_movement_vlarge,
+                                     .medium_pulse = .pulse_movement_medium_pulse,
+                                     .large_pulse = .pulse_movement_large_pulse,
+                                     .very_large_pulse = .pulse_movement_very_large_pulse)
 
   # total fish that will migrate becuase of pulse flows, this derived using total in river
   # and a binomial selection based on pr of movement due to pulse flows
@@ -83,7 +108,9 @@ route_bypass <- function(bypass_fish, bypass_habitat, migration_survival_rate) {
 #' @param migration_survival_rate The outmigration survival rate
 #' @source IP-117068
 #' @export
-route_regional <- function(month, migrants, inchannel_habitat, floodplain_habitat, prop_pulse_flows, migration_survival_rate) {
+route_regional <- function(month, migrants,
+                           inchannel_habitat, floodplain_habitat,
+                           prop_pulse_flows, migration_survival_rate) {
   # fill up upper mainstem, but in river fish can leave due to pulses
 
   regional_fish <- fill_regional(juveniles = migrants,
@@ -203,6 +230,8 @@ route_south_delta <- function(freeport_flow, dcc_closed, month,
 #' @export
 route_and_rear_deltas <- function(year, month, migrants, north_delta_fish, south_delta_fish,
                          north_delta_habitat, south_delta_habitat,
+                         freeport_flows,
+                         cc_gates_days_closed,
                          rearing_survival_delta, migratory_survival_delta,
                          migratory_survival_sac_delta, migratory_survival_bay_delta,
                          juveniles_at_chipps, growth_rates,

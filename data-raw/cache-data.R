@@ -86,3 +86,39 @@ diversity_group <- original_groups$DiversityGroup
 names(diversity_group) <- original_groups$watershed
 usethis::use_data(diversity_group, overwrite = TRUE)
 
+
+
+watershed_labels <- c("Upper Sacramento River", "Antelope Creek", "Battle Creek",
+                      "Bear Creek", "Big Chico Creek", "Butte Creek", "Clear Creek",
+                      "Cottonwood Creek", "Cow Creek", "Deer Creek", "Elder Creek",
+                      "Mill Creek", "Paynes Creek", "Stony Creek", "Thomes Creek",
+                      "Upper-mid Sacramento River", "Sutter Bypass", "Bear River",
+                      "Feather River", "Yuba River", "Lower-mid Sacramento River",
+                      "Yolo Bypass", "American River", "Lower Sacramento River", "Calaveras River",
+                      "Cosumnes River", "Mokelumne River", "Merced River", "Stanislaus River",
+                      "Tuolumne River", "San Joaquin River")
+
+usethis::use_data(watershed_labels)
+
+size_class_labels <- c('s', 'm', 'l', 'vl')
+
+usethis::use_data(size_class_labels)
+
+# calculate growth rates
+growth_rates <- growth()
+usethis::use_data(growth_rates)
+growth_rates_floodplain <- growth_floodplain()
+usethis::use_data(growth_rates_floodplain)
+
+
+
+
+
+
+
+
+
+
+
+
+

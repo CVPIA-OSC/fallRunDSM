@@ -51,13 +51,16 @@
 #' @description TODO
 "stray_rate"
 
-#' @title Survival Betas
-#' @description calibration derived parameters used in the survival submodels.
-"survival_betas"
+#' @title Model Parameters from Calibration
+#' @description calibration derived parameters used in submodels.
+"params"
 
 #' @title Diversity Groups
 #' @description TODO
 "diversity_group"
 
+#' @rdname growth
+"growth_rates"
 
-
+#' @rdname growth_floodplain
+"growth_rates_floodplain"

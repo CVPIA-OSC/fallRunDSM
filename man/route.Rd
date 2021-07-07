@@ -14,7 +14,15 @@ route(
   inchannel_habitat,
   floodplain_habitat,
   prop_pulse_flows,
-  detour = NULL
+  detour = NULL,
+  .pulse_movement_intercept,
+  .pulse_movement_proportion_pulse,
+  .pulse_movement_medium,
+  .pulse_movement_large,
+  .pulse_movement_vlarge,
+  .pulse_movement_medium_pulse,
+  .pulse_movement_large_pulse,
+  .pulse_movement_very_large_pulse
 )
 }
 \arguments{
@@ -29,6 +37,22 @@ route(
 \item{prop_pulse_flows}{The proportion of pulse flows}
 
 \item{detour}{Values can be 'sutter' or 'yolo' if some juveniles are detoured on to that bypass, otherwise NULL}
+
+\item{.pulse_movement_intercept}{TODO}
+
+\item{.pulse_movement_proportion_pulse}{TODO}
+
+\item{.pulse_movement_medium}{TODO}
+
+\item{.pulse_movement_large}{TODO}
+
+\item{.pulse_movement_vlarge}{TODO}
+
+\item{.pulse_movement_medium_pulse}{TODO}
+
+\item{.pulse_movement_large_pulse}{TODO}
+
+\item{.pulse_movement_very_large_pulse}{TODO}
 
 \item{juvenile}{An n by 4 matrix of juvenile fish by watershed and size class}
 }

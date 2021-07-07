@@ -25,9 +25,9 @@ surv_adult_enroute(
 
 \item{..surv_adult_enroute_int}{intercept, source: calibration}
 
-\item{.migratory_temp}{coefficient for migratory_temp variable, source: \href{https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&usg= AOvVaw0VgMOwD7knFfSxRZy6k8RG}{Schreck et al. (1994)}}
+\item{.migratory_temp}{coefficient for \code{migratory_temp} variable, source: \href{https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&usg= AOvVaw0VgMOwD7knFfSxRZy6k8RG}{Schreck et al. (1994)}}
 
-\item{.bypass_overtopped}{coefficient for bypass_overtopped variable, source: Expert opinion Ted Sommer, California Department of Water Resources (tributaries above bypasses only)}
+\item{.bypass_overtopped}{coefficient for \code{bypass_overtopped} variable, source: Expert opinion Ted Sommer, California Department of Water Resources (tributaries above bypasses only)}
 }
 \description{
 Calculate adult survival en route to spawning grounds

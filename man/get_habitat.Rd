@@ -7,7 +7,36 @@
 IP-117068
 }
 \usage{
-get_habitat(year, month)
+get_habitat(
+  year,
+  month,
+  inchannel_habitat_fry,
+  inchannel_habitat_juvenile,
+  floodplain_habitat,
+  sutter_habitat,
+  yolo_habitat,
+  north_delta_habitat,
+  south_delta_habitat
+)
+}
+\arguments{
+\item{year}{TODO}
+
+\item{month}{TODO}
+
+\item{inchannel_habitat_fry}{TODO}
+
+\item{inchannel_habitat_juvenile}{TODO}
+
+\item{floodplain_habitat}{TODO}
+
+\item{sutter_habitat}{TODO}
+
+\item{yolo_habitat}{TODO}
+
+\item{north_delta_habitat}{TODO}
+
+\item{south_delta_habitat}{TODO}
 }
 \description{
 Get habitat Values

@@ -15,6 +15,8 @@ route_and_rear_deltas(
   south_delta_fish,
   north_delta_habitat,
   south_delta_habitat,
+  freeport_flows,
+  cc_gates_days_closed,
   rearing_survival_delta,
   migratory_survival_delta,
   migratory_survival_sac_delta,

@@ -1,7 +1,22 @@
 #' @title Get habitat Values
 #' @source IP-117068
+#' @param year TODO
+#' @param month TODO
+#' @param inchannel_habitat_fry TODO
+#' @param inchannel_habitat_juvenile TODO
+#' @param floodplain_habitat TODO
+#' @param sutter_habitat TODO
+#' @param yolo_habitat TODO
+#' @param north_delta_habitat TODO
+#' @param south_delta_habitat TODO
 #' @export
-get_habitat <- function(year, month) {
+get_habitat <- function(year, month,
+                        inchannel_habitat_fry,
+                        inchannel_habitat_juvenile,
+                        floodplain_habitat,
+                        sutter_habitat,
+                        yolo_habitat,
+                        delta_habitat) {
   # set monthly habitat values
   ic_habitat <- if (month < 4) inchannel_habitat_fry[ , month, year] else inchannel_habitat_juvenile[ , month, year]
   floodplain_activation <- matrix(0, nrow = 31, ncol = 12)
