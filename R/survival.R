@@ -231,19 +231,6 @@ get_rearing_survival_rates <- function(year, month,
                                        .surv_juv_delta_medium,
                                        .surv_juv_delta_large,
                                        min_survival_rate) {
-  watershed_labels <- c("Upper Sacramento River", "Antelope Creek", "Battle Creek",
-                        "Bear Creek", "Big Chico Creek", "Butte Creek", "Clear Creek",
-                        "Cottonwood Creek", "Cow Creek", "Deer Creek", "Elder Creek",
-                        "Mill Creek", "Paynes Creek", "Stony Creek", "Thomes Creek",
-                        "Upper-mid Sacramento River", "Sutter Bypass", "Bear River",
-                        "Feather River", "Yuba River", "Lower-mid Sacramento River",
-                        "Yolo Bypass", "American River", "Lower Sacramento River", "Calaveras River",
-                        "Cosumnes River", "Mokelumne River", "Merced River", "Stanislaus River",
-                        "Tuolumne River", "San Joaquin River")
-
-  size_class_labels <- c('s', 'm', 'l', 'vl')
-
-  # weird temp stuff
 
   aveT20 <- rbinom(31, 1, boot::inv.logit(-14.32252 + 0.72102 * avg_temp[ , month , year]))
   maxT25 <- rbinom(31, 1, boot::inv.logit(-23.1766 + 1.4566 * avg_temp[ , month, year]))
@@ -252,7 +239,6 @@ get_rearing_survival_rates <- function(year, month,
 
   # set proportion fish stranding
   prob_ws_strand <- if(month < 4) prob_strand_early else prob_strand_late
-
 
   ws_strand <-rbinom(31, 1, prob_ws_strand)
 
@@ -320,7 +306,6 @@ get_rearing_survival_rates <- function(year, month,
   sutter_surv <- sqrt(bp_surv)
   yolo_surv <- sqrt(bp_surv)
 
-  # TODO hi.tmp is an embeded value need to expose?
   delta_juv_surv <- surv_juv_delta(avg_temp = avg_temp_delta[month, year, "North Delta"],
                                    max_temp_thresh = maxT25D,
                                    avg_temp_thresh = aveT20D,
@@ -579,7 +564,7 @@ surv_juv_outmigration_delta <- function(prop_DCC_closed, hor_barr, freeport_flow
     trap_trans
 
   survival_rates <- rbind(northern_fish, cosumnes_mokelumne_fish, calaveras_fish, southern_fish)
-  colnames(survival_rates) <- c('s', 'm', 'l', 'vl')
+  colnames(survival_rates) <- fallRunDSM::size_class_labels
   return(survival_rates)
 
 }
@@ -604,6 +589,7 @@ surv_juv_outmigration_delta <- function(prop_DCC_closed, hor_barr, freeport_flow
 #' @param ..surv_juv_outmigration_sac_int_two
 #' @param .surv_juv_outmigration_san_joquin_medium TODO
 #' @param .surv_juv_outmigration_san_joaquin_large TODO
+#' @param min_survival_rate TODO
 #' @source IP-117068
 #' @export
 get_migratory_survival_rates <- function(year, month,
@@ -634,7 +620,8 @@ get_migratory_survival_rates <- function(year, month,
                                          ..surv_juv_outmigration_sac_total_diversions = ..surv_juv_outmigration_sac_total_diversions,
                                          ..surv_juv_outmigration_sac_int_two = ..surv_juv_outmigration_sac_int_two,
                                          .surv_juv_outmigration_san_joquin_medium = .surv_juv_outmigration_san_joquin_medium,
-                                         .surv_juv_outmigration_san_joaquin_large = .surv_juv_outmigration_san_joaquin_large) {
+                                         .surv_juv_outmigration_san_joaquin_large = .surv_juv_outmigration_san_joaquin_large,
+                                         min_survival_rate = min_survival_rate) {
 
 
   aveT20 <- rbinom(31, 1, boot::inv.logit(-14.32252 + 0.72102 * avg_temp[ , month , year]))
@@ -692,11 +679,10 @@ get_migratory_survival_rates <- function(year, month,
 
   bay_delta_migration_surv <- mean(c(0.43, 0.46, 0.26, 0.25, 0.39)) # Bay.S Chipps island to bay
 
-  bp_surv <- surv_juv_bypass(max_temp_thresh = maxT25[22],
-                             avg_temp_thresh = aveT20[22],
-                             high_predation = 0)
-
-  sutter <- sqrt(bp_surv)
+  bp_surv <- sqrt(surv_juv_bypass(max_temp_thresh = maxT25[22],
+                                  avg_temp_thresh = aveT20[22],
+                                  high_predation = 0,
+                                  min_survival_rate = min_survival_rate))
 
   return(
     list(
@@ -705,8 +691,8 @@ get_migratory_survival_rates <- function(year, month,
       uppermid_sac = uppermid_sac_migration_surv,
       lowermid_sac = lowermid_sac_migration_surv,
       lower_sac = lower_sac_migration_surv,
-      sutter = sutter,
-      yolo = sutter,
+      sutter = bp_surv,
+      yolo = bp_surv,
       sac_delta = sac_delta_migration_surv,
       bay_delta = bay_delta_migration_surv
     ))
