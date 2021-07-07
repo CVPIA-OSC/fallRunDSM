@@ -605,7 +605,7 @@ surv_juv_outmigration_delta <- function(prop_DCC_closed, hor_barr, freeport_flow
 #' @param ..surv_juv_outmigration_sac_prop_diversions Coefficient for code{\link{surv_juv_outmigration_sac_delta}} \code{prop_diversion} variable
 #' @param ..surv_juv_outmigration_sac_total_diversions Coefficient for code{\link{surv_juv_outmigration_sac_delta}} \code{total_diversion} variable #TODO (do we use this variable?)
 #' @param ..surv_juv_outmigration_sac_int_two Intercept one for \code{\link{surv_juv_outmigration_sac_delta}}
-#' @param .surv_juv_outmigration_san_joquin_medium parameter for \code{\link{surv_juv_outmigration_san_joaquin}} medium sized fish
+#' @param .surv_juv_outmigration_san_joaquin_medium parameter for \code{\link{surv_juv_outmigration_san_joaquin}} medium sized fish
 #' @param .surv_juv_outmigration_san_joaquin_large parameter for \code{\link{surv_juv_outmigration_san_joaquin}} large sized fish
 #' @param min_survival_rate TODO
 #' @source IP-117068
@@ -637,7 +637,7 @@ get_migratory_survival_rates <- function(year, month,
                                          ..surv_juv_outmigration_sac_prop_diversions = ..surv_juv_outmigration_sac_prop_diversions,
                                          ..surv_juv_outmigration_sac_total_diversions = ..surv_juv_outmigration_sac_total_diversions,
                                          ..surv_juv_outmigration_sac_int_two = ..surv_juv_outmigration_sac_int_two,
-                                         .surv_juv_outmigration_san_joquin_medium = .surv_juv_outmigration_san_joquin_medium,
+                                         .surv_juv_outmigration_san_joaquin_medium = .surv_juv_outmigration_san_joaquin_medium,
                                          .surv_juv_outmigration_san_joaquin_large = .surv_juv_outmigration_san_joaquin_large,
                                          min_survival_rate = min_survival_rate) {
 
@@ -658,7 +658,7 @@ get_migratory_survival_rates <- function(year, month,
 
   u_sac_flow <- upper_sacramento_flows[month, year]
   sj_migration_surv <- surv_juv_outmigration_san_joaquin(..surv_juv_outmigration_sj_int = ..surv_juv_outmigration_sj_int,
-                                                         .medium = .surv_juv_outmigration_san_joquin_medium,
+                                                         .medium = .surv_juv_outmigration_san_joaquin_medium,
                                                          .large = .surv_juv_outmigration_san_joaquin_large)
 
   uppermid_sac_migration_surv <- surv_juv_outmigration_sac(flow_cms = u_sac_flow)
