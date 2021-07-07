@@ -74,7 +74,7 @@ params <- list(
   .surv_juv_delta_prop_diverted = -3.51,
   .surv_juv_delta_medium = 1.48,
   .surv_juv_delta_large = 2.223,
-  .surv_juv_outmigration_san_joquin_medium = 1.48,
+  .surv_juv_outmigration_san_joaquin_medium = 1.48,
   .surv_juv_outmigration_san_joaquin_large = 2.223,
   min_survival_rate = 0.0001,
 
