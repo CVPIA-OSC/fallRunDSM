@@ -48,7 +48,8 @@ get_rearing_survival_rates(
   .surv_juv_delta_high_predation,
   .surv_juv_delta_prop_diverted,
   .surv_juv_delta_medium,
-  .surv_juv_delta_large
+  .surv_juv_delta_large,
+  min_survival_rate
 )
 }
 \arguments{
@@ -129,6 +130,8 @@ get_rearing_survival_rates(
 \item{.surv_juv_delta_medium}{Parameter for \code{\link{surv_juv_delta}} medium sized fish}
 
 \item{.surv_juv_delta_large}{Parameter for \code{\link{surv_juv_delta}} large sized fish}
+
+\item{min_survival_rate}{TODO}
 
 \item{scenario}{The current scenario}
 }

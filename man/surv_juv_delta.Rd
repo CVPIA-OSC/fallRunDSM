@@ -22,7 +22,8 @@ surv_juv_delta(
   .prop_diverted = fallRunDSM::params$.surv_juv_delta_prop_diverted,
   ..surv_juv_delta_total_diverted = fallRunDSM::params$..surv_juv_delta_total_diverted,
   .medium = fallRunDSM::params$.surv_juv_delta_medium,
-  .large = fallRunDSM::params$.surv_juv_delta_large
+  .large = fallRunDSM::params$.surv_juv_delta_large,
+  min_survival_rate
 )
 }
 \arguments{
@@ -40,21 +41,23 @@ surv_juv_delta(
 
 \item{total_diverted}{Variable representing the total diversions}
 
-\item{..surv_juv_delta_int}{intercept}
+\item{..surv_juv_delta_int}{intercept, source: calibration}
 
-\item{.avg_temp_thresh}{Coefficient for \code{avg_temp_thresh} variable}
+\item{.avg_temp_thresh}{Coefficient for avg_temp_thresh variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/marine_cech_water_temp_effects.pdf}{Marine and Chech (2004)}}
 
-\item{.high_predation}{Coefficient for \code{high_predation} variable}
+\item{.high_predation}{Coefficient for high_predation variable, source: \href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}}
 
-\item{..surv_juv_delta_contact_points}{Coefficient for \code{contact_points} variable}
+\item{..surv_juv_delta_contact_points}{Coefficient for contact_points variable, source: calibration}
 
-\item{.prop_diverted}{Coefficient for \code{prop_diversions} variable}
+\item{.prop_diverted}{Coefficient for prop_diversions variable, source: Newman and Brandes (2010)}
 
-\item{..surv_juv_delta_total_diverted}{Coefficient for \code{total_diversions} variable}
+\item{..surv_juv_delta_total_diverted}{Coefficient for total_diversions variable, source: calibration}
 
-\item{.medium}{parameter for medium sized fish}
+\item{.medium}{parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}}
 
-\item{.large}{parameter for large sized fish}
+\item{.large}{parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}}
+
+\item{min_survival_rate}{estimated survival rate if temperature threshold is exceeded, source: expert opinion}
 }
 \description{
 Calculates the juvenile rearing survival in the deltas

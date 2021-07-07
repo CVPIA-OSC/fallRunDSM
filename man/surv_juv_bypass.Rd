@@ -16,7 +16,8 @@ surv_juv_bypass(
   .high_predation = fallRunDSM::params$.surv_juv_bypass_high_predation,
   .medium = fallRunDSM::params$.surv_juv_bypass_medium,
   .large = fallRunDSM::params$.surv_juv_bypass_large,
-  .floodplain = fallRunDSM::params$.surv_juv_bypass_floodplain
+  .floodplain = fallRunDSM::params$.surv_juv_bypass_floodplain,
+  min_survival_rate
 )
 }
 \arguments{
@@ -26,17 +27,19 @@ surv_juv_bypass(
 
 \item{high_predation}{Variable representing an indicator for high predation in watershed}
 
-\item{..surv_juv_bypass_int}{intercept}
+\item{..surv_juv_bypass_int}{intercept, source: calibration}
 
-\item{.avg_temp_thresh}{coefficient for \code{avg_temp_thresh} variable}
+\item{.avg_temp_thresh}{coefficient for avg_temp_thresh variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/marine_cech_water_temp_effects.pdf}{Marine and Chech (2004)}}
 
-\item{.high_predation}{coefficient for \code{high_predation} variable}
+\item{.high_predation}{coefficient for high_predation variable, source:\href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}}
 
-\item{.medium}{parameter for medium sized fish}
+\item{.medium}{parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}}
 
-\item{.large}{parameter for large sized fish}
+\item{.large}{parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}}
 
-\item{.floodplain}{parameter for floodplain rearing benefit}
+\item{.floodplain}{parameter for floodplain rearing benefit, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/SOMMER_T-SDWA+180+Floodplain+rearing+of+juvenile+chinook+salmon+evidence+of+enhanced+growth+and+survival+.pdf}{Sommer et al. (2001)}}
+
+\item{min_survival_rate}{estimated survival rate if temperature threshold is exceeded, source: expert opinion}
 }
 \description{
 Calculates the juvenile rearing survival in the bypasses
