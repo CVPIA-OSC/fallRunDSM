@@ -132,7 +132,13 @@ expected_habitat <- list(inchannel = c(`Upper Sacramento River` = 284862.5186007
                          north_delta = 20327680.998477,
                          south_delta = 20685020.6986651)
 test_that('The get_habitat function returns the expected values for year 1 and month 3', {
-  expect_equal(get_habitat(year = year, month = month), expected_habitat)
+  expect_equal(get_habitat(year = year, month = month,
+                           inchannel_habitat_fry = fallRunDSM::params$inchannel_habitat_fry,
+                           inchannel_habitat_juvenile = fallRunDSM::params$inchannel_habitat_juvenile,
+                           floodplain_habitat = fallRunDSM::params$floodplain_habitat,
+                           sutter_habitat = fallRunDSM::params$sutter_habitat,
+                           yolo_habitat = fallRunDSM::params$yolo_habitat,
+                           delta_habitat = fallRunDSM::params$delta_habitat), expected_habitat)
 })
 
 
@@ -145,7 +151,10 @@ expected_ocean_entry_success <- c(1854, 2959, 247, 760, 0, 302, 124, 3, 12125, 2
 test_that('The ocen entry success function returns the expected values for year 1 month 3', {
   expect_equal(ocean_entry_success(migrants = migrants_at_golden_gate,
                                    month = month,
-                                   avg_ocean_transition_month = avg_ocean_transition_month),
+                                   avg_ocean_transition_month = avg_ocean_transition_month,
+                                   .ocean_entry_success_length = fallRunDSM::params$.ocean_entry_success_length,
+                                   ..ocean_entry_success_int = fallRunDSM::params$..ocean_entry_success_int,
+                                   .ocean_entry_success_months = fallRunDSM::params$.ocean_entry_success_months),
                expected_ocean_entry_success)
 })
 
@@ -268,8 +277,19 @@ expected_route <- list(inchannel = structure(c(5706730, 95829.4873630614, 212275
 
 test_that('The route() function returns the expected values for year 1 month 3', {
   set.seed(2021)
-  route <- route(year = year, month = month, juveniles = juveniles, inchannel_habitat = expected_habitat$inchannel, floodplain_habitat = expected_habitat$floodplain,
-                 prop_pulse_flows = prop_pulse_flows)
+  route <- route(year = year, month = month,
+                 juveniles = juveniles,
+                 inchannel_habitat = expected_habitat$inchannel,
+                 floodplain_habitat = expected_habitat$floodplain,
+                 prop_pulse_flows = prop_pulse_flows,
+                 .pulse_movement_intercept = fallRunDSM::params$.pulse_movement_intercept,
+                 .pulse_movement_proportion_pulse = fallRunDSM::params$.pulse_movement_proportion_pulse,
+                 .pulse_movement_medium = fallRunDSM::params$.pulse_movement_medium,
+                 .pulse_movement_large = fallRunDSM::params$.pulse_movement_large,
+                 .pulse_movement_vlarge = fallRunDSM::params$.pulse_movement_vlarge,
+                 .pulse_movement_medium_pulse = fallRunDSM::params$.pulse_movement_medium_pulse,
+                 .pulse_movement_large_pulse = fallRunDSM::params$.pulse_movement_large_pulse,
+                 .pulse_movement_very_large_pulse = fallRunDSM::params$.pulse_movement_very_large_pulse)
   expect_equal(route, expected_route)
 })
 
@@ -474,6 +494,8 @@ test_that('The route_and_rear_deltas() function returns the expected values for 
                                                   south_delta_fish = south_delta_fish,
                                                   north_delta_habitat = expected_habitat$north_delta,
                                                   south_delta_habitat = expected_habitat$south_delta,
+                                                  cc_gates_days_closed = fallRunDSM::params$cc_gates_days_closed,
+                                                  freeport_flows = fallRunDSM::params$freeport_flows,
                                                   rearing_survival_delta = rearing_survival$delta,
                                                   migratory_survival_delta = migratory_survival$delta,
                                                   migratory_survival_sac_delta = migratory_survival$sac_delta,
