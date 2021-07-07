@@ -179,9 +179,9 @@ hatch_adults <- c(`Upper Sacramento River` = 6926L, `Antelope Creek` = 13L, `Bat
                   `San Joaquin River` = 0L)
 seeds <- NULL
 
-expected_spawners <- list(init_adults = c(22012, 72, 3171, 12, 12, 885, 8555, 1251,
-                                          1649, 569, 12, 1332, 51, 12, 12, 0, 0, 12, 39562, 7184, 0, 0,
-                                          19284, 0, 12, 499, 2747, 1526, 5405, 984, 0),
+expected_spawners <- list(init_adults = c(22012, 72, 12626, 12, 12, 885, 8555, 1251,
+                                          1649, 569, 12, 1332, 51, 12, 12, 0, 0, 12, 52408, 7184, 0, 0,
+                                          24959, 0, 12, 499, 4514, 2145, 5405, 984, 0),
                           proportion_natural = c(`Upper Sacramento River` = 0.63,
                                                  `Antelope Creek` = 0.8, `Battle Creek` = 0.1, `Bear Creek` = 0.62031746031746,
                                                  `Big Chico Creek` = 0.8, `Butte Creek` = 0.885, `Clear Creek` = 0.7775,
@@ -194,10 +194,11 @@ expected_spawners <- list(init_adults = c(22012, 72, 3171, 12, 12, 885, 8555, 12
                                                  `American River` = 0.428333333333333, `Lower Sacramento River` = 0.62031746031746,
                                                  `Calaveras River` = 0.923333333333333, `Cosumnes River` = 0.98,
                                                  `Mokelumne River` = 0.2425, `Merced River` = 0.255, `Stanislaus River` = 0.295,
-                                                 `Tuolumne River` = 0.535, `San Joaquin River` = 0.62031746031746),
-                          natural_adults = c(22012, 72, 12626, 12, 12, 885, 8555, 1251,
-                                             1649, 569, 12, 1332, 51, 12, 12, 0, 0, 12, 52408, 7184, 0, 0,
-                                             24959, 0, 12, 499, 4514, 2145, 5405, 984, 0),
+                                                 `Tuolumne River` = 0.535, `San Joaquin River` = 0.62031746031746
+                                          ),
+                          natural_adults = c(22012, 72, 3171, 12, 12, 885, 8555, 1251,
+                                             1649, 569, 12, 1332, 51, 12, 12, 0, 0, 12, 39562, 7184, 0, 0,
+                                             19284, 0, 12, 499, 2747, 1526, 5405, 984, 0),
                           init_adults_by_month = structure(c(4867L,
                                                              17L, 741L, 3L, 4L, 195L, 1839L, 277L, 331L, 139L, 1L, 287L, 15L,
                                                              1L, 3L, 0L, 0L, 1L, 8886L, 1611L, 0L, 0L, 4280L, 0L, 1L, 118L,
@@ -210,7 +211,26 @@ expected_spawners <- list(init_adults = c(22012, 72, 3171, 12, 12, 885, 8555, 12
 test_that("Get spawning adults returns the expected values", {
 
   set.seed(2021)
-  spawning_adults <- get_spawning_adults(year = year, adults = adults, hatch_adults = hatch_adults, seeds = seeds)
+  spawning_adults <- get_spawning_adults(year = year, adults = adults,
+                                         hatch_adults = hatch_adults,
+                                         mode = "seed",
+                                         prop_flow_natal = fallRunDSM::params$prop_flow_natal,
+                                         south_delta_routed_watersheds = fallRunDSM::params$south_delta_routed_watersheds,
+                                         cc_gates_days_closed = fallRunDSM::params$cc_gates_days_closed,
+                                         gates_overtopped = fallRunDSM::params$gates_overtopped,
+                                         tisdale_bypass_watershed = fallRunDSM::params$tisdale_bypass_watershed,
+                                         yolo_bypass_watershed = fallRunDSM::params$yolo_bypass_watershed,
+                                         migratory_temperature_proportion_over_20 = fallRunDSM::params$migratory_temperature_proportion_over_20,
+                                         ..surv_adult_enroute_int = fallRunDSM::params$..surv_adult_enroute_int,
+                                         .adult_stray_intercept = fallRunDSM::params$.adult_stray_intercept,
+                                         .adult_stray_wild = fallRunDSM::params$.adult_stray_wild,
+                                         .adult_stray_natal_flow = fallRunDSM::params$.adult_stray_natal_flow,
+                                         .adult_stray_cross_channel_gates_closed = fallRunDSM::params$.adult_stray_cross_channel_gates_closed,
+                                         .adult_stray_prop_bay_trans = fallRunDSM::params$.adult_stray_prop_bay_trans,
+                                         .adult_stray_prop_delta_trans = fallRunDSM::params$.adult_stray_prop_delta_trans,
+                                         .adult_en_route_migratory_temp = fallRunDSM::params$.adult_en_route_migratory_temp,
+                                         .adult_en_route_bypass_overtopped = fallRunDSM::params$.adult_en_route_bypass_overtopped,
+                                         .adult_en_route_adult_harvest_rate = fallRunDSM::params$.adult_en_route_adult_harvest_rate)
   expect_equal(spawning_adults, expected_spawners)
 })
 
@@ -219,33 +239,35 @@ test_that("Get spawning adults returns the expected values", {
 init_adults <- expected_spawners$init_adults
 min_spawn_habitat <- apply(spawning_habitat[ , 10:12, year], 1, min)
 
-expected_juveniles <- structure(c(23562632.6818975, 95877.4873630614, 400486.276147004,
+expected_juveniles <- structure(c(23562632.6818975, 95877.4873630614, 400486.276068609,
                                   14696.4466670538, 15466.5250672724, 1230801.9983072, 11392333.5307564,
                                   1505953.40992132, 2237111.18034545, 770950.13685259, 15511.9369082167,
                                   1660902.32553158, 62818.1321951005, 14307.5895999286, 14822.7873816012,
-                                  0, 0, 15335.6115608913, 26878201.5840594, 9066230.947591, 0,
-                                  0, 23435759.0578475, 0, 14870.5408311819, 651645.917994897, 3098441.89405339,
-                                  1235205.31252439, 6286476.48377482, 1223531.384084, 0, 0, 0,
+                                  0, 0, 15335.6115608913, 26878201.5853304, 9066230.947591, 0,
+                                  0, 30332561.2074681, 0, 14870.5408311819, 651645.917994897, 5091505.90089442,
+                                  1736248.62081574, 6286476.48377482, 1223531.384084, 0, 0, 0,
                                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                  0, 0, 0, 0, 0, 0, 0), .Dim = c(31L, 4L), .Dimnames = list(c("Upper Sacramento River",
-                                                                                              "Antelope Creek", "Battle Creek", "Bear Creek", "Big Chico Creek",
-                                                                                              "Butte Creek", "Clear Creek", "Cottonwood Creek", "Cow Creek",
-                                                                                              "Deer Creek", "Elder Creek", "Mill Creek", "Paynes Creek", "Stony Creek",
-                                                                                              "Thomes Creek", "Upper-mid Sacramento River", "Sutter Bypass",
-                                                                                              "Bear River", "Feather River", "Yuba River", "Lower-mid Sacramento River",
-                                                                                              "Yolo Bypass", "American River", "Lower Sacramento River", "Calaveras River",
-                                                                                              "Cosumnes River", "Mokelumne River", "Merced River", "Stanislaus River",
-                                                                                              "Tuolumne River", "San Joaquin River"), c("fry", "", "", "")))
+                                  0, 0, 0, 0, 0, 0, 0), .Dim = c(31L, 4L),
+                                .Dimnames = list(c("Upper Sacramento River",
+                                                   "Antelope Creek", "Battle Creek", "Bear Creek", "Big Chico Creek",
+                                                   "Butte Creek", "Clear Creek", "Cottonwood Creek", "Cow Creek",
+                                                   "Deer Creek", "Elder Creek", "Mill Creek", "Paynes Creek", "Stony Creek",
+                                                   "Thomes Creek", "Upper-mid Sacramento River", "Sutter Bypass",
+                                                   "Bear River", "Feather River", "Yuba River", "Lower-mid Sacramento River",
+                                                   "Yolo Bypass", "American River", "Lower Sacramento River", "Calaveras River",
+                                                   "Cosumnes River", "Mokelumne River", "Merced River", "Stanislaus River",
+                                                   "Tuolumne River", "San Joaquin River"), c("fry", "", "", "")))
 
 test_that("spawn success function returns the expected value", {
+  set.seed(2021)
   juveniles <- spawn_success(escapement = init_adults,
                              adult_prespawn_survival = expected_prespawn_surv,
                              egg_to_fry_survival = expected_egg_surv,
                              prob_scour = prob_nest_scoured,
                              spawn_habitat = min_spawn_habitat)
-  expect_equal(juveniles, expected_juveniles)
+  expect_equal(round(juveniles, 2), round(expected_juveniles, 2))
 })
 
