@@ -79,9 +79,9 @@ get_migratory_survival_rates(
 
 \item{..surv_juv_outmigration_sac_int_one}{Intercept one for \code{\link{surv_juv_outmigration_sac_delta}}}
 
-\item{..surv_juv_outmigration_sac_prop_diversions}{Coefficent for code{\link{surv_juv_outmigration_sac_delta}} \code{prop_diversion} variable}
+\item{..surv_juv_outmigration_sac_prop_diversions}{Coefficient for code{\link{surv_juv_outmigration_sac_delta}} \code{prop_diversion} variable}
 
-\item{..surv_juv_outmigration_sac_total_diversions}{Coefficent for code{\link{surv_juv_outmigration_sac_delta}} \code{total_diversion} variable #TODO (do we use this variable?)}
+\item{..surv_juv_outmigration_sac_total_diversions}{Coefficient for code{\link{surv_juv_outmigration_sac_delta}} \code{total_diversion} variable #TODO (do we use this variable?)}
 
 \item{..surv_juv_outmigration_sac_int_two}{Intercept one for \code{\link{surv_juv_outmigration_sac_delta}}}
 

@@ -80,13 +80,13 @@ A list containing all parameters needed for running the \code{\link{fall_run_mod
   \item \code{delta_contact_points}: More details at \code{\link[DSMhabitat]{delta_contact_points}}
   \item \code{delta_prop_high_predation}: More details at \code{\link[DSMhabitat]{delta_prop_high_predation}}
   \item \code{..surv_juv_rear_int}: Intercept, Source: calibration (varies by tributary)
-  \item \code{..surv_juv_rear_contact_points}: Coefficient for contact_points variable, Source: calibration
-  \item \code{..surv_juv_rear_prop_diversions}: Coefficient for prop_diversions variable, Source: calibration
-  \item \code{..surv_juv_rear_total_diversions}: Coefficient for total_diversions variable, Source: calibration
+  \item \code{..surv_juv_rear_contact_points}: Coefficient for \code{contact_points} variable, Source: calibration
+  \item \code{..surv_juv_rear_prop_diversions}: Coefficient for \code{prop_diversions} variable, Source: calibration
+  \item \code{..surv_juv_rear_total_diversions}: Coefficient for \code{total_diversions} variable, Source: calibration
   \item \code{..surv_juv_bypass_int}: Intercept, Source: calibration
   \item \code{..surv_juv_delta_int}: Intercept, Source: calibration
-  \item \code{..surv_juv_delta_contact_points}: Coefficient for contact_points variable, Source: calibration
-  \item \code{..surv_juv_delta_total_diverted}: Coefficient for total_diversions variable, Source: calibration
+  \item \code{..surv_juv_delta_contact_points}: Coefficient for \code{contact_points} variable, Source: calibration
+  \item \code{..surv_juv_delta_total_diverted}: Coefficient for \code{total_diversions} variable, Source: calibration
   \item \code{.surv_juv_rear_avg_temp_thresh}:  Coefficient for \code{avg_temp_thresh} variable, Source: TODO
   \item \code{.surv_juv_rear_high_predation}: Coefficient for \code{high_predation} variable, source: \href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}
   \item \code{.surv_juv_rear_stranded}: Coefficient for \code{stranded} variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/DWR-1140+USFWS+2006.pdf}{USFWS (2006) and CDWR (2006)}
@@ -109,59 +109,55 @@ A list containing all parameters needed for running the \code{\link{fall_run_mod
 \section{Migratory Survival}{
 
 \itemize{
-  \item \code{cc_gates_prop_days_closed}
-  \item \code{freeport_flows}
-  \item \code{vernalis_flows}
-  \item \code{stockton_flows}
-  \item \code{vernalis_temps}
-  \item \code{prisoners_point_temps}
-  \item \code{CVP_exports}
-  \item \code{SWP_exports}
-  \item \code{upper_sacramento_flows}
-  \item \code{delta_inflow}
-  \item \code{avg_temp_delta}
-  \item \code{avg_temp}
-  \item \code{delta_proportion_diverted}
-  \item \code{.surv_juv_outmigration_sac_delta_intercept_one}
-  \item \code{.surv_juv_outmigration_sac_delta_intercept_two}
-  \item \code{.surv_juv_outmigration_sac_delta_intercept_three}
-  \item \code{.surv_juv_outmigration_sac_delta_delta_flow}
-  \item \code{.surv_juv_outmigration_sac_delta_avg_temp}
-  \item \code{.surv_juv_outmigration_sac_delta_perc_diversions}
-  \item \code{.surv_juv_outmigration_sac_delta_medium}
-  \item \code{.surv_juv_outmigration_sac_delta_large}
-  \item \code{..surv_juv_outmigration_sj_int}
-  \item \code{..surv_juv_outmigration_sac_int_one}
-  \item \code{..surv_juv_outmigration_sac_prop_diversions}
-  \item \code{..surv_juv_outmigration_sac_total_diversions}
-  \item \code{..surv_juv_outmigration_sac_int_two}
-  \item \code{.surv_juv_outmigration_san_joquin_medium}
-  \item \code{.surv_juv_outmigration_san_joaquin_large}
+  \item \code{cc_gates_prop_days_closed}: More details at \code{\link[DSMflow]{delta_cross_channel_closed}}
+  \item \code{freeport_flows}: More details at \code{\link[DSMflow]{freeport_flow}}
+  \item \code{vernalis_flows}: More details at \code{\link[DSMflow]{vernalis_flow}}
+  \item \code{stockton_flows}: More details at \code{\link[DSMflow]{stockton_flow}}
+  \item \code{vernalis_temps}: More details at \code{\link[DSMtemperature]{vernalis_temperature}}
+  \item \code{prisoners_point_temps}: More details at \code{\link[DSMtemperature]{prisoners_point_temperature}}
+  \item \code{CVP_exports}: More details at \code{\link[DSMflow]{CVP_exports}}
+  \item \code{SWP_exports}: More details at \code{\link[DSMflow]{SWP_exports}}
+  \item \code{upper_sacramento_flows}: More details at \code{\link[DSMflow]{upper_sacramento_flows}}
+  \item \code{delta_inflow}: More details at \code{\link[DSMflow]{delta_inflow}}
+  \item \code{avg_temp_delta}: More details at \code{\link[DSMtemperature]{delta_temperature}}
+  \item \code{avg_temp}: More details at \code{\link[DSMtemperature]{stream_temperature}}
+  \item \code{delta_proportion_diverted}: More details at \code{\link[DSMflow]{delta_proportion_diverted}}
+  \item \code{.surv_juv_outmigration_sac_delta_intercept_one} Intercept for model one, source: TODO
+  \item \code{.surv_juv_outmigration_sac_delta_intercept_two} Intercept for model two, source: TODO
+  \item \code{.surv_juv_outmigration_sac_delta_intercept_three} Intercept for model three, source: TODO
+  \item \code{.surv_juv_outmigration_sac_delta_delta_flow} Coefficient for \code{delta_flow} variable, source: TODO
+  \item \code{.surv_juv_outmigration_sac_delta_avg_temp} Coefficient for \code{avg_temp} variable, source: TODO
+  \item \code{.surv_juv_outmigration_sac_delta_perc_diversions} Coefficient for \code{perc_diversions} variable, source: TODO
+  \item \code{.surv_juv_outmigration_sac_delta_medium} Parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+  \item \code{.surv_juv_outmigration_sac_delta_large} Parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+  \item \code{..surv_juv_outmigration_sj_int} Intercept, source: calibration
+  \item \code{.surv_juv_outmigration_san_joquin_medium} Parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+  \item \code{.surv_juv_outmigration_san_joaquin_large} Parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
 }
 }
 
 \section{Delta Routing and Rearing}{
 
 \itemize{
-  \item \code{freeport_flows}
-  \item \code{cc_gates_days_closed}
-  \item \code{growth_rates}
+  \item \code{freeport_flows}: More details at \code{\link[DSMflow]{freeport_flow}}
+  \item \code{cc_gates_days_closed}: More details at \code{\link[DSMflow]{delta_cross_channel_closed}}
+  \item \code{growth_rates}: More details at: \code{\link{growth_rates}}
 }
 }
 
 \section{Routing}{
 
 \itemize{
-  \item \code{prop_pulse_flows}
-  \item \code{proportion_flow_bypass}
-  \item \code{.pulse_movement_intercept}
-  \item \code{.pulse_movement_proportion_pulse}
-  \item \code{.pulse_movement_medium}
-  \item \code{.pulse_movement_large}
-  \item \code{.pulse_movement_vlarge}
-  \item \code{.pulse_movement_medium_pulse}
-  \item \code{.pulse_movement_large_pulse}
-  \item \code{.pulse_movement_very_large_pulse}
+  \item \code{prop_pulse_flows}: More details at \code{\link[DSMflow]{proportion_pulse_flows}}
+  \item \code{proportion_flow_bypass}: More details at \code{\link[DSMflow]{proportion_flow_bypasses}}
+  \item \code{.pulse_movement_intercept}: Intercept, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.
+  \item \code{.pulse_movement_proportion_pulse}: Coefficient for \code{proportion_pulse} variable, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.
+  \item \code{.pulse_movement_medium}: Parameter for medium sized fish, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.
+  \item \code{.pulse_movement_large}: Parameter for large sized fish, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.
+  \item \code{.pulse_movement_vlarge}: Parameter for very large sized fish, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.
+  \item \code{.pulse_movement_medium_pulse}: Additional coefficient for \code{proportion_pulse} variable for medium size fish, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.
+  \item \code{.pulse_movement_large_pulse}: Additional coefficient for \code{proportion_pulse} variable for large size fish, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.
+  \item \code{.pulse_movement_very_large_pulse}: Additional coefficient for \code{proportion_pulse} variable for very large size fish, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.
 }
 }
 
@@ -180,7 +176,7 @@ A list containing all parameters needed for running the \code{\link{fall_run_mod
 \itemize{
   \item \code{.ocean_entry_success_length}: Variable representing the fork lengths for each size classes, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/Satterthwaite_et_al_2014.pdf}{Satterthwaite et al. (2014)}
   \item \code{..ocean_entry_success_int}: Intercept, source: Calibration (Varies by tributary)
-  \item \code{.ocean_entry_success_months}: Coefficient for month variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/Satterthwaite_et_al_2014.pdf}{Satterthwaite et al. (2014)}
+  \item \code{.ocean_entry_success_months}: Coefficient for \code{month} variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/Satterthwaite_et_al_2014.pdf}{Satterthwaite et al. (2014)}
 }
 }
 

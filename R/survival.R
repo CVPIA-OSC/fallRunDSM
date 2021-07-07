@@ -362,9 +362,9 @@ surv_juv_outmigration_sac <- function(flow_cms){
 
 #' @title Juvenile San Joaquin Outmigration Survival
 #' @description Calculates the San Joaquin River juvenile out migration survival
-#' @param ..surv_juv_outmigration_sj_int intercept, source: calibration
-#' @param .medium parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
-#' @param .large parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+#' @param ..surv_juv_outmigration_sj_int Intercept
+#' @param .medium Parameter for medium sized fish
+#' @param .large Parameter for large sized fish
 #' @source IP-117068
 #' @export
 surv_juv_outmigration_san_joaquin <- function(..surv_juv_outmigration_sj_int = fallRunDSM::params$..surv_juv_outmigration_sj_int,
@@ -383,14 +383,14 @@ surv_juv_outmigration_san_joaquin <- function(..surv_juv_outmigration_sj_int = f
 #' @param delta_flow Variable describing delta inflow in cubic meters per second
 #' @param avg_temp Variable describing monthly mean temperature in celsius
 #' @param perc_diversions Variable describing monthly mean percent diverted
-#' @param .intercept_one Intercept for model one, source: TODO
-#' @param .intercept_two Intercept for model two, source: TODO
-#' @param .intercept_three Intercept for model three, source: TODO
-#' @param .delta_flow Coefficient for delta_flow variable, source: TODO
-#' @param .avg_temp Coefficient for avg_temp variable, source: TODO
-#' @param .perc_diversions Coefficient for perc_diversions variable, source: TODO
-#' @param .medium parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
-#' @param .large parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+#' @param .intercept_one Intercept for model one
+#' @param .intercept_two Intercept for model two
+#' @param .intercept_three Intercept for model three
+#' @param .delta_flow Coefficient for delta_flow variable
+#' @param .avg_temp Coefficient for avg_temp variable
+#' @param .perc_diversions Coefficient for perc_diversions variable
+#' @param .medium parameter for medium sized fish
+#' @param .large parameter for large sized fish
 #' @source IP-117068
 #' @export
 surv_juv_outmigration_sac_delta <- function(delta_flow, avg_temp, perc_diversions,
@@ -602,8 +602,8 @@ surv_juv_outmigration_delta <- function(prop_DCC_closed, hor_barr, freeport_flow
 #' @param SWP_exports More details at \code{\link[DSMflow]{swp_exports}}
 #' @param ..surv_juv_outmigration_sj_int Intercept for \code{\link{surv_juv_outmigration_san_joaquin}}
 #' @param ..surv_juv_outmigration_sac_int_one Intercept one for \code{\link{surv_juv_outmigration_sac_delta}}
-#' @param ..surv_juv_outmigration_sac_prop_diversions Coefficent for code{\link{surv_juv_outmigration_sac_delta}} \code{prop_diversion} variable
-#' @param ..surv_juv_outmigration_sac_total_diversions Coefficent for code{\link{surv_juv_outmigration_sac_delta}} \code{total_diversion} variable #TODO (do we use this variable?)
+#' @param ..surv_juv_outmigration_sac_prop_diversions Coefficient for code{\link{surv_juv_outmigration_sac_delta}} \code{prop_diversion} variable
+#' @param ..surv_juv_outmigration_sac_total_diversions Coefficient for code{\link{surv_juv_outmigration_sac_delta}} \code{total_diversion} variable #TODO (do we use this variable?)
 #' @param ..surv_juv_outmigration_sac_int_two Intercept one for \code{\link{surv_juv_outmigration_sac_delta}}
 #' @param .surv_juv_outmigration_san_joquin_medium parameter for \code{\link{surv_juv_outmigration_san_joaquin}} medium sized fish
 #' @param .surv_juv_outmigration_san_joaquin_large parameter for \code{\link{surv_juv_outmigration_san_joaquin}} large sized fish

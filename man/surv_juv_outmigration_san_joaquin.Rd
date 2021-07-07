@@ -14,11 +14,11 @@ surv_juv_outmigration_san_joaquin(
 )
 }
 \arguments{
-\item{..surv_juv_outmigration_sj_int}{intercept, source: calibration}
+\item{..surv_juv_outmigration_sj_int}{Intercept}
 
-\item{.medium}{parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}}
+\item{.medium}{Parameter for medium sized fish}
 
-\item{.large}{parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}}
+\item{.large}{Parameter for large sized fish}
 }
 \description{
 Calculates the San Joaquin River juvenile out migration survival
