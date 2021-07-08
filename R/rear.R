@@ -14,10 +14,43 @@ rear <- function(juveniles, survival_rate, growth, floodplain_juveniles = NULL,
                  floodplain_survival_rate = NULL, floodplain_growth = NULL,
                  weeks_flooded = NULL){
 
-  next_juveniles <- (juveniles * survival_rate) %*% growth
+  # we want to be able to use one survival "rate" on multiple watersheds
+  if (nrow(survival_rate) == 1) {
+    survival_rate <- matrix(rep(survival_rate, nrow(juveniles)),
+                            nrow = nrow(juveniles), byrow = TRUE)
+  } else if (nrow(survival_rate) != nrow(juveniles)) {
+    stop(sprintf("'survival rate' must have same dimensions as juveniles (%d x %d) or (1 x 4)",
+                 nrow(juveniles), ncol(juveniles)), call. = FALSE)
+  }
+
+  if (max(juveniles) <= 1000000000) {
+    survived <- t(sapply(1:nrow(juveniles), function(watershed) {
+      rbinom(4, size = round(juveniles[watershed, ]), prob = survival_rate[watershed, ])
+    }))
+  } else {
+    survived <- round(juveniles * survival_rate)
+  }
+
+  next_juveniles <- round(survived %*% growth)
 
   if(!is.null(floodplain_juveniles)) {
-    floodplain_juveniles_survived <- floodplain_juveniles * floodplain_survival_rate
+
+    if (nrow(floodplain_survival_rate) == 1) {
+      floodplain_survival_rate <- matrix(rep(floodplain_survival_rate, nrow(floodplain_juveniles)),
+                              nrow = nrow(floodplain_juveniles), byrow = TRUE)
+    } else if (nrow(floodplain_survival_rate) != nrow(floodplain_juveniles)) {
+      stop(sprintf("'survival rate' must have same dimensions as juveniles (%d x %d) or (1 x 4)",
+                   nrow(floodplain_juveniles), ncol(floodplain_juveniles)), call. = FALSE)
+    }
+
+
+    if (max(floodplain_juveniles) <= 1000000000) {
+      floodplain_juveniles_survived <- t(sapply(1:nrow(floodplain_juveniles), function(watershed) {
+        rbinom(4, size = round(floodplain_juveniles[watershed, ]), prob = floodplain_survival_rate[watershed, ])
+      }))
+    } else {
+      floodplain_juveniles_survived <- floodplain_juveniles * floodplain_survival_rate
+    }
 
     next_floodplain_juveniles <- c()
 
@@ -29,7 +62,7 @@ rear <- function(juveniles, survival_rate, growth, floodplain_juveniles = NULL,
         next_floodplain_juveniles <- rbind(next_floodplain_juveniles, rep(0, 4))
       }
     }
-    return(list(inchannel = next_juveniles, floodplain = next_floodplain_juveniles))
+    return(list(inchannel = next_juveniles, floodplain = round(next_floodplain_juveniles)))
   }
 
   return(next_juveniles)

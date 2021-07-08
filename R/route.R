@@ -287,11 +287,11 @@ route_and_rear_deltas <- function(year, month, migrants, north_delta_fish, south
 
   if (month != 8) {
     north_delta_fish <- rear(juveniles = north_delta_fish$inchannel,
-                             survival_rate = rearing_survival_delta[1, ],
+                             survival_rate = rearing_survival_delta[1, , drop = FALSE],
                              growth = growth_rates)
 
     south_delta_fish <- rear(juveniles = south_delta_fish$inchannel,
-                             survival_rate = rearing_survival_delta[2, ],
+                             survival_rate = rearing_survival_delta[2, , drop = FALSE],
                              growth = growth_rates)
 
   }
