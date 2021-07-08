@@ -97,7 +97,7 @@
 #'   \item \code{degree_days}: More details at \code{\link[DSMtemperature]{degree_days}}
 #'   \item \code{month_return_proportions}: More details at \code{\link[fallRunDSM]{month_return_proportions}}
 #'   \item \code{..surv_adult_prespawn_int}:  Intercept, Source: Calibration Estimate
-#'   \item \code{.adult_prespawn_deg_day}: Coefficient for \code{deg_day} variable, source Colvin et al. (2018)
+#'   \item \code{.adult_prespawn_deg_day}: Coefficient for \code{deg_day} variable, source: \href{https://onlinelibrary.wiley.com/doi/epdf/10.1002/rra.3348}{Colvin et al. (2018)}
 #'   \item \code{prob_nest_scoured}: More details at \code{\link[DSMhabitat]{prob_nest_scoured}}
 #'   \item \code{spawn_success_sex_ratio}: Variable describing the female to male spawning ratio, default 0.5 TODO (find source for default)
 #'   \item \code{spawn_success_redd_size}: Variable describing the size of redds including defensible space, default value 9.29 square meters TODO (find source for default)

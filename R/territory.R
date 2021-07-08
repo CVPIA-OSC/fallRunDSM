@@ -1,5 +1,5 @@
 #' @title Territory Size Requirement
-#' @description Territory requirement as a function of fork length (Grant and Kramer 1990).
+#' @description Territory requirement as a function of fork length \href{https://cdnsciencepub.com/doi/10.1139/f90-197}{Grant and Kramer 1990.}
 #' Default value returns the territory requirement in square meters for each size class.
 #' @param fork_lengths The fork length in centimeters. The default value is the
 #' mid-point for each size class.

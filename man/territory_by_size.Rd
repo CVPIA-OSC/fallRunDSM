@@ -16,6 +16,6 @@ territory_by_size(
 mid-point for each size class.}
 }
 \description{
-Territory requirement as a function of fork length (Grant and Kramer 1990).
+Territory requirement as a function of fork length \href{https://cdnsciencepub.com/doi/10.1139/f90-197}{Grant and Kramer 1990.}
 Default value returns the territory requirement in square meters for each size class.
 }
