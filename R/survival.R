@@ -199,7 +199,7 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
 #' @param .surv_juv_delta_large Parameter for \code{\link{surv_juv_delta}} large sized fish
 #' @source IP-117068
 #' @export
-get_rearing_survival_rates <- function(year, month,
+get_rearing_survival <- function(year, month,
                                        survival_adjustment,
                                        mode,
                                        avg_temp,
@@ -612,7 +612,7 @@ surv_juv_outmigration_delta <- function(prop_DCC_closed, hor_barr, freeport_flow
 #' @param .surv_juv_outmigration_san_joaquin_large parameter for \code{\link{surv_juv_outmigration_san_joaquin}} large sized fish
 #' @source IP-117068
 #' @export
-get_migratory_survival_rates <- function(year, month,
+get_migratory_survival <- function(year, month,
                                          cc_gates_prop_days_closed = fallRunDSM::params$cc_gates_prop_days_closed,
                                          freeport_flows = fallRunDSM::params$freeport_flows,
                                          vernalis_flows = fallRunDSM::params$vernalis_flows,

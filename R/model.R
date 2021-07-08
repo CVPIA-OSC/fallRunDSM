@@ -141,7 +141,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                              yolo_habitat = ..params$yolo_habitat,
                              delta_habitat = ..params$delta_habitat)
 
-      rearing_survival <- get_rearing_survival_rates(year, month,
+      rearing_survival <- get_rearing_survival(year, month,
                                                      survival_adjustment = scenario_data$survival_adjustment,
                                                      mode = mode,
                                                      avg_temp = ..params$avg_temp,
@@ -182,7 +182,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                                      .surv_juv_delta_medium = ..params$.surv_juv_delta_medium,
                                                      .surv_juv_delta_large = ..params$.surv_juv_delta_large)
 
-      migratory_survival <- get_migratory_survival_rates(year, month,
+      migratory_survival <- get_migratory_survival(year, month,
                                                          cc_gates_prop_days_closed = ..params$cc_gates_prop_days_closed,
                                                          freeport_flows = ..params$freeport_flows,
                                                          vernalis_flows = ..params$vernalis_flows,
