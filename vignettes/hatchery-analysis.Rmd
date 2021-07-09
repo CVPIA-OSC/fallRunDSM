@@ -1,0 +1,214 @@
+---
+title: "DSM Hatchery Analysis Documentation "
+output: 
+  html_document:
+    theme: flatly
+    code_folding: hide
+vignette: >
+  %\VignetteIndexEntry{hatchery-analysis}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+library(readr)
+library(tidyverse)
+library(DT)
+library(fallRunDSM)
+```
+
+## Description 
+This analysis provides the `hatchery_allocation` and `natural_adult_removal_rate` inputs to the FallRunDSM, SpringRunDSM, and WinterRunDSM. 
+The following code and datatables document the process of finding the of number and distribution of hatchery origin Fall Run, Spring Run, and Winter Run Chinook in the Central Valley. 
+
+### Datasource
+Temporal Range: 2010 - 2012 
+
+Most data from CWT (coded wire tag) analyses with limited data in 2010 from CVPIA ChinookProd database 
+version 2 September 22, 2017. Data from these sources was compiled in a csv called [hatchery_fish_fate2010_2012.csv](https://dsm-docs.s3-us-west-2.amazonaws.com/adult_hatchery_documentation/hatchery_fish_fate2010_2012.csv).
+
+**Adjustment to Feather and Yuba Rivers:**
+
+Feather and Yuba Rivers do not separate spring and fall run
+in totals, here we apply the proportion of spring hatchery return
+adults that are used to adjust the totals for 2010 - 2012. Data used for Feather and Yuba adjustment were from [GrandTab 2017 version.](https://dsm-docs.s3-us-west-2.amazonaws.com/adult_hatchery_documentation/GrandTab.2017.04.07.pdf)
+
+The datatable below shows the data that has been prepped for analysis. (`No_hatch_returns` correspondes to the number of hatchery fish returning, `Hatch_flag` describes if fish are hatchery(1) or not hatchery(0)) 
+
+```{r}
+cwt_data <- read_csv(system.file("extdata", "hatchery-data", "hatchery_fish_fate2010_2012.csv", 
+                       package = "fallRunDSM", mustWork = TRUE)) %>%
+  rename("Hatch_flag" = Hatch.flag)
+
+# Do not get the correct values using this for proportion spring run
+# prop_spring <- cwt_data %>% filter(Run == "Spring") %>%
+#   group_by(Year) %>%
+#   summarise(prop = n()/nrow(cwt_data))
+
+proportion_spring_run <- dplyr::tibble(prp = c(0.076777295, 0.056932196, 0.081441457), 
+                                       Year = c(2010, 2011, 2012))
+
+# Apply fall proportions * (1- spring proportion) to feather and yuba 
+spring_run_feather_yuba <- cwt_data %>%
+  filter(Run == "Fall/Spr") %>%
+  left_join(proportion_spring_run, by = "Year") %>%
+  mutate(No_hatch_ret = No_hatch_ret * (1 - prp),
+         Total_escape = Total_escape * (1 - prp),
+         Run = "Fall") %>%
+  select(-prp)
+
+# Apply fall proportions * (spring proportion) to feather and yuba 
+fall_run_feather_yuba <- cwt_data %>%
+  filter(Run == "Fall/Spr") %>%
+  left_join(proportion_spring_run, by = "Year") %>%
+  mutate(No_hatch_ret = No_hatch_ret * prp,
+         Total_escape = Total_escape * prp,
+         Run = "Spring") %>%
+  select(-prp)
+  
+# Remove initial "Fall/Spr" data from hatchery data and then bind new spring fall data on
+cwt_data <- cwt_data %>%
+  filter(Run != "Fall/Spr") %>%
+  rbind(spring_run_feather_yuba, fall_run_feather_yuba)
+
+datatable(cwt_data, 
+          options = list(
+                    searching = FALSE,
+                    pageLength = 5,
+                    lengthMenu = c(5, 10, 15, 20)
+))
+```
+
+### Hatchery Allocation
+`hatchery_allocation` is used in the fallRunDSM, springRunDSM and winterRunDSM. The number of `hatch_adults` is determined in the `model.R` script through a multinominal distribution with the probability equal to the `hatchery_allocation` calculated below. 
+
+To find the `hatchery_allocation` we calculated the proportion of hatchery fish allocated to each tributary in each year, grouped our data by tributary and Run, and then summarized to find the mean percentage of hatchery fish for each tributary. 
+
+Additional Considerations for Specific Runs: 
+
+* There are 5 tributaries missing data for Fall Run fish. We assign lowest proportion of Fall Run hatchery fish spawning in our observed dataset to these tributaries and we renormalize the values so that they all sum to 1.
+* There are no Spring Run hatchery fish on Mill creek so We set percentage hatchery on Mill Creek to 0 and we renormalized the values so that they all sum to 1. 
+* For Winter Run `hatchery_allocation` we are only considering Upper Sacramento so allocation should be 100% for the Upper Sacramento River.
+
+```{r}
+fish_in_wild <- cwt_data %>%
+  filter(Hatch_flag == 0)
+
+wild_totals <- fish_in_wild %>%
+  group_by(Year) %>%
+  summarise(total_hatch_spawn = sum(No_hatch_ret)) 
+
+fish_in_wild <- left_join(fish_in_wild, wild_totals, by = "Year")
+
+summarized_fish_in_wild <- fish_in_wild %>%
+  mutate(trib_hatchery_percentage = No_hatch_ret/total_hatch_spawn) %>%
+  group_by(Trib, Run) %>%
+  summarise(mean_trib_hatchery_percentage = mean(trib_hatchery_percentage)) %>%
+  ungroup() %>%
+  spread(Run, mean_trib_hatchery_percentage) %>%
+  mutate(Spring = ifelse(Trib == "Mill Creek", 0, Spring)) 
+
+hatchery_per_trib <- summarized_fish_in_wild %>%
+  rbind(tibble(Trib = c("Bear Creek", "Elder Creek", "Stony Creek", "Thomes Creek", "Bear River"),
+               Fall = rep(min(summarized_fish_in_wild$Fall), 5),
+               Spring = rep(NA, 5),
+               Winter = rep(NA, 5))) %>%
+  mutate(Fall = round((Fall / sum(Fall, na.rm = TRUE)), 4),
+         Spring = round((Spring / sum(Spring, na.rm = TRUE)), 4),
+         Winter = round((Winter / sum(Winter, na.rm = TRUE)), 4)) %>%
+  rename("Fall proportion allocated to tributary" = Fall,
+         "Spring proportion allocated to tributary" = Spring,
+         "Winter proportion allocated to tributary" = Winter) %>%
+  mutate(across(everything(), ~replace_na(.x, 0)))
+
+datatable(hatchery_per_trib[order(hatchery_per_trib$`Winter proportion allocated to tributary`),], 
+          options = list(
+                    searching = FALSE,
+                    pageLength = 8,
+                    lengthMenu = c(8, 10, 15, 20)
+)) %>% formatStyle(columns = c("Trib"), textAlign = 'center')
+```
+
+### Natural Adult Removal Rate
+`natural_adult_removal_rate` is used in the fallRunDSM, springRunDSM and winterRunDSM by the `get_spawning_adults()` function.  The number of `natural_adults_by_month` is determined binomial distribution with the probability equal to the `1 - natural_adult_removal_rate`. 
+
+We calculate the natural adult removal rate for each tributary by estimating the proportion of naturally produced fish used in a hatchery
+(i.e., they did not spawn). 
+
+Additional Considerations for Specific Runs: 
+
+* For Fall Run `natural_adult_removal_rate` there are 5 tributaries where fish are removed for use in hatcheries. 
+* For Spring Run `natural_adult_removal_rate` only Feather River has fish that are removed for use in hatcheries. 
+* For Winter Run `natural_adult_removal_rate` only the Upper Sacramento River has fish that are removed for use in hatcheries.
+
+```{r}
+# Fall natural adult removal -------------------------------------------------------------------------------------
+fall_hatchery_fish <- cwt_data %>%
+  filter(Hatch_flag == 1 & Run == "Fall") %>%
+  mutate(remove = Natural * Total_escape)
+
+pairs <- matrix(c("Coleman National Fish Hatchery", "Battle Creek",
+                  "Feather River Hatchery", "Feather River", "Merced River Fish Facility", 
+                  "Merced River", "Nimbus Fish Hatchery", "American River", "Mokelumne Hatchery", 
+                  "Mokelumne River"), 
+                ncol=2, 
+                byrow=T)
+
+fall_fish_removal = NULL
+for(i in 1:5){
+  keep_in_hatchery <- fall_hatchery_fish %>%
+    filter(Trib == pairs[i, 1]) %>%
+    arrange(Year)
+  
+  remove_from_trib <- cwt_data %>%
+    filter(Run == "Fall" & Trib == pairs[i, 2]) %>%
+    arrange(Year) %>%
+    mutate(natural_removed = Natural * Total_escape) 
+  
+  fall_proportion_removed <- keep_in_hatchery$remove/(keep_in_hatchery$remove + remove_from_trib$natural_removed)
+  fall_fish_removal <- rbind(fall_fish_removal, data.frame(Trib = rep(pairs[i, 2], 3), fall_proportion_removed, 3))
+}
+
+# Spring natural adult removal -------------------------------------------------------------------------------------
+spring_hatchery_fish <- cwt_data %>%
+  filter(Hatch_flag == 1 & Run == "Spring") %>%
+  mutate(remove = Natural * Total_escape)
+
+spring_fish_removed_from_trib <- cwt_data %>%
+  filter(Trib == "Feather River" & Run == "Spring") %>% # Only feather river has hatchery fish removed in spring
+  mutate(remove = Natural * Total_escape)
+
+spring_proportion_removed <-  tibble(Trib = "Feather River", 
+                                    "Spring Proportion Removed" = round(mean(spring_hatchery_fish$remove/
+                                                                               (spring_hatchery_fish$remove + spring_fish_removed_from_trib$remove)), 3))
+
+# Winter natural adult removal -------------------------------------------------------------------------------------
+winter_hatchery_fish <- cwt_data %>%
+  filter(Hatch_flag == 1 & Run == "Winter") %>%
+  mutate(remove = Natural * Total_escape)
+
+winter_fish_removed_from_trib <- cwt_data %>%
+  filter(Trib == "Upper Sacramento River" & Run == "Winter") %>% # Only Upper Sac river has hatchery fish removed in Winter
+  mutate(remove = Natural * Total_escape)
+
+winter_proportion_removed <- tibble(Trib = "Upper Sacramento River", 
+                                    "Winter Proportion Removed" = round(mean(winter_hatchery_fish$remove / 
+                                                                               (winter_hatchery_fish$remove + winter_fish_removed_from_trib$remove)), 3))
+
+# Combine run removal rates 
+natural_adult_removal_rate <- fall_fish_removal %>%
+  group_by(Trib) %>%
+  summarise("Fall Proportion Removed" = round(mean(fall_proportion_removed), 3)) %>%
+  left_join(spring_proportion_removed) %>%
+  full_join(winter_proportion_removed) %>%
+  mutate(across(everything(), ~replace_na(.x, 0)))
+
+# Display it all 
+datatable(natural_adult_removal_rate, 
+          options = list(
+                    searching = FALSE,
+                    pageLength = 6,
+                    lengthMenu = c(6, 10, 15, 20)
+)) %>% formatStyle(columns = c("Trib"), textAlign = 'center')
+```

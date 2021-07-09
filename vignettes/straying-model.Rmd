@@ -1,0 +1,29 @@
+---
+title: "DSM Straying Model Documentation"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{straying-model}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r}
+library(fallRunDSM)
+cwt_data = system.file("extdata", "straying-data", "cwt_stray.csv", 
+                       package = "fallRunDSM", mustWork = TRUE)
+
+releases = system.file("extdata", "straying-data", "releases.csv", 
+                       package = "fallRunDSM", mustWork = TRUE)
+```
+
+```{r}
+
+```
+
