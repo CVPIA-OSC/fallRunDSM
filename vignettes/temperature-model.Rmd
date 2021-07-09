@@ -13,28 +13,47 @@ vignette: >
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE,
                       message = FALSE,
-                      warning = FALSE)
+                      warning = FALSE,
+                      fig.width=15, fig.height=8)
 library(readr)
 library(tidyverse)
 library(boot)
 library(formattable)
 library(DT)
+library(gridExtra)
 ```
+
 ## Chinook supplementary analysis for Chinook DSM models
 
-### Central Valley river and Delta logistic temperature models 
+### Creates logistic models to estimate temperature metrics 
 
 The script below analyzes the relationship between monthly median temperature and temperature exceedance variables. In this script we use logistic regression to be able to predict if temperatures exceed 20 degrees or 25 degrees in a month based on a medium monthly value. 
 
 The logistic regression coefficients are used to define the `aveT20` and `maxT25` in the survival submodels of the `fallRunDSM`, `springRunDSM`, and `winterRunDSM` models. 
 
-#### Data Source
-This analysis is done using data from the [Full temperature data.csv](https://dsm-docs.s3-us-west-2.amazonaws.com/temperature_modeling/Full+temperature+data.csv). TODO where is the "Full temperature data.csv" coming from?
+#### Data Sources
 
-The table below shows the temperature grouped by month and year and summarized to give monthly mean temperature, proportion of days over 20 degrees, and the count of days per month over 25 degrees. 
+Central Valley River Temps: 
+This analysis is done using data from the [Full temperature data.csv](https://dsm-docs.s3-us-west-2.amazonaws.com/temperature_modeling/Full+temperature+data.csv). 
+
+Delta Temps:
+This analysis is done using the following data:
+
+* [DUTCH SLOUGH.csv](https://dsm-docs.s3-us-west-2.amazonaws.com/temperature_modeling/DUTCH+SLOUGH.csv).
+* [GEORGIANA SLOUGH.csv](https://dsm-docs.s3-us-west-2.amazonaws.com/temperature_modeling/GEORGIANA+SLOUGH.csv)
+* [JERSEY POINT.csv](https://dsm-docs.s3-us-west-2.amazonaws.com/temperature_modeling/JERSEY+POINT.csv)
+* [LPotatoSLough.csv](https://dsm-docs.s3-us-west-2.amazonaws.com/temperature_modeling/LPotatoSlough.csv)
+
+
+TODO source for these CSVs?
+
+
+#### Central Valley River Temperature Data
+
+The table below shows the Central Valley temperature data grouped by month and year and summarized to give monthly mean temperature, proportion of days over 20 degrees, and the count of days per month over 25 degrees. 
 ```{r}
 full_temp_data <- read_csv(system.file("extdata", "temperature-data", "Full temperature data.csv", 
-                       package = "fallRunDSM", mustWork = TRUE)) %>% 
+                           package = "fallRunDSM", mustWork = TRUE)) %>% 
   na.omit() %>%
   mutate(gt20 = ifelse(medC > 20, 1, 0),
          gt25 = ifelse(maxC > 20, 1, 0))
@@ -44,9 +63,9 @@ full_temp_data <- read_csv(system.file("extdata", "temperature-data", "Full temp
 
 grouped_temp_measures <- full_temp_data %>%
   group_by(year, month) %>%
-  summarise(count_measures_gt_25 = sum(gt25),
-            prop_gt_20 = mean(gt20),
-            month_mean_temp = mean(medC)) 
+  summarise(prop_gt_20 = round(mean(gt20), 2),
+            count_measures_gt_25 = sum(gt25),
+            month_mean_temp = round(mean(medC), 2)) 
 datatable(grouped_temp_measures %>% rename("Year" = year, 
                                            "Month" = month,
                                            "Number of Measures Exceeding 25 degrees" = count_measures_gt_25,
@@ -59,12 +78,55 @@ datatable(grouped_temp_measures %>% rename("Year" = year,
 ))
 ```
 
+
+#### Delta Temperature Data 
+The table below shows the delta temperature grouped by month and year and summarized to give monthly mean temperature, proportion of days over 20 degrees, and the count of days per month over 25 degrees. 
+```{r}
+jersey_point <- read_csv(system.file("extdata", "temperature-data", "JERSEY POINT.csv", 
+                           package = "fallRunDSM", mustWork = TRUE))
+dutch_slough <- read_csv(system.file("extdata", "temperature-data", "DUTCH SLOUGH.csv", 
+                           package = "fallRunDSM", mustWork = TRUE))
+georgiana_slough <- read_csv(system.file("extdata", "temperature-data", "GEORGIANA SLOUGH.csv", 
+                           package = "fallRunDSM", mustWork = TRUE))
+potato_slough <-read_csv(system.file("extdata", "temperature-data", "LPotatoSlough.csv", 
+                           package = "fallRunDSM", mustWork = TRUE))
+
+full_temp_data <- rbind(jersey_point, dutch_slough, georgiana_slough, potato_slough) %>%
+  na.omit() %>%
+  mutate(gt20 = ifelse(TempC > 20, 1, 0),
+         gt25 = ifelse(TempC > 25, 1, 0))
+
+# summary(full_temp_data)
+# sum(full_temp_data$gt25)
+
+grouped_temp_measures_delta <- full_temp_data %>%
+  group_by(year, month) %>%
+  summarise(prop_gt_20 = round(mean(gt20), 2),
+            count_gt_25 = sum(gt25),
+            month_mean_temp = round(mean(TempC), 2))
+
+datatable(grouped_temp_measures_delta %>% rename("Year" = year, 
+                                           "Month" = month,
+                                           "Number of Measures Exceeding 25 degrees" = count_gt_25,
+                                           "Proportion Exceeding 20" = prop_gt_20,
+                                           "Monthly Mean Temp" = month_mean_temp),
+          options = list(
+                    searching = FALSE,
+                    pageLength = 5,
+                    lengthMenu = c(5, 10, 15, 20)
+))
+```
+
 ### Logistic Regression model 
 
-Model proportion month with temps > 20 C using logistic regression. To allow for logistic regression model use we adjusted zeros to .001 of and 1's to .999. 
-We appended an additional column to our data containing the odds ratio by taking takes log(Proportion Exceeding 20/(1 - Proportion Exceeding 20)). 
+Model proportion of days in a month with temps > 20 °C and if temperature will go above 25 °C using logistic regression. 
 
-We find the linear relationship between the odds ratio and the mean monthly temperature and use the estimates generated for the Intercept and Monthly Mean temp as inputs to a logistic model prediction. 
+To allow for logistic regression model use we made the following edits: 
+
+* We adjusted zeros to .001 of and 1's to .999. 
+* We appended an additional column to our data containing the odds ratio by taking takes `log(Proportion Exceeding 20/(1 - Proportion Exceeding 20))`. 
+* We edited our `Number of Measures Exceeding 25 degrees` to create a binary column describing when temperature exceeds 25 in a month (1) and when temperature does not exceed 25 in a month (0).
+
 ```{r}
 grouped_temp_measures_for_logistic <- grouped_temp_measures %>%
   mutate(prop_gt_20 = case_when(prop_gt_20 == 0 ~ 0.001, 
@@ -78,26 +140,56 @@ lm_summary <- summary(lm(odds_ratio ~ month_mean_temp, data = grouped_temp_measu
 month_means <- c(5:25) # ? where does this come from?
 prediction <- boot::inv.logit(lm_summary$coefficients[1, 1] + lm_summary$coefficients[2, 1] * month_means)
 monthly_predictions <- data.frame(month_means, prediction)
+
+# Repeat for delta 
+delta_grouped_temp_measures_for_logit <- grouped_temp_measures_delta%>%
+  mutate(prop_gt_20 = case_when(prop_gt_20 == 0 ~ 0.001, 
+                                 prop_gt_20 == 1 ~ 0.999,
+                                 prop_gt_20 != 0 & prop_gt_20 != 1 ~ prop_gt_20),
+         odds_ratio = log(prop_gt_20 / (1 - prop_gt_20)))
+
+# summary(grouped_temp_measures_for_logit)
+delta_lm_summary <- summary(lm(odds_ratio ~ month_mean_temp, data = delta_grouped_temp_measures_for_logit))
+
+month_means <- c(5:25) # ? where does this come from?
+delta_prediction <- boot::inv.logit(lm_summary$coefficients[1, 1] + lm_summary$coefficients[2, 1] * month_means)
+delta_monthly_predictions <- data.frame(month_means, delta_prediction)
 ```
 
 #### Graph logistic model of proportion days temperature exceedes 20 in a month and monthly mean temp
-The graph below shows a scatterplot of mean monthly temperature and the proportion of measures greater than 20 degrees. The red line is our logistic model prediction.
 
-Logistic Model Input: Proportions above 20 (input to logistic model to find `avgT20` in DSM models). 
+**Finding `avgT20` in DSM models:**
+In the DSM models `avgT20` is estimated for each month using a logistic model.
 
-Here we define the numeric input to logistic model based on the coefficients generated by fitting a linear model on the `odds_ratio` and `month_mean_temp`. We take the sum of our linear model intercept and slope and multiply this by the month mean temperature to find the numeric input for our logistic model:
+**Logistic Model Input:**
+Here we define the numeric input to our logistic models for CV temperature and Delta temperature based on the coefficients generated by fitting a linear model on the `odds_ratio` and `month_mean_temp`. We take the sum of our linear model intercept and slope and multiply this by the month mean temperature to find the numeric input for our CV rivers and Delta logistic models:
 
-* Numeric Input = `r lm_summary$coefficients[1, 1]` + `r lm_summary$coefficients[2, 1]` * `month mean temperature`
+* CV Logistic Regression Numeric Input = ``r lm_summary$coefficients[1, 1]`` + ``r lm_summary$coefficients[2, 1]`` * `month mean temperature`
+* Delta Logistic Regression Numeric Input = ``r delta_lm_summary$coefficients[1, 1]`` +  ``r delta_lm_summary$coefficients[2, 1]`` * `month mean temperature`
 
-Graphing the proportions greater than 20 and a prediction line calculated by taking the logistic regression based on the numeric input defined above (`boot::inv.logit(Numeric Input)`) we generate the following plot:
+The scatterplots below show the mean monthly temperature and the proportion of measures greater than 20 degrees for the Delta and Central Valley Rivers. The red line is our logistic model prediction based on the numeric input defined above (`boot::inv.logit(Numeric Input)`):
 
 ```{r}
-monthly_predictions %>%
+cv_plot <- monthly_predictions %>%
   ggplot() +
   geom_line(aes(month_means, prediction), color = "Red") +
   geom_point(data = grouped_temp_measures_for_logistic, aes(x = month_mean_temp, y = prop_gt_20)) +
   xlab("Monthly mean temperature") +
-  ylab("Proportion days temp > 20 in a month")
+  ylab("Proportion days temp > 20 in a month") + 
+  ggtitle("Central Valley Temperature Model") +
+  theme(text = element_text(size = 18))
+
+delta_plot <- delta_monthly_predictions %>%
+  ggplot() +
+  geom_line(aes(month_means, prediction), color = "Red") +
+  geom_point(data = delta_grouped_temp_measures_for_logit, aes(x = month_mean_temp, y = prop_gt_20)) +
+  xlab("Monthly median temperature Delta") +
+  ylab("Proportion days temp > 20") + 
+  ggtitle("Delta Temperature Model") +
+  theme(text = element_text(size = 18))
+
+
+grid.arrange(cv_plot, delta_plot, ncol = 2)
 ```
 
 
@@ -112,22 +204,48 @@ month_means <- c(5:25) # ? where does this come from?
 prediction <- boot::inv.logit(glm_summary$coefficients[1, 1] + glm_summary$coefficients[2, 1] * month_means)
 monthly_predictions <- data.frame(month_means, prediction)
 
+# Delta model
+delta_grouped_temp_measures_for_logit <- grouped_temp_measures_delta %>%
+  mutate(count_gt_25 = ifelse(count_gt_25 > 1, 1, count_gt_25))
+
+delta_glm_summary <- summary(glm(count_gt_25 ~ month_mean_temp, data = delta_grouped_temp_measures_for_logit, family='binomial'))
+
+month_means <- c(5:25) # ? where does this come from?
+delta_prediction <- boot::inv.logit(glm_summary$coefficients[1, 1] + glm_summary$coefficients[2, 1] * month_means)
+delta_monthly_predictions <- data.frame(month_means, delta_prediction)
 ```
 
 #### Graph temp exceeding 25 during month and mean monthly temperture 
+**Finding `maxT25` in DSM models:**
+In the DSM models `maxT25` is estimated for each month using a logistic model.
 
-Max above 25 (input to logistic model to find `maxT25` in DSM models) Here we define the numeric input to logistic model based on the coefficients generated by fitting a generalized linear model on the `count_gt_25` and `month_mean_temp`. We take the sum of our linear model intercept and slope and multiply this by the month mean temperature to find the numeric input for our logistic model: 
+**Logistic model input:**
+Here we define the numeric input to our logistic models for CV temperature and Delta temperature based on the coefficients generated by fitting a generalized linear model on the `count_gt_25` and `month_mean_temp`. We take the sum of our linear model intercept and slope and multiply this by the month mean temperature to find the numeric input for our CV rivers and Delta logistic models: 
 
-* Numeric Input = `r glm_summary$coefficients[1, 1]` + `r glm_summary$coefficients[2, 1]` * `month mean temperature`
+* Central Valley Rivers Logistic Model Numeric Input = ``r glm_summary$coefficients[1, 1]`` + ``r glm_summary$coefficients[2, 1]`` * `month mean temperature`
+* Delta Logistic Model Numeric Input = ``r delta_glm_summary$coefficients[1, 1]`` + ``r delta_glm_summary$coefficients[2, 1]`` * `month mean temperature`
 
-Graphing temperature exceedence of 25 and a prediction line calculated by taking the logistic regression based on the numeric input defined above (`boot::inv.logit(Numeric Input)`) we generate the following plot:
+The scatterplots below show if temp exceeds 25 for a given mean monthly temperature in the Delta and Central Valley Rivers. The red line is our logistic model prediction based on the numeric input defined above (`boot::inv.logit(Numeric Input)`):
 ```{r}
-monthly_predictions %>%
+cv_plot <- monthly_predictions %>%
   ggplot() +
   geom_line(aes(month_means, prediction), color = "Red") +
   geom_point(data = grouped_temp_measures_for_logistic, aes(x = month_mean_temp, y = count_measures_gt_25)) +
   xlab("Monthly mean temperature") +
-  ylab("Temp goes above 25 during month")
+  ylab("Temp goes above 25 during month") +
+  ggtitle("Central Valley Temperature Model") +
+  theme(text = element_text(size = 18))
+
+delta_plot <- delta_monthly_predictions %>%
+  ggplot() +
+  geom_line(aes(month_means, prediction), color = "Red") +
+  geom_point(data = delta_grouped_temp_measures_for_logit, aes(x = month_mean_temp, y = count_gt_25)) +
+  xlab("Monthly median temperature") +
+  ylab("Temp goes above 25 during month") +
+  ggtitle("Delta Temperature Model") +
+  theme(text = element_text(size = 18))
+
+grid.arrange(cv_plot, delta_plot, ncol = 2) 
 
 ```
 
