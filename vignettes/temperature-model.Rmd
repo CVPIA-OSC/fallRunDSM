@@ -17,8 +17,7 @@ knitr::opts_chunk$set(echo = TRUE,
                       fig.width=15, fig.height=8)
 library(readr)
 library(tidyverse)
-library(boot)
-library(formattable)
+library(boot) # Used for logit/inv.logit calculation
 library(DT)
 library(gridExtra)
 ```
@@ -29,7 +28,7 @@ library(gridExtra)
 
 The script below analyzes the relationship between monthly median temperature and temperature exceedance variables. In this script we use logistic regression to be able to predict if temperatures exceed 20 degrees or 25 degrees in a month based on a medium monthly value. 
 
-The logistic regression coefficients are used to define the `aveT20` and `maxT25` in the survival submodels of the `fallRunDSM`, `springRunDSM`, and `winterRunDSM` models. 
+The logistic regression coefficients are used to define the `aveT20` and `maxT25` in the `get_rearing_survival()` submodel of `fallRunDSM`. 
 
 #### Data Sources
 
@@ -44,9 +43,7 @@ This analysis is done using the following data:
 * [JERSEY POINT.csv](https://dsm-docs.s3-us-west-2.amazonaws.com/temperature_modeling/JERSEY+POINT.csv)
 * [LPotatoSLough.csv](https://dsm-docs.s3-us-west-2.amazonaws.com/temperature_modeling/LPotatoSlough.csv)
 
-
 TODO source for these CSVs?
-
 
 #### Central Valley River Temperature Data
 
@@ -119,7 +116,7 @@ datatable(grouped_temp_measures_delta %>% rename("Year" = year,
 
 ### Logistic Regression model 
 
-Model proportion of days in a month with temps > 20 °C and if temperature will go above 25 °C using logistic regression. 
+This data was prepped to model the proportion of days in a month with temps > 20 °C and if temperature will go above 25 °C using logistic regression. 
 
 To allow for logistic regression model use we made the following edits: 
 

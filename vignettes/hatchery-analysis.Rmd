@@ -34,7 +34,7 @@ Feather and Yuba Rivers do not separate spring and fall run
 in totals, here we apply the proportion of spring hatchery return
 adults that are used to adjust the totals for 2010 - 2012. Data used for Feather and Yuba adjustment were from [GrandTab 2017 version.](https://dsm-docs.s3-us-west-2.amazonaws.com/adult_hatchery_documentation/GrandTab.2017.04.07.pdf)
 
-The datatable below shows the data that has been prepped for analysis. (`No_hatch_returns` correspondes to the number of hatchery fish returning, `Hatch_flag` describes if fish are hatchery(1) or not hatchery(0)) 
+The datatable below shows the data that has been prepped for analysis. (`No_hatch_returns` corresponds to the number of hatchery fish returning, `Hatch_flag` describes if fish are hatchery(1) or not hatchery(0)) 
 
 ```{r}
 cwt_data <- read_csv(system.file("extdata", "hatchery-data", "hatchery_fish_fate2010_2012.csv", 

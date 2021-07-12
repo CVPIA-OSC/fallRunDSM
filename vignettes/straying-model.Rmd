@@ -12,18 +12,64 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+library(readr)
+library(tidyverse)
 ```
 
 ```{r}
 library(fallRunDSM)
-cwt_data = system.file("extdata", "straying-data", "cwt_stray.csv", 
-                       package = "fallRunDSM", mustWork = TRUE)
+cwt_stray = read_csv(system.file("extdata", "straying-data", "cwt_stray.csv", 
+                       package = "fallRunDSM", mustWork = TRUE))
 
-releases = system.file("extdata", "straying-data", "releases.csv", 
-                       package = "fallRunDSM", mustWork = TRUE)
+releases = read_csv(system.file("extdata", "straying-data", "releases.csv", 
+                       package = "fallRunDSM", mustWork = TRUE))
+
+dat = read_csv(system.file("extdata", "straying-data", "crxchan.csv", 
+                       package = "fallRunDSM", mustWork = TRUE)) %>% 
+  rename("run_year" = Run.year,
+         "count" = Number,
+         "prop_stray" = prop.stray,
+         "pulse" = Pulsed,
+         "closure_days" = Closure.days,
+         "prop_sacramento" = Prp.sac,
+         "prop_san_joaquin" = Prp.sj)
+```
+Prep data create a dataframe:
+```{r}
+
+releases <- releases[-2,]
+combined_stray_data <- merge(cwt_stray, releases, all = T)
+
+fall <- combined_stray_data %>% 
+  filter(run == "Fall") %>%
+  mutate(no_tagged = ifelse(is.na(`no tagged`), 
+                            no.woth.CTW, `no tagged`),
+         prop_stray = ifelse(is.na(prop.stray), 0, prop.stray),
+         no_stray = round(no_tagged * prop_stray),
+         brood_year = as.factor(Brood.yr)) %>%
+  select(no_tagged, prop_stray, no_stray, 
+         brood_year, "wild" = Wild, 
+         "delta" = Delta, "bay" = Bay)
+
+names(fall)
+summary(fall)
 ```
 
 ```{r}
+outz <- glm(cbind(no_stray, no_tagged) ~ brood_year + delta + bay + wild, family = quasibinomial, data = fall)
 
+summary(outz)
+# plot(outz)
+```
+
+Cross channel analysis 
+```{r}
+names(dat)
+
+dat$no_stray <- round(dat$count * dat$prop_stray)
+
+outz <- glm(cbind(no_stray, count) ~ closure_days + prop_san_joaquin, family = binomial, data = dat)
+
+summary(outz)
 ```
 
