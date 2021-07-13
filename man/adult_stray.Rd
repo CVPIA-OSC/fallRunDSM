@@ -51,3 +51,6 @@ adult_stray(
 \description{
 Calculate the proportion of adults straying to non-natal streams to spawn
 }
+\details{
+See \code{\link{params}} for details on parameter sources
+}

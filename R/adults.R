@@ -1,5 +1,6 @@
 #' @title Adult Straying
 #' @description Calculate the proportion of adults straying to non-natal streams to spawn
+#' @details See \code{\link{params}} for details on parameter sources
 #' @param wild Variable indicator of wild fish returning
 #' @param natal_flow Variable describing proportion flows at tributary junctions coming from natal watershed in October
 #' @param south_delta_watershed Variable indicator if watershed feeds into South Delta
@@ -36,6 +37,7 @@ adult_stray <- function(wild, natal_flow, south_delta_watershed, cross_channel_g
 
 #' @title Adult En Route Survival
 #' @description Calculate adult survival en route to spawning grounds
+#' @details See \code{\link{params}} for details on parameter sources
 #' @param migratory_temp variable representing proportion of migratory corridor temperature above  20°C
 #' @param bypass_overtopped Indicator for bypass overtopped
 #' @param adult_harvest Adult harvest rate
@@ -57,6 +59,7 @@ surv_adult_enroute <- function(migratory_temp, bypass_overtopped, adult_harvest,
 
 #' @title Adult Prespawn Survival
 #' @description Calculate the adult prespawn survival
+#' @details See \code{\link{params}} for details on parameter sources
 #' @param deg_day Variable describing average degree days
 #' @param ..surv_adult_prespawn_int Intercept
 #' @param .deg_day Coefficient for \code{deg_day} variable

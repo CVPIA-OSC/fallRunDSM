@@ -19,24 +19,27 @@ get_habitat(
 )
 }
 \arguments{
-\item{year}{TODO}
+\item{year}{The current simulation year, 1-20}
 
-\item{month}{TODO}
+\item{month}{The current simulation month, 1-8}
 
-\item{inchannel_habitat_fry}{TODO}
+\item{inchannel_habitat_fry}{Variable describing fry inchannel rearing habitat}
 
-\item{inchannel_habitat_juvenile}{TODO}
+\item{inchannel_habitat_juvenile}{Variable describing juvenile inchannel rearing habitat}
 
-\item{floodplain_habitat}{TODO}
+\item{floodplain_habitat}{Variable describing floodplain rearing habitat}
 
-\item{sutter_habitat}{TODO}
+\item{sutter_habitat}{Variable describing sutter bypass rearing habitat}
 
-\item{yolo_habitat}{TODO}
+\item{yolo_habitat}{Variable describing yolo bypass rearing habitat}
 
-\item{north_delta_habitat}{TODO}
+\item{north_delta_habitat}{Variable describing north delta rearing habitat}
 
-\item{south_delta_habitat}{TODO}
+\item{south_delta_habitat}{Variable describing south delta rearing habitat}
 }
 \description{
-Get habitat Values
+Returns the appropriate habitat for spawning and rearing based on habitat inputs and a given simulation year and month
+}
+\details{
+See \code{\link{params}} for details on parameter sources
 }

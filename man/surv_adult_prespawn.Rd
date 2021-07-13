@@ -23,3 +23,6 @@ surv_adult_prespawn(
 \description{
 Calculate the adult prespawn survival
 }
+\details{
+See \code{\link{params}} for details on parameter sources
+}

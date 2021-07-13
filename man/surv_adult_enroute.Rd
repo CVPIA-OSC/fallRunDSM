@@ -32,3 +32,6 @@ surv_adult_enroute(
 \description{
 Calculate adult survival en route to spawning grounds
 }
+\details{
+See \code{\link{params}} for details on parameter sources
+}
