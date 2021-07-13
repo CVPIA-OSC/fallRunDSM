@@ -78,6 +78,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
     hatch_adults <- rmultinom(1, size = round(runif(1, 83097.01,532203.1)), prob = ..params$hatchery_allocation)[ , 1]
     spawners <- get_spawning_adults(year, round(adults), hatch_adults, mode = mode,
+                                    month_return_proportions = ..params$month_return_proportions,
                                     prop_flow_natal = ..params$prop_flow_natal,
                                     south_delta_routed_watersheds = ..params$south_delta_routed_watersheds,
                                     cc_gates_days_closed = ..params$cc_gates_days_closed,
