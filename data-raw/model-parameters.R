@@ -45,8 +45,8 @@ params <- list(
   spawn_success_redd_size = 9.29,
   spawn_success_fecundity = 5522,
 
-  surv_egg_to_fry_proportion_natural = 0.533,
-  surv_egg_to_fry_scour = -0.655,
+  .surv_egg_to_fry_proportion_natural = 0.533,
+  .surv_egg_to_fry_scour = -0.655,
 
   .surv_juv_outmigration_sac_delta_intercept_one = -3.5,
   .surv_juv_outmigration_sac_delta_intercept_two =  0.3,

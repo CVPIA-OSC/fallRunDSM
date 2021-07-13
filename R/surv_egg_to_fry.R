@@ -14,8 +14,8 @@ surv_egg_to_fry <- function(proportion_natural,
                             scour,
                             temperature_effect = fallRunDSM::params$mean_egg_temp_effect,
                             ..surv_egg_to_fry_int = fallRunDSM::params$..surv_egg_to_fry_int,
-                            .proportion_natural = fallRunDSM::params$surv_egg_to_fry_proportion_natural,
-                            .scour = fallRunDSM::params$surv_egg_to_fry_scour){
+                            .proportion_natural = fallRunDSM::params$.surv_egg_to_fry_proportion_natural,
+                            .scour = fallRunDSM::params$.surv_egg_to_fry_scour){
 
   boot::inv.logit(..surv_egg_to_fry_int + .proportion_natural * proportion_natural +
                   .scour * scour) * temperature_effect

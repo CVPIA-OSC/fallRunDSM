@@ -70,7 +70,8 @@
 "growth_rates_floodplain"
 
 #' @title Model Parameters
-#' @description A list containing all parameters needed for running the \code{\link{fall_run_model}}
+#' @description A list containing all parameters needed for running the \code{\link{fall_run_model}}. Parameters with a single
+#' period in front are model or submodel coefficients. Parameters with double periods in front of them are calibrated model parameters.
 #' @usage NULL
 #' @format NULL
 #' @section Habitat Inputs:
@@ -116,8 +117,8 @@
 #'   \item \code{proportion_hatchery}: More details at \code{\link[fallRunDSM]{proportion_hatchery}}
 #'   \item \code{prob_nest_scoured}: More details at \code{\link[DSMhabitat]{prob_nest_scoured}}
 #'   \item \code{mean_egg_temp_effect}: More details at \code{\link[DSMtemperature]{egg_temperature_effect}}
-#'   \item \code{surv_egg_to_fry_proportion_natural}: Coefficient for \code{proportion_natural} variable, Source: \href{https://cdnsciencepub.com/doi/abs/10.1139/F10-168}{Chilcote et al. (2011)}
-#'   \item \code{surv_egg_to_fry_scour}: Coefficient for \code{scour} variable, Source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/montogemery_1996.pdf}{Montgomery et al. (1996)}
+#'   \item \code{.surv_egg_to_fry_proportion_natural}: Coefficient for \code{proportion_natural} variable, Source: \href{https://cdnsciencepub.com/doi/abs/10.1139/F10-168}{Chilcote et al. (2011)}
+#'   \item \code{.surv_egg_to_fry_scour}: Coefficient for \code{scour} variable, Source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/montogemery_1996.pdf}{Montgomery et al. (1996)}
 #'   \item \code{..surv_egg_to_fry_int}:  Intercept, Source: Calibration
 #' }
 #' @section Rearing Survival:
