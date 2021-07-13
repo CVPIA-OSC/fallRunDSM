@@ -91,6 +91,8 @@ period in front are model or submodel coefficients. Parameters with double perio
 \section{Bypass Rearing Survival}{
 
 \itemize{
+  \item \code{avg_temp}: See Tributary Rearing Survival \code{avg_temp} above
+  \item \code{prop_high_predation}: See Tributary Rearing Survival \code{prop_high_predation} above
   \item \code{..surv_juv_bypass_int}: Intercept, Source: calibration
   \item \code{.surv_juv_bypass_avg_temp_thresh}: Coefficient for \code{avg_temp_thresh} variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/marine_cech_water_temp_effects.pdf}{Marine and Chech (2004)}
   \item \code{.surv_juv_bypass_high_predation}: Coefficient for \code{high_predation} variable, source: \href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}
