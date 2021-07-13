@@ -16,9 +16,9 @@
 #' @param ..surv_juv_rear_prop_diversions coefficient for prop_diversions variable
 #' @param ..surv_juv_rear_total_diversions coefficient for total_diversions variable
 #' @param .stranded coefficient for stranded variable
-#' @param medium parameter for medium sized fish
-#' @param large parameter for large sized fish
-#' @param floodplain parameter for floodplain rearing benefit
+#' @param .medium size related intercept for medium sized fish
+#' @param .large size related intercept for large sized fish
+#' @param .floodplain Additional intercept for floodplain rearing benefit
 #' @param min_survival_rate estimated survival rate if temperature threshold is exceeded, source: expert opinion
 #' @source IP-117068
 #' @export
@@ -32,9 +32,9 @@ surv_juv_rear <- function(max_temp_thresh, avg_temp_thresh, high_predation,
                           ..surv_juv_rear_prop_diversions = fallRunDSM::params$..surv_juv_rear_prop_diversions,
                           ..surv_juv_rear_total_diversions = fallRunDSM::params$..surv_juv_rear_total_diversions,
                           .stranded = fallRunDSM::params$.surv_juv_rear_stranded,
-                          medium = fallRunDSM::params$surv_juv_rear_medium,
-                          large = fallRunDSM::params$surv_juv_rear_large,
-                          floodplain = fallRunDSM::params$surv_juv_rear_floodplain,
+                          .medium = fallRunDSM::params$.surv_juv_rear_medium,
+                          .large = fallRunDSM::params$.surv_juv_rear_large,
+                          .floodplain = fallRunDSM::params$.surv_juv_rear_floodplain,
                           min_survival_rate = fallRunDSM::params$min_survival_rate){
   # determine the proportion of weeks when flooded vs not
   prop_ic <-ifelse(weeks_flooded > 0, (4 - weeks_flooded) / 4, 1)
@@ -48,16 +48,16 @@ surv_juv_rear <- function(max_temp_thresh, avg_temp_thresh, high_predation,
     (..surv_juv_rear_total_diversions * total_diversions) +
     (.stranded * stranded)
 
-  base_score_floodplain <- ..surv_juv_rear_int + floodplain +
+  base_score_floodplain <- ..surv_juv_rear_int + .floodplain +
     (.avg_temp_thresh  * avg_temp_thresh) + (.high_predation * high_predation)
 
   s1 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_inchannel))
-  m1 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_inchannel + medium))
-  l1 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_inchannel + large))
+  m1 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_inchannel + .medium))
+  l1 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_inchannel + .large))
 
   s2 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_floodplain)) ^ prop_fp
-  m2 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_floodplain + medium)) ^ prop_fp
-  l2 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_floodplain + large)) ^ prop_fp
+  m2 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_floodplain + .medium)) ^ prop_fp
+  l2 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_floodplain + .large)) ^ prop_fp
 
   list(
     inchannel = cbind(s = s1,
@@ -80,9 +80,9 @@ surv_juv_rear <- function(max_temp_thresh, avg_temp_thresh, high_predation,
 #' @param ..surv_juv_bypass_int intercept, source: calibration
 #' @param .avg_temp_thresh coefficient for avg_temp_thresh variable
 #' @param .high_predation coefficient for high_predation variable
-#' @param medium parameter for medium sized fish
-#' @param large parameter for large sized fish
-#' @param floodplain parameter for floodplain rearing benefit
+#' @param .medium size related intercept for medium sized fish
+#' @param .large size related intercept for large sized fish
+#' @param .floodplain Additional intercept for floodplain rearing benefit
 #' @param min_survival_rate estimated survival rate if temperature threshold is exceeded
 #' @source IP-117068
 #' @export
@@ -90,18 +90,18 @@ surv_juv_bypass <- function(max_temp_thresh, avg_temp_thresh, high_predation,
                             ..surv_juv_bypass_int = fallRunDSM::params$..surv_juv_bypass_int,
                             .avg_temp_thresh = fallRunDSM::params$.surv_juv_bypass_avg_temp_thresh,
                             .high_predation = fallRunDSM::params$.surv_juv_bypass_high_predation,
-                            medium = fallRunDSM::params$surv_juv_bypass_medium,
-                            large = fallRunDSM::params$surv_juv_bypass_large,
-                            floodplain = fallRunDSM::params$surv_juv_bypass_floodplain,
+                            .medium = fallRunDSM::params$.surv_juv_bypass_medium,
+                            .large = fallRunDSM::params$.surv_juv_bypass_large,
+                            .floodplain = fallRunDSM::params$.surv_juv_bypass_floodplain,
                             min_survival_rate = fallRunDSM::params$min_survival_rate){
 
-  base_score <- ..surv_juv_bypass_int + floodplain +
+  base_score <- ..surv_juv_bypass_int + .floodplain +
     .avg_temp_thresh * avg_temp_thresh +
     .high_predation * high_predation
 
   s <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score))
-  m <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score + medium))
-  l <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score + large))
+  m <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score + .medium))
+  l <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score + .large))
 
   cbind(s = s, m = m, l = l, vl = 1)
 }
@@ -122,8 +122,8 @@ surv_juv_bypass <- function(max_temp_thresh, avg_temp_thresh, high_predation,
 #' @param ..surv_juv_delta_contact_points Coefficient for contact_points variable
 #' @param .prop_diverted Coefficient for prop_diversions variable
 #' @param ..surv_juv_delta_total_diverted Coefficient for total_diversions variable
-#' @param medium parameter for medium sized fish
-#' @param large parameter for large sized fish
+#' @param .medium size related intercept for medium sized fish
+#' @param .large size related intercept for large sized fish
 #' @param min_survival_rate estimated survival rate if temperature threshold is exceeded
 #' @source IP-117068
 #' @export
@@ -135,8 +135,8 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
                            ..surv_juv_delta_contact_points = fallRunDSM::params$..surv_juv_delta_contact_points,
                            .prop_diverted = fallRunDSM::params$.surv_juv_delta_prop_diverted,
                            ..surv_juv_delta_total_diverted = fallRunDSM::params$..surv_juv_delta_total_diverted,
-                           medium = fallRunDSM::params$surv_juv_delta_medium,
-                           large =  fallRunDSM::params$surv_juv_delta_large,
+                           .medium = fallRunDSM::params$.surv_juv_delta_medium,
+                           .large =  fallRunDSM::params$.surv_juv_delta_large,
                            min_survival_rate = fallRunDSM::params$min_survival_rate){
   # north delta
   north_delta_surv <- rep((avg_temp <= 16.5)*.42 + (avg_temp > 16.5 & avg_temp < 19.5) * 0.42 / (1.55^(avg_temp-15.5)) + (avg_temp > 19.5 & avg_temp < 25)*0.035,4)
@@ -150,8 +150,8 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
     ..surv_juv_delta_total_diverted * total_diverted[2]
 
   s <- ifelse(max_temp_thresh[2], min_survival_rate, boot::inv.logit(base_score))
-  m <- ifelse(max_temp_thresh[2], min_survival_rate, boot::inv.logit(base_score + medium))
-  l <- ifelse(max_temp_thresh[2], min_survival_rate, boot::inv.logit(base_score + large))
+  m <- ifelse(max_temp_thresh[2], min_survival_rate, boot::inv.logit(base_score + .medium))
+  l <- ifelse(max_temp_thresh[2], min_survival_rate, boot::inv.logit(base_score + .large))
 
   south_delta_surv <- cbind(s = s, m = m, l = l, vl = 1)
   result <- rbind("north_delta" = north_delta_surv, "south_delta" = south_delta_surv)
@@ -191,19 +191,19 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
 #' @param .surv_juv_rear_avg_temp_thresh Coefficient for \code{\link{surv_juv_rear}} \code{avg_temp_thresh} variable
 #' @param .surv_juv_rear_high_predation Coefficient for \code{\link{surv_juv_rear}} \code{high_predation} variable
 #' @param .surv_juv_rear_stranded Coefficient for \code{\link{surv_juv_rear}} \code{stranded} variable
-#' @param surv_juv_rear_medium Parameter for \code{\link{surv_juv_rear}} medium sized fish
-#' @param surv_juv_rear_large Parameter for \code{\link{surv_juv_rear}} large sized fish
-#' @param surv_juv_rear_floodplain Parameter for \code{\link{surv_juv_rear}} floodplain rearing benefit
+#' @param .surv_juv_rear_medium Size related intercept for \code{\link{surv_juv_rear}} medium sized fish
+#' @param .surv_juv_rear_large Size related intercept for \code{\link{surv_juv_rear}} large sized fish
+#' @param .surv_juv_rear_floodplain Additional intercept for \code{\link{surv_juv_rear}} floodplain rearing benefit
 #' @param .surv_juv_bypass_avg_temp_thresh Coefficient for \code{\link{surv_juv_bypass}} \code{avg_temp_thresh} variable
 #' @param .surv_juv_bypass_high_predation Coefficient for \code{\link{surv_juv_bypass}} \code{high_predation} variableTODO
-#' @param surv_juv_bypass_medium Parameter for \code{\link{surv_juv_bypass}} medium sized fish
-#' @param surv_juv_bypass_large Parameter for \code{\link{surv_juv_bypass}} large sized fish
-#' @param surv_juv_bypass_floodplain Parameter for \code{\link{surv_juv_bypass}} floodplain rearing benefit
+#' @param .surv_juv_bypass_medium Size related intercept for \code{\link{surv_juv_bypass}} medium sized fish
+#' @param .surv_juv_bypass_large Size related intercept for \code{\link{surv_juv_bypass}} large sized fish
+#' @param .surv_juv_bypass_floodplain Additional intercept for \code{\link{surv_juv_bypass}} floodplain rearing benefit
 #' @param .surv_juv_delta_avg_temp_thresh Coefficient for \code{\link{surv_juv_delta}} \code{avg_temp_thresh} variable
 #' @param .surv_juv_delta_high_predation Coefficient for \code{\link{surv_juv_delta}} \code{high_predation} variable
 #' @param .surv_juv_delta_prop_diverted Coefficient for \code{\link{surv_juv_delta}} \code{prop_diversions} variable
-#' @param surv_juv_delta_medium Parameter for \code{\link{surv_juv_delta}} medium sized fish
-#' @param surv_juv_delta_large Parameter for \code{\link{surv_juv_delta}} large sized fish
+#' @param .surv_juv_delta_medium Size related intercept for \code{\link{surv_juv_delta}} medium sized fish
+#' @param .surv_juv_delta_large Size related intercept for \code{\link{surv_juv_delta}} large sized fish
 #' @param min_survival_rate estimated survival rate if temperature threshold is exceeded
 #' @source IP-117068
 #' @export
@@ -234,19 +234,19 @@ get_rearing_survival_rates <- function(year, month,
                                        .surv_juv_rear_avg_temp_thresh,
                                        .surv_juv_rear_high_predation,
                                        .surv_juv_rear_stranded,
-                                       surv_juv_rear_medium,
-                                       surv_juv_rear_large,
-                                       surv_juv_rear_floodplain,
+                                       .surv_juv_rear_medium,
+                                       .surv_juv_rear_large,
+                                       .surv_juv_rear_floodplain,
                                        .surv_juv_bypass_avg_temp_thresh,
                                        .surv_juv_bypass_high_predation,
-                                       surv_juv_bypass_medium,
-                                       surv_juv_bypass_large,
-                                       surv_juv_bypass_floodplain,
+                                       .surv_juv_bypass_medium,
+                                       .surv_juv_bypass_large,
+                                       .surv_juv_bypass_floodplain,
                                        .surv_juv_delta_avg_temp_thresh,
                                        .surv_juv_delta_high_predation,
                                        .surv_juv_delta_prop_diverted,
-                                       surv_juv_delta_medium,
-                                       surv_juv_delta_large,
+                                       .surv_juv_delta_medium,
+                                       .surv_juv_delta_large,
                                        min_survival_rate) {
 
   aveT20 <- rbinom(31, 1, boot::inv.logit(-14.32252 + 0.72102 * avg_temp[ , month , year]))
@@ -294,9 +294,9 @@ get_rearing_survival_rates <- function(year, month,
                   .avg_temp_thresh = .surv_juv_rear_avg_temp_thresh,
                   .high_predation = .surv_juv_rear_high_predation,
                   .stranded = .surv_juv_rear_stranded,
-                  medium = surv_juv_rear_medium,
-                  large = surv_juv_rear_large,
-                  floodplain = surv_juv_rear_floodplain,
+                  .medium = .surv_juv_rear_medium,
+                  .large = .surv_juv_rear_large,
+                  .floodplain = .surv_juv_rear_floodplain,
                   min_survival_rate = min_survival_rate)
   }))
 
@@ -315,9 +315,9 @@ get_rearing_survival_rates <- function(year, month,
                              ..surv_juv_bypass_int = ..surv_juv_bypass_int,
                              .avg_temp_thresh = .surv_juv_bypass_avg_temp_thresh,
                              .high_predation = .surv_juv_bypass_high_predation,
-                             medium = surv_juv_bypass_medium,
-                             large = surv_juv_bypass_large,
-                             floodplain = surv_juv_bypass_floodplain,
+                             .medium = .surv_juv_bypass_medium,
+                             .large = .surv_juv_bypass_large,
+                             .floodplain = .surv_juv_bypass_floodplain,
                              min_survival_rate = min_survival_rate)
 
   sutter_surv <- sqrt(bp_surv)
@@ -336,8 +336,8 @@ get_rearing_survival_rates <- function(year, month,
                                    .avg_temp_thresh = .surv_juv_delta_avg_temp_thresh,
                                    .high_predation = .surv_juv_delta_high_predation,
                                    .prop_diverted = .surv_juv_delta_prop_diverted,
-                                   medium = surv_juv_delta_medium,
-                                   large = surv_juv_delta_large,
+                                   .medium = .surv_juv_delta_medium,
+                                   .large = .surv_juv_delta_large,
                                    min_survival_rate = min_survival_rate)
 
   return(
@@ -367,17 +367,17 @@ surv_juv_outmigration_sac <- function(flow_cms){
 #' @description Calculates the San Joaquin River juvenile out migration survival
 #' @details See \code{\link{params}} for details on parameter sources
 #' @param ..surv_juv_outmigration_sj_int Intercept
-#' @param medium Parameter for medium sized fish
-#' @param large Parameter for large sized fish
+#' @param .medium Size related intercept for medium sized fish
+#' @param .large Size related intercept for large sized fish
 #' @source IP-117068
 #' @export
 surv_juv_outmigration_san_joaquin <- function(..surv_juv_outmigration_sj_int = fallRunDSM::params$..surv_juv_outmigration_sj_int,
-                                              medium = fallRunDSM::params$surv_juv_outmigration_san_joaquin_medium,
-                                              large = fallRunDSM::params$surv_juv_outmigration_san_joaquin_large){
+                                              .medium = fallRunDSM::params$.surv_juv_outmigration_san_joaquin_medium,
+                                              .large = fallRunDSM::params$.surv_juv_outmigration_san_joaquin_large){
 
   s <- boot::inv.logit(..surv_juv_outmigration_sj_int)
-  m <- boot::inv.logit(..surv_juv_outmigration_sj_int + medium)
-  l <- vl <- boot::inv.logit(..surv_juv_outmigration_sj_int + large)
+  m <- boot::inv.logit(..surv_juv_outmigration_sj_int + .medium)
+  l <- vl <- boot::inv.logit(..surv_juv_outmigration_sj_int + .large)
 
   cbind(s = s, m = m, l = l, vl = vl)
 }
@@ -394,8 +394,8 @@ surv_juv_outmigration_san_joaquin <- function(..surv_juv_outmigration_sj_int = f
 #' @param .delta_flow Coefficient for delta_flow variable
 #' @param .avg_temp Coefficient for avg_temp variable
 #' @param .perc_diversions Coefficient for perc_diversions variable
-#' @param medium parameter for medium sized fish
-#' @param large parameter for large sized fish
+#' @param .medium Size related intercept for medium sized fish
+#' @param .large Size related intercept for large sized fish
 #' @source IP-117068
 #' @export
 surv_juv_outmigration_sac_delta <- function(delta_flow, avg_temp, perc_diversions,
@@ -405,8 +405,8 @@ surv_juv_outmigration_sac_delta <- function(delta_flow, avg_temp, perc_diversion
                                             .delta_flow = fallRunDSM::params$.surv_juv_outmigration_sac_delta_delta_flow,
                                             .avg_temp = fallRunDSM::params$.surv_juv_outmigration_sac_delta_avg_temp,
                                             .perc_diversions = fallRunDSM::params$.surv_juv_outmigration_sac_delta_perc_diversions,
-                                            medium = fallRunDSM::params$surv_juv_outmigration_sac_delta_medium,
-                                            large = fallRunDSM::params$surv_juv_outmigration_sac_delta_large){
+                                            .medium = fallRunDSM::params$.surv_juv_outmigration_sac_delta_medium,
+                                            .large = fallRunDSM::params$.surv_juv_outmigration_sac_delta_large){
 
   model_weight <- 1/3
 
@@ -418,13 +418,13 @@ surv_juv_outmigration_sac_delta <- function(delta_flow, avg_temp, perc_diversion
                          boot::inv.logit(base_score2) +
                          boot::inv.logit(base_score3))
 
-  m <- model_weight * (boot::inv.logit(base_score1 + medium) +
-                         boot::inv.logit(base_score2 + medium) +
-                         boot::inv.logit(base_score3 + medium))
+  m <- model_weight * (boot::inv.logit(base_score1 + .medium) +
+                         boot::inv.logit(base_score2 + .medium) +
+                         boot::inv.logit(base_score3 + .medium))
 
-  vl <- l <- model_weight * (boot::inv.logit(base_score1 + large) +
-                               boot::inv.logit(base_score2 + large) +
-                               boot::inv.logit(base_score3 + large))
+  vl <- l <- model_weight * (boot::inv.logit(base_score1 + .large) +
+                               boot::inv.logit(base_score2 + .large) +
+                               boot::inv.logit(base_score3 + .large))
 
   cbind(s = s, m = m, l = l, vl = vl)
 }
@@ -612,10 +612,10 @@ surv_juv_outmigration_delta <- function(prop_DCC_closed, hor_barr, freeport_flow
 #' @param .surv_juv_outmigration_sac_delta_delta_flow Coefficient \code{\link{surv_juv_outmigration_sac_delta}} for \code{delta_flow} variable
 #' @param .surv_juv_outmigration_sac_delta_avg_temp Coefficient \code{\link{surv_juv_outmigration_sac_delta}} for \code{avg_temp} variable
 #' @param .surv_juv_outmigration_sac_delta_perc_diversions Coefficient \code{\link{surv_juv_outmigration_sac_delta}} for \code{perc_diversions} variable
-#' @param surv_juv_outmigration_sac_delta_medium parameter for \code{\link{surv_juv_outmigration_sac_delta}} medium sized fish
-#' @param surv_juv_outmigration_sac_delta_large parameter for \code{\link{surv_juv_outmigration_sac_delta}} large sized fish
-#' @param surv_juv_outmigration_san_joaquin_medium parameter for \code{\link{surv_juv_outmigration_san_joaquin}} medium sized fish
-#' @param surv_juv_outmigration_san_joaquin_large parameter for \code{\link{surv_juv_outmigration_san_joaquin}} large sized fish
+#' @param .surv_juv_outmigration_sac_delta_medium Size related intercept for \code{\link{surv_juv_outmigration_sac_delta}} medium sized fish
+#' @param .surv_juv_outmigration_sac_delta_large Size related intercept for \code{\link{surv_juv_outmigration_sac_delta}} large sized fish
+#' @param .surv_juv_outmigration_san_joaquin_medium Size related intercept for \code{\link{surv_juv_outmigration_san_joaquin}} medium sized fish
+#' @param .surv_juv_outmigration_san_joaquin_large Size related intercept for \code{\link{surv_juv_outmigration_san_joaquin}} large sized fish
 #' @param min_survival_rate estimated survival rate if temperature threshold is exceeded
 #' @source IP-117068
 #' @export
@@ -639,15 +639,15 @@ get_migratory_survival_rates <- function(year, month,
                                          .surv_juv_outmigration_sac_delta_delta_flow = .surv_juv_outmigration_sac_delta_delta_flow,
                                          .surv_juv_outmigration_sac_delta_avg_temp = .surv_juv_outmigration_sac_delta_avg_temp,
                                          .surv_juv_outmigration_sac_delta_perc_diversions = .surv_juv_outmigration_sac_delta_perc_diversions,
-                                         surv_juv_outmigration_sac_delta_medium = surv_juv_outmigration_sac_delta_medium,
-                                         surv_juv_outmigration_sac_delta_large = surv_juv_outmigration_sac_delta_large,
+                                         .surv_juv_outmigration_sac_delta_medium = surv_juv_outmigration_sac_delta_medium,
+                                         .surv_juv_outmigration_sac_delta_large = surv_juv_outmigration_sac_delta_large,
                                          ..surv_juv_outmigration_sj_int = ..surv_juv_outmigration_sj_int,
                                          ..surv_juv_outmigration_sac_int_one = ..surv_juv_outmigration_sac_int_one,
                                          ..surv_juv_outmigration_sac_prop_diversions = ..surv_juv_outmigration_sac_prop_diversions,
                                          ..surv_juv_outmigration_sac_total_diversions = ..surv_juv_outmigration_sac_total_diversions,
                                          ..surv_juv_outmigration_sac_int_two = ..surv_juv_outmigration_sac_int_two,
-                                         surv_juv_outmigration_san_joaquin_medium = surv_juv_outmigration_san_joaquin_medium,
-                                         surv_juv_outmigration_san_joaquin_large = surv_juv_outmigration_san_joaquin_large,
+                                         .surv_juv_outmigration_san_joaquin_medium = surv_juv_outmigration_san_joaquin_medium,
+                                         .surv_juv_outmigration_san_joaquin_large = surv_juv_outmigration_san_joaquin_large,
                                          min_survival_rate = min_survival_rate) {
 
   aveT20 <- rbinom(31, 1, boot::inv.logit(-14.32252 + 0.72102 * avg_temp[ , month , year]))
@@ -667,8 +667,8 @@ get_migratory_survival_rates <- function(year, month,
 
   u_sac_flow <- upper_sacramento_flows[month, year]
   sj_migration_surv <- surv_juv_outmigration_san_joaquin(..surv_juv_outmigration_sj_int = ..surv_juv_outmigration_sj_int,
-                                                         medium = surv_juv_outmigration_san_joaquin_medium,
-                                                         large = surv_juv_outmigration_san_joaquin_large)
+                                                         .medium = .surv_juv_outmigration_san_joaquin_medium,
+                                                         .large = .surv_juv_outmigration_san_joaquin_large)
 
   uppermid_sac_migration_surv <- surv_juv_outmigration_sac(flow_cms = u_sac_flow)
 
@@ -685,8 +685,8 @@ get_migratory_survival_rates <- function(year, month,
                                                               .delta_flow = .surv_juv_outmigration_sac_delta_delta_flow,
                                                               .avg_temp = .surv_juv_outmigration_sac_delta_avg_temp,
                                                               .perc_diversions = .surv_juv_outmigration_sac_delta_perc_diversions,
-                                                              medium = surv_juv_outmigration_sac_delta_medium,
-                                                              large = surv_juv_outmigration_sac_delta_large) #Sac.Delt.S
+                                                              .medium = .surv_juv_outmigration_sac_delta_medium,
+                                                              .large = .surv_juv_outmigration_sac_delta_large) #Sac.Delt.S
 
   bay_delta_migration_surv <- mean(c(0.43, 0.46, 0.26, 0.25, 0.39)) # Bay.S Chipps island to bay
 

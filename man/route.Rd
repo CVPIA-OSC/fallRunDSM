@@ -18,9 +18,9 @@ route(
   detour = NULL,
   .pulse_movement_intercept,
   .pulse_movement_proportion_pulse,
-  pulse_movement_medium,
-  pulse_movement_large,
-  pulse_movement_vlarge,
+  .pulse_movement_medium,
+  .pulse_movement_large,
+  .pulse_movement_vlarge,
   .pulse_movement_medium_pulse,
   .pulse_movement_large_pulse,
   .pulse_movement_very_large_pulse
@@ -43,11 +43,11 @@ route(
 
 \item{.pulse_movement_proportion_pulse}{Coefficient for \code{\link{pulse_movement}} \code{proportion_pulse} variable}
 
-\item{pulse_movement_medium}{Parameter for \code{\link{pulse_movement}} medium sized fish}
+\item{.pulse_movement_medium}{Size related intercept for \code{\link{pulse_movement}} medium sized fish}
 
-\item{pulse_movement_large}{Parameter for \code{\link{pulse_movement}} large sized fish}
+\item{.pulse_movement_large}{Size related intercept for \code{\link{pulse_movement}} large sized fish}
 
-\item{pulse_movement_vlarge}{Parameter for \code{\link{pulse_movement}} very large sized fish}
+\item{.pulse_movement_vlarge}{Size related intercept for \code{\link{pulse_movement}} very large sized fish}
 
 \item{.pulse_movement_medium_pulse}{Additional coefficient for \code{\link{pulse_movement}} \code{proportion_pulse} variable for medium size fish}
 

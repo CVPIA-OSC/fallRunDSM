@@ -82,9 +82,9 @@ period in front are model or submodel coefficients. Parameters with double perio
   \item \code{.surv_juv_rear_avg_temp_thresh}:  Coefficient for \code{avg_temp_thresh} variable, Source: \href{https://www.tandfonline.com/doi/full/10.1577/M07-130.1?scroll=top&needAccess=true}{Runge et al (2008)}
   \item \code{.surv_juv_rear_high_predation}: Coefficient for \code{high_predation} variable, source: \href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}
   \item \code{.surv_juv_rear_stranded}: Coefficient for \code{stranded} variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/DWR-1140+USFWS+2006.pdf}{USFWS (2006) and CDWR (2006)}
-  \item \code{surv_juv_rear_medium}: Parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
-  \item \code{surv_juv_rear_large}: parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
-  \item \code{surv_juv_rear_floodplain}: parameter for floodplain rearing benefit, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/SOMMER_T-SDWA+180+Floodplain+rearing+of+juvenile+chinook+salmon+evidence+of+enhanced+growth+and+survival+.pdf}{Sommer et al. (2001)}
+  \item \code{.surv_juv_rear_medium}: Size related intercept for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+  \item \code{.surv_juv_rear_large}: Size related intercept for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+  \item \code{.surv_juv_rear_floodplain}: Additional intercept for floodplain rearing benefit, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/SOMMER_T-SDWA+180+Floodplain+rearing+of+juvenile+chinook+salmon+evidence+of+enhanced+growth+and+survival+.pdf}{Sommer et al. (2001)}
 }
 }
 
@@ -96,9 +96,9 @@ period in front are model or submodel coefficients. Parameters with double perio
   \item \code{..surv_juv_bypass_int}: Intercept, Source: calibration
   \item \code{.surv_juv_bypass_avg_temp_thresh}: Coefficient for \code{avg_temp_thresh} variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/marine_cech_water_temp_effects.pdf}{Marine and Chech (2004)}
   \item \code{.surv_juv_bypass_high_predation}: Coefficient for \code{high_predation} variable, source: \href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}
-  \item \code{surv_juv_bypass_medium}: Parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
-  \item \code{surv_juv_bypass_large}: Parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
-  \item \code{surv_juv_bypass_floodplain}: Parameter for floodplain rearing benefit, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/SOMMER_T-SDWA+180+Floodplain+rearing+of+juvenile+chinook+salmon+evidence+of+enhanced+growth+and+survival+.pdf}{Sommer et al. (2001)}
+  \item \code{.surv_juv_bypass_medium}: Size related intercept for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+  \item \code{.surv_juv_bypass_large}: Size related intercept for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+  \item \code{.surv_juv_bypass_floodplain}: Additional intercept for floodplain rearing benefit, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/SOMMER_T-SDWA+180+Floodplain+rearing+of+juvenile+chinook+salmon+evidence+of+enhanced+growth+and+survival+.pdf}{Sommer et al. (2001)}
 }
 }
 
@@ -116,8 +116,8 @@ period in front are model or submodel coefficients. Parameters with double perio
   \item \code{.surv_juv_delta_avg_temp_thresh}: Coefficient for \code{avg_temp_thresh} variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/marine_cech_water_temp_effects.pdf}{Marine and Chech (2004)}
   \item \code{.surv_juv_delta_high_predation}: Coefficient for \code{high_predation} variable, source: \href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}
   \item \code{.surv_juv_delta_prop_diverted}: Coefficient for \code{prop_diversions} variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/Hierarchical_Modeling_of_Juvenile_Chinook_Salmon_S+(1).pdf}{Newman and Brandes (2010)}
-  \item \code{surv_juv_delta_medium}: parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
-  \item \code{surv_juv_delta_large}: parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+  \item \code{.surv_juv_delta_medium}: Size related intercept for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+  \item \code{.surv_juv_delta_large}: Size related intercept for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
 }
 }
 
@@ -134,8 +134,8 @@ period in front are model or submodel coefficients. Parameters with double perio
   \item \code{CVP_exports}: More details at \code{\link[DSMflow]{cvp_exports}}
   \item \code{SWP_exports}: More details at \code{\link[DSMflow]{swp_exports}}
   \item \code{..surv_juv_outmigration_sj_int} Intercept, source: calibration
-  \item \code{surv_juv_outmigration_san_joquin_medium} Parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
-  \item \code{surv_juv_outmigration_san_joaquin_large} Parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+  \item \code{.surv_juv_outmigration_san_joquin_medium} Size related intercept for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+  \item \code{.surv_juv_outmigration_san_joaquin_large} Size related intercept for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
   \item \code{min_survival_rate} Estimated survival rate if temperature threshold is exceeded, source: expert opinion
   \item \code{avg_temp}: More details at \code{\link[DSMtemperature]{stream_temperature}}
   }
@@ -153,8 +153,8 @@ period in front are model or submodel coefficients. Parameters with double perio
   \item \code{.surv_juv_outmigration_sac_delta_delta_flow} Coefficient for \code{delta_flow} variable, source: TODO
   \item \code{.surv_juv_outmigration_sac_delta_avg_temp} Coefficient for \code{avg_temp} variable, source: TODO
   \item \code{.surv_juv_outmigration_sac_delta_perc_diversions} Coefficient for \code{perc_diversions} variable, source: TODO
-  \item \code{surv_juv_outmigration_sac_delta_medium} Parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
-  \item \code{surv_juv_outmigration_sac_delta_large} Parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+  \item \code{.surv_juv_outmigration_sac_delta_medium} Size related intercept for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+  \item \code{.surv_juv_outmigration_sac_delta_large} Size related intercept for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
 }
 }
 
@@ -174,9 +174,9 @@ period in front are model or submodel coefficients. Parameters with double perio
   \item \code{proportion_flow_bypass}: More details at \code{\link[DSMflow]{proportion_flow_bypasses}}
   \item \code{.pulse_movement_intercept}: Intercept, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.
   \item \code{.pulse_movement_proportion_pulse}: Coefficient for \code{proportion_pulse} variable, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.
-  \item \code{pulse_movement_medium}: Parameter for medium sized fish, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.
-  \item \code{pulse_movement_large}: Parameter for large sized fish, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.
-  \item \code{pulse_movement_vlarge}: Parameter for very large sized fish, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.
+  \item \code{.pulse_movement_medium}: Size related intercept for medium sized fish, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.
+  \item \code{.pulse_movement_large}: Size related intercept for large sized fish, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.
+  \item \code{.pulse_movement_vlarge}: Size related intercept for very large sized fish, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.
   \item \code{.pulse_movement_medium_pulse}: Additional coefficient for \code{proportion_pulse} variable for medium size fish, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.
   \item \code{.pulse_movement_large_pulse}: Additional coefficient for \code{proportion_pulse} variable for large size fish, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.
   \item \code{.pulse_movement_very_large_pulse}: Additional coefficient for \code{proportion_pulse} variable for very large size fish, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.

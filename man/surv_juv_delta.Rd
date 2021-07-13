@@ -21,8 +21,8 @@ surv_juv_delta(
   ..surv_juv_delta_contact_points = fallRunDSM::params$..surv_juv_delta_contact_points,
   .prop_diverted = fallRunDSM::params$.surv_juv_delta_prop_diverted,
   ..surv_juv_delta_total_diverted = fallRunDSM::params$..surv_juv_delta_total_diverted,
-  medium = fallRunDSM::params$surv_juv_delta_medium,
-  large = fallRunDSM::params$surv_juv_delta_large,
+  .medium = fallRunDSM::params$.surv_juv_delta_medium,
+  .large = fallRunDSM::params$.surv_juv_delta_large,
   min_survival_rate = fallRunDSM::params$min_survival_rate
 )
 }
@@ -53,9 +53,9 @@ surv_juv_delta(
 
 \item{..surv_juv_delta_total_diverted}{Coefficient for total_diversions variable}
 
-\item{medium}{parameter for medium sized fish}
+\item{.medium}{size related intercept for medium sized fish}
 
-\item{large}{parameter for large sized fish}
+\item{.large}{size related intercept for large sized fish}
 
 \item{min_survival_rate}{estimated survival rate if temperature threshold is exceeded}
 }

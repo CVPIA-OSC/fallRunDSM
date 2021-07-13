@@ -14,9 +14,9 @@ surv_juv_bypass(
   ..surv_juv_bypass_int = fallRunDSM::params$..surv_juv_bypass_int,
   .avg_temp_thresh = fallRunDSM::params$.surv_juv_bypass_avg_temp_thresh,
   .high_predation = fallRunDSM::params$.surv_juv_bypass_high_predation,
-  medium = fallRunDSM::params$surv_juv_bypass_medium,
-  large = fallRunDSM::params$surv_juv_bypass_large,
-  floodplain = fallRunDSM::params$surv_juv_bypass_floodplain,
+  .medium = fallRunDSM::params$.surv_juv_bypass_medium,
+  .large = fallRunDSM::params$.surv_juv_bypass_large,
+  .floodplain = fallRunDSM::params$.surv_juv_bypass_floodplain,
   min_survival_rate = fallRunDSM::params$min_survival_rate
 )
 }
@@ -33,11 +33,11 @@ surv_juv_bypass(
 
 \item{.high_predation}{coefficient for high_predation variable}
 
-\item{medium}{parameter for medium sized fish}
+\item{.medium}{size related intercept for medium sized fish}
 
-\item{large}{parameter for large sized fish}
+\item{.large}{size related intercept for large sized fish}
 
-\item{floodplain}{parameter for floodplain rearing benefit}
+\item{.floodplain}{Additional intercept for floodplain rearing benefit}
 
 \item{min_survival_rate}{estimated survival rate if temperature threshold is exceeded}
 }

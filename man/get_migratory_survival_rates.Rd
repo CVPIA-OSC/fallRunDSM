@@ -34,8 +34,8 @@ get_migratory_survival_rates(
   .surv_juv_outmigration_sac_delta_avg_temp = .surv_juv_outmigration_sac_delta_avg_temp,
  
     .surv_juv_outmigration_sac_delta_perc_diversions = .surv_juv_outmigration_sac_delta_perc_diversions,
-  surv_juv_outmigration_sac_delta_medium = surv_juv_outmigration_sac_delta_medium,
-  surv_juv_outmigration_sac_delta_large = surv_juv_outmigration_sac_delta_large,
+  .surv_juv_outmigration_sac_delta_medium = surv_juv_outmigration_sac_delta_medium,
+  .surv_juv_outmigration_sac_delta_large = surv_juv_outmigration_sac_delta_large,
   ..surv_juv_outmigration_sj_int = ..surv_juv_outmigration_sj_int,
   ..surv_juv_outmigration_sac_int_one = ..surv_juv_outmigration_sac_int_one,
  
@@ -43,8 +43,8 @@ get_migratory_survival_rates(
  
     ..surv_juv_outmigration_sac_total_diversions = ..surv_juv_outmigration_sac_total_diversions,
   ..surv_juv_outmigration_sac_int_two = ..surv_juv_outmigration_sac_int_two,
-  surv_juv_outmigration_san_joaquin_medium = surv_juv_outmigration_san_joaquin_medium,
-  surv_juv_outmigration_san_joaquin_large = surv_juv_outmigration_san_joaquin_large,
+  .surv_juv_outmigration_san_joaquin_medium = surv_juv_outmigration_san_joaquin_medium,
+  .surv_juv_outmigration_san_joaquin_large = surv_juv_outmigration_san_joaquin_large,
   min_survival_rate = min_survival_rate
 )
 }
@@ -81,15 +81,15 @@ get_migratory_survival_rates(
 
 \item{.surv_juv_outmigration_sac_delta_perc_diversions}{Coefficient \code{\link{surv_juv_outmigration_sac_delta}} for \code{perc_diversions} variable}
 
-\item{surv_juv_outmigration_sac_delta_medium}{parameter for \code{\link{surv_juv_outmigration_sac_delta}} medium sized fish}
+\item{.surv_juv_outmigration_sac_delta_medium}{Size related intercept for \code{\link{surv_juv_outmigration_sac_delta}} medium sized fish}
 
-\item{surv_juv_outmigration_sac_delta_large}{parameter for \code{\link{surv_juv_outmigration_sac_delta}} large sized fish}
+\item{.surv_juv_outmigration_sac_delta_large}{Size related intercept for \code{\link{surv_juv_outmigration_sac_delta}} large sized fish}
 
 \item{..surv_juv_outmigration_sj_int}{Intercept for \code{\link{surv_juv_outmigration_san_joaquin}}}
 
-\item{surv_juv_outmigration_san_joaquin_medium}{parameter for \code{\link{surv_juv_outmigration_san_joaquin}} medium sized fish}
+\item{.surv_juv_outmigration_san_joaquin_medium}{Size related intercept for \code{\link{surv_juv_outmigration_san_joaquin}} medium sized fish}
 
-\item{surv_juv_outmigration_san_joaquin_large}{parameter for \code{\link{surv_juv_outmigration_san_joaquin}} large sized fish}
+\item{.surv_juv_outmigration_san_joaquin_large}{Size related intercept for \code{\link{surv_juv_outmigration_san_joaquin}} large sized fish}
 
 \item{min_survival_rate}{estimated survival rate if temperature threshold is exceeded}
 }

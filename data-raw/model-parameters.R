@@ -36,9 +36,9 @@ params <- list(
   # Pulse movement coefficients and variables
   .pulse_movement_intercept = -7.70744,
   .pulse_movement_proportion_pulse = 0.26579,
-  pulse_movement_medium = 1.66845,
-  pulse_movement_large = 0.5706,
-  pulse_movement_vlarge = -4.305,
+  .pulse_movement_medium = 1.66845,
+  .pulse_movement_large = 0.5706,
+  .pulse_movement_vlarge = -4.305,
   .pulse_movement_medium_pulse = -0.25477,
   .pulse_movement_large_pulse = -0.44778,
   .pulse_movement_very_large_pulse = 0.329,
@@ -56,28 +56,28 @@ params <- list(
   .surv_juv_rear_avg_temp_thresh = -0.717,
   .surv_juv_rear_high_predation = -0.122,
   .surv_juv_rear_stranded = -1.939,
-  surv_juv_rear_medium = 1.48,
-  surv_juv_rear_large = 2.223,
-  surv_juv_rear_floodplain = 0.47,
+  .surv_juv_rear_medium = 1.48,
+  .surv_juv_rear_large = 2.223,
+  .surv_juv_rear_floodplain = 0.47,
   min_survival_rate = 0.0001,
 
   # Juvenile bypass survival coefficients and variables
   .surv_juv_bypass_avg_temp_thresh = -0.717,
   .surv_juv_bypass_high_predation = -0.122,
-  surv_juv_bypass_medium = 1.48,
-  surv_juv_bypass_large = 2.223,
-  surv_juv_bypass_floodplain = 0.47,
+  .surv_juv_bypass_medium = 1.48,
+  .surv_juv_bypass_large = 2.223,
+  .surv_juv_bypass_floodplain = 0.47,
 
   # Juvenile delta survival coefficients and variables
   .surv_juv_delta_avg_temp_thresh = -0.717,
   .surv_juv_delta_high_predation = -0.122,
   .surv_juv_delta_prop_diverted = -3.51,
-  surv_juv_delta_medium = 1.48,
-  surv_juv_delta_large = 2.223,
+  .surv_juv_delta_medium = 1.48,
+  .surv_juv_delta_large = 2.223,
 
   # San joaquin outmigration variables
-  surv_juv_outmigration_san_joaquin_medium = 1.48,
-  surv_juv_outmigration_san_joaquin_large = 2.223,
+  .surv_juv_outmigration_san_joaquin_medium = 1.48,
+  .surv_juv_outmigration_san_joaquin_large = 2.223,
 
   # Sac delta outmigration coefficients and variables
   .surv_juv_outmigration_sac_delta_intercept_one = -3.5,
@@ -86,8 +86,8 @@ params <- list(
   .surv_juv_outmigration_sac_delta_delta_flow = 0.0013,
   .surv_juv_outmigration_sac_delta_avg_temp = 0.386,
   .surv_juv_outmigration_sac_delta_perc_diversions = -0.033,
-  surv_juv_outmigration_sac_delta_medium = 1.48,
-  surv_juv_outmigration_sac_delta_large = 2.223,
+  .surv_juv_outmigration_sac_delta_medium = 1.48,
+  .surv_juv_outmigration_sac_delta_large = 2.223,
 
   ## Variable from load baseline data
   # DSMflow variables -----

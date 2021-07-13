@@ -11,9 +11,9 @@ pulse_movement(
   proportion_pulse,
   .intercept = fallRunDSM::params$.pulse_movement_intercept,
   .proportion_pulse = fallRunDSM::params$.pulse_movement_proportion_pulse,
-  medium = fallRunDSM::params$pulse_movement_medium,
-  large = fallRunDSM::params$pulse_movement_large,
-  vlarge = fallRunDSM::params$pulse_movement_vlarge,
+  .medium = fallRunDSM::params$.pulse_movement_medium,
+  .large = fallRunDSM::params$.pulse_movement_large,
+  .vlarge = fallRunDSM::params$.pulse_movement_vlarge,
   .medium_pulse = fallRunDSM::params$.pulse_movement_medium_pulse,
   .large_pulse = fallRunDSM::params$.pulse_movement_large_pulse,
   .very_large_pulse = fallRunDSM::params$.pulse_movement_very_large_pulse
@@ -27,11 +27,11 @@ by the standard deviation of flow divided by the median flow for each month}
 
 \item{.proportion_pulse}{Coefficient for the \code{proportion_pulse} variable}
 
-\item{medium}{Parameter for medium sized fish}
+\item{.medium}{Size related intercept for medium sized fish}
 
-\item{large}{Parameter for large sized fish}
+\item{.large}{Size related intercept for large sized fish}
 
-\item{vlarge}{Parameter for very large sized fish}
+\item{.vlarge}{Size related intercept for very large sized fish}
 
 \item{.medium_pulse}{Additional coefficient for \code{proportion_pulse} variable for medium size fish}
 
