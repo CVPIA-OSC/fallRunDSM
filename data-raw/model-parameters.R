@@ -34,9 +34,9 @@ params <- list(
   # rear
   .pulse_movement_intercept = -7.70744,
   .pulse_movement_proportion_pulse = 0.26579,
-  .pulse_movement_medium = 1.66845,
-  .pulse_movement_large = 0.5706,
-  .pulse_movement_vlarge = -4.305,
+  pulse_movement_medium = 1.66845,
+  pulse_movement_large = 0.5706,
+  pulse_movement_vlarge = -4.305,
   .pulse_movement_medium_pulse = -0.25477,
   .pulse_movement_large_pulse = -0.44778,
   .pulse_movement_very_large_pulse = 0.329,
