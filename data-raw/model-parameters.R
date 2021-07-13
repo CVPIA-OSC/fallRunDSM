@@ -54,9 +54,9 @@ params <- list(
 
   # Juvenile rearing survival coefficients and variables
   .surv_juv_rear_avg_temp_thresh = -0.717,
-  .surv_juv_rear_contact_points = -0.189, # move out of calibration section and add into submodel
-  .surv_juv_rear_prop_diversions = -3.51, # move out of calibration section and add into submodel
-  .surv_juv_rear_total_diversions = -0.0021, # move out of calibration section and add into submodel
+  .surv_juv_rear_contact_points = -0.189,
+  .surv_juv_rear_prop_diversions = -3.51,
+  .surv_juv_rear_total_diversions = -0.0021,
   .surv_juv_rear_high_predation = -0.122,
   .surv_juv_rear_stranded = -1.939,
   .surv_juv_rear_medium = 1.48,
@@ -73,8 +73,8 @@ params <- list(
 
   # Juvenile delta survival coefficients and variables
   .surv_juv_delta_avg_temp_thresh = -0.717,
-  .surv_juv_delta_contact_points = -0.189, # move out of calibration section and add into submodel
-  .surv_juv_delta_total_diverted = -0.0021, # move out of calibration section and add into submodel
+  .surv_juv_delta_contact_points = -0.189,
+  .surv_juv_delta_total_diverted = -0.0021,
   .surv_juv_delta_high_predation = -0.122,
   .surv_juv_delta_prop_diverted = -3.51,
   .surv_juv_delta_medium = 1.48,
