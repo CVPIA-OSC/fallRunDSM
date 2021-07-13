@@ -121,49 +121,56 @@
 #'   \item \code{.surv_egg_to_fry_scour}: Coefficient for \code{scour} variable, Source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/montogemery_1996.pdf}{Montgomery et al. (1996)}
 #'   \item \code{..surv_egg_to_fry_int}:  Intercept, Source: Calibration
 #' }
-#' @section Rearing Survival:
+#' @section Rearing Survival Tributary:
 #' \itemize{
 #'   \item \code{avg_temp}: More details at \code{\link[DSMtemperature]{stream_temperature}}
-#'   \item \code{avg_temp_delta}: More details at \code{\link[DSMtemperature]{delta_temperature}}
 #'   \item \code{prob_strand_early}: More details at \code{\link[DSMhabitat]{prob_strand_early}}
 #'   \item \code{prob_strand_late}: More details at \code{\link[DSMhabitat]{prob_strand_late}}
 #'   \item \code{proportion_diverted}: More details at \code{\link[DSMflow]{proportion_diverted}}
 #'   \item \code{total_diverted}: More details at \code{\link[DSMflow]{total_diverted}}
-#'   \item \code{delta_proportion_diverted}: More details at \code{\link[DSMflow]{delta_proportion_diverted}}
-#'   \item \code{delta_total_diverted}: More details at \code{\link[DSMflow]{delta_total_diverted}}
 #'   \item \code{weeks_flooded}: More details at \code{\link[DSMhabitat]{weeks_flooded}}
 #'   \item \code{prop_high_predation}: More details at \code{\link[DSMhabitat]{prop_high_predation}}
 #'   \item \code{contact_points}: More details at \code{\link[DSMhabitat]{contact_points}}
-#'   \item \code{delta_contact_points}: More details at \code{\link[DSMhabitat]{delta_contact_points}}
-#'   \item \code{delta_prop_high_predation}: More details at \code{\link[DSMhabitat]{delta_prop_high_predation}}
 #'   \item \code{..surv_juv_rear_int}: Intercept, Source: calibration (varies by tributary)
 #'   \item \code{..surv_juv_rear_contact_points}: Coefficient for \code{contact_points} variable, Source: calibration
 #'   \item \code{..surv_juv_rear_prop_diversions}: Coefficient for \code{prop_diversions} variable, Source: calibration
 #'   \item \code{..surv_juv_rear_total_diversions}: Coefficient for \code{total_diversions} variable, Source: calibration
-#'   \item \code{..surv_juv_bypass_int}: Intercept, Source: calibration
-#'   \item \code{..surv_juv_delta_int}: Intercept, Source: calibration
-#'   \item \code{..surv_juv_delta_contact_points}: Coefficient for \code{contact_points} variable, Source: calibration
-#'   \item \code{..surv_juv_delta_total_diverted}: Coefficient for \code{total_diversions} variable, Source: calibration
 #'   \item \code{.surv_juv_rear_avg_temp_thresh}:  Coefficient for \code{avg_temp_thresh} variable, Source: \href{https://www.tandfonline.com/doi/full/10.1577/M07-130.1?scroll=top&needAccess=true}{Runge et al (2008)}
 #'   \item \code{.surv_juv_rear_high_predation}: Coefficient for \code{high_predation} variable, source: \href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}
 #'   \item \code{.surv_juv_rear_stranded}: Coefficient for \code{stranded} variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/DWR-1140+USFWS+2006.pdf}{USFWS (2006) and CDWR (2006)}
 #'   \item \code{surv_juv_rear_medium}: Parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
 #'   \item \code{surv_juv_rear_large}: parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
 #'   \item \code{surv_juv_rear_floodplain}: parameter for floodplain rearing benefit, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/SOMMER_T-SDWA+180+Floodplain+rearing+of+juvenile+chinook+salmon+evidence+of+enhanced+growth+and+survival+.pdf}{Sommer et al. (2001)}
+#' }
+#' @section Rearing Survival Bypass:
+#' \itemize{
+#'   \item \code{..surv_juv_bypass_int}: Intercept, Source: calibration
 #'   \item \code{.surv_juv_bypass_avg_temp_thresh}: Coefficient for \code{avg_temp_thresh} variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/marine_cech_water_temp_effects.pdf}{Marine and Chech (2004)}
 #'   \item \code{.surv_juv_bypass_high_predation}: Coefficient for \code{high_predation} variable, source: \href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}
 #'   \item \code{surv_juv_bypass_medium}: Parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
 #'   \item \code{surv_juv_bypass_large}: Parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
 #'   \item \code{surv_juv_bypass_floodplain}: Parameter for floodplain rearing benefit, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/SOMMER_T-SDWA+180+Floodplain+rearing+of+juvenile+chinook+salmon+evidence+of+enhanced+growth+and+survival+.pdf}{Sommer et al. (2001)}
+#' }
+#' @section Rearing Survival Delta:
+#' \itemize{
+#'   \item \code{avg_temp_delta}: More details at \code{\link[DSMtemperature]{delta_temperature}}
+#'   \item \code{delta_proportion_diverted}: More details at \code{\link[DSMflow]{delta_proportion_diverted}}
+#'   \item \code{delta_total_diverted}: More details at \code{\link[DSMflow]{delta_total_diverted}}
+#'   \item \code{delta_contact_points}: More details at \code{\link[DSMhabitat]{delta_contact_points}}
+#'   \item \code{delta_prop_high_predation}: More details at \code{\link[DSMhabitat]{delta_prop_high_predation}}
+#'   \item \code{..surv_juv_delta_int}: Intercept, Source: calibration
+#'   \item \code{..surv_juv_delta_contact_points}: Coefficient for \code{contact_points} variable, Source: calibration
+#'   \item \code{..surv_juv_delta_total_diverted}: Coefficient for \code{total_diversions} variable, Source: calibration
 #'   \item \code{.surv_juv_delta_avg_temp_thresh}: Coefficient for \code{avg_temp_thresh} variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/marine_cech_water_temp_effects.pdf}{Marine and Chech (2004)}
 #'   \item \code{.surv_juv_delta_high_predation}: Coefficient for \code{high_predation} variable, source: \href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}
 #'   \item \code{.surv_juv_delta_prop_diverted}: Coefficient for \code{prop_diversions} variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/Hierarchical_Modeling_of_Juvenile_Chinook_Salmon_S+(1).pdf}{Newman and Brandes (2010)}
 #'   \item \code{surv_juv_delta_medium}: parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
 #'   \item \code{surv_juv_delta_large}: parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
 #' }
-#' @section Migratory Survival:
+#' @section Migratory Survival Tributary:
 #' \itemize{
 #'   \item \code{cc_gates_prop_days_closed}: More details at \code{\link[DSMflow]{delta_cross_channel_closed}}
+#'   \item \code{upper_sacramento_flows}: More details at \code{\link[DSMflow]{upper_sacramento_flows}}
 #'   \item \code{freeport_flows}: More details at \code{\link[DSMflow]{freeport_flow}}
 #'   \item \code{vernalis_flows}: More details at \code{\link[DSMflow]{vernalis_flow}}
 #'   \item \code{stockton_flows}: More details at \code{\link[DSMflow]{stockton_flow}}
@@ -171,10 +178,16 @@
 #'   \item \code{prisoners_point_temps}: More details at \code{\link[DSMtemperature]{prisoners_point_temperature}}
 #'   \item \code{CVP_exports}: More details at \code{\link[DSMflow]{cvp_exports}}
 #'   \item \code{SWP_exports}: More details at \code{\link[DSMflow]{swp_exports}}
-#'   \item \code{upper_sacramento_flows}: More details at \code{\link[DSMflow]{upper_sacramento_flows}}
+#'   \item \code{..surv_juv_outmigration_sj_int} Intercept, source: calibration
+#'   \item \code{surv_juv_outmigration_san_joquin_medium} Parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+#'   \item \code{surv_juv_outmigration_san_joaquin_large} Parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+#'   \item \code{min_survival_rate} Estimated survival rate if temperature threshold is exceeded, source: expert opinion
+#'   \item \code{avg_temp}: More details at \code{\link[DSMtemperature]{stream_temperature}}
+#'   }
+#' @section Migratory Survival Delta:
+#' \itemize{
 #'   \item \code{delta_inflow}: More details at \code{\link[DSMflow]{delta_inflow}}
 #'   \item \code{avg_temp_delta}: More details at \code{\link[DSMtemperature]{delta_temperature}}
-#'   \item \code{avg_temp}: More details at \code{\link[DSMtemperature]{stream_temperature}}
 #'   \item \code{delta_proportion_diverted}: More details at \code{\link[DSMflow]{delta_proportion_diverted}}
 #'   \item \code{.surv_juv_outmigration_sac_delta_intercept_one} Intercept for model one, source: TODO
 #'   \item \code{.surv_juv_outmigration_sac_delta_intercept_two} Intercept for model two, source: TODO
@@ -184,10 +197,6 @@
 #'   \item \code{.surv_juv_outmigration_sac_delta_perc_diversions} Coefficient for \code{perc_diversions} variable, source: TODO
 #'   \item \code{surv_juv_outmigration_sac_delta_medium} Parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
 #'   \item \code{surv_juv_outmigration_sac_delta_large} Parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
-#'   \item \code{..surv_juv_outmigration_sj_int} Intercept, source: calibration
-#'   \item \code{surv_juv_outmigration_san_joquin_medium} Parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
-#'   \item \code{surv_juv_outmigration_san_joaquin_large} Parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
-#'   \item \code{min_survival_rate} Estimated survival rate if temperature threshold is exceeded, source: expert opinion
 #' }
 #' @section Delta Routing and Rearing:
 #' \itemize{

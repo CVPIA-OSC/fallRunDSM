@@ -17,7 +17,7 @@ surv_juv_bypass(
   medium = fallRunDSM::params$surv_juv_bypass_medium,
   large = fallRunDSM::params$surv_juv_bypass_large,
   floodplain = fallRunDSM::params$surv_juv_bypass_floodplain,
-  min_survival_rate
+  min_survival_rate = fallRunDSM::params$min_survival_rate
 )
 }
 \arguments{
