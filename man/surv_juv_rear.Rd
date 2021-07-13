@@ -24,9 +24,9 @@ surv_juv_rear(
  
     ..surv_juv_rear_total_diversions = fallRunDSM::params$..surv_juv_rear_total_diversions,
   .stranded = fallRunDSM::params$.surv_juv_rear_stranded,
-  .medium = fallRunDSM::params$.surv_juv_rear_medium,
-  .large = fallRunDSM::params$.surv_juv_rear_large,
-  .floodplain = fallRunDSM::params$.surv_juv_rear_floodplain,
+  medium = fallRunDSM::params$surv_juv_rear_medium,
+  large = fallRunDSM::params$surv_juv_rear_large,
+  floodplain = fallRunDSM::params$surv_juv_rear_floodplain,
   min_survival_rate
 )
 }
@@ -61,11 +61,11 @@ surv_juv_rear(
 
 \item{.stranded}{coefficient for stranded variable}
 
-\item{.medium}{parameter for medium sized fish}
+\item{medium}{parameter for medium sized fish}
 
-\item{.large}{parameter for large sized fish}
+\item{large}{parameter for large sized fish}
 
-\item{.floodplain}{parameter for floodplain rearing benefit}
+\item{floodplain}{parameter for floodplain rearing benefit}
 
 \item{min_survival_rate}{estimated survival rate if temperature threshold is exceeded, source: expert opinion}
 }
