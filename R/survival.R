@@ -201,7 +201,7 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
 #' @param .surv_juv_delta_prop_diverted Coefficient for \code{\link{surv_juv_delta}} \code{prop_diversions} variable
 #' @param surv_juv_delta_medium Parameter for \code{\link{surv_juv_delta}} medium sized fish
 #' @param surv_juv_delta_large Parameter for \code{\link{surv_juv_delta}} large sized fish
-#' @param min_survival_rate TODO
+#' @param min_survival_rate estimated survival rate if temperature threshold is exceeded
 #' @source IP-117068
 #' @export
 get_rearing_survival_rates <- function(year, month,
@@ -363,17 +363,17 @@ surv_juv_outmigration_sac <- function(flow_cms){
 #' @title Juvenile San Joaquin Outmigration Survival
 #' @description Calculates the San Joaquin River juvenile out migration survival
 #' @param ..surv_juv_outmigration_sj_int Intercept
-#' @param .medium Parameter for medium sized fish
-#' @param .large Parameter for large sized fish
+#' @param medium Parameter for medium sized fish
+#' @param large Parameter for large sized fish
 #' @source IP-117068
 #' @export
 surv_juv_outmigration_san_joaquin <- function(..surv_juv_outmigration_sj_int = fallRunDSM::params$..surv_juv_outmigration_sj_int,
-                                              .medium = fallRunDSM::params$.surv_juv_outmigration_san_joaquin_medium,
-                                              .large = fallRunDSM::params$.surv_juv_outmigration_san_joaquin_large){
+                                              medium = fallRunDSM::params$surv_juv_outmigration_san_joaquin_medium,
+                                              large = fallRunDSM::params$surv_juv_outmigration_san_joaquin_large){
 
   s <- boot::inv.logit(..surv_juv_outmigration_sj_int)
-  m <- boot::inv.logit(..surv_juv_outmigration_sj_int + .medium)
-  l <- vl <- boot::inv.logit(..surv_juv_outmigration_sj_int + .large)
+  m <- boot::inv.logit(..surv_juv_outmigration_sj_int + medium)
+  l <- vl <- boot::inv.logit(..surv_juv_outmigration_sj_int + large)
 
   cbind(s = s, m = m, l = l, vl = vl)
 }
@@ -389,8 +389,8 @@ surv_juv_outmigration_san_joaquin <- function(..surv_juv_outmigration_sj_int = f
 #' @param .delta_flow Coefficient for delta_flow variable
 #' @param .avg_temp Coefficient for avg_temp variable
 #' @param .perc_diversions Coefficient for perc_diversions variable
-#' @param .medium parameter for medium sized fish
-#' @param .large parameter for large sized fish
+#' @param medium parameter for medium sized fish
+#' @param large parameter for large sized fish
 #' @source IP-117068
 #' @export
 surv_juv_outmigration_sac_delta <- function(delta_flow, avg_temp, perc_diversions,
@@ -400,8 +400,8 @@ surv_juv_outmigration_sac_delta <- function(delta_flow, avg_temp, perc_diversion
                                             .delta_flow = fallRunDSM::params$.surv_juv_outmigration_sac_delta_delta_flow,
                                             .avg_temp = fallRunDSM::params$.surv_juv_outmigration_sac_delta_avg_temp,
                                             .perc_diversions = fallRunDSM::params$.surv_juv_outmigration_sac_delta_perc_diversions,
-                                            .medium = fallRunDSM::params$.surv_juv_outmigration_sac_delta_medium,
-                                            .large = fallRunDSM::params$.surv_juv_outmigration_sac_delta_large){
+                                            medium = fallRunDSM::params$surv_juv_outmigration_sac_delta_medium,
+                                            large = fallRunDSM::params$surv_juv_outmigration_sac_delta_large){
 
   model_weight <- 1/3
 
@@ -413,13 +413,13 @@ surv_juv_outmigration_sac_delta <- function(delta_flow, avg_temp, perc_diversion
                          boot::inv.logit(base_score2) +
                          boot::inv.logit(base_score3))
 
-  m <- model_weight * (boot::inv.logit(base_score1 + .medium) +
-                         boot::inv.logit(base_score2 + .medium) +
-                         boot::inv.logit(base_score3 + .medium))
+  m <- model_weight * (boot::inv.logit(base_score1 + medium) +
+                         boot::inv.logit(base_score2 + medium) +
+                         boot::inv.logit(base_score3 + medium))
 
-  vl <- l <- model_weight * (boot::inv.logit(base_score1 + .large) +
-                               boot::inv.logit(base_score2 + .large) +
-                               boot::inv.logit(base_score3 + .large))
+  vl <- l <- model_weight * (boot::inv.logit(base_score1 + large) +
+                               boot::inv.logit(base_score2 + large) +
+                               boot::inv.logit(base_score3 + large))
 
   cbind(s = s, m = m, l = l, vl = vl)
 }
@@ -601,13 +601,17 @@ surv_juv_outmigration_delta <- function(prop_DCC_closed, hor_barr, freeport_flow
 #' @param CVP_exports More details at \code{\link[DSMflow]{cvp_exports}}
 #' @param SWP_exports More details at \code{\link[DSMflow]{swp_exports}}
 #' @param ..surv_juv_outmigration_sj_int Intercept for \code{\link{surv_juv_outmigration_san_joaquin}}
-#' @param ..surv_juv_outmigration_sac_int_one Intercept one for \code{\link{surv_juv_outmigration_sac_delta}}
-#' @param ..surv_juv_outmigration_sac_prop_diversions Coefficient for code{\link{surv_juv_outmigration_sac_delta}} \code{prop_diversion} variable
-#' @param ..surv_juv_outmigration_sac_total_diversions Coefficient for code{\link{surv_juv_outmigration_sac_delta}} \code{total_diversion} variable #TODO (do we use this variable?)
-#' @param ..surv_juv_outmigration_sac_int_two Intercept one for \code{\link{surv_juv_outmigration_sac_delta}}
-#' @param .surv_juv_outmigration_san_joaquin_medium parameter for \code{\link{surv_juv_outmigration_san_joaquin}} medium sized fish
-#' @param .surv_juv_outmigration_san_joaquin_large parameter for \code{\link{surv_juv_outmigration_san_joaquin}} large sized fish
-#' @param min_survival_rate TODO
+#' @param .surv_juv_outmigration_sac_delta_intercept_one Intercept \code{\link{surv_juv_outmigration_sac_delta}} for model one
+#' @param .surv_juv_outmigration_sac_delta_intercept_two Intercept \code{\link{surv_juv_outmigration_sac_delta}} for model two
+#' @param .surv_juv_outmigration_sac_delta_intercept_three Intercept \code{\link{surv_juv_outmigration_sac_delta}} for model three
+#' @param .surv_juv_outmigration_sac_delta_delta_flow Coefficient \code{\link{surv_juv_outmigration_sac_delta}} for \code{delta_flow} variable
+#' @param .surv_juv_outmigration_sac_delta_avg_temp Coefficient \code{\link{surv_juv_outmigration_sac_delta}} for \code{avg_temp} variable
+#' @param .surv_juv_outmigration_sac_delta_perc_diversions Coefficient \code{\link{surv_juv_outmigration_sac_delta}} for \code{perc_diversions} variable
+#' @param surv_juv_outmigration_sac_delta_medium parameter for \code{\link{surv_juv_outmigration_sac_delta}} medium sized fish
+#' @param surv_juv_outmigration_sac_delta_large parameter for \code{\link{surv_juv_outmigration_sac_delta}} large sized fish
+#' @param surv_juv_outmigration_san_joaquin_medium parameter for \code{\link{surv_juv_outmigration_san_joaquin}} medium sized fish
+#' @param surv_juv_outmigration_san_joaquin_large parameter for \code{\link{surv_juv_outmigration_san_joaquin}} large sized fish
+#' @param min_survival_rate estimated survival rate if temperature threshold is exceeded
 #' @source IP-117068
 #' @export
 get_migratory_survival_rates <- function(year, month,
@@ -630,15 +634,15 @@ get_migratory_survival_rates <- function(year, month,
                                          .surv_juv_outmigration_sac_delta_delta_flow = .surv_juv_outmigration_sac_delta_delta_flow,
                                          .surv_juv_outmigration_sac_delta_avg_temp = .surv_juv_outmigration_sac_delta_avg_temp,
                                          .surv_juv_outmigration_sac_delta_perc_diversions = .surv_juv_outmigration_sac_delta_perc_diversions,
-                                         .surv_juv_outmigration_sac_delta_medium = .surv_juv_outmigration_sac_delta_medium,
-                                         .surv_juv_outmigration_sac_delta_large = .surv_juv_outmigration_sac_delta_large,
+                                         surv_juv_outmigration_sac_delta_medium = surv_juv_outmigration_sac_delta_medium,
+                                         surv_juv_outmigration_sac_delta_large = surv_juv_outmigration_sac_delta_large,
                                          ..surv_juv_outmigration_sj_int = ..surv_juv_outmigration_sj_int,
                                          ..surv_juv_outmigration_sac_int_one = ..surv_juv_outmigration_sac_int_one,
                                          ..surv_juv_outmigration_sac_prop_diversions = ..surv_juv_outmigration_sac_prop_diversions,
                                          ..surv_juv_outmigration_sac_total_diversions = ..surv_juv_outmigration_sac_total_diversions,
                                          ..surv_juv_outmigration_sac_int_two = ..surv_juv_outmigration_sac_int_two,
-                                         .surv_juv_outmigration_san_joaquin_medium = .surv_juv_outmigration_san_joaquin_medium,
-                                         .surv_juv_outmigration_san_joaquin_large = .surv_juv_outmigration_san_joaquin_large,
+                                         surv_juv_outmigration_san_joaquin_medium = surv_juv_outmigration_san_joaquin_medium,
+                                         surv_juv_outmigration_san_joaquin_large = surv_juv_outmigration_san_joaquin_large,
                                          min_survival_rate = min_survival_rate) {
 
   aveT20 <- rbinom(31, 1, boot::inv.logit(-14.32252 + 0.72102 * avg_temp[ , month , year]))
@@ -658,8 +662,8 @@ get_migratory_survival_rates <- function(year, month,
 
   u_sac_flow <- upper_sacramento_flows[month, year]
   sj_migration_surv <- surv_juv_outmigration_san_joaquin(..surv_juv_outmigration_sj_int = ..surv_juv_outmigration_sj_int,
-                                                         .medium = .surv_juv_outmigration_san_joaquin_medium,
-                                                         .large = .surv_juv_outmigration_san_joaquin_large)
+                                                         medium = surv_juv_outmigration_san_joaquin_medium,
+                                                         large = surv_juv_outmigration_san_joaquin_large)
 
   uppermid_sac_migration_surv <- surv_juv_outmigration_sac(flow_cms = u_sac_flow)
 
@@ -676,8 +680,8 @@ get_migratory_survival_rates <- function(year, month,
                                                               .delta_flow = .surv_juv_outmigration_sac_delta_delta_flow,
                                                               .avg_temp = .surv_juv_outmigration_sac_delta_avg_temp,
                                                               .perc_diversions = .surv_juv_outmigration_sac_delta_perc_diversions,
-                                                              .medium = .surv_juv_outmigration_sac_delta_medium,
-                                                              .large = .surv_juv_outmigration_sac_delta_large) #Sac.Delt.S
+                                                              medium = surv_juv_outmigration_sac_delta_medium,
+                                                              large = surv_juv_outmigration_sac_delta_large) #Sac.Delt.S
 
   bay_delta_migration_surv <- mean(c(0.43, 0.46, 0.26, 0.25, 0.39)) # Bay.S Chipps island to bay
 

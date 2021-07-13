@@ -203,15 +203,15 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                                          .surv_juv_outmigration_sac_delta_delta_flow = ..params$.surv_juv_outmigration_sac_delta_delta_flow,
                                                          .surv_juv_outmigration_sac_delta_avg_temp = ..params$.surv_juv_outmigration_sac_delta_avg_temp,
                                                          .surv_juv_outmigration_sac_delta_perc_diversions = ..params$.surv_juv_outmigration_sac_delta_perc_diversions,
-                                                         .surv_juv_outmigration_sac_delta_medium = ..params$.surv_juv_outmigration_sac_delta_medium,
-                                                         .surv_juv_outmigration_sac_delta_large = ..params$.surv_juv_outmigration_sac_delta_large,
+                                                         surv_juv_outmigration_sac_delta_medium = ..params$surv_juv_outmigration_sac_delta_medium,
+                                                         surv_juv_outmigration_sac_delta_large = ..params$surv_juv_outmigration_sac_delta_large,
                                                          ..surv_juv_outmigration_sj_int = ..params$..surv_juv_outmigration_sj_int,
                                                          ..surv_juv_outmigration_sac_int_one = ..params$..surv_juv_outmigration_sac_int_one,
                                                          ..surv_juv_outmigration_sac_prop_diversions = ..params$..surv_juv_outmigration_sac_prop_diversions,
                                                          ..surv_juv_outmigration_sac_total_diversions = ..params$..surv_juv_outmigration_sac_total_diversions,
                                                          ..surv_juv_outmigration_sac_int_two = ..params$..surv_juv_outmigration_sac_int_two,
-                                                         .surv_juv_outmigration_san_joaquin_medium = ..params$.surv_juv_outmigration_san_joaquin_medium,
-                                                         .surv_juv_outmigration_san_joaquin_large = ..params$.surv_juv_outmigration_san_joaquin_large,
+                                                         surv_juv_outmigration_san_joaquin_medium = ..params$surv_juv_outmigration_san_joaquin_medium,
+                                                         surv_juv_outmigration_san_joaquin_large = ..params$surv_juv_outmigration_san_joaquin_large,
                                                          min_survival_rate = ..params$min_survival_rate)
 
       migrants <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))

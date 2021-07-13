@@ -54,8 +54,8 @@ params <- list(
   .surv_juv_outmigration_sac_delta_delta_flow = 0.0013,
   .surv_juv_outmigration_sac_delta_avg_temp = 0.386,
   .surv_juv_outmigration_sac_delta_perc_diversions = -0.033,
-  .surv_juv_outmigration_sac_delta_medium = 1.48,
-  .surv_juv_outmigration_sac_delta_large = 2.223,
+  surv_juv_outmigration_sac_delta_medium = 1.48,
+  surv_juv_outmigration_sac_delta_large = 2.223,
 
   # survival
   .surv_juv_rear_avg_temp_thresh = -0.717,
@@ -74,8 +74,8 @@ params <- list(
   .surv_juv_delta_prop_diverted = -3.51,
   surv_juv_delta_medium = 1.48,
   surv_juv_delta_large = 2.223,
-  .surv_juv_outmigration_san_joaquin_medium = 1.48,
-  .surv_juv_outmigration_san_joaquin_large = 2.223,
+  surv_juv_outmigration_san_joaquin_medium = 1.48,
+  surv_juv_outmigration_san_joaquin_large = 2.223,
   min_survival_rate = 0.0001,
 
   ### load baseline data

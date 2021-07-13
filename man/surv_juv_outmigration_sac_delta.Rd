@@ -19,8 +19,8 @@ surv_juv_outmigration_sac_delta(
   .avg_temp = fallRunDSM::params$.surv_juv_outmigration_sac_delta_avg_temp,
  
     .perc_diversions = fallRunDSM::params$.surv_juv_outmigration_sac_delta_perc_diversions,
-  .medium = fallRunDSM::params$.surv_juv_outmigration_sac_delta_medium,
-  .large = fallRunDSM::params$.surv_juv_outmigration_sac_delta_large
+  medium = fallRunDSM::params$surv_juv_outmigration_sac_delta_medium,
+  large = fallRunDSM::params$surv_juv_outmigration_sac_delta_large
 )
 }
 \arguments{
@@ -42,9 +42,9 @@ surv_juv_outmigration_sac_delta(
 
 \item{.perc_diversions}{Coefficient for perc_diversions variable}
 
-\item{.medium}{parameter for medium sized fish}
+\item{medium}{parameter for medium sized fish}
 
-\item{.large}{parameter for large sized fish}
+\item{large}{parameter for large sized fish}
 }
 \description{
 Calculates the Sacramento Delta juvenile out migration survival

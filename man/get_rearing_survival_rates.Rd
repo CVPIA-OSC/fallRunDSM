@@ -131,7 +131,7 @@ get_rearing_survival_rates(
 
 \item{surv_juv_delta_large}{Parameter for \code{\link{surv_juv_delta}} large sized fish}
 
-\item{min_survival_rate}{TODO}
+\item{min_survival_rate}{estimated survival rate if temperature threshold is exceeded}
 
 \item{scenario}{The current scenario}
 }

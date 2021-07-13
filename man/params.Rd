@@ -96,14 +96,14 @@ period in front are model or submodel coefficients. Parameters with double perio
   \item \code{surv_juv_rear_floodplain}: parameter for floodplain rearing benefit, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/SOMMER_T-SDWA+180+Floodplain+rearing+of+juvenile+chinook+salmon+evidence+of+enhanced+growth+and+survival+.pdf}{Sommer et al. (2001)}
   \item \code{.surv_juv_bypass_avg_temp_thresh}: Coefficient for \code{avg_temp_thresh} variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/marine_cech_water_temp_effects.pdf}{Marine and Chech (2004)}
   \item \code{.surv_juv_bypass_high_predation}: Coefficient for \code{high_predation} variable, source: \href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}
-  \item \code{.surv_juv_bypass_medium}: Parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
-  \item \code{.surv_juv_bypass_large}: Parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
-  \item \code{.surv_juv_bypass_floodplain}: Parameter for floodplain rearing benefit, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/SOMMER_T-SDWA+180+Floodplain+rearing+of+juvenile+chinook+salmon+evidence+of+enhanced+growth+and+survival+.pdf}{Sommer et al. (2001)}
+  \item \code{surv_juv_bypass_medium}: Parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+  \item \code{surv_juv_bypass_large}: Parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+  \item \code{surv_juv_bypass_floodplain}: Parameter for floodplain rearing benefit, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/SOMMER_T-SDWA+180+Floodplain+rearing+of+juvenile+chinook+salmon+evidence+of+enhanced+growth+and+survival+.pdf}{Sommer et al. (2001)}
   \item \code{.surv_juv_delta_avg_temp_thresh}: Coefficient for \code{avg_temp_thresh} variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/marine_cech_water_temp_effects.pdf}{Marine and Chech (2004)}
   \item \code{.surv_juv_delta_high_predation}: Coefficient for \code{high_predation} variable, source: \href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}
   \item \code{.surv_juv_delta_prop_diverted}: Coefficient for \code{prop_diversions} variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/Hierarchical_Modeling_of_Juvenile_Chinook_Salmon_S+(1).pdf}{Newman and Brandes (2010)}
-  \item \code{.surv_juv_delta_medium}: parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
-  \item \code{.surv_juv_delta_large}: parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+  \item \code{surv_juv_delta_medium}: parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+  \item \code{surv_juv_delta_large}: parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
 }
 }
 
@@ -129,11 +129,11 @@ period in front are model or submodel coefficients. Parameters with double perio
   \item \code{.surv_juv_outmigration_sac_delta_delta_flow} Coefficient for \code{delta_flow} variable, source: TODO
   \item \code{.surv_juv_outmigration_sac_delta_avg_temp} Coefficient for \code{avg_temp} variable, source: TODO
   \item \code{.surv_juv_outmigration_sac_delta_perc_diversions} Coefficient for \code{perc_diversions} variable, source: TODO
-  \item \code{.surv_juv_outmigration_sac_delta_medium} Parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
-  \item \code{.surv_juv_outmigration_sac_delta_large} Parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+  \item \code{surv_juv_outmigration_sac_delta_medium} Parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+  \item \code{surv_juv_outmigration_sac_delta_large} Parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
   \item \code{..surv_juv_outmigration_sj_int} Intercept, source: calibration
-  \item \code{.surv_juv_outmigration_san_joquin_medium} Parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
-  \item \code{.surv_juv_outmigration_san_joaquin_large} Parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+  \item \code{surv_juv_outmigration_san_joquin_medium} Parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+  \item \code{surv_juv_outmigration_san_joaquin_large} Parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
   \item \code{min_survival_rate} Estimated survival rate if temperature threshold is exceeded, source: expert opinion
 }
 }
