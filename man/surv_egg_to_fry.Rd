@@ -33,3 +33,6 @@ Fall and spring estimated by C. Hammersmark (CBEC Ecoengineering Inc.). Winter-r
 \description{
 Calculates the survival of transitioning from egg to fry
 }
+\details{
+See \code{\link{params}} for details on parameter sources
+}

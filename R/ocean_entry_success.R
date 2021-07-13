@@ -1,5 +1,6 @@
 #' @title Ocean Entry Success
 #' @description Calculates the number of juveniles that survive entering the ocean
+#' @details See \code{\link{params}} for details on parameter sources
 #' @param migrants Variable representing the number of juveniles at golden gate bridge
 #' @param month Variable representing the current simulation month
 #' @param avg_ocean_transition_month Variable representing the average month juveniles transition to the ocean

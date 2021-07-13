@@ -1,6 +1,7 @@
 
 #' @title Egg to Fry Survival
 #' @description Calculates the survival of transitioning from egg to fry
+#' @details See \code{\link{params}} for details on parameter sources
 #' @param proportion_natural Variable describing the proportion of natural-origin spawners
 #' @param scour Variable describing the probability of redd scouring event
 #' @param temperature_effect Variable describing the effect of inchannel temperature on egg survival.

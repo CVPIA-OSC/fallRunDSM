@@ -32,3 +32,6 @@ ocean_entry_success(
 \description{
 Calculates the number of juveniles that survive entering the ocean
 }
+\details{
+See \code{\link{params}} for details on parameter sources
+}

@@ -1,6 +1,7 @@
 #' @title Juvenile Pulse Movement
 #' @description Calculates the proportion of juveniles in each size class that
 #' migrate due to pulse flow
+#' @details See \code{\link{params}} for details on parameter sources
 #' @param proportion_pulse The proportion of flow that is a pulse, estimated
 #' by the standard deviation of flow divided by the median flow for each month
 #' @param .intercept Intercept

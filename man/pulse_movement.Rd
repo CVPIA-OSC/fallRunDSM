@@ -43,3 +43,6 @@ by the standard deviation of flow divided by the median flow for each month}
 Calculates the proportion of juveniles in each size class that
 migrate due to pulse flow
 }
+\details{
+See \code{\link{params}} for details on parameter sources
+}
