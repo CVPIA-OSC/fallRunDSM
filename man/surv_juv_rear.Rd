@@ -19,8 +19,11 @@ surv_juv_rear(
   ..surv_juv_rear_int = fallRunDSM::params$..surv_juv_rear_int,
   .avg_temp_thresh = fallRunDSM::params$.surv_juv_rear_avg_temp_thresh,
   .high_predation = fallRunDSM::params$.surv_juv_rear_high_predation,
+  .surv_juv_rear_contact_points = fallRunDSM::params$.surv_juv_rear_contact_points,
   ..surv_juv_rear_contact_points = fallRunDSM::params$..surv_juv_rear_contact_points,
+  .surv_juv_rear_prop_diversions = fallRunDSM::params$.surv_juv_rear_prop_diversions,
   ..surv_juv_rear_prop_diversions = fallRunDSM::params$..surv_juv_rear_prop_diversions,
+  .surv_juv_rear_total_diversions = fallRunDSM::params$.surv_juv_rear_total_diversions,
  
     ..surv_juv_rear_total_diversions = fallRunDSM::params$..surv_juv_rear_total_diversions,
   .stranded = fallRunDSM::params$.surv_juv_rear_stranded,
@@ -53,11 +56,17 @@ surv_juv_rear(
 
 \item{.high_predation}{coefficient for high_predation variable}
 
-\item{..surv_juv_rear_contact_points}{coefficient for contact_points variable}
+\item{.surv_juv_rear_contact_points}{coefficient for contact_points variable}
 
-\item{..surv_juv_rear_prop_diversions}{coefficient for prop_diversions variable}
+\item{..surv_juv_rear_contact_points}{calibrated coefficient for contact_points variable}
 
-\item{..surv_juv_rear_total_diversions}{coefficient for total_diversions variable}
+\item{.surv_juv_rear_prop_diversions}{coefficient for prop_diversions variable}
+
+\item{..surv_juv_rear_prop_diversions}{calibrated coefficient for prop_diversions variable}
+
+\item{.surv_juv_rear_total_diversions}{coefficient for total_diversions variable}
+
+\item{..surv_juv_rear_total_diversions}{calibrated coefficient for total_diversions variable}
 
 \item{.stranded}{coefficient for stranded variable}
 

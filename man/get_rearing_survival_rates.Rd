@@ -26,12 +26,17 @@ get_rearing_survival_rates(
   delta_contact_points,
   delta_prop_high_predation,
   ..surv_juv_rear_int,
+  .surv_juv_rear_contact_points,
   ..surv_juv_rear_contact_points,
+  .surv_juv_rear_prop_diversions,
   ..surv_juv_rear_prop_diversions,
+  .surv_juv_rear_total_diversions,
   ..surv_juv_rear_total_diversions,
   ..surv_juv_bypass_int,
   ..surv_juv_delta_int,
+  .surv_juv_delta_contact_points,
   ..surv_juv_delta_contact_points,
+  .surv_juv_delta_total_diverted,
   ..surv_juv_delta_total_diverted,
   .surv_juv_rear_avg_temp_thresh,
   .surv_juv_rear_high_predation,
@@ -85,19 +90,29 @@ get_rearing_survival_rates(
 
 \item{..surv_juv_rear_int}{Intercept for \code{\link{surv_juv_rear}}}
 
-\item{..surv_juv_rear_contact_points}{Coefficient for \code{\link{surv_juv_rear}} \code{contact_points} variable}
+\item{.surv_juv_rear_contact_points}{Coefficient for \code{\link{surv_juv_rear}} \code{contact_points} variable}
 
-\item{..surv_juv_rear_prop_diversions}{Coefficient for \code{\link{surv_juv_rear}} \code{prop_diversions} variable}
+\item{..surv_juv_rear_contact_points}{Calibrated coefficient for \code{\link{surv_juv_rear}} \code{contact_points} variable}
 
-\item{..surv_juv_rear_total_diversions}{Coefficient for \code{\link{surv_juv_rear}} \code{total_diversions} variable}
+\item{.surv_juv_rear_prop_diversions}{Coefficient for \code{\link{surv_juv_rear}} \code{prop_diversions} variable}
+
+\item{..surv_juv_rear_prop_diversions}{Calibrated coefficient for \code{\link{surv_juv_rear}} \code{prop_diversions} variable}
+
+\item{.surv_juv_rear_total_diversions}{Coefficient for \code{\link{surv_juv_rear}} \code{total_diversions} variable}
+
+\item{..surv_juv_rear_total_diversions}{Calibrated coefficient for \code{\link{surv_juv_rear}} \code{total_diversions} variable}
 
 \item{..surv_juv_bypass_int}{Intercept for \code{\link{surv_juv_bypass}}}
 
 \item{..surv_juv_delta_int}{Intercept for \code{\link{surv_juv_delta}}}
 
-\item{..surv_juv_delta_contact_points}{Coefficient for \code{\link{surv_juv_delta}} contact_points variable}
+\item{.surv_juv_delta_contact_points}{Coefficient for \code{\link{surv_juv_delta}} contact_points variable}
 
-\item{..surv_juv_delta_total_diverted}{Coefficient for \code{\link{surv_juv_delta}} total_diversions variable}
+\item{..surv_juv_delta_contact_points}{Calibrated coefficient for \code{\link{surv_juv_delta}} contact_points variable}
+
+\item{.surv_juv_delta_total_diverted}{Coefficient for \code{\link{surv_juv_delta}} total_diversions variable}
+
+\item{..surv_juv_delta_total_diverted}{Calibrated coefficient for \code{\link{surv_juv_delta}} total_diversions variable}
 
 \item{.surv_juv_rear_avg_temp_thresh}{Coefficient for \code{\link{surv_juv_rear}} \code{avg_temp_thresh} variable}
 

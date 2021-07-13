@@ -18,8 +18,10 @@ surv_juv_delta(
   ..surv_juv_delta_int = fallRunDSM::params$..surv_juv_delta_int,
   .avg_temp_thresh = fallRunDSM::params$.surv_juv_delta_avg_temp_thresh,
   .high_predation = fallRunDSM::params$.surv_juv_delta_high_predation,
+  .surv_juv_delta_contact_points = fallRunDSM::params$.surv_juv_delta_contact_points,
   ..surv_juv_delta_contact_points = fallRunDSM::params$..surv_juv_delta_contact_points,
   .prop_diverted = fallRunDSM::params$.surv_juv_delta_prop_diverted,
+  .surv_juv_delta_total_diverted = fallRunDSM::params$.surv_juv_delta_total_diverted,
   ..surv_juv_delta_total_diverted = fallRunDSM::params$..surv_juv_delta_total_diverted,
   .medium = fallRunDSM::params$.surv_juv_delta_medium,
   .large = fallRunDSM::params$.surv_juv_delta_large,
@@ -47,11 +49,15 @@ surv_juv_delta(
 
 \item{.high_predation}{Coefficient for high_predation variable}
 
-\item{..surv_juv_delta_contact_points}{Coefficient for contact_points variable}
+\item{.surv_juv_delta_contact_points}{Coefficient for contact_points variable}
+
+\item{..surv_juv_delta_contact_points}{Calibrated coefficient for contact_points variable}
 
 \item{.prop_diverted}{Coefficient for prop_diversions variable}
 
-\item{..surv_juv_delta_total_diverted}{Coefficient for total_diversions variable}
+\item{.surv_juv_delta_total_diverted}{Coefficient for total_diversions variable}
+
+\item{..surv_juv_delta_total_diverted}{Calibrated coefficient for total_diversions variable}
 
 \item{.medium}{size related intercept for medium sized fish}
 

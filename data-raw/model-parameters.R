@@ -54,6 +54,9 @@ params <- list(
 
   # Juvenile rearing survival coefficients and variables
   .surv_juv_rear_avg_temp_thresh = -0.717,
+  .surv_juv_rear_contact_points = -0.189, # move out of calibration section and add into submodel
+  .surv_juv_rear_prop_diversions = -3.51, # move out of calibration section and add into submodel
+  .surv_juv_rear_total_diversions = -0.0021, # move out of calibration section and add into submodel
   .surv_juv_rear_high_predation = -0.122,
   .surv_juv_rear_stranded = -1.939,
   .surv_juv_rear_medium = 1.48,
@@ -70,6 +73,8 @@ params <- list(
 
   # Juvenile delta survival coefficients and variables
   .surv_juv_delta_avg_temp_thresh = -0.717,
+  .surv_juv_delta_contact_points = -0.189, # move out of calibration section and add into submodel
+  .surv_juv_delta_total_diverted = -0.0021, # move out of calibration section and add into submodel
   .surv_juv_delta_high_predation = -0.122,
   .surv_juv_delta_prop_diverted = -3.51,
   .surv_juv_delta_medium = 1.48,
@@ -153,13 +158,13 @@ params <- list(
                           `Lower Sacramento River` = -3.5, `Calaveras River` = -1.2, `Cosumnes River` = -1.2,
                           `Mokelumne River` = 1.9999999, `Merced River` = -0.2, `Stanislaus River` = -0.1081707,
                           `Tuolumne River` = -3.4999959, `San Joaquin River` = -0.4),
-  ..surv_juv_rear_contact_points = -0.0068,
-  ..surv_juv_rear_prop_diversions = -0.1755,
-  ..surv_juv_rear_total_diversions = -0.0005,
+  ..surv_juv_rear_contact_points = 0.0358,
+  ..surv_juv_rear_prop_diversions = 0.05,
+  ..surv_juv_rear_total_diversions = 0.215,
   ..surv_juv_bypass_int = -3.5,
   ..surv_juv_delta_int = 1.4,
-  ..surv_juv_delta_contact_points = (.0358 * -0.189),
-  ..surv_juv_delta_total_diverted = (.5 * -0.0021),
+  ..surv_juv_delta_contact_points = .0358,
+  ..surv_juv_delta_total_diverted = .5,
   ..surv_juv_outmigration_sj_int = -3.5,
   ..ocean_entry_success_int = c(
     `Upper Sacramento River` = -0.5108849,

@@ -12,9 +12,12 @@
 #' @param ..surv_juv_rear_int  intercept, source: calibration (varies by tributary)
 #' @param .avg_temp_thresh coefficient for avg_temp_thresh variable
 #' @param .high_predation coefficient for high_predation variable
-#' @param ..surv_juv_rear_contact_points coefficient for contact_points variable
-#' @param ..surv_juv_rear_prop_diversions coefficient for prop_diversions variable
-#' @param ..surv_juv_rear_total_diversions coefficient for total_diversions variable
+#' @param .surv_juv_rear_contact_points coefficient for contact_points variable
+#' @param ..surv_juv_rear_contact_points calibrated coefficient for contact_points variable
+#' @param .surv_juv_rear_prop_diversions coefficient for prop_diversions variable
+#' @param ..surv_juv_rear_prop_diversions calibrated coefficient for prop_diversions variable
+#' @param .surv_juv_rear_total_diversions coefficient for total_diversions variable
+#' @param ..surv_juv_rear_total_diversions calibrated coefficient for total_diversions variable
 #' @param .stranded coefficient for stranded variable
 #' @param .medium size related intercept for medium sized fish
 #' @param .large size related intercept for large sized fish
@@ -28,8 +31,11 @@ surv_juv_rear <- function(max_temp_thresh, avg_temp_thresh, high_predation,
                           ..surv_juv_rear_int = fallRunDSM::params$..surv_juv_rear_int,
                           .avg_temp_thresh = fallRunDSM::params$.surv_juv_rear_avg_temp_thresh,
                           .high_predation = fallRunDSM::params$.surv_juv_rear_high_predation,
+                          .surv_juv_rear_contact_points = fallRunDSM::params$.surv_juv_rear_contact_points,
                           ..surv_juv_rear_contact_points = fallRunDSM::params$..surv_juv_rear_contact_points,
+                          .surv_juv_rear_prop_diversions = fallRunDSM::params$.surv_juv_rear_prop_diversions,
                           ..surv_juv_rear_prop_diversions = fallRunDSM::params$..surv_juv_rear_prop_diversions,
+                          .surv_juv_rear_total_diversions = fallRunDSM::params$.surv_juv_rear_total_diversions,
                           ..surv_juv_rear_total_diversions = fallRunDSM::params$..surv_juv_rear_total_diversions,
                           .stranded = fallRunDSM::params$.surv_juv_rear_stranded,
                           .medium = fallRunDSM::params$.surv_juv_rear_medium,
@@ -43,9 +49,9 @@ surv_juv_rear <- function(max_temp_thresh, avg_temp_thresh, high_predation,
   base_score_inchannel <- ..surv_juv_rear_int +
     (.avg_temp_thresh * avg_temp_thresh) +
     (.high_predation * high_predation) +
-    (..surv_juv_rear_contact_points * contact_points * high_predation) +
-    (..surv_juv_rear_prop_diversions * prop_diversions) +
-    (..surv_juv_rear_total_diversions * total_diversions) +
+    (.surv_juv_rear_contact_points * ..surv_juv_rear_contact_points * contact_points * high_predation) +
+    (.surv_juv_rear_prop_diversions * ..surv_juv_rear_prop_diversions * prop_diversions) +
+    (.surv_juv_rear_total_diversions * ..surv_juv_rear_total_diversions * total_diversions) +
     (.stranded * stranded)
 
   base_score_floodplain <- ..surv_juv_rear_int + .floodplain +
@@ -119,9 +125,11 @@ surv_juv_bypass <- function(max_temp_thresh, avg_temp_thresh, high_predation,
 #' @param ..surv_juv_delta_int intercept, source: calibration
 #' @param .avg_temp_thresh Coefficient for avg_temp_thresh variable
 #' @param .high_predation Coefficient for high_predation variable
-#' @param ..surv_juv_delta_contact_points Coefficient for contact_points variable
+#' @param .surv_juv_delta_contact_points Coefficient for contact_points variable
+#' @param ..surv_juv_delta_contact_points Calibrated coefficient for contact_points variable
 #' @param .prop_diverted Coefficient for prop_diversions variable
-#' @param ..surv_juv_delta_total_diverted Coefficient for total_diversions variable
+#' @param .surv_juv_delta_total_diverted Coefficient for total_diversions variable
+#' @param ..surv_juv_delta_total_diverted Calibrated coefficient for total_diversions variable
 #' @param .medium size related intercept for medium sized fish
 #' @param .large size related intercept for large sized fish
 #' @param min_survival_rate estimated survival rate if temperature threshold is exceeded
@@ -132,8 +140,10 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
                            ..surv_juv_delta_int = fallRunDSM::params$..surv_juv_delta_int,
                            .avg_temp_thresh = fallRunDSM::params$.surv_juv_delta_avg_temp_thresh,
                            .high_predation = fallRunDSM::params$.surv_juv_delta_high_predation,
+                           .surv_juv_delta_contact_points = fallRunDSM::params$.surv_juv_delta_contact_points,
                            ..surv_juv_delta_contact_points = fallRunDSM::params$..surv_juv_delta_contact_points,
                            .prop_diverted = fallRunDSM::params$.surv_juv_delta_prop_diverted,
+                           .surv_juv_delta_total_diverted = fallRunDSM::params$.surv_juv_delta_total_diverted,
                            ..surv_juv_delta_total_diverted = fallRunDSM::params$..surv_juv_delta_total_diverted,
                            .medium = fallRunDSM::params$.surv_juv_delta_medium,
                            .large =  fallRunDSM::params$.surv_juv_delta_large,
@@ -145,9 +155,9 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
   base_score <- ..surv_juv_delta_int +
     .avg_temp_thresh * avg_temp_thresh[2] +
     .high_predation * high_predation[2] +
-    ..surv_juv_delta_contact_points * contact_points[2] * high_predation[2] +
+    .surv_juv_delta_contact_points * ..surv_juv_delta_contact_points * contact_points[2] * high_predation[2] +
     .prop_diverted * prop_diverted[2] +
-    ..surv_juv_delta_total_diverted * total_diverted[2]
+    .surv_juv_delta_total_diverted * ..surv_juv_delta_total_diverted * total_diverted[2]
 
   s <- ifelse(max_temp_thresh[2], min_survival_rate, boot::inv.logit(base_score))
   m <- ifelse(max_temp_thresh[2], min_survival_rate, boot::inv.logit(base_score + .medium))
@@ -181,13 +191,18 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
 #' @param delta_contact_points More details at \code{\link[DSMhabitat]{delta_contact_points}}
 #' @param delta_prop_high_predation More details at \code{\link[DSMhabitat]{delta_prop_high_predation}}
 #' @param ..surv_juv_rear_int Intercept for \code{\link{surv_juv_rear}}
-#' @param ..surv_juv_rear_contact_points Coefficient for \code{\link{surv_juv_rear}} \code{contact_points} variable
-#' @param ..surv_juv_rear_prop_diversions Coefficient for \code{\link{surv_juv_rear}} \code{prop_diversions} variable
-#' @param ..surv_juv_rear_total_diversions Coefficient for \code{\link{surv_juv_rear}} \code{total_diversions} variable
+#' @param .surv_juv_rear_contact_points Coefficient for \code{\link{surv_juv_rear}} \code{contact_points} variable
+#' @param ..surv_juv_rear_contact_points Calibrated coefficient for \code{\link{surv_juv_rear}} \code{contact_points} variable
+#' @param .surv_juv_rear_prop_diversions Coefficient for \code{\link{surv_juv_rear}} \code{prop_diversions} variable
+#' @param ..surv_juv_rear_prop_diversions Calibrated coefficient for \code{\link{surv_juv_rear}} \code{prop_diversions} variable
+#' @param .surv_juv_rear_total_diversions Coefficient for \code{\link{surv_juv_rear}} \code{total_diversions} variable
+#' @param ..surv_juv_rear_total_diversions Calibrated coefficient for \code{\link{surv_juv_rear}} \code{total_diversions} variable
 #' @param ..surv_juv_bypass_int Intercept for \code{\link{surv_juv_bypass}}
 #' @param ..surv_juv_delta_int Intercept for \code{\link{surv_juv_delta}}
-#' @param ..surv_juv_delta_contact_points Coefficient for \code{\link{surv_juv_delta}} contact_points variable
-#' @param ..surv_juv_delta_total_diverted Coefficient for \code{\link{surv_juv_delta}} total_diversions variable
+#' @param .surv_juv_delta_contact_points Coefficient for \code{\link{surv_juv_delta}} contact_points variable
+#' @param ..surv_juv_delta_contact_points Calibrated coefficient for \code{\link{surv_juv_delta}} contact_points variable
+#' @param .surv_juv_delta_total_diverted Coefficient for \code{\link{surv_juv_delta}} total_diversions variable
+#' @param ..surv_juv_delta_total_diverted Calibrated coefficient for \code{\link{surv_juv_delta}} total_diversions variable
 #' @param .surv_juv_rear_avg_temp_thresh Coefficient for \code{\link{surv_juv_rear}} \code{avg_temp_thresh} variable
 #' @param .surv_juv_rear_high_predation Coefficient for \code{\link{surv_juv_rear}} \code{high_predation} variable
 #' @param .surv_juv_rear_stranded Coefficient for \code{\link{surv_juv_rear}} \code{stranded} variable
@@ -224,12 +239,17 @@ get_rearing_survival_rates <- function(year, month,
                                        delta_contact_points,
                                        delta_prop_high_predation,
                                        ..surv_juv_rear_int,
+                                       .surv_juv_rear_contact_points,
                                        ..surv_juv_rear_contact_points,
+                                       .surv_juv_rear_prop_diversions,
                                        ..surv_juv_rear_prop_diversions,
+                                       .surv_juv_rear_total_diversions,
                                        ..surv_juv_rear_total_diversions,
                                        ..surv_juv_bypass_int,
                                        ..surv_juv_delta_int,
+                                       .surv_juv_delta_contact_points,
                                        ..surv_juv_delta_contact_points,
+                                       .surv_juv_delta_total_diverted,
                                        ..surv_juv_delta_total_diverted,
                                        .surv_juv_rear_avg_temp_thresh,
                                        .surv_juv_rear_high_predation,
@@ -288,8 +308,11 @@ get_rearing_survival_rates <- function(year, month,
                   stranded = ws_strand[x],
                   weeks_flooded = weeks_flood[x],
                   ..surv_juv_rear_int = ..surv_juv_rear_int[x],
+                  .surv_juv_rear_contact_points = .surv_juv_rear_contact_points,
                   ..surv_juv_rear_contact_points = ..surv_juv_rear_contact_points,
+                  .surv_juv_rear_prop_diversions = .surv_juv_rear_prop_diversions,
                   ..surv_juv_rear_prop_diversions = ..surv_juv_rear_prop_diversions,
+                  .surv_juv_rear_total_diversions = .surv_juv_rear_total_diversions,
                   ..surv_juv_rear_total_diversions = ..surv_juv_rear_total_diversions,
                   .avg_temp_thresh = .surv_juv_rear_avg_temp_thresh,
                   .high_predation = .surv_juv_rear_high_predation,
@@ -331,7 +354,9 @@ get_rearing_survival_rates <- function(year, month,
                                    prop_diverted = delta_proportion_diverted,
                                    total_diverted = delta_total_diverted,
                                    ..surv_juv_delta_int = ..surv_juv_delta_int,
+                                   .surv_juv_delta_contact_points = .surv_juv_delta_contact_points,
                                    ..surv_juv_delta_contact_points = ..surv_juv_delta_contact_points,
+                                   .surv_juv_delta_total_diverted = .surv_juv_delta_total_diverted,
                                    ..surv_juv_delta_total_diverted = ..surv_juv_delta_total_diverted,
                                    .avg_temp_thresh = .surv_juv_delta_avg_temp_thresh,
                                    .high_predation = .surv_juv_delta_high_predation,
