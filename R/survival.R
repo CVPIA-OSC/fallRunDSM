@@ -34,7 +34,7 @@ surv_juv_rear <- function(max_temp_thresh, avg_temp_thresh, high_predation,
                           medium = fallRunDSM::params$surv_juv_rear_medium,
                           large = fallRunDSM::params$surv_juv_rear_large,
                           floodplain = fallRunDSM::params$surv_juv_rear_floodplain,
-                          min_survival_rate){
+                          min_survival_rate = fallRunDSM::params$min_survival_rate){
   # determine the proportion of weeks when flooded vs not
   prop_ic <-ifelse(weeks_flooded > 0, (4 - weeks_flooded) / 4, 1)
   prop_fp <- 1 - prop_ic
@@ -91,7 +91,7 @@ surv_juv_bypass <- function(max_temp_thresh, avg_temp_thresh, high_predation,
                             medium = fallRunDSM::params$surv_juv_bypass_medium,
                             large = fallRunDSM::params$surv_juv_bypass_large,
                             floodplain = fallRunDSM::params$surv_juv_bypass_floodplain,
-                            min_survival_rate){
+                            min_survival_rate = fallRunDSM::params$min_survival_rate){
 
   base_score <- ..surv_juv_bypass_int + floodplain +
     .avg_temp_thresh * avg_temp_thresh +
@@ -134,7 +134,7 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
                            ..surv_juv_delta_total_diverted = fallRunDSM::params$..surv_juv_delta_total_diverted,
                            medium = fallRunDSM::params$surv_juv_delta_medium,
                            large =  fallRunDSM::params$surv_juv_delta_large,
-                           min_survival_rate){
+                           min_survival_rate = fallRunDSM::params$min_survival_rate){
   # north delta
   north_delta_surv <- rep((avg_temp <= 16.5)*.42 + (avg_temp > 16.5 & avg_temp < 19.5) * 0.42 / (1.55^(avg_temp-15.5)) + (avg_temp > 19.5 & avg_temp < 25)*0.035,4)
 
