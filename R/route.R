@@ -1,6 +1,7 @@
 #' @title Route Natal Streams
 #' @description Determines if juveniles stay in their natal tributary, are detoured
 #' to a bypass, or out migrate during a simulated month
+#' @details See \code{\link{params}} for details on parameter sources
 #' @param year The current simulation year, 1-20
 #' @param month The current simulation month, 1-8
 #' @param juvenile An n by 4 matrix of juvenile fish by watershed and size class
@@ -8,14 +9,14 @@
 #' @param floodplain_habitat A vector of available floodplain habitat in square meters
 #' @param prop_pulse_flows The proportion of pulse flows
 #' @param detour Values can be 'sutter' or 'yolo' if some juveniles are detoured on to that bypass, otherwise NULL
-#' @param .pulse_movement_intercept TODO
-#' @param .pulse_movement_proportion_pulse TODO
-#' @param .pulse_movement_medium TODO
-#' @param .pulse_movement_large TODO
-#' @param .pulse_movement_vlarge TODO
-#' @param .pulse_movement_medium_pulse TODO
-#' @param .pulse_movement_large_pulse TODO
-#' @param .pulse_movement_very_large_pulse TODO
+#' @param .pulse_movement_intercept Intercept for \code{\link{pulse_movement}}
+#' @param .pulse_movement_proportion_pulse Coefficient for \code{\link{pulse_movement}} \code{proportion_pulse} variable
+#' @param pulse_movement_medium Parameter for \code{\link{pulse_movement}} medium sized fish
+#' @param pulse_movement_large Parameter for \code{\link{pulse_movement}} large sized fish
+#' @param pulse_movement_vlarge Parameter for \code{\link{pulse_movement}} very large sized fish
+#' @param .pulse_movement_medium_pulse Additional coefficient for \code{\link{pulse_movement}} \code{proportion_pulse} variable for medium size fish
+#' @param .pulse_movement_large_pulse Additional coefficient for \code{\link{pulse_movement}} \code{proportion_pulse} variable for large size fish
+#' @param .pulse_movement_very_large_pulse Additional coefficient for \code{\link{pulse_movement}} \code{proportion_pulse} variable for very large size fish
 #' @source IP-117068
 #' @export
 route <- function(year, month, juveniles, inchannel_habitat, floodplain_habitat,

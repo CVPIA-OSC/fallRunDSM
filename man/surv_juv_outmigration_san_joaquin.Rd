@@ -23,3 +23,6 @@ surv_juv_outmigration_san_joaquin(
 \description{
 Calculates the San Joaquin River juvenile out migration survival
 }
+\details{
+See \code{\link{params}} for details on parameter sources
+}

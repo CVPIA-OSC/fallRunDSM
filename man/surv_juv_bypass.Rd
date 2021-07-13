@@ -44,3 +44,6 @@ surv_juv_bypass(
 \description{
 Calculates the juvenile rearing survival in the bypasses
 }
+\details{
+See \code{\link{params}} for details on parameter sources
+}

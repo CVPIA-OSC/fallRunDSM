@@ -72,3 +72,6 @@ surv_juv_rear(
 \description{
 Calculates the juvenile rearing survival inchannel and on the floodplain
 }
+\details{
+See \code{\link{params}} for details on parameter sources
+}

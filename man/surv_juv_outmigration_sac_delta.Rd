@@ -49,3 +49,6 @@ surv_juv_outmigration_sac_delta(
 \description{
 Calculates the Sacramento Delta juvenile out migration survival
 }
+\details{
+See \code{\link{params}} for details on parameter sources
+}

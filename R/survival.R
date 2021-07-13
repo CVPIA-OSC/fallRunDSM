@@ -1,5 +1,6 @@
 #' @title Juvenile Rearing Survival
 #' @description Calculates the juvenile rearing survival inchannel and on the floodplain
+#' @details See \code{\link{params}} for details on parameter sources
 #' @param max_temp_thresh variable representing probability of exceeding the max temperature threshold
 #' @param avg_temp_thresh variable representing probability of exceeding the avg temperature threshold
 #' @param high_predation variable representing indicator of high predation for a watershed
@@ -72,6 +73,7 @@ surv_juv_rear <- function(max_temp_thresh, avg_temp_thresh, high_predation,
 
 #' @title Juvenile Bypass Survival
 #' @description Calculates the juvenile rearing survival in the bypasses
+#' @details See \code{\link{params}} for details on parameter sources
 #' @param max_temp_thresh Variable representing the probability of exceeding the max temp threshold
 #' @param avg_temp_thresh Variable representing the probability of exceeding the average temperature
 #' @param high_predation Variable representing an indicator for high predation in watershed
@@ -106,6 +108,7 @@ surv_juv_bypass <- function(max_temp_thresh, avg_temp_thresh, high_predation,
 
 #' @title Juvenile Delta Survival
 #' @description Calculates the juvenile rearing survival in the deltas
+#' @details See \code{\link{params}} for details on parameter sources
 #' @param avg_temp Variable representing average temperature in the delta
 #' @param max_temp_thresh Variable representing the probability of exceeding the max temperature
 #' @param avg_temp_thresh Variable representing the probability of exceeding the average temperature
@@ -362,6 +365,7 @@ surv_juv_outmigration_sac <- function(flow_cms){
 
 #' @title Juvenile San Joaquin Outmigration Survival
 #' @description Calculates the San Joaquin River juvenile out migration survival
+#' @details See \code{\link{params}} for details on parameter sources
 #' @param ..surv_juv_outmigration_sj_int Intercept
 #' @param medium Parameter for medium sized fish
 #' @param large Parameter for large sized fish
@@ -380,6 +384,7 @@ surv_juv_outmigration_san_joaquin <- function(..surv_juv_outmigration_sj_int = f
 
 #' @title Juvenile Delta Outmigration Survival
 #' @description Calculates the Sacramento Delta juvenile out migration survival
+#' @details See \code{\link{params}} for details on parameter sources
 #' @param delta_flow Variable describing delta inflow in cubic meters per second
 #' @param avg_temp Variable describing monthly mean temperature in celsius
 #' @param perc_diversions Variable describing monthly mean percent diverted

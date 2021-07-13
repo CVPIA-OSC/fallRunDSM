@@ -39,25 +39,28 @@ route(
 
 \item{detour}{Values can be 'sutter' or 'yolo' if some juveniles are detoured on to that bypass, otherwise NULL}
 
-\item{.pulse_movement_intercept}{TODO}
+\item{.pulse_movement_intercept}{Intercept for \code{\link{pulse_movement}}}
 
-\item{.pulse_movement_proportion_pulse}{TODO}
+\item{.pulse_movement_proportion_pulse}{Coefficient for \code{\link{pulse_movement}} \code{proportion_pulse} variable}
 
-\item{.pulse_movement_medium_pulse}{TODO}
+\item{pulse_movement_medium}{Parameter for \code{\link{pulse_movement}} medium sized fish}
 
-\item{.pulse_movement_large_pulse}{TODO}
+\item{pulse_movement_large}{Parameter for \code{\link{pulse_movement}} large sized fish}
 
-\item{.pulse_movement_very_large_pulse}{TODO}
+\item{pulse_movement_vlarge}{Parameter for \code{\link{pulse_movement}} very large sized fish}
+
+\item{.pulse_movement_medium_pulse}{Additional coefficient for \code{\link{pulse_movement}} \code{proportion_pulse} variable for medium size fish}
+
+\item{.pulse_movement_large_pulse}{Additional coefficient for \code{\link{pulse_movement}} \code{proportion_pulse} variable for large size fish}
+
+\item{.pulse_movement_very_large_pulse}{Additional coefficient for \code{\link{pulse_movement}} \code{proportion_pulse} variable for very large size fish}
 
 \item{juvenile}{An n by 4 matrix of juvenile fish by watershed and size class}
-
-\item{.pulse_movement_medium}{TODO}
-
-\item{.pulse_movement_large}{TODO}
-
-\item{.pulse_movement_vlarge}{TODO}
 }
 \description{
 Determines if juveniles stay in their natal tributary, are detoured
 to a bypass, or out migrate during a simulated month
+}
+\details{
+See \code{\link{params}} for details on parameter sources
 }

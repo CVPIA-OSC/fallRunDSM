@@ -62,3 +62,6 @@ surv_juv_delta(
 \description{
 Calculates the juvenile rearing survival in the deltas
 }
+\details{
+See \code{\link{params}} for details on parameter sources
+}
