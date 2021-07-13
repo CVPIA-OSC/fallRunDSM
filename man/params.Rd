@@ -64,7 +64,7 @@ period in front are model or submodel coefficients. Parameters with double perio
 }
 }
 
-\section{Rearing Survival Tributary}{
+\section{Tributary Rearing Survival}{
 
 \itemize{
   \item \code{avg_temp}: More details at \code{\link[DSMtemperature]{stream_temperature}}
@@ -88,7 +88,7 @@ period in front are model or submodel coefficients. Parameters with double perio
 }
 }
 
-\section{Rearing Survival Bypass}{
+\section{Bypass Rearing Survival}{
 
 \itemize{
   \item \code{..surv_juv_bypass_int}: Intercept, Source: calibration
@@ -100,7 +100,7 @@ period in front are model or submodel coefficients. Parameters with double perio
 }
 }
 
-\section{Rearing Survival Delta}{
+\section{Delta Rearing Survival}{
 
 \itemize{
   \item \code{avg_temp_delta}: More details at \code{\link[DSMtemperature]{delta_temperature}}
@@ -119,7 +119,7 @@ period in front are model or submodel coefficients. Parameters with double perio
 }
 }
 
-\section{Migratory Survival Tributary}{
+\section{Tributary Migratory Survival}{
 
 \itemize{
   \item \code{cc_gates_prop_days_closed}: More details at \code{\link[DSMflow]{delta_cross_channel_closed}}
@@ -139,7 +139,7 @@ period in front are model or submodel coefficients. Parameters with double perio
   }
 }
 
-\section{Migratory Survival Delta}{
+\section{Delta Migratory Survival}{
 
 \itemize{
   \item \code{delta_inflow}: More details at \code{\link[DSMflow]{delta_inflow}}
@@ -165,7 +165,7 @@ period in front are model or submodel coefficients. Parameters with double perio
 }
 }
 
-\section{Routing}{
+\section{Tributary Routing}{
 
 \itemize{
   \item \code{prop_pulse_flows}: More details at \code{\link[DSMflow]{proportion_pulse_flows}}
@@ -181,7 +181,7 @@ period in front are model or submodel coefficients. Parameters with double perio
 }
 }
 
-\section{Rearing}{
+\section{Tributary Rearing}{
 
 \itemize{
   \item \code{growth_rates}: More details at: \code{\link{growth_rates}}

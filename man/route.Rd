@@ -18,9 +18,9 @@ route(
   detour = NULL,
   .pulse_movement_intercept,
   .pulse_movement_proportion_pulse,
-  .pulse_movement_medium,
-  .pulse_movement_large,
-  .pulse_movement_vlarge,
+  pulse_movement_medium,
+  pulse_movement_large,
+  pulse_movement_vlarge,
   .pulse_movement_medium_pulse,
   .pulse_movement_large_pulse,
   .pulse_movement_very_large_pulse
@@ -43,12 +43,6 @@ route(
 
 \item{.pulse_movement_proportion_pulse}{TODO}
 
-\item{.pulse_movement_medium}{TODO}
-
-\item{.pulse_movement_large}{TODO}
-
-\item{.pulse_movement_vlarge}{TODO}
-
 \item{.pulse_movement_medium_pulse}{TODO}
 
 \item{.pulse_movement_large_pulse}{TODO}
@@ -56,6 +50,12 @@ route(
 \item{.pulse_movement_very_large_pulse}{TODO}
 
 \item{juvenile}{An n by 4 matrix of juvenile fish by watershed and size class}
+
+\item{.pulse_movement_medium}{TODO}
+
+\item{.pulse_movement_large}{TODO}
+
+\item{.pulse_movement_vlarge}{TODO}
 }
 \description{
 Determines if juveniles stay in their natal tributary, are detoured

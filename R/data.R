@@ -121,7 +121,7 @@
 #'   \item \code{.surv_egg_to_fry_scour}: Coefficient for \code{scour} variable, Source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/montogemery_1996.pdf}{Montgomery et al. (1996)}
 #'   \item \code{..surv_egg_to_fry_int}:  Intercept, Source: Calibration
 #' }
-#' @section Rearing Survival Tributary:
+#' @section Tributary Rearing Survival:
 #' \itemize{
 #'   \item \code{avg_temp}: More details at \code{\link[DSMtemperature]{stream_temperature}}
 #'   \item \code{prob_strand_early}: More details at \code{\link[DSMhabitat]{prob_strand_early}}
@@ -142,7 +142,7 @@
 #'   \item \code{surv_juv_rear_large}: parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
 #'   \item \code{surv_juv_rear_floodplain}: parameter for floodplain rearing benefit, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/SOMMER_T-SDWA+180+Floodplain+rearing+of+juvenile+chinook+salmon+evidence+of+enhanced+growth+and+survival+.pdf}{Sommer et al. (2001)}
 #' }
-#' @section Rearing Survival Bypass:
+#' @section Bypass Rearing Survival:
 #' \itemize{
 #'   \item \code{..surv_juv_bypass_int}: Intercept, Source: calibration
 #'   \item \code{.surv_juv_bypass_avg_temp_thresh}: Coefficient for \code{avg_temp_thresh} variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/marine_cech_water_temp_effects.pdf}{Marine and Chech (2004)}
@@ -151,7 +151,7 @@
 #'   \item \code{surv_juv_bypass_large}: Parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
 #'   \item \code{surv_juv_bypass_floodplain}: Parameter for floodplain rearing benefit, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/SOMMER_T-SDWA+180+Floodplain+rearing+of+juvenile+chinook+salmon+evidence+of+enhanced+growth+and+survival+.pdf}{Sommer et al. (2001)}
 #' }
-#' @section Rearing Survival Delta:
+#' @section Delta Rearing Survival:
 #' \itemize{
 #'   \item \code{avg_temp_delta}: More details at \code{\link[DSMtemperature]{delta_temperature}}
 #'   \item \code{delta_proportion_diverted}: More details at \code{\link[DSMflow]{delta_proportion_diverted}}
@@ -167,7 +167,7 @@
 #'   \item \code{surv_juv_delta_medium}: parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
 #'   \item \code{surv_juv_delta_large}: parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
 #' }
-#' @section Migratory Survival Tributary:
+#' @section Tributary Migratory Survival:
 #' \itemize{
 #'   \item \code{cc_gates_prop_days_closed}: More details at \code{\link[DSMflow]{delta_cross_channel_closed}}
 #'   \item \code{upper_sacramento_flows}: More details at \code{\link[DSMflow]{upper_sacramento_flows}}
@@ -184,7 +184,7 @@
 #'   \item \code{min_survival_rate} Estimated survival rate if temperature threshold is exceeded, source: expert opinion
 #'   \item \code{avg_temp}: More details at \code{\link[DSMtemperature]{stream_temperature}}
 #'   }
-#' @section Migratory Survival Delta:
+#' @section Delta Migratory Survival:
 #' \itemize{
 #'   \item \code{delta_inflow}: More details at \code{\link[DSMflow]{delta_inflow}}
 #'   \item \code{avg_temp_delta}: More details at \code{\link[DSMtemperature]{delta_temperature}}
@@ -204,7 +204,7 @@
 #'   \item \code{cc_gates_days_closed}: More details at \code{\link[DSMflow]{delta_cross_channel_closed}}
 #'   \item \code{growth_rates}: More details at: \code{\link{growth_rates}}
 #' }
-#' @section Routing:
+#' @section Tributary Routing:
 #' \itemize{
 #'   \item \code{prop_pulse_flows}: More details at \code{\link[DSMflow]{proportion_pulse_flows}}
 #'   \item \code{proportion_flow_bypass}: More details at \code{\link[DSMflow]{proportion_flow_bypasses}}
@@ -217,7 +217,7 @@
 #'   \item \code{.pulse_movement_large_pulse}: Additional coefficient for \code{proportion_pulse} variable for large size fish, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.
 #'   \item \code{.pulse_movement_very_large_pulse}: Additional coefficient for \code{proportion_pulse} variable for very large size fish, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.
 #' }
-#' @section Rearing:
+#' @section Tributary Rearing:
 #' \itemize{
 #'   \item \code{growth_rates}: More details at: \code{\link{growth_rates}}
 #'   \item \code{growth_rates_floodplain}: More details at: \code{\link{growth_rates_floodplain}}
