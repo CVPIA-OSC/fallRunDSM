@@ -529,7 +529,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
       adults_in_ocean <- adults_in_ocean + ocean_entry_success(migrants = migrants_at_golden_gate,
                                                                month = month,
                                                                avg_ocean_transition_month = avg_ocean_transition_month,
-                                                               .ocean_entry_success_length = ..params$.ocean_entry_success_length,
+                                                               ocean_entry_success_length = ..params$ocean_entry_success_length,
                                                                ..ocean_entry_success_int = ..params$..ocean_entry_success_int,
                                                                .ocean_entry_success_months = ..params$.ocean_entry_success_months)
 

@@ -11,7 +11,7 @@ ocean_entry_success(
   migrants,
   month,
   avg_ocean_transition_month,
-  .ocean_entry_success_length = fallRunDSM::params$.ocean_entry_success_length,
+  ocean_entry_success_length = fallRunDSM::params$ocean_entry_success_length,
   ..ocean_entry_success_int = fallRunDSM::params$..ocean_entry_success_int,
   .ocean_entry_success_months = fallRunDSM::params$.ocean_entry_success_months
 )
@@ -23,11 +23,11 @@ ocean_entry_success(
 
 \item{avg_ocean_transition_month}{Variable representing the average month juveniles transition to the ocean}
 
-\item{.ocean_entry_success_length}{Variable representing the fork lengths for each size classes}
-
 \item{..ocean_entry_success_int}{Intercept}
 
 \item{.ocean_entry_success_months}{Coefficient for month variable}
+
+\item{.ocean_entry_success_length}{Variable representing the fork lengths for each size classes}
 }
 \description{
 Calculates the number of juveniles that survive entering the ocean
