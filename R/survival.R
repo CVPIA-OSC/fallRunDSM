@@ -15,9 +15,9 @@
 #' @param ..surv_juv_rear_prop_diversions coefficient for prop_diversions variable
 #' @param ..surv_juv_rear_total_diversions coefficient for total_diversions variable
 #' @param .stranded coefficient for stranded variable
-#' @param .medium parameter for medium sized fish
-#' @param .large parameter for large sized fish
-#' @param .floodplain parameter for floodplain rearing benefit
+#' @param medium parameter for medium sized fish
+#' @param large parameter for large sized fish
+#' @param floodplain parameter for floodplain rearing benefit
 #' @param min_survival_rate estimated survival rate if temperature threshold is exceeded, source: expert opinion
 #' @source IP-117068
 #' @export
@@ -31,9 +31,9 @@ surv_juv_rear <- function(max_temp_thresh, avg_temp_thresh, high_predation,
                           ..surv_juv_rear_prop_diversions = fallRunDSM::params$..surv_juv_rear_prop_diversions,
                           ..surv_juv_rear_total_diversions = fallRunDSM::params$..surv_juv_rear_total_diversions,
                           .stranded = fallRunDSM::params$.surv_juv_rear_stranded,
-                          .medium = fallRunDSM::params$.surv_juv_rear_medium,
-                          .large = fallRunDSM::params$.surv_juv_rear_large,
-                          .floodplain = fallRunDSM::params$.surv_juv_rear_floodplain,
+                          medium = fallRunDSM::params$surv_juv_rear_medium,
+                          large = fallRunDSM::params$surv_juv_rear_large,
+                          floodplain = fallRunDSM::params$surv_juv_rear_floodplain,
                           min_survival_rate){
   # determine the proportion of weeks when flooded vs not
   prop_ic <-ifelse(weeks_flooded > 0, (4 - weeks_flooded) / 4, 1)
@@ -47,16 +47,16 @@ surv_juv_rear <- function(max_temp_thresh, avg_temp_thresh, high_predation,
     (..surv_juv_rear_total_diversions * total_diversions) +
     (.stranded * stranded)
 
-  base_score_floodplain <- ..surv_juv_rear_int + .floodplain +
+  base_score_floodplain <- ..surv_juv_rear_int + floodplain +
     (.avg_temp_thresh  * avg_temp_thresh) + (.high_predation * high_predation)
 
   s1 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_inchannel))
-  m1 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_inchannel + .medium))
-  l1 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_inchannel  + .large))
+  m1 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_inchannel + medium))
+  l1 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_inchannel + large))
 
   s2 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_floodplain)) ^ prop_fp
-  m2 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_floodplain + .medium)) ^ prop_fp
-  l2 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_floodplain + .large)) ^ prop_fp
+  m2 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_floodplain + medium)) ^ prop_fp
+  l2 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_floodplain + large)) ^ prop_fp
 
   list(
     inchannel = cbind(s = s1,
@@ -188,8 +188,8 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
 #' @param .surv_juv_rear_avg_temp_thresh Coefficient for \code{\link{surv_juv_rear}} \code{avg_temp_thresh} variable
 #' @param .surv_juv_rear_high_predation Coefficient for \code{\link{surv_juv_rear}} \code{high_predation} variable
 #' @param .surv_juv_rear_stranded Coefficient for \code{\link{surv_juv_rear}} \code{stranded} variable
-#' @param .surv_juv_rear_medium Parameter for \code{\link{surv_juv_rear}} medium sized fish
-#' @param .surv_juv_rear_large Parameter for \code{\link{surv_juv_rear}} large sized fish
+#' @param surv_juv_rear_medium Parameter for \code{\link{surv_juv_rear}} medium sized fish
+#' @param surv_juv_rear_large Parameter for \code{\link{surv_juv_rear}} large sized fish
 #' @param .surv_juv_rear_floodplain Parameter for \code{\link{surv_juv_rear}} floodplain rearing benefit
 #' @param .surv_juv_bypass_avg_temp_thresh Coefficient for \code{\link{surv_juv_bypass}} \code{avg_temp_thresh} variable
 #' @param .surv_juv_bypass_high_predation Coefficient for \code{\link{surv_juv_bypass}} \code{high_predation} variableTODO
@@ -231,9 +231,9 @@ get_rearing_survival_rates <- function(year, month,
                                        .surv_juv_rear_avg_temp_thresh,
                                        .surv_juv_rear_high_predation,
                                        .surv_juv_rear_stranded,
-                                       .surv_juv_rear_medium,
-                                       .surv_juv_rear_large,
-                                       .surv_juv_rear_floodplain,
+                                       surv_juv_rear_medium,
+                                       surv_juv_rear_large,
+                                       surv_juv_rear_floodplain,
                                        .surv_juv_bypass_avg_temp_thresh,
                                        .surv_juv_bypass_high_predation,
                                        .surv_juv_bypass_medium,
@@ -291,9 +291,9 @@ get_rearing_survival_rates <- function(year, month,
                   .avg_temp_thresh = .surv_juv_rear_avg_temp_thresh,
                   .high_predation = .surv_juv_rear_high_predation,
                   .stranded = .surv_juv_rear_stranded,
-                  .medium = .surv_juv_rear_medium,
-                  .large = .surv_juv_rear_large,
-                  .floodplain = .surv_juv_rear_floodplain,
+                  medium = surv_juv_rear_medium,
+                  large = surv_juv_rear_large,
+                  floodplain = surv_juv_rear_floodplain,
                   min_survival_rate = min_survival_rate)
   }))
 
