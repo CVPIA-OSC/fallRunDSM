@@ -45,7 +45,7 @@ route <- function(year, month, juveniles, inchannel_habitat, floodplain_habitat,
                                      .large_pulse = .pulse_movement_large_pulse,
                                      .very_large_pulse = .pulse_movement_very_large_pulse)
 
-  # total fish that will migrate becuase of pulse flows, this derived using total in river
+  # total fish that will migrate because of pulse flows, this derived using total in river
   # and a binomial selection based on pr of movement due to pulse flows
   pulse_migrants <- t(sapply(1:nrow(juveniles), function(i) {
     rbinom(n = 4, size = round(natal_watersheds$inchannel[i, ]), prob = prob_pulse_leave[i, ])
