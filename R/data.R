@@ -44,7 +44,7 @@
 "mass_by_size_class"
 
 #' @title Cross Channel Stray Rate
-#' @description Natural straying allocation across channes, source: expert opinion from SIT members.
+#' @description Natural straying allocation across channels, source: expert opinion from SIT members.
 "cross_channel_stray_rate"
 
 #' @title Stray Rate
@@ -54,13 +54,19 @@
 "stray_rate"
 
 #' @title Diversity Groups
-#' @description TODO
+#' @description SIT defined diversity groups
 "diversity_group"
 
 #' @rdname growth
+#' @description Growth rates determined by expert SIT judgment based on the following: \href{https://link.springer.com/article/10.1007/s10641-009-9473-8}{Limm, M.P., Marchetti, M.P.  (2009)}
+#' \href{https://www.tandfonline.com/doi/abs/10.1577/T08-112.1}{Rene E. Henery, Ted R. Sommer & Charles R. Goldman (2010)}
+#' \href{https://link.springer.com/article/10.1007/s10641-008-9367-1}{Jeffres, C.A., Opperman, J.J. & Moyle, P.B. (2008)}
 "growth_rates"
 
 #' @rdname growth_floodplain
+#' @description Growth rates determined by expert SIT judgment based on the following: \href{https://link.springer.com/article/10.1007/s10641-009-9473-8}{Limm, M.P., Marchetti, M.P.  (2009)}
+#' \href{https://www.tandfonline.com/doi/abs/10.1577/T08-112.1}{Rene E. Henery, Ted R. Sommer & Charles R. Goldman (2010)}
+#' \href{https://link.springer.com/article/10.1007/s10641-008-9367-1}{Jeffres, C.A., Opperman, J.J. & Moyle, P.B. (2008)}
 "growth_rates_floodplain"
 
 #' @title Model Parameters

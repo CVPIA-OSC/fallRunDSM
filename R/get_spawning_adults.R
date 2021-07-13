@@ -14,7 +14,7 @@
 #' @param .adult_stray_intercept Intercept for \code{\link{adult_stray}}
 #' @param .adult_stray_wild Coefficient for \code{\link{adult_stray}} \code{wild} variable
 #' @param .adult_stray_natal_flow  Coefficient for \code{\link{adult_stray}} \code{natal_flow} variable
-#' @param .adult_stray_cross_channel_gates_closed  Coefficient for \code{\link{adult_stray} \code{cross_channel_gates_closed} variable
+#' @param .adult_stray_cross_channel_gates_closed  Coefficient for \code{\link{adult_stray}} \code{cross_channel_gates_closed} variable
 #' @param .adult_stray_prop_bay_trans  Coefficient for \code{\link{adult_stray}} \code{prop_bay_trans} variable
 #' @param .adult_stray_prop_delta_trans  Coefficient for \code{\link{adult_stray}} \code{prop_delta_trans} variable
 #' @param ..surv_adult_enroute_int Intercept for \code{\link{surv_adult_enroute}}

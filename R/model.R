@@ -2,11 +2,11 @@
 #' @description Fall Run Chinook life cycle model used for CVPIA's Structured
 #' Decision Making Process
 #' @param scenario Model inputs, can be modified to test management actions
-#' @param mode
+#' @param mode The mode to run model in. Can be \code{"seed"}, \code{"simulate"}, \code{"calibrate"}
 #' @param seeds The default value is NULL runs the model in seeding mode,
 #' returning a 31 by 25 matrix with the first four years of seeded adults. This
 #' returned value can be fed into the model again as the value for the seeds argument
-#' @param ..params parameters for model and submodels
+#' @param ..params Parameters for model and submodels
 #' @source IP-117068
 #' @export
 fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibrate"),

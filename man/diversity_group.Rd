@@ -11,6 +11,6 @@ An object of class \code{numeric} of length 31.
 diversity_group
 }
 \description{
-TODO
+SIT defined diversity groups
 }
 \keyword{datasets}

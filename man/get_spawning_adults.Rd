@@ -63,6 +63,8 @@ get_spawning_adults(
 
 \item{.adult_stray_natal_flow}{Coefficient for \code{\link{adult_stray}} \code{natal_flow} variable}
 
+\item{.adult_stray_cross_channel_gates_closed}{Coefficient for \code{\link{adult_stray}} \code{cross_channel_gates_closed} variable}
+
 \item{.adult_stray_prop_bay_trans}{Coefficient for \code{\link{adult_stray}} \code{prop_bay_trans} variable}
 
 \item{.adult_stray_prop_delta_trans}{Coefficient for \code{\link{adult_stray}} \code{prop_delta_trans} variable}

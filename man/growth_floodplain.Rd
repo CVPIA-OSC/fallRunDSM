@@ -22,6 +22,10 @@ growth_floodplain(daily_rates = c(0.5, 1.06), weeks_flooded = 1:4)
 \item{weeks_flooded}{The number of weeks inundated, 1-4 weeks}
 }
 \description{
+Growth rates determined by expert SIT judgment based on the following: \href{https://link.springer.com/article/10.1007/s10641-009-9473-8}{Limm, M.P., Marchetti, M.P.  (2009)}
+\href{https://www.tandfonline.com/doi/abs/10.1577/T08-112.1}{Rene E. Henery, Ted R. Sommer & Charles R. Goldman (2010)}
+\href{https://link.springer.com/article/10.1007/s10641-008-9367-1}{Jeffres, C.A., Opperman, J.J. & Moyle, P.B. (2008)}
+
 Generates transition probability matrices for growth on the
 floodplain dependent on number of weeks inundated
 }

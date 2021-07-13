@@ -22,6 +22,10 @@ growth(daily_growth_rate = 0.5, size_class_breaks = c(35, 42, 72, 110))
 \item{daily_rates}{The daily growth rate for inchannel (default value is 0.5 mm/day)}
 }
 \description{
+Growth rates determined by expert SIT judgment based on the following: \href{https://link.springer.com/article/10.1007/s10641-009-9473-8}{Limm, M.P., Marchetti, M.P.  (2009)}
+\href{https://www.tandfonline.com/doi/abs/10.1577/T08-112.1}{Rene E. Henery, Ted R. Sommer & Charles R. Goldman (2010)}
+\href{https://link.springer.com/article/10.1007/s10641-008-9367-1}{Jeffres, C.A., Opperman, J.J. & Moyle, P.B. (2008)}
+
 Generates transition probability matrices for growth inchannel
 }
 \keyword{datasets}
