@@ -1,6 +1,6 @@
 #' @title Get habitat Values
 #' @source IP-117068
-#' @description Returns the appropriate habitat for spawning and rearing based on habitat inputs and a given simulation year and month
+#' @description 3 dimensional array [watersheds, months, years] representing fry inchannel and floodplain rearing habitat in square meters
 #' @details See \code{\link{params}} for details on parameter sources
 #' @param year The current simulation year, 1-20
 #' @param month The current simulation month, 1-8

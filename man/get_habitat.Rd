@@ -38,7 +38,7 @@ get_habitat(
 \item{south_delta_habitat}{Variable describing south delta rearing habitat}
 }
 \description{
-Returns the appropriate habitat for spawning and rearing based on habitat inputs and a given simulation year and month
+3 dimensional array [watersheds, months, years] representing fry inchannel and floodplain rearing habitat in square meters
 }
 \details{
 See \code{\link{params}} for details on parameter sources
