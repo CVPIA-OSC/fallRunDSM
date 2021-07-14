@@ -4,7 +4,7 @@
 \name{growth_rates}
 \alias{growth_rates}
 \alias{growth}
-\title{Growth Transistion Probability}
+\title{Growth Transition Probability}
 \format{
 An object of class \code{matrix} (inherits from \code{array}) with 4 rows and 4 columns.
 }
