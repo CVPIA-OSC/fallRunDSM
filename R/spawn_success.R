@@ -25,11 +25,7 @@ spawn_success <- function(escapement, adult_prespawn_survival, egg_to_fry_surviv
     round(escapement * adult_prespawn_survival * sex_ratio)
   }
 
-  spawners <- if(spawner_potential > capacity) {
-    capacity
-  } else {
-    spawner_potential
-  }
+  spawners <- pmax(spawner_potential, capacity)
 
   fry <- spawners * (1 - prob_scour) * fecundity * egg_to_fry_survival
 
