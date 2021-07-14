@@ -13,7 +13,8 @@ route_regional(
   inchannel_habitat,
   floodplain_habitat,
   prop_pulse_flows,
-  migration_survival_rate
+  migration_survival_rate,
+  fill_territory_size
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ route_regional(
 \item{prop_pulse_flows}{The proportion of pulse flows}
 
 \item{migration_survival_rate}{The outmigration survival rate}
+
+\item{fill_territory_size}{Array of juvenile fish territory requirements for \code{\link{fill_regional}}}
 }
 \description{
 Determines if juveniles stay in the region (Sections of Mainstem

@@ -33,7 +33,7 @@ params <- list(
   .ocean_entry_success_length = c(-0.0897309864, -0.0709704348, -0.0208590732, 0.0732620916),
   .ocean_entry_success_months = 0.35,
 
-  # Pulse movement coefficients and variables
+  # Routing coefficients and variables
   .pulse_movement_intercept = -7.70744,
   .pulse_movement_proportion_pulse = 0.26579,
   .pulse_movement_medium = 1.66845,
@@ -42,6 +42,7 @@ params <- list(
   .pulse_movement_medium_pulse = -0.25477,
   .pulse_movement_large_pulse = -0.44778,
   .pulse_movement_very_large_pulse = 0.329,
+  fill_territory_size = c(0.0498944803729701, 0.138941944739835, 0.471083652829798, 0),
 
   # Spawn success variables
   spawn_success_sex_ratio = 0.5,

@@ -7,7 +7,12 @@
 IP-117068
 }
 \usage{
-route_bypass(bypass_fish, bypass_habitat, migration_survival_rate)
+route_bypass(
+  bypass_fish,
+  bypass_habitat,
+  migration_survival_rate,
+  fill_territory_size
+)
 }
 \arguments{
 \item{bypass_fish}{An n by 4 matrix of juvenile fish by watershed and size class}
@@ -15,6 +20,8 @@ route_bypass(bypass_fish, bypass_habitat, migration_survival_rate)
 \item{bypass_habitat}{A vector of available habitat in square meters}
 
 \item{migration_survival_rate}{The outmigration survival rate}
+
+\item{fill_territory_size}{Array of juvenile fish territory requirements for \code{\link{fill_regional}}}
 }
 \description{
 Determines if juveniles remain in the bypass or out migrate

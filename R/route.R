@@ -17,6 +17,7 @@
 #' @param .pulse_movement_medium_pulse Additional coefficient for \code{\link{pulse_movement}} \code{proportion_pulse} variable for medium size fish
 #' @param .pulse_movement_large_pulse Additional coefficient for \code{\link{pulse_movement}} \code{proportion_pulse} variable for large size fish
 #' @param .pulse_movement_very_large_pulse Additional coefficient for \code{\link{pulse_movement}} \code{proportion_pulse} variable for very large size fish
+#' @param fill_territory_size Array of juvenile fish territory requirements for \code{\link{fill_natal}}
 #' @source IP-117068
 #' @export
 route <- function(year, month, juveniles, inchannel_habitat, floodplain_habitat,
@@ -28,11 +29,13 @@ route <- function(year, month, juveniles, inchannel_habitat, floodplain_habitat,
                   .pulse_movement_vlarge,
                   .pulse_movement_medium_pulse,
                   .pulse_movement_large_pulse,
-                  .pulse_movement_very_large_pulse) {
+                  .pulse_movement_very_large_pulse,
+                  fill_territory_size) {
 
   natal_watersheds <- fill_natal(juveniles = juveniles,
                                  inchannel_habitat = inchannel_habitat,
-                                 floodplain_habitat = floodplain_habitat)
+                                 floodplain_habitat = floodplain_habitat,
+                                 territory_size = fill_territory_size)
 
   # estimate probability leaving as function of pulse flow
   prob_pulse_leave <- pulse_movement(prop_pulse_flows[ , month],
@@ -80,12 +83,15 @@ route <- function(year, month, juveniles, inchannel_habitat, floodplain_habitat,
 #' @param bypass_fish An n by 4 matrix of juvenile fish by watershed and size class
 #' @param bypass_habitat A vector of available habitat in square meters
 #' @param migration_survival_rate The outmigration survival rate
+#' @param fill_territory_size Array of juvenile fish territory requirements for \code{\link{fill_regional}}
 #' @source IP-117068
 #' @export
-route_bypass <- function(bypass_fish, bypass_habitat, migration_survival_rate) {
+route_bypass <- function(bypass_fish, bypass_habitat, migration_survival_rate,
+                         fill_territory_size) {
 
   bypass_fish <- fill_regional(juveniles = bypass_fish,
-                               habitat = bypass_habitat)
+                               habitat = bypass_habitat,
+                               territory_size = fill_territory_size)
 
   bypass_fish$migrants <- t(
     sapply(1:nrow(bypass_fish$migrants), function(i) {
@@ -107,16 +113,19 @@ route_bypass <- function(bypass_fish, bypass_habitat, migration_survival_rate) {
 #' @param floodplain_habitat A vector of available floodplain habitat in square meters
 #' @param prop_pulse_flows The proportion of pulse flows
 #' @param migration_survival_rate The outmigration survival rate
+#' @param fill_territory_size Array of juvenile fish territory requirements for \code{\link{fill_regional}}
 #' @source IP-117068
 #' @export
 route_regional <- function(month, migrants,
                            inchannel_habitat, floodplain_habitat,
-                           prop_pulse_flows, migration_survival_rate) {
+                           prop_pulse_flows, migration_survival_rate,
+                           fill_territory_size) {
   # fill up upper mainstem, but in river fish can leave due to pulses
 
   regional_fish <- fill_regional(juveniles = migrants,
                                  habitat = inchannel_habitat,
-                                 floodplain_habitat = floodplain_habitat)
+                                 floodplain_habitat = floodplain_habitat,
+                                 territory_size = fill_territory_size)
   # estimate probability leaving as function of pulse flow
   pulse_flows <- prop_pulse_flows[ , month]
   prob_pulse_leave <- matrix(pulse_movement(pulse_flows), ncol = 4, byrow = T)
@@ -227,6 +236,7 @@ route_south_delta <- function(freeport_flow, dcc_closed, month,
 #' @param growth_rates The delta growth rate
 #' @param location_index Migratory survival probability location index for fish coming from 4 areas (1-4) representing
 #' "northern_fish", "cosumnes_mokelumne_fish", "calaveras_fish", or "southern_fish" respectively
+#' @param fill_territory_size Array of juvenile fish territory requirements for \code{\link{fill_natal}}
 #' @source IP-117068
 #' @export
 route_and_rear_deltas <- function(year, month, migrants, north_delta_fish, south_delta_fish,
@@ -236,7 +246,8 @@ route_and_rear_deltas <- function(year, month, migrants, north_delta_fish, south
                          rearing_survival_delta, migratory_survival_delta,
                          migratory_survival_sac_delta, migratory_survival_bay_delta,
                          juveniles_at_chipps, growth_rates,
-                         location_index = c(rep(1, 24), 3, rep(2, 2), rep(4, 4))) {
+                         location_index = c(rep(1, 24), 3, rep(2, 2), rep(4, 4)),
+                         fill_territory_size) {
 
   prop_delta_fish_entrained <- route_south_delta(freeport_flow = freeport_flows[[month, year]] * 35.3147,
                                                  dcc_closed = cc_gates_days_closed[month],
@@ -252,10 +263,12 @@ route_and_rear_deltas <- function(year, month, migrants, north_delta_fish, south
   migrants_and_salvaged[1:23, ] <- migrants_and_salvaged[1:23, ] - sac_not_entrained
 
   north_delta_fish <- fill_regional(juveniles = sac_not_entrained + north_delta_fish,
-                                    habitat = north_delta_habitat)
+                                    habitat = north_delta_habitat,
+                                    territory_size = fill_territory_size)
 
   south_delta_fish <- fill_regional(juveniles = migrants_and_salvaged + south_delta_fish,
-                                    habitat = north_delta_habitat)
+                                    habitat = north_delta_habitat,
+                                    territory_size = fill_territory_size)
 
   if (month == 8) {
     north_delta_fish = list(migrants = north_delta_fish$inchannel + north_delta_fish$migrants)
