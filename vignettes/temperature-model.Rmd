@@ -24,7 +24,7 @@ library(gridExtra)
 
 ## Chinook supplementary analysis for Chinook DSM models
 
-### Creates logistic models to estimate temperature metrics 
+### Logistic models to estimate temperature metrics 
 
 The script below analyzes the relationship between monthly median temperature and temperature exceedance variables. In this script we use logistic regression to be able to predict if temperatures exceed 20 degrees or 25 degrees in a month based on a medium monthly value. 
 
@@ -38,16 +38,15 @@ This analysis is done using data from the [Full temperature data.csv](https://ds
 Delta Temps:
 This analysis is done using the following data:
 
-* [DUTCH SLOUGH.csv](https://dsm-docs.s3-us-west-2.amazonaws.com/temperature_modeling/DUTCH+SLOUGH.csv).
+* [DUTCH SLOUGH.csv](https://dsm-docs.s3-us-west-2.amazonaws.com/temperature_modeling/DUTCH+SLOUGH.csv)
 * [GEORGIANA SLOUGH.csv](https://dsm-docs.s3-us-west-2.amazonaws.com/temperature_modeling/GEORGIANA+SLOUGH.csv)
 * [JERSEY POINT.csv](https://dsm-docs.s3-us-west-2.amazonaws.com/temperature_modeling/JERSEY+POINT.csv)
 * [LPotatoSLough.csv](https://dsm-docs.s3-us-west-2.amazonaws.com/temperature_modeling/LPotatoSlough.csv)
 
 TODO source for these CSVs?
 
-#### Central Valley River Temperature Data
-
-The table below shows the Central Valley temperature data grouped by month and year and summarized to give monthly mean temperature, proportion of days over 20 degrees, and the count of days per month over 25 degrees. 
+#### Temperature Data 
+The table below shows the Central Valley and delta temperature grouped by month and year and summarized to give monthly mean temperature, proportion of days over 20 degrees, and the count of days per month over 25 degrees. 
 ```{r}
 full_temp_data <- read_csv(system.file("extdata", "temperature-data", "Full temperature data.csv", 
                            package = "fallRunDSM", mustWork = TRUE)) %>% 
@@ -55,30 +54,12 @@ full_temp_data <- read_csv(system.file("extdata", "temperature-data", "Full temp
   mutate(gt20 = ifelse(medC > 20, 1, 0),
          gt25 = ifelse(maxC > 20, 1, 0))
 
-#summary(full_temp_data)
-#sum(full_temp_data$gt25)
-
 grouped_temp_measures <- full_temp_data %>%
   group_by(year, month) %>%
   summarise(prop_gt_20 = round(mean(gt20), 2),
             count_measures_gt_25 = sum(gt25),
             month_mean_temp = round(mean(medC), 2)) 
-datatable(grouped_temp_measures %>% rename("Year" = year, 
-                                           "Month" = month,
-                                           "Number of Measures Exceeding 25 degrees" = count_measures_gt_25,
-                                           "Proportion Exceeding 20" = prop_gt_20,
-                                           "Monthly Mean Temp" = month_mean_temp),
-          options = list(
-                    searching = FALSE,
-                    pageLength = 5,
-                    lengthMenu = c(5, 10, 15, 20)
-))
-```
 
-
-#### Delta Temperature Data 
-The table below shows the delta temperature grouped by month and year and summarized to give monthly mean temperature, proportion of days over 20 degrees, and the count of days per month over 25 degrees. 
-```{r}
 jersey_point <- read_csv(system.file("extdata", "temperature-data", "JERSEY POINT.csv", 
                            package = "fallRunDSM", mustWork = TRUE))
 dutch_slough <- read_csv(system.file("extdata", "temperature-data", "DUTCH SLOUGH.csv", 
@@ -88,25 +69,28 @@ georgiana_slough <- read_csv(system.file("extdata", "temperature-data", "GEORGIA
 potato_slough <-read_csv(system.file("extdata", "temperature-data", "LPotatoSlough.csv", 
                            package = "fallRunDSM", mustWork = TRUE))
 
-full_temp_data <- rbind(jersey_point, dutch_slough, georgiana_slough, potato_slough) %>%
+delta_full_temp_data <- rbind(jersey_point, dutch_slough, georgiana_slough, potato_slough) %>%
   na.omit() %>%
   mutate(gt20 = ifelse(TempC > 20, 1, 0),
          gt25 = ifelse(TempC > 25, 1, 0))
 
-# summary(full_temp_data)
-# sum(full_temp_data$gt25)
-
-grouped_temp_measures_delta <- full_temp_data %>%
+grouped_temp_measures_delta <- delta_full_temp_data %>%
   group_by(year, month) %>%
-  summarise(prop_gt_20 = round(mean(gt20), 2),
-            count_gt_25 = sum(gt25),
-            month_mean_temp = round(mean(TempC), 2))
+  summarise(delta_prop_gt_20 = round(mean(gt20), 2),
+            delta_count_gt_25 = sum(gt25),
+            delta_month_mean_temp = round(mean(TempC), 2))
 
-datatable(grouped_temp_measures_delta %>% rename("Year" = year, 
+combined_temp_measures <- grouped_temp_measures_delta %>% 
+  full_join(grouped_temp_measures, by = c("month", "year"))
+
+datatable(combined_temp_measures %>% rename("Year" = year, 
                                            "Month" = month,
-                                           "Number of Measures Exceeding 25 degrees" = count_gt_25,
-                                           "Proportion Exceeding 20" = prop_gt_20,
-                                           "Monthly Mean Temp" = month_mean_temp),
+                                           "CV Number of Measures Exceeding 25°C" = count_measures_gt_25,
+                                           "CV Proportion Exceeding 20°C" = prop_gt_20,
+                                           "CV Monthly Mean Temp" = month_mean_temp,
+                                           "Delta Number of Measures Exceeding 25°C" = delta_count_gt_25,
+                                           "Delta Proportion Exceeding 20°C" = delta_prop_gt_20,
+                                           "Delta Monthly Mean Temp" = delta_month_mean_temp),
           options = list(
                     searching = FALSE,
                     pageLength = 5,
@@ -140,13 +124,13 @@ monthly_predictions <- data.frame(month_means, prediction)
 
 # Repeat for delta 
 delta_grouped_temp_measures_for_logit <- grouped_temp_measures_delta%>%
-  mutate(prop_gt_20 = case_when(prop_gt_20 == 0 ~ 0.001, 
-                                 prop_gt_20 == 1 ~ 0.999,
-                                 prop_gt_20 != 0 & prop_gt_20 != 1 ~ prop_gt_20),
+  mutate(prop_gt_20 = case_when(delta_prop_gt_20 == 0 ~ 0.001, 
+                                 delta_prop_gt_20 == 1 ~ 0.999,
+                                 delta_prop_gt_20 != 0 & delta_prop_gt_20 != 1 ~ delta_prop_gt_20),
          odds_ratio = log(prop_gt_20 / (1 - prop_gt_20)))
 
 # summary(grouped_temp_measures_for_logit)
-delta_lm_summary <- summary(lm(odds_ratio ~ month_mean_temp, data = delta_grouped_temp_measures_for_logit))
+delta_lm_summary <- summary(lm(odds_ratio ~ delta_month_mean_temp, data = delta_grouped_temp_measures_for_logit))
 
 month_means <- c(5:25) # ? where does this come from?
 delta_prediction <- boot::inv.logit(lm_summary$coefficients[1, 1] + lm_summary$coefficients[2, 1] * month_means)
@@ -172,16 +156,16 @@ cv_plot <- monthly_predictions %>%
   geom_line(aes(month_means, prediction), color = "Red") +
   geom_point(data = grouped_temp_measures_for_logistic, aes(x = month_mean_temp, y = prop_gt_20)) +
   xlab("Monthly mean temperature") +
-  ylab("Proportion days temp > 20 in a month") + 
+  ylab("Proportion days temp exceeds 20°C in a month") + 
   ggtitle("Central Valley Temperature Model") +
   theme(text = element_text(size = 18))
 
 delta_plot <- delta_monthly_predictions %>%
   ggplot() +
   geom_line(aes(month_means, prediction), color = "Red") +
-  geom_point(data = delta_grouped_temp_measures_for_logit, aes(x = month_mean_temp, y = prop_gt_20)) +
+  geom_point(data = delta_grouped_temp_measures_for_logit, aes(x = delta_month_mean_temp, y = delta_prop_gt_20)) +
   xlab("Monthly median temperature Delta") +
-  ylab("Proportion days temp > 20") + 
+  ylab("Proportion days temp exceeds 20°C in a month") + 
   ggtitle("Delta Temperature Model") +
   theme(text = element_text(size = 18))
 
@@ -203,9 +187,9 @@ monthly_predictions <- data.frame(month_means, prediction)
 
 # Delta model
 delta_grouped_temp_measures_for_logit <- grouped_temp_measures_delta %>%
-  mutate(count_gt_25 = ifelse(count_gt_25 > 1, 1, count_gt_25))
+  mutate(delta_count_gt_25 = ifelse(delta_count_gt_25 > 1, 1, delta_count_gt_25))
 
-delta_glm_summary <- summary(glm(count_gt_25 ~ month_mean_temp, data = delta_grouped_temp_measures_for_logit, family='binomial'))
+delta_glm_summary <- summary(glm(delta_count_gt_25 ~ delta_month_mean_temp, data = delta_grouped_temp_measures_for_logit, family='binomial'))
 
 month_means <- c(5:25) # ? where does this come from?
 delta_prediction <- boot::inv.logit(glm_summary$coefficients[1, 1] + glm_summary$coefficients[2, 1] * month_means)
@@ -229,16 +213,16 @@ cv_plot <- monthly_predictions %>%
   geom_line(aes(month_means, prediction), color = "Red") +
   geom_point(data = grouped_temp_measures_for_logistic, aes(x = month_mean_temp, y = count_measures_gt_25)) +
   xlab("Monthly mean temperature") +
-  ylab("Temp goes above 25 during month") +
+  ylab("Temp goes above 25°C during month") +
   ggtitle("Central Valley Temperature Model") +
   theme(text = element_text(size = 18))
 
 delta_plot <- delta_monthly_predictions %>%
   ggplot() +
   geom_line(aes(month_means, prediction), color = "Red") +
-  geom_point(data = delta_grouped_temp_measures_for_logit, aes(x = month_mean_temp, y = count_gt_25)) +
+  geom_point(data = delta_grouped_temp_measures_for_logit, aes(x = delta_month_mean_temp, y = delta_count_gt_25)) +
   xlab("Monthly median temperature") +
-  ylab("Temp goes above 25 during month") +
+  ylab("Temp goes above 25°C during month") +
   ggtitle("Delta Temperature Model") +
   theme(text = element_text(size = 18))
 

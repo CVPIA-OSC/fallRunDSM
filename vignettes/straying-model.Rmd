@@ -1,11 +1,27 @@
 ---
 title: "DSM Straying Model Documentation"
-output: rmarkdown::html_vignette
+output: 
+  html_document:
+    theme: flatly
+    code_folding: hide
 vignette: >
-  %\VignetteIndexEntry{straying-model}
+  %\VignetteIndexEntry{temperature-model}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+## Chinook supplementary analysis for Chinook DSM models
+
+### Empirical model to describe adult straying 
+
+
+#### Data Source: 
+
+This analysis is done using 2008–2011 tagging data provided by East Bay Municipal Utility District. The data can be accessed from the following links:
+
+* [cwt_stray.csv](https://dsm-docs.s3-us-west-2.amazonaws.com/straying-data/cwt_stray.csv)
+* [releases.csv](https://dsm-docs.s3-us-west-2.amazonaws.com/straying-data/releases.csv)
+* [crxchan.csv](https://dsm-docs.s3-us-west-2.amazonaws.com/straying-data/crxchan.csv)
+
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -14,6 +30,7 @@ knitr::opts_chunk$set(
 )
 library(readr)
 library(tidyverse)
+library(DT)
 ```
 
 ```{r}
@@ -36,7 +53,6 @@ dat = read_csv(system.file("extdata", "straying-data", "crxchan.csv",
 ```
 Prep data create a dataframe:
 ```{r}
-
 releases <- releases[-2,]
 combined_stray_data <- merge(cwt_stray, releases, all = T)
 
@@ -51,8 +67,12 @@ fall <- combined_stray_data %>%
          brood_year, "wild" = Wild, 
          "delta" = Delta, "bay" = Bay)
 
-names(fall)
-summary(fall)
+datatable(fall,
+          options = list(
+                    searching = FALSE,
+                    pageLength = 5,
+                    lengthMenu = c(5, 10, 15, 20)
+))
 ```
 
 ```{r}
