@@ -18,7 +18,7 @@ vignette: >
 
 This analysis is done using 2008–2011 tagging data provided by East Bay Municipal Utility District. The data can be accessed from the following links:
 
-* [cwt_stray.csv](https://dsm-docs.s3-us-west-2.amazonaws.com/straying-data/cwt_stray.csv)
+* [cwt_stray.csv](https://dsm-docs.s3-us-west-2.amazonaws.com/straying-data/cwt_stray_data.csv)
 * [releases.csv](https://dsm-docs.s3-us-west-2.amazonaws.com/straying-data/releases.csv)
 * [crxchan.csv](https://dsm-docs.s3-us-west-2.amazonaws.com/straying-data/crxchan.csv)
 
@@ -35,14 +35,14 @@ library(DT)
 
 ```{r}
 library(fallRunDSM)
-cwt_stray = read_csv(system.file("extdata", "straying-data", "cwt_stray.csv", 
+cwt_stray_data <- read_csv(system.file("extdata", "straying-data", "cwt_stray.csv", 
                        package = "fallRunDSM", mustWork = TRUE))
 
-releases = read_csv(system.file("extdata", "straying-data", "releases.csv", 
+release_data <- read_csv(system.file("extdata", "straying-data", "releases.csv", 
                        package = "fallRunDSM", mustWork = TRUE))
 
-dat = read_csv(system.file("extdata", "straying-data", "crxchan.csv", 
-                       package = "fallRunDSM", mustWork = TRUE)) %>% 
+cross_channel_data <- read_csv(system.file("extdata", "straying-data", "crxchan.csv", 
+                                           package = "fallRunDSM", mustWork = TRUE)) %>% 
   rename("run_year" = Run.year,
          "count" = Number,
          "prop_stray" = prop.stray,
@@ -53,8 +53,8 @@ dat = read_csv(system.file("extdata", "straying-data", "crxchan.csv",
 ```
 Prep data create a dataframe:
 ```{r}
-releases <- releases[-2,]
-combined_stray_data <- merge(cwt_stray, releases, all = T)
+release_data <- release_data[-2,]
+combined_stray_data <- merge(cwt_stray_data, release_data, all = T)
 
 fall <- combined_stray_data %>% 
   filter(run == "Fall") %>%
@@ -75,21 +75,26 @@ datatable(fall,
 ))
 ```
 
-```{r}
-outz <- glm(cbind(no_stray, no_tagged) ~ brood_year + delta + bay + wild, family = quasibinomial, data = fall)
+#### Fitting a Generalized Linear Model 
 
-summary(outz)
-# plot(outz)
+```{r}
+glm_stray_rate <- glm(cbind(no_stray, no_tagged) ~ brood_year + delta + bay + wild, 
+                      family = quasibinomial, 
+                      data = fall)
+
+summary(glm_stray_rate)
 ```
 
-Cross channel analysis 
+#### Modeling Cross Channel Straying
 ```{r}
-names(dat)
+names(cross_channel_data)
 
-dat$no_stray <- round(dat$count * dat$prop_stray)
+cross_channel_data$no_stray <- round(cross_channel_data$count * cross_channel_data$prop_stray)
 
-outz <- glm(cbind(no_stray, count) ~ closure_days + prop_san_joaquin, family = binomial, data = dat)
+glm_cross_channel <- glm(cbind(no_stray, count) ~ closure_days + prop_san_joaquin, 
+                         family = binomial, 
+                         data = cross_channel_data)
 
-summary(outz)
+summary(glm_cross_channel)
 ```
 
