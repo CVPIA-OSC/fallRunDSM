@@ -76,7 +76,7 @@ period in front are model or submodel coefficients. Parameters with double perio
   \item \code{prop_high_predation}: More details at \code{\link[DSMhabitat]{prop_high_predation}}
   \item \code{contact_points}: More details at \code{\link[DSMhabitat]{contact_points}}
   \item \code{..surv_juv_rear_int}: Intercept, Source: calibration (varies by tributary)
-  \item \code{.surv_juv_rear_contact_points}: Coefficient for \code{contact_points} variable, Source: TODO - Literature
+  \item \code{.surv_juv_rear_contact_points}: Coefficient for \code{contact_points} variable, Source: Derived from the \href{https://nrm.dfg.ca.gov/PAD/view/query.aspx}{Passage Assessment Database (PAD)} maintained by California Department of Fish and Wildlife.
   \item \code{..surv_juv_rear_contact_points}: Coefficient for \code{contact_points} variable, Source: calibration
   \item \code{.surv_juv_rear_prop_diversions}: Coefficient for \code{prop_diversions} variable, Source: source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/Hierarchical_Modeling_of_Juvenile_Chinook_Salmon_S+(1).pdf}{Newman and Brandes (2010)}
   \item \code{..surv_juv_rear_prop_diversions}: Coefficient for \code{prop_diversions} variable, Source: calibration
@@ -114,7 +114,7 @@ period in front are model or submodel coefficients. Parameters with double perio
   \item \code{delta_contact_points}: More details at \code{\link[DSMhabitat]{delta_contact_points}}
   \item \code{delta_prop_high_predation}: More details at \code{\link[DSMhabitat]{delta_prop_high_predation}}
   \item \code{..surv_juv_delta_int}: Intercept, Source: calibration
-  \item \code{.surv_juv_delta_contact_points}: Coefficient for \code{contact_points} variable, Source: TODO - literature
+  \item \code{.surv_juv_delta_contact_points}: Coefficient for \code{contact_points} variable, Source: Derived from the \href{https://nrm.dfg.ca.gov/PAD/view/query.aspx}{Passage Assessment Database (PAD)} maintained by California Department of Fish and Wildlife.
   \item \code{..surv_juv_delta_contact_points}: Coefficient for \code{contact_points} variable, Source: calibration
   \item \code{.surv_juv_delta_total_diverted}: Coefficient for \code{total_diversions} variable, Source: TODO - literature
   \item \code{..surv_juv_delta_total_diverted}: Coefficient for \code{total_diversions} variable, Source: calibration
