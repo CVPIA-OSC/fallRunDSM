@@ -301,10 +301,10 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                             growth = fallRunDSM::params$growth_rates)
 
         upper_mid_sac_fish <- rear(juveniles = upper_mid_sac_fish$inchannel,
-                                   survival_rate = rearing_survival$inchannel[16, , drop = FALSE],
+                                   survival_rate = rearing_survival$inchannel[16, ],
                                    growth = fallRunDSM::params$growth_rates,
                                    floodplain_juveniles = upper_mid_sac_fish$floodplain,
-                                   floodplain_survival_rate = rearing_survival$floodplain[16, , drop = FALSE],
+                                   floodplain_survival_rate = rearing_survival$floodplain[16, ],
                                    floodplain_growth = fallRunDSM::params$growth_rates_floodplain,
                                    weeks_flooded = rep(..params$weeks_flooded[16, month, year], nrow(upper_mid_sac_fish$inchannel)))
 
@@ -361,10 +361,10 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                           growth = fallRunDSM::params$growth_rates)
 
         lower_mid_sac_fish <- rear(juveniles = lower_mid_sac_fish$inchannel,
-                                   survival_rate = rearing_survival$inchannel[21, , drop = FALSE],
+                                   survival_rate = rearing_survival$inchannel[21, ],
                                    growth = fallRunDSM::params$growth_rates,
                                    floodplain_juveniles = lower_mid_sac_fish$floodplain,
-                                   floodplain_survival_rate = rearing_survival$floodplain[21, , drop = FALSE],
+                                   floodplain_survival_rate = rearing_survival$floodplain[21, ],
                                    floodplain_growth = fallRunDSM::params$growth_rates_floodplain,
                                    weeks_flooded = rep(..params$weeks_flooded[21, month, year], nrow(lower_mid_sac_fish$inchannel)))
 
@@ -410,10 +410,10 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
         migrants <- lower_sac_fish$migrants
 
         lower_sac_fish <- rear(juveniles = lower_sac_fish$inchannel,
-                               survival_rate = rearing_survival$inchannel[24, , drop = FALSE],
+                               survival_rate = rearing_survival$inchannel[24, ],
                                growth = fallRunDSM::params$growth_rates,
                                floodplain_juveniles = lower_sac_fish$floodplain,
-                               floodplain_survival_rate = rearing_survival$floodplain[24, , drop = FALSE],
+                               floodplain_survival_rate = rearing_survival$floodplain[24, ],
                                floodplain_growth = fallRunDSM::params$growth_rates_floodplain,
                                weeks_flooded = rep(..params$weeks_flooded[24, month, year], nrow(lower_sac_fish$inchannel)))
 
@@ -490,10 +490,10 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
         migrants[28:30, ] <- san_joaquin_fish$migrants
 
         san_joaquin_fish <- rear(juveniles = san_joaquin_fish$inchannel,
-                                 survival_rate = rearing_survival$inchannel[31, , drop = FALSE],
+                                 survival_rate = rearing_survival$inchannel[31, ],
                                  growth = fallRunDSM::params$growth_rates,
                                  floodplain_juveniles = san_joaquin_fish$floodplain,
-                                 floodplain_survival_rate = rearing_survival$floodplain[31, , drop = FALSE],
+                                 floodplain_survival_rate = rearing_survival$floodplain[31, ],
                                  floodplain_growth = fallRunDSM::params$growth_rates_floodplain,
                                  weeks_flooded = rep(..params$weeks_flooded[31, month, year], nrow(san_joaquin_fish$inchannel)))
 
