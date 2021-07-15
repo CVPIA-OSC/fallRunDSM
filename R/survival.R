@@ -644,7 +644,7 @@ surv_juv_outmigration_delta <- function(prop_DCC_closed, hor_barr, freeport_flow
 #' @param min_survival_rate estimated survival rate if temperature threshold is exceeded
 #' @source IP-117068
 #' @export
-get_migratory_survival_rates <- function(year, month,
+get_migratory_survival <- function(year, month,
                                          cc_gates_prop_days_closed,
                                          freeport_flows,
                                          vernalis_flows,
