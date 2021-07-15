@@ -11,7 +11,7 @@ fill_regional(
   juveniles,
   habitat,
   floodplain_habitat = NULL,
-  territory_size = fallRunDSM::params$fill_territory_size,
+  territory_size = fallRunDSM::params$territory_size,
   up_to_size_class = 3
 )
 }

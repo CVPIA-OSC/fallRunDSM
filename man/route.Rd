@@ -24,7 +24,7 @@ route(
   .pulse_movement_medium_pulse,
   .pulse_movement_large_pulse,
   .pulse_movement_very_large_pulse,
-  fill_territory_size
+  territory_size
 )
 }
 \arguments{
@@ -56,7 +56,7 @@ route(
 
 \item{.pulse_movement_very_large_pulse}{Additional coefficient for \code{\link{pulse_movement}} \code{proportion_pulse} variable for very large size fish}
 
-\item{fill_territory_size}{Array of juvenile fish territory requirements for \code{\link{fill_natal}}}
+\item{territory_size}{Array of juvenile fish territory requirements for \code{\link{fill_natal}}}
 
 \item{juvenile}{An n by 4 matrix of juvenile fish by watershed and size class}
 }

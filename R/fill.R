@@ -10,7 +10,7 @@
 #' @source IP-117068
 #' @export
 fill_natal <- function(juveniles, inchannel_habitat, floodplain_habitat,
-                       territory_size = fallRunDSM::params$fill_territory_size,
+                       territory_size = fallRunDSM::params$territory_size,
                        up_to_size_class = 2){
 
   number_of_regions <- max(nrow(juveniles), 1)
@@ -53,7 +53,7 @@ fill_natal <- function(juveniles, inchannel_habitat, floodplain_habitat,
 #' @source IP-117068
 #' @export
 fill_regional <- function(juveniles, habitat, floodplain_habitat = NULL,
-                          territory_size = fallRunDSM::params$fill_territory_size,
+                          territory_size = fallRunDSM::params$territory_size,
                           up_to_size_class = 3){
 
   all_sheds <- orig_tot <- colSums(juveniles)

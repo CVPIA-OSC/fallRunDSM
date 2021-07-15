@@ -11,7 +11,7 @@ route_bypass(
   bypass_fish,
   bypass_habitat,
   migration_survival_rate,
-  fill_territory_size
+  territory_size
 )
 }
 \arguments{
@@ -21,7 +21,7 @@ route_bypass(
 
 \item{migration_survival_rate}{The outmigration survival rate}
 
-\item{fill_territory_size}{Array of juvenile fish territory requirements for \code{\link{fill_regional}}}
+\item{territory_size}{Array of juvenile fish territory requirements for \code{\link{fill_regional}}}
 }
 \description{
 Determines if juveniles remain in the bypass or out migrate

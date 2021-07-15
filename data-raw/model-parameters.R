@@ -42,7 +42,7 @@ params <- list(
   .pulse_movement_medium_pulse = -0.25477,
   .pulse_movement_large_pulse = -0.44778,
   .pulse_movement_very_large_pulse = 0.329,
-  fill_territory_size = c(0.0498944803729701, 0.138941944739835, 0.471083652829798, 0),
+  territory_size = c(0.0498944803729701, 0.138941944739835, 0.471083652829798, 0),
 
   # Spawn success variables
   spawn_success_sex_ratio = 0.5,

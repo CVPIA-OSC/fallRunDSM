@@ -24,7 +24,7 @@ route_and_rear_deltas(
   juveniles_at_chipps,
   growth_rates,
   location_index = c(rep(1, 24), 3, rep(2, 2), rep(4, 4)),
-  fill_territory_size
+  territory_size
 )
 }
 \arguments{
@@ -57,7 +57,7 @@ route_and_rear_deltas(
 \item{location_index}{Migratory survival probability location index for fish coming from 4 areas (1-4) representing
 "northern_fish", "cosumnes_mokelumne_fish", "calaveras_fish", or "southern_fish" respectively}
 
-\item{fill_territory_size}{Array of juvenile fish territory requirements for \code{\link{fill_natal}}}
+\item{territory_size}{Array of juvenile fish territory requirements for \code{\link{fill_natal}}}
 }
 \description{
 Determines if juveniles stay in the delta or out migrate to golden gate
