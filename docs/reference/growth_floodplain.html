@@ -6,14 +6,14 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Floodplain Growth Transistion Probability — growth_floodplain • fallRunDSM</title>
+<title>Floodplain Growth Transistion Probability — growth_rates_floodplain • fallRunDSM</title>
 
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -39,8 +39,11 @@
 
 
 
-<meta property="og:title" content="Floodplain Growth Transistion Probability — growth_floodplain" />
-<meta property="og:description" content="Generates transition probability matrices for growth on the
+<meta property="og:title" content="Floodplain Growth Transistion Probability — growth_rates_floodplain" />
+<meta property="og:description" content="Growth rates determined by expert SIT judgment based on the following: Limm, M.P., Marchetti, M.P.  (2009)
+Rene E. Henery, Ted R. Sommer &amp;amp; Charles R. Goldman (2010)
+Jeffres, C.A., Opperman, J.J. &amp;amp; Moyle, P.B. (2008)
+Generates transition probability matrices for growth on the
 floodplain dependent on number of weeks inundated" />
 
 
@@ -110,11 +113,16 @@ floodplain dependent on number of weeks inundated" />
     </div>
 
     <div class="ref-description">
-    <p>Generates transition probability matrices for growth on the
+    <p>Growth rates determined by expert SIT judgment based on the following: <a href='https://link.springer.com/article/10.1007/s10641-009-9473-8'>Limm, M.P., Marchetti, M.P.  (2009)</a>
+<a href='https://www.tandfonline.com/doi/abs/10.1577/T08-112.1'>Rene E. Henery, Ted R. Sommer &amp; Charles R. Goldman (2010)</a>
+<a href='https://link.springer.com/article/10.1007/s10641-008-9367-1'>Jeffres, C.A., Opperman, J.J. &amp; Moyle, P.B. (2008)</a></p>
+<p>Generates transition probability matrices for growth on the
 floodplain dependent on number of weeks inundated</p>
     </div>
 
-    <pre class="usage"><span class='fu'>growth_floodplain</span><span class='op'>(</span>daily_rates <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.5</span>, <span class='fl'>1.06</span><span class='op'>)</span>, weeks_flooded <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='va'>growth_rates_floodplain</span>
+
+<span class='fu'>growth_floodplain</span><span class='op'>(</span>daily_rates <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.5</span>, <span class='fl'>1.06</span><span class='op'>)</span>, weeks_flooded <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -129,6 +137,9 @@ floodplain dependent on number of weeks inundated</p>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>An object of class <code>array</code> of dimension 4 x 4 x 4.</p>
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
     <p>IP-117068</p>

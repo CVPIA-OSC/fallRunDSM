@@ -12,8 +12,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -118,9 +118,9 @@
   <span class='va'>egg_to_fry_survival</span>,
   <span class='va'>prob_scour</span>,
   <span class='va'>spawn_habitat</span>,
-  sex_ratio <span class='op'>=</span> <span class='fl'>0.5</span>,
-  redd_size <span class='op'>=</span> <span class='fl'>9.29</span>,
-  fecundity <span class='op'>=</span> <span class='fl'>5522</span>
+  sex_ratio <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>spawn_success_sex_ratio</span>,
+  redd_size <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>spawn_success_redd_size</span>,
+  fecundity <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>spawn_success_fecundity</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -148,15 +148,15 @@
     </tr>
     <tr>
       <th>sex_ratio</th>
-      <td><p>The female to male spawning ratio, default 0.5</p></td>
+      <td><p>The female to male spawning ratio</p></td>
     </tr>
     <tr>
       <th>redd_size</th>
-      <td><p>The size of redds including defensible space, default value 9.29 square meters</p></td>
+      <td><p>The size of redds including defensible space</p></td>
     </tr>
     <tr>
       <th>fecundity</th>
-      <td><p>The number of eggs per female, default value 5522</p></td>
+      <td><p>The number of eggs per female</p></td>
     </tr>
     </table>
 

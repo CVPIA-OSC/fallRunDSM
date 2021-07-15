@@ -12,8 +12,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -120,7 +120,8 @@ Sacramento River or San Joaquin River) or out migrate during a simulated month</
   <span class='va'>inchannel_habitat</span>,
   <span class='va'>floodplain_habitat</span>,
   <span class='va'>prop_pulse_flows</span>,
-  <span class='va'>migration_survival_rate</span>
+  <span class='va'>migration_survival_rate</span>,
+  <span class='va'>territory_size</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -149,6 +150,10 @@ Sacramento River or San Joaquin River) or out migrate during a simulated month</
     <tr>
       <th>migration_survival_rate</th>
       <td><p>The outmigration survival rate</p></td>
+    </tr>
+    <tr>
+      <th>territory_size</th>
+      <td><p>Array of juvenile fish territory requirements for <code><a href='fill_regional.html'>fill_regional</a></code></p></td>
     </tr>
     </table>
 

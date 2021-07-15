@@ -12,8 +12,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -121,7 +121,17 @@ to a bypass, or out migrate during a simulated month</p>
   <span class='va'>inchannel_habitat</span>,
   <span class='va'>floodplain_habitat</span>,
   <span class='va'>prop_pulse_flows</span>,
-  detour <span class='op'>=</span> <span class='cn'>NULL</span>
+  <span class='va'>proportion_flow_bypass</span>,
+  detour <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>.pulse_movement_intercept</span>,
+  <span class='va'>.pulse_movement_proportion_pulse</span>,
+  <span class='va'>.pulse_movement_medium</span>,
+  <span class='va'>.pulse_movement_large</span>,
+  <span class='va'>.pulse_movement_vlarge</span>,
+  <span class='va'>.pulse_movement_medium_pulse</span>,
+  <span class='va'>.pulse_movement_large_pulse</span>,
+  <span class='va'>.pulse_movement_very_large_pulse</span>,
+  <span class='va'>territory_size</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -152,6 +162,42 @@ to a bypass, or out migrate during a simulated month</p>
       <td><p>Values can be 'sutter' or 'yolo' if some juveniles are detoured on to that bypass, otherwise NULL</p></td>
     </tr>
     <tr>
+      <th>.pulse_movement_intercept</th>
+      <td><p>Intercept for <code><a href='pulse_movement.html'>pulse_movement</a></code></p></td>
+    </tr>
+    <tr>
+      <th>.pulse_movement_proportion_pulse</th>
+      <td><p>Coefficient for <code><a href='pulse_movement.html'>pulse_movement</a></code> <code>proportion_pulse</code> variable</p></td>
+    </tr>
+    <tr>
+      <th>.pulse_movement_medium</th>
+      <td><p>Size related intercept for <code><a href='pulse_movement.html'>pulse_movement</a></code> medium sized fish</p></td>
+    </tr>
+    <tr>
+      <th>.pulse_movement_large</th>
+      <td><p>Size related intercept for <code><a href='pulse_movement.html'>pulse_movement</a></code> large sized fish</p></td>
+    </tr>
+    <tr>
+      <th>.pulse_movement_vlarge</th>
+      <td><p>Size related intercept for <code><a href='pulse_movement.html'>pulse_movement</a></code> very large sized fish</p></td>
+    </tr>
+    <tr>
+      <th>.pulse_movement_medium_pulse</th>
+      <td><p>Additional coefficient for <code><a href='pulse_movement.html'>pulse_movement</a></code> <code>proportion_pulse</code> variable for medium size fish</p></td>
+    </tr>
+    <tr>
+      <th>.pulse_movement_large_pulse</th>
+      <td><p>Additional coefficient for <code><a href='pulse_movement.html'>pulse_movement</a></code> <code>proportion_pulse</code> variable for large size fish</p></td>
+    </tr>
+    <tr>
+      <th>.pulse_movement_very_large_pulse</th>
+      <td><p>Additional coefficient for <code><a href='pulse_movement.html'>pulse_movement</a></code> <code>proportion_pulse</code> variable for very large size fish</p></td>
+    </tr>
+    <tr>
+      <th>territory_size</th>
+      <td><p>Array of juvenile fish territory requirements for <code><a href='fill_natal.html'>fill_natal</a></code></p></td>
+    </tr>
+    <tr>
       <th>juvenile</th>
       <td><p>An n by 4 matrix of juvenile fish by watershed and size class</p></td>
     </tr>
@@ -160,6 +206,9 @@ to a bypass, or out migrate during a simulated month</p>
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
     <p>IP-117068</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>See <code><a href='params.html'>params</a></code> for details on parameter sources</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

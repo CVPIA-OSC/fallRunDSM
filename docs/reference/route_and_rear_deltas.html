@@ -12,8 +12,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -124,13 +124,16 @@ during a simulated month. Then the remaining juveniles in the delta rear
   <span class='va'>south_delta_fish</span>,
   <span class='va'>north_delta_habitat</span>,
   <span class='va'>south_delta_habitat</span>,
+  <span class='va'>freeport_flows</span>,
+  <span class='va'>cc_gates_days_closed</span>,
   <span class='va'>rearing_survival_delta</span>,
   <span class='va'>migratory_survival_delta</span>,
   <span class='va'>migratory_survival_sac_delta</span>,
   <span class='va'>migratory_survival_bay_delta</span>,
   <span class='va'>juveniles_at_chipps</span>,
   <span class='va'>growth_rates</span>,
-  location_index <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>24</span><span class='op'>)</span>, <span class='fl'>3</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>2</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>4</span>, <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>
+  location_index <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>24</span><span class='op'>)</span>, <span class='fl'>3</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>2</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>4</span>, <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>,
+  <span class='va'>territory_size</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -192,6 +195,10 @@ during a simulated month. Then the remaining juveniles in the delta rear
       <th>location_index</th>
       <td><p>Migratory survival probability location index for fish coming from 4 areas (1-4) representing
 "northern_fish", "cosumnes_mokelumne_fish", "calaveras_fish", or "southern_fish" respectively</p></td>
+    </tr>
+    <tr>
+      <th>territory_size</th>
+      <td><p>Array of juvenile fish territory requirements for <code><a href='fill_natal.html'>fill_natal</a></code></p></td>
     </tr>
     </table>
 

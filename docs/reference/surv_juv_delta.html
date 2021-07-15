@@ -12,8 +12,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -120,14 +120,17 @@
   <span class='va'>contact_points</span>,
   <span class='va'>prop_diverted</span>,
   <span class='va'>total_diverted</span>,
-  ..surv_juv_delta_int <span class='op'>=</span> <span class='fl'>1.4</span>,
-  .avg_temp_thresh <span class='op'>=</span> <span class='op'>-</span><span class='fl'>0.717</span>,
-  .high_predation <span class='op'>=</span> <span class='op'>-</span><span class='fl'>0.122</span>,
-  ..surv_juv_delta_contact_points <span class='op'>=</span> <span class='fl'>0.0358</span> <span class='op'>*</span> <span class='op'>-</span><span class='fl'>0.189</span>,
-  .prop_diverted <span class='op'>=</span> <span class='op'>-</span><span class='fl'>3.51</span>,
-  ..surv_juv_delta_total_diverted <span class='op'>=</span> <span class='fl'>0.5</span> <span class='op'>*</span> <span class='op'>-</span><span class='fl'>0.0021</span>,
-  .medium <span class='op'>=</span> <span class='fl'>1.48</span>,
-  .large <span class='op'>=</span> <span class='fl'>2.223</span>
+  ..surv_juv_delta_int <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>..surv_juv_delta_int</span>,
+  .avg_temp_thresh <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>.surv_juv_delta_avg_temp_thresh</span>,
+  .high_predation <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>.surv_juv_delta_high_predation</span>,
+  .surv_juv_delta_contact_points <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>.surv_juv_delta_contact_points</span>,
+  ..surv_juv_delta_contact_points <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>..surv_juv_delta_contact_points</span>,
+  .prop_diverted <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>.surv_juv_delta_prop_diverted</span>,
+  .surv_juv_delta_total_diverted <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>.surv_juv_delta_total_diverted</span>,
+  ..surv_juv_delta_total_diverted <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>..surv_juv_delta_total_diverted</span>,
+  .medium <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>.surv_juv_delta_medium</span>,
+  .large <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>.surv_juv_delta_large</span>,
+  min_survival_rate <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>min_survival_rate</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -167,37 +170,52 @@
     </tr>
     <tr>
       <th>.avg_temp_thresh</th>
-      <td><p>Coefficient for avg_temp_thresh variable, source: <a href='https://dsm-docs.s3-us-west-2.amazonaws.com/marine_cech_water_temp_effects.pdf'>Marine and Chech (2004)</a></p></td>
+      <td><p>Coefficient for avg_temp_thresh variable</p></td>
     </tr>
     <tr>
       <th>.high_predation</th>
-      <td><p>Coefficient for high_predation variable, source: <a href='https://pubag.nal.usda.gov/catalog/512123'>Cavallo et al. (2012)</a></p></td>
+      <td><p>Coefficient for high_predation variable</p></td>
+    </tr>
+    <tr>
+      <th>.surv_juv_delta_contact_points</th>
+      <td><p>Coefficient for contact_points variable</p></td>
     </tr>
     <tr>
       <th>..surv_juv_delta_contact_points</th>
-      <td><p>Coefficient for contact_points variable, source: calibration</p></td>
+      <td><p>Calibrated coefficient for contact_points variable</p></td>
     </tr>
     <tr>
       <th>.prop_diverted</th>
-      <td><p>Coefficient for prop_diversions variable, source: Newman and Brandes (2010)</p></td>
+      <td><p>Coefficient for prop_diversions variable</p></td>
+    </tr>
+    <tr>
+      <th>.surv_juv_delta_total_diverted</th>
+      <td><p>Coefficient for total_diversions variable</p></td>
     </tr>
     <tr>
       <th>..surv_juv_delta_total_diverted</th>
-      <td><p>Coefficient for total_diversions variable, source: calibration</p></td>
+      <td><p>Calibrated coefficient for total_diversions variable</p></td>
     </tr>
     <tr>
       <th>.medium</th>
-      <td><p>parameter for medium sized fish, source: <a href='https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1'>Connor et al. (2004)</a></p></td>
+      <td><p>size related intercept for medium sized fish</p></td>
     </tr>
     <tr>
       <th>.large</th>
-      <td><p>parameter for large sized fish, source: <a href='https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1'>Connor et al. (2004)</a></p></td>
+      <td><p>size related intercept for large sized fish</p></td>
+    </tr>
+    <tr>
+      <th>min_survival_rate</th>
+      <td><p>estimated survival rate if temperature threshold is exceeded</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
     <p>IP-117068</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>See <code><a href='params.html'>params</a></code> for details on parameter sources</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
