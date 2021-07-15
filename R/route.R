@@ -1,6 +1,7 @@
 #' @title Route Natal Streams
 #' @description Determines if juveniles stay in their natal tributary, are detoured
 #' to a bypass, or out migrate during a simulated month
+#' @details See \code{\link{params}} for details on parameter sources
 #' @param year The current simulation year, 1-20
 #' @param month The current simulation month, 1-8
 #' @param juvenile An n by 4 matrix of juvenile fish by watershed and size class
@@ -8,18 +9,46 @@
 #' @param floodplain_habitat A vector of available floodplain habitat in square meters
 #' @param prop_pulse_flows The proportion of pulse flows
 #' @param detour Values can be 'sutter' or 'yolo' if some juveniles are detoured on to that bypass, otherwise NULL
+#' @param .pulse_movement_intercept Intercept for \code{\link{pulse_movement}}
+#' @param .pulse_movement_proportion_pulse Coefficient for \code{\link{pulse_movement}} \code{proportion_pulse} variable
+#' @param .pulse_movement_medium Size related intercept for \code{\link{pulse_movement}} medium sized fish
+#' @param .pulse_movement_large Size related intercept for \code{\link{pulse_movement}} large sized fish
+#' @param .pulse_movement_vlarge Size related intercept for \code{\link{pulse_movement}} very large sized fish
+#' @param .pulse_movement_medium_pulse Additional coefficient for \code{\link{pulse_movement}} \code{proportion_pulse} variable for medium size fish
+#' @param .pulse_movement_large_pulse Additional coefficient for \code{\link{pulse_movement}} \code{proportion_pulse} variable for large size fish
+#' @param .pulse_movement_very_large_pulse Additional coefficient for \code{\link{pulse_movement}} \code{proportion_pulse} variable for very large size fish
+#' @param territory_size Array of juvenile fish territory requirements for \code{\link{fill_natal}}
 #' @source IP-117068
 #' @export
-route <- function(year, month, juveniles, inchannel_habitat, floodplain_habitat, prop_pulse_flows, detour = NULL) {
+route <- function(year, month, juveniles, inchannel_habitat, floodplain_habitat,
+                  prop_pulse_flows, proportion_flow_bypass, detour = NULL,
+                  .pulse_movement_intercept,
+                  .pulse_movement_proportion_pulse,
+                  .pulse_movement_medium,
+                  .pulse_movement_large,
+                  .pulse_movement_vlarge,
+                  .pulse_movement_medium_pulse,
+                  .pulse_movement_large_pulse,
+                  .pulse_movement_very_large_pulse,
+                  territory_size) {
 
   natal_watersheds <- fill_natal(juveniles = juveniles,
                                  inchannel_habitat = inchannel_habitat,
-                                 floodplain_habitat = floodplain_habitat)
+                                 floodplain_habitat = floodplain_habitat,
+                                 territory_size = territory_size)
 
   # estimate probability leaving as function of pulse flow
-  prob_pulse_leave <- pulse_movement(prop_pulse_flows[ , month])
+  prob_pulse_leave <- pulse_movement(prop_pulse_flows[ , month],
+                                     .intercept = .pulse_movement_intercept,
+                                     .proportion_pulse = .pulse_movement_proportion_pulse,
+                                     .medium = .pulse_movement_medium,
+                                     .large = .pulse_movement_large,
+                                     .vlarge = .pulse_movement_vlarge,
+                                     .medium_pulse = .pulse_movement_medium_pulse,
+                                     .large_pulse = .pulse_movement_large_pulse,
+                                     .very_large_pulse = .pulse_movement_very_large_pulse)
 
-  # total fish that will migrate becuase of pulse flows, this derived using total in river
+  # total fish that will migrate because of pulse flows, this derived using total in river
   # and a binomial selection based on pr of movement due to pulse flows
   pulse_migrants <- t(sapply(1:nrow(juveniles), function(i) {
     rbinom(n = 4, size = round(natal_watersheds$inchannel[i, ]), prob = prob_pulse_leave[i, ])
@@ -54,12 +83,15 @@ route <- function(year, month, juveniles, inchannel_habitat, floodplain_habitat,
 #' @param bypass_fish An n by 4 matrix of juvenile fish by watershed and size class
 #' @param bypass_habitat A vector of available habitat in square meters
 #' @param migration_survival_rate The outmigration survival rate
+#' @param territory_size Array of juvenile fish territory requirements for \code{\link{fill_regional}}
 #' @source IP-117068
 #' @export
-route_bypass <- function(bypass_fish, bypass_habitat, migration_survival_rate) {
+route_bypass <- function(bypass_fish, bypass_habitat, migration_survival_rate,
+                         territory_size) {
 
   bypass_fish <- fill_regional(juveniles = bypass_fish,
-                               habitat = bypass_habitat)
+                               habitat = bypass_habitat,
+                               territory_size = territory_size)
 
   bypass_fish$migrants <- t(
     sapply(1:nrow(bypass_fish$migrants), function(i) {
@@ -81,14 +113,19 @@ route_bypass <- function(bypass_fish, bypass_habitat, migration_survival_rate) {
 #' @param floodplain_habitat A vector of available floodplain habitat in square meters
 #' @param prop_pulse_flows The proportion of pulse flows
 #' @param migration_survival_rate The outmigration survival rate
+#' @param territory_size Array of juvenile fish territory requirements for \code{\link{fill_regional}}
 #' @source IP-117068
 #' @export
-route_regional <- function(month, migrants, inchannel_habitat, floodplain_habitat, prop_pulse_flows, migration_survival_rate) {
+route_regional <- function(month, migrants,
+                           inchannel_habitat, floodplain_habitat,
+                           prop_pulse_flows, migration_survival_rate,
+                           territory_size) {
   # fill up upper mainstem, but in river fish can leave due to pulses
 
   regional_fish <- fill_regional(juveniles = migrants,
                                  habitat = inchannel_habitat,
-                                 floodplain_habitat = floodplain_habitat)
+                                 floodplain_habitat = floodplain_habitat,
+                                 territory_size = territory_size)
   # estimate probability leaving as function of pulse flow
   pulse_flows <- prop_pulse_flows[ , month]
   prob_pulse_leave <- matrix(pulse_movement(pulse_flows), ncol = 4, byrow = T)
@@ -199,14 +236,18 @@ route_south_delta <- function(freeport_flow, dcc_closed, month,
 #' @param growth_rates The delta growth rate
 #' @param location_index Migratory survival probability location index for fish coming from 4 areas (1-4) representing
 #' "northern_fish", "cosumnes_mokelumne_fish", "calaveras_fish", or "southern_fish" respectively
+#' @param territory_size Array of juvenile fish territory requirements for \code{\link{fill_natal}}
 #' @source IP-117068
 #' @export
 route_and_rear_deltas <- function(year, month, migrants, north_delta_fish, south_delta_fish,
                          north_delta_habitat, south_delta_habitat,
+                         freeport_flows,
+                         cc_gates_days_closed,
                          rearing_survival_delta, migratory_survival_delta,
                          migratory_survival_sac_delta, migratory_survival_bay_delta,
                          juveniles_at_chipps, growth_rates,
-                         location_index = c(rep(1, 24), 3, rep(2, 2), rep(4, 4))) {
+                         location_index = c(rep(1, 24), 3, rep(2, 2), rep(4, 4)),
+                         territory_size) {
 
   prop_delta_fish_entrained <- route_south_delta(freeport_flow = freeport_flows[[month, year]] * 35.3147,
                                                  dcc_closed = cc_gates_days_closed[month],
@@ -222,10 +263,12 @@ route_and_rear_deltas <- function(year, month, migrants, north_delta_fish, south
   migrants_and_salvaged[1:23, ] <- migrants_and_salvaged[1:23, ] - sac_not_entrained
 
   north_delta_fish <- fill_regional(juveniles = sac_not_entrained + north_delta_fish,
-                                    habitat = north_delta_habitat)
+                                    habitat = north_delta_habitat,
+                                    territory_size = territory_size)
 
   south_delta_fish <- fill_regional(juveniles = migrants_and_salvaged + south_delta_fish,
-                                    habitat = north_delta_habitat)
+                                    habitat = north_delta_habitat,
+                                    territory_size = territory_size)
 
   if (month == 8) {
     north_delta_fish = list(migrants = north_delta_fish$inchannel + north_delta_fish$migrants)

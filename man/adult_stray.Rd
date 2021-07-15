@@ -14,12 +14,13 @@ adult_stray(
   cross_channel_gates_closed,
   prop_bay_trans = 0,
   prop_delta_trans = 0,
-  .intercept = 3,
-  .wild = -5.5,
-  .natal_flow = -1.99,
-  .cross_channel_gates_closed = -0.174,
-  .prop_bay_trans = 2.09,
-  .prop_delta_trans = 2.89
+  .intercept = fallRunDSM::params$.adult_stray_intercept,
+  .wild = fallRunDSM::params$.adult_stray_wild,
+  .natal_flow = fallRunDSM::params$.adult_stray_natal_flow,
+ 
+    .cross_channel_gates_closed = fallRunDSM::params$.adult_stray_cross_channel_gates_closed,
+  .prop_bay_trans = fallRunDSM::params$.adult_stray_prop_bay_trans,
+  .prop_delta_trans = fallRunDSM::params$.adult_stray_prop_delta_trans
 )
 }
 \arguments{
@@ -35,18 +36,21 @@ adult_stray(
 
 \item{prop_delta_trans}{Variable describing proportion transport to the delta}
 
-\item{.intercept}{Intercept, source: Empirical model fit using 2008–2011 tagging data provided by East Bay Municipal Utility District}
+\item{.intercept}{Intercept}
 
-\item{.wild}{Coefficient for wild variable, source: Estimated with coded wire tag data 2010–2013 \href{https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&usg= AOvVaw0VgMOwD7knFfSxRZy6k8RG}{(Kormos et al. 2012, Palmer-Zwahlen & Kormos 2013-2015, Palmer-Zwahlen et al. 2018)}}
+\item{.wild}{Coefficient for \code{wild} variable}
 
-\item{.natal_flow}{Coefficient for natal flow variable, source: Empirical model fit using 2008–2011 tagging data provided by East Bay Municipal Utility District}
+\item{.natal_flow}{Coefficient for \code{natal_flow} variable}
 
-\item{.cross_channel_gates_closed}{Coefficient for cross_channel_gates_closed variable, Source: Empirical model fit using  2008–2011 tagging data provided by East Bay Municipal Utility District.}
+\item{.cross_channel_gates_closed}{Coefficient for \code{cross_channel_gates_closed} variable}
 
-\item{.prop_bay_trans}{Coefficient for prop_bay_trans variable, source: Estimated with coded wire tag data 2010–2013 \href{https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&usg= AOvVaw0VgMOwD7knFfSxRZy6k8RG}{(Kormos et al. 2012, Palmer-Zwahlen & Kormos 2013-2015, Palmer-Zwahlen et al. 2018)}}
+\item{.prop_bay_trans}{Coefficient for \code{prop_bay_trans} variable}
 
-\item{.prop_delta_trans}{Coefficient for prop_delta_trans variable, source: Estimated with coded wire tag data 2010–2013 \href{https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&usg= AOvVaw0VgMOwD7knFfSxRZy6k8RG}{(Kormos et al. 2012, Palmer-Zwahlen & Kormos 2013-2015, Palmer-Zwahlen et al. 2018)}}
+\item{.prop_delta_trans}{Coefficient for \code{prop_delta_trans} variable}
 }
 \description{
 Calculate the proportion of adults straying to non-natal streams to spawn
+}
+\details{
+See \code{\link{params}} for details on parameter sources
 }

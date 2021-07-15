@@ -9,17 +9,20 @@ IP-117068
 \usage{
 surv_adult_prespawn(
   deg_day,
-  ..surv_adult_prespawn_int = 3,
-  .deg_day = -0.000669526
+  ..surv_adult_prespawn_int = fallRunDSM::params$..surv_adult_prespawn_int,
+  .deg_day = fallRunDSM::params$.adult_prespawn_deg_day
 )
 }
 \arguments{
 \item{deg_day}{Variable describing average degree days}
 
-\item{..surv_adult_prespawn_int}{Intercept, Source: Calibration Estimate}
+\item{..surv_adult_prespawn_int}{Intercept}
 
-\item{.deg_day}{Coefficient for deg_day variable, source Colvin et al. (2018)}
+\item{.deg_day}{Coefficient for \code{deg_day} variable}
 }
 \description{
 Calculate the adult prespawn survival
+}
+\details{
+See \code{\link{params}} for details on parameter sources
 }

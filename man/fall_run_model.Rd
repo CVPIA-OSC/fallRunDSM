@@ -7,14 +7,23 @@
 IP-117068
 }
 \usage{
-fall_run_model(scenario = NULL, seeds = NULL)
+fall_run_model(
+  scenario = NULL,
+  mode = c("seed", "simulate", "calibrate"),
+  seeds = NULL,
+  ..params = fallRunDSM::params
+)
 }
 \arguments{
 \item{scenario}{Model inputs, can be modified to test management actions}
 
+\item{mode}{The mode to run model in. Can be \code{"seed"}, \code{"simulate"}, \code{"calibrate"}}
+
 \item{seeds}{The default value is NULL runs the model in seeding mode,
 returning a 31 by 25 matrix with the first four years of seeded adults. This
 returned value can be fed into the model again as the value for the seeds argument}
+
+\item{..params}{Parameters for model and submodels}
 }
 \description{
 Fall Run Chinook life cycle model used for CVPIA's Structured

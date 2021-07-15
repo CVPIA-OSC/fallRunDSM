@@ -7,48 +7,10 @@
 IP-117068
 }
 \usage{
-surv_juv_outmigration_sac(
-  flow_cms,
-  avg_temp,
-  total_diversions,
-  prop_diversions,
-  ..surv_juv_outmigration_sac_int_one = 2.5,
-  .flow_cms = 0.0092,
-  ..surv_juv_outmigration_sac_prop_diversions = -3.51 * 0.05,
-  ..surv_juv_outmigration_sac_total_diversions = -0.0021 * 0.215,
-  ..surv_juv_outmigration_sac_int_two = 0.3,
-  .avg_temp = 0.554,
-  .model_weight = 0.5,
-  .medium = 1.48,
-  .large = 2.223
-)
+surv_juv_outmigration_sac(flow_cms)
 }
 \arguments{
 \item{flow_cms}{Variable representing upper Sacramento River flow in cubic meters per second}
-
-\item{avg_temp}{Variable representing monthly mean temperature in celsius}
-
-\item{total_diversions}{Variable representing monthly mean total diversions in cubic feet per second}
-
-\item{prop_diversions}{Variable representing monthly mean proportion diverted}
-
-\item{..surv_juv_outmigration_sac_int_one}{intercept for first model, source: calibration (varies by tributary)}
-
-\item{.flow_cms}{coefficient for flow_cms, source: empirical model fit to the 2014 late-fall-run Chinook salmon tag release data}
-
-\item{..surv_juv_outmigration_sac_prop_diversions}{coefficient for prop_diversions, source: calibration}
-
-\item{..surv_juv_outmigration_sac_total_diversions}{coefficient for total_diversions, source: calibration}
-
-\item{..surv_juv_outmigration_sac_int_two}{intercept for second model, source: calibration (varies by tributary)}
-
-\item{.avg_temp}{coefficient for avg_temp, source: empirical model fit to the 2014 late-fall-run Chinook salmon tag release data}
-
-\item{.model_weight}{parameter describing how to weight the two models}
-
-\item{.medium}{parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}}
-
-\item{.large}{parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}}
 }
 \description{
 Calculates the Mainstem Sacramento juvenile out migration survival

@@ -12,6 +12,6 @@ adult_seeds
 }
 \description{
 adult fish for the initial 5 years of the simulations derived
-from average escapement estimates from 2013 to 2017 (Azat 2019).
+from average escapement estimates from 2013 to 2017 \href{https://dsm-docs.s3.us-west-2.amazonaws.com/Azat+2019.pdf}{Azat 2019}.
 }
 \keyword{datasets}

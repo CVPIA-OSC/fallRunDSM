@@ -1,12 +1,22 @@
 library(tidyverse)
+library(DSMCalibrationData)
 
 adult_seeds <- matrix(0, nrow = 31, ncol = 30)
-adult_seeds[ , 1] <- c(22012L, 72L, 12626L, 12L, 12L, 885L, 8555L, 1251L, 1649L, 569L,
-                       12L, 1332L, 51L, 12L, 12L, 0L, 0L, 12L, 52408L, 7184L, 0L, 0L,
-                       24959L, 0L, 12L, 499L, 4514L, 2145L, 5405L, 984L, 0L)
+no_fr_spawn <- !as.logical(DSMhabitat::watershed_species_present[1:31, ]$fr *
+              DSMhabitat::watershed_species_present[1:31,]$spawn)
 
-rownames(adult_seeds) <- DSMhabitat::watershed_metadata$watershed[-32]
+adult_seed_values <- DSMCalibrationData::mean_escapement_2013_2017 %>%
+  bind_cols(no_fr_spawn = no_fr_spawn) %>%
+  select(watershed, Fall, no_fr_spawn) %>%
+  mutate(corrected_fall = case_when(
+    no_fr_spawn ~ 0,
+    is.na(Fall) | Fall < 10 ~ 12,
+    TRUE ~ Fall)
+  ) %>% pull(corrected_fall)
 
+adult_seeds[ , 1] <- adult_seed_values
+
+rownames(adult_seeds) <- DSMhabitat::watershed_species_present$watershed_name[-32]
 usethis::use_data(adult_seeds, overwrite = TRUE)
 
 proportion_hatchery <- c(0.37, 0.2, 0.9, 0.37968253968254, 0.2, 0.115, 0.2225, 0.3525,
@@ -85,4 +95,40 @@ original_groups <- read_csv("data-raw/misc/Grouping.csv")
 diversity_group <- original_groups$DiversityGroup
 names(diversity_group) <- original_groups$watershed
 usethis::use_data(diversity_group, overwrite = TRUE)
+
+
+
+watershed_labels <- c("Upper Sacramento River", "Antelope Creek", "Battle Creek",
+                      "Bear Creek", "Big Chico Creek", "Butte Creek", "Clear Creek",
+                      "Cottonwood Creek", "Cow Creek", "Deer Creek", "Elder Creek",
+                      "Mill Creek", "Paynes Creek", "Stony Creek", "Thomes Creek",
+                      "Upper-mid Sacramento River", "Sutter Bypass", "Bear River",
+                      "Feather River", "Yuba River", "Lower-mid Sacramento River",
+                      "Yolo Bypass", "American River", "Lower Sacramento River", "Calaveras River",
+                      "Cosumnes River", "Mokelumne River", "Merced River", "Stanislaus River",
+                      "Tuolumne River", "San Joaquin River")
+
+usethis::use_data(watershed_labels)
+
+size_class_labels <- c('s', 'm', 'l', 'vl')
+
+usethis::use_data(size_class_labels)
+
+# calculate growth rates
+growth_rates <- growth()
+usethis::use_data(growth_rates)
+growth_rates_floodplain <- growth_floodplain()
+usethis::use_data(growth_rates_floodplain)
+
+
+
+
+
+
+
+
+
+
+
+
 

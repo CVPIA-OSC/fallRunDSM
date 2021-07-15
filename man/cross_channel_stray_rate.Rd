@@ -11,6 +11,6 @@ An object of class \code{numeric} of length 31.
 cross_channel_stray_rate
 }
 \description{
-TODO
+Natural straying allocation across channels, source: expert opinion from SIT members.
 }
 \keyword{datasets}

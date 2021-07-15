@@ -7,12 +7,75 @@
 IP-117068
 }
 \usage{
-get_spawning_adults(year, adults, hatch_adults)
+get_spawning_adults(
+  year,
+  adults,
+  hatch_adults,
+  mode,
+  month_return_proportions,
+  prop_flow_natal,
+  south_delta_routed_watersheds,
+  cc_gates_days_closed,
+  gates_overtopped,
+  tisdale_bypass_watershed,
+  yolo_bypass_watershed,
+  migratory_temperature_proportion_over_20,
+  ..surv_adult_enroute_int,
+  .adult_stray_intercept,
+  .adult_stray_wild,
+  .adult_stray_natal_flow,
+  .adult_stray_cross_channel_gates_closed,
+  .adult_stray_prop_bay_trans,
+  .adult_stray_prop_delta_trans,
+  .adult_en_route_migratory_temp,
+  .adult_en_route_bypass_overtopped,
+  .adult_en_route_adult_harvest_rate
+)
 }
 \arguments{
 \item{year}{the year of simulation}
 
 \item{adults}{potential spawning adults for each watershed (length = 31) values must be integer}
+
+\item{hatch_adults}{total hatchery adults}
+
+\item{month_return_proportions}{The proportion of fish returning for each month}
+
+\item{prop_flow_natal}{More details at \code{\link[DSMflow]{proportion_flow_natal}}}
+
+\item{south_delta_routed_watersheds}{More details at \code{\link[DSMhabitat]{south_delta_routed_watersheds}}}
+
+\item{cc_gates_days_closed}{More details at \code{\link[DSMflow]{delta_cross_channel_closed}}}
+
+\item{gates_overtopped}{More details at \code{\link[DSMflow]{gates_overtopped}}}
+
+\item{tisdale_bypass_watershed}{More details at \code{\link[DSMhabitat]{tisdale_bypass_watershed}}}
+
+\item{yolo_bypass_watershed}{More details at \code{\link[DSMhabitat]{yolo_bypass_watershed}}}
+
+\item{migratory_temperature_proportion_over_20}{More details at \code{\link[DSMtemperature]{migratory_temperature_proportion_over_20}}}
+
+\item{..surv_adult_enroute_int}{Intercept for \code{\link{surv_adult_enroute}}}
+
+\item{.adult_stray_intercept}{Intercept for \code{\link{adult_stray}}}
+
+\item{.adult_stray_wild}{Coefficient for \code{\link{adult_stray}} \code{wild} variable}
+
+\item{.adult_stray_natal_flow}{Coefficient for \code{\link{adult_stray}} \code{natal_flow} variable}
+
+\item{.adult_stray_cross_channel_gates_closed}{Coefficient for \code{\link{adult_stray}} \code{cross_channel_gates_closed} variable}
+
+\item{.adult_stray_prop_bay_trans}{Coefficient for \code{\link{adult_stray}} \code{prop_bay_trans} variable}
+
+\item{.adult_stray_prop_delta_trans}{Coefficient for \code{\link{adult_stray}} \code{prop_delta_trans} variable}
+
+\item{.adult_en_route_migratory_temp}{Coefficient for \code{\link{surv_adult_enroute}} \code{migratory_temp} variable}
+
+\item{.adult_en_route_bypass_overtopped}{Coefficient for \code{\link{surv_adult_enroute}} \code{bypass_overtopped} variable}
+
+\item{.adult_en_route_adult_harvest_rate}{Adult harvest rate for \code{\link{surv_adult_enroute}}}
+
+\item{seeds}{a value meant to be inherited to determine if model is in seeding stage or not}
 }
 \description{
 Get Spawning Adults

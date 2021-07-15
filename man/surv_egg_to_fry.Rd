@@ -10,10 +10,10 @@ IP-117068
 surv_egg_to_fry(
   proportion_natural,
   scour,
-  temperature_effect,
-  ..surv_egg_to_fry_int = 0.041,
-  .proportion_natural = 0.533,
-  .scour = -0.655
+  temperature_effect = fallRunDSM::params$mean_egg_temp_effect,
+  ..surv_egg_to_fry_int = fallRunDSM::params$..surv_egg_to_fry_int,
+  .proportion_natural = fallRunDSM::params$.surv_egg_to_fry_proportion_natural,
+  .scour = fallRunDSM::params$.surv_egg_to_fry_scour
 )
 }
 \arguments{
@@ -24,12 +24,15 @@ surv_egg_to_fry(
 \item{temperature_effect}{Variable describing the effect of inchannel temperature on egg survival.
 Fall and spring estimated by C. Hammersmark (CBEC Ecoengineering Inc.). Winter-run value was calibrated.}
 
-\item{..surv_egg_to_fry_int}{Intercept, source: Calibration}
+\item{..surv_egg_to_fry_int}{Intercept}
 
-\item{.proportion_natural}{Coefficient for proportion_natural variable, Source: \href{https://cdnsciencepub.com/doi/abs/10.1139/F10-168}{Chilcote et al. (2011)}}
+\item{.proportion_natural}{Coefficient for \code{proportion_natural} variable}
 
-\item{.scour}{Coefficient for scour variable, Source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/montogemery_1996.pdf}{Montgomery et al. (1996)}}
+\item{.scour}{Coefficient for \code{scour} variable}
 }
 \description{
 Calculates the survival of transitioning from egg to fry
+}
+\details{
+See \code{\link{params}} for details on parameter sources
 }

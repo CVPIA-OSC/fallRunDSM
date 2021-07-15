@@ -16,16 +16,21 @@ surv_juv_rear(
   total_diversions,
   stranded,
   weeks_flooded,
-  ..surv_juv_rear_int = 3.5,
-  .avg_temp_thresh = -0.717,
-  .high_predation = -0.122,
-  ..surv_juv_rear_contact_points = -0.0068,
-  ..surv_juv_rear_prop_diversions = -0.1755,
-  ..surv_juv_rear_total_diversions = -5e-04,
-  .stranded = -1.939,
-  .medium = 1.48,
-  .large = 2.223,
-  .floodplain = 0.47
+  ..surv_juv_rear_int = fallRunDSM::params$..surv_juv_rear_int,
+  .avg_temp_thresh = fallRunDSM::params$.surv_juv_rear_avg_temp_thresh,
+  .high_predation = fallRunDSM::params$.surv_juv_rear_high_predation,
+  .surv_juv_rear_contact_points = fallRunDSM::params$.surv_juv_rear_contact_points,
+  ..surv_juv_rear_contact_points = fallRunDSM::params$..surv_juv_rear_contact_points,
+  .surv_juv_rear_prop_diversions = fallRunDSM::params$.surv_juv_rear_prop_diversions,
+  ..surv_juv_rear_prop_diversions = fallRunDSM::params$..surv_juv_rear_prop_diversions,
+  .surv_juv_rear_total_diversions = fallRunDSM::params$.surv_juv_rear_total_diversions,
+ 
+    ..surv_juv_rear_total_diversions = fallRunDSM::params$..surv_juv_rear_total_diversions,
+  .stranded = fallRunDSM::params$.surv_juv_rear_stranded,
+  .medium = fallRunDSM::params$.surv_juv_rear_medium,
+  .large = fallRunDSM::params$.surv_juv_rear_large,
+  .floodplain = fallRunDSM::params$.surv_juv_rear_floodplain,
+  min_survival_rate = fallRunDSM::params$min_survival_rate
 )
 }
 \arguments{
@@ -47,24 +52,35 @@ surv_juv_rear(
 
 \item{..surv_juv_rear_int}{intercept, source: calibration (varies by tributary)}
 
-\item{.avg_temp_thresh}{coefficient for avg_temp_thresh variable, source: \href{https://www.noaa.gov/sites/default/files/atoms/files/07354626766.pdf}{Marine and Chech (2004)}}
+\item{.avg_temp_thresh}{coefficient for avg_temp_thresh variable}
 
-\item{.high_predation}{coefficient for high_predation variable, source: \href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}}
+\item{.high_predation}{coefficient for high_predation variable}
 
-\item{..surv_juv_rear_contact_points}{coefficient for contact_points variable, source: calibration}
+\item{.surv_juv_rear_contact_points}{coefficient for contact_points variable}
 
-\item{..surv_juv_rear_prop_diversions}{coefficient for prop_diversions variable, source: calibration}
+\item{..surv_juv_rear_contact_points}{calibrated coefficient for contact_points variable}
 
-\item{..surv_juv_rear_total_diversions}{coefficient for total_diversions variable, source: calibration}
+\item{.surv_juv_rear_prop_diversions}{coefficient for prop_diversions variable}
 
-\item{.stranded}{coefficient for stranded variable, source: \href{#}{USFWS (2006) and CDWR (2006)}}
+\item{..surv_juv_rear_prop_diversions}{calibrated coefficient for prop_diversions variable}
 
-\item{.medium}{parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}}
+\item{.surv_juv_rear_total_diversions}{coefficient for total_diversions variable}
 
-\item{.large}{parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}}
+\item{..surv_juv_rear_total_diversions}{calibrated coefficient for total_diversions variable}
 
-\item{.floodplain}{parameter for floodplain rearing benefit, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/SOMMER_T-SDWA+180+Floodplain+rearing+of+juvenile+chinook+salmon+evidence+of+enhanced+growth+and+survival+.pdf}{Sommer et al. (2001)}}
+\item{.stranded}{coefficient for stranded variable}
+
+\item{.medium}{size related intercept for medium sized fish}
+
+\item{.large}{size related intercept for large sized fish}
+
+\item{.floodplain}{Additional intercept for floodplain rearing benefit}
+
+\item{min_survival_rate}{estimated survival rate if temperature threshold is exceeded, source: expert opinion}
 }
 \description{
 Calculates the juvenile rearing survival inchannel and on the floodplain
+}
+\details{
+See \code{\link{params}} for details on parameter sources
 }

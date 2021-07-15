@@ -11,9 +11,9 @@ surv_adult_enroute(
   migratory_temp,
   bypass_overtopped,
   adult_harvest,
-  ..surv_adult_enroute_int = 3,
-  .migratory_temp = -0.26,
-  .bypass_overtopped = -0.019
+  ..surv_adult_enroute_int = fallRunDSM::params$..surv_adult_enroute_int,
+  .migratory_temp = fallRunDSM::params$.adult_en_route_migratory_temp,
+  .bypass_overtopped = fallRunDSM::params$.adult_en_route_bypass_overtopped
 )
 }
 \arguments{
@@ -21,14 +21,17 @@ surv_adult_enroute(
 
 \item{bypass_overtopped}{Indicator for bypass overtopped}
 
-\item{adult_harvest}{Adult harvest rate (Estimated with Coded Wire Tag data 2012–2013 (Palmer-Zwahlen & Kormos 2015; Palmer-Zwahlen et al. 2018))}
+\item{adult_harvest}{Adult harvest rate}
 
-\item{..surv_adult_enroute_int}{intercept, source: calibration}
+\item{..surv_adult_enroute_int}{Intercept}
 
-\item{.migratory_temp}{coefficient for migratory_temp variable, source: \href{https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&usg= AOvVaw0VgMOwD7knFfSxRZy6k8RG}{Schreck et al. (1994)}}
+\item{.migratory_temp}{Coefficient for \code{migratory_temp} variable}
 
-\item{.bypass_overtopped}{coefficient for bypass_overtopped variable, source: Expert opinion Ted Sommer, California Department of Water Resources (tributaries above bypasses only)}
+\item{.bypass_overtopped}{Coefficient for \code{bypass_overtopped} variable}
 }
 \description{
 Calculate adult survival en route to spawning grounds
+}
+\details{
+See \code{\link{params}} for details on parameter sources
 }
