@@ -19,8 +19,7 @@ library(fallRunDSM)
 ```
 
 ## Description 
-This analysis provides the `hatchery_allocation` and `natural_adult_removal_rate` inputs to the FallRunDSM, SpringRunDSM, and WinterRunDSM. 
-The following code and datatables document the process of finding the of number and distribution of hatchery origin Fall Run, Spring Run, and Winter Run Chinook in the Central Valley. 
+This analysis provides the `hatchery_allocation` and `natural_adult_removal_rate` inputs to the FallRunDSM. 
 
 ### Datasource
 Temporal Range: 2010 - 2012 
