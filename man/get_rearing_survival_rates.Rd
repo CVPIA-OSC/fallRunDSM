@@ -128,7 +128,7 @@ get_rearing_survival_rates(
 
 \item{.surv_juv_bypass_avg_temp_thresh}{Coefficient for \code{\link{surv_juv_bypass}} \code{avg_temp_thresh} variable}
 
-\item{.surv_juv_bypass_high_predation}{Coefficient for \code{\link{surv_juv_bypass}} \code{high_predation} variableTODO}
+\item{.surv_juv_bypass_high_predation}{Coefficient for \code{\link{surv_juv_bypass}} \code{high_predation} variable}
 
 \item{.surv_juv_bypass_medium}{Size related intercept for \code{\link{surv_juv_bypass}} medium sized fish}
 
