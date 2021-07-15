@@ -11,7 +11,7 @@ fill_natal(
   juveniles,
   inchannel_habitat,
   floodplain_habitat,
-  territory_size = c(0.0498944803729701, 0.138941944739835, 0.471083652829798, 0),
+  territory_size = fallRunDSM::params$territory_size,
   up_to_size_class = 2
 )
 }

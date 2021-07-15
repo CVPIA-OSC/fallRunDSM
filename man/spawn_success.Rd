@@ -13,9 +13,9 @@ spawn_success(
   egg_to_fry_survival,
   prob_scour,
   spawn_habitat,
-  sex_ratio = 0.5,
-  redd_size = 9.29,
-  fecundity = 5522
+  sex_ratio = fallRunDSM::params$spawn_success_sex_ratio,
+  redd_size = fallRunDSM::params$spawn_success_redd_size,
+  fecundity = fallRunDSM::params$spawn_success_fecundity
 )
 }
 \arguments{
@@ -29,11 +29,11 @@ spawn_success(
 
 \item{spawn_habitat}{The available spawning habitat in square meters}
 
-\item{sex_ratio}{The female to male spawning ratio, default 0.5}
+\item{sex_ratio}{The female to male spawning ratio}
 
-\item{redd_size}{The size of redds including defensible space, default value 9.29 square meters}
+\item{redd_size}{The size of redds including defensible space}
 
-\item{fecundity}{The number of eggs per female, default value 5522}
+\item{fecundity}{The number of eggs per female}
 }
 \description{
 Calculates the annual reproductive success.

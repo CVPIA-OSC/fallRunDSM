@@ -11,12 +11,13 @@ surv_juv_bypass(
   max_temp_thresh,
   avg_temp_thresh,
   high_predation,
-  ..surv_juv_bypass_int = -3.5,
-  .avg_temp_thresh = -0.717,
-  .high_predation = -0.122,
-  .medium = 1.48,
-  .large = 2.223,
-  .floodplain = 0.47
+  ..surv_juv_bypass_int = fallRunDSM::params$..surv_juv_bypass_int,
+  .avg_temp_thresh = fallRunDSM::params$.surv_juv_bypass_avg_temp_thresh,
+  .high_predation = fallRunDSM::params$.surv_juv_bypass_high_predation,
+  .medium = fallRunDSM::params$.surv_juv_bypass_medium,
+  .large = fallRunDSM::params$.surv_juv_bypass_large,
+  .floodplain = fallRunDSM::params$.surv_juv_bypass_floodplain,
+  min_survival_rate = fallRunDSM::params$min_survival_rate
 )
 }
 \arguments{
@@ -28,16 +29,21 @@ surv_juv_bypass(
 
 \item{..surv_juv_bypass_int}{intercept, source: calibration}
 
-\item{.avg_temp_thresh}{coefficient for avg_temp_thresh variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/marine_cech_water_temp_effects.pdf}{Marine and Chech (2004)}}
+\item{.avg_temp_thresh}{coefficient for avg_temp_thresh variable}
 
-\item{.high_predation}{coefficient for high_predation variable, source:\href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}}
+\item{.high_predation}{coefficient for high_predation variable}
 
-\item{.medium}{parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}}
+\item{.medium}{size related intercept for medium sized fish}
 
-\item{.large}{parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}}
+\item{.large}{size related intercept for large sized fish}
 
-\item{.floodplain}{parameter for floodplain rearing benefit, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/SOMMER_T-SDWA+180+Floodplain+rearing+of+juvenile+chinook+salmon+evidence+of+enhanced+growth+and+survival+.pdf}{Sommer et al. (2001)}}
+\item{.floodplain}{Additional intercept for floodplain rearing benefit}
+
+\item{min_survival_rate}{estimated survival rate if temperature threshold is exceeded}
 }
 \description{
 Calculates the juvenile rearing survival in the bypasses
+}
+\details{
+See \code{\link{params}} for details on parameter sources
 }

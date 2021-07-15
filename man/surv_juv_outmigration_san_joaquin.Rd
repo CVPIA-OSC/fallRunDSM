@@ -8,18 +8,21 @@ IP-117068
 }
 \usage{
 surv_juv_outmigration_san_joaquin(
-  ..surv_juv_outmigration_sj_int = -3.5,
-  .medium = 1.48,
-  .large = 2.223
+  ..surv_juv_outmigration_sj_int = fallRunDSM::params$..surv_juv_outmigration_sj_int,
+  .medium = fallRunDSM::params$.surv_juv_outmigration_san_joaquin_medium,
+  .large = fallRunDSM::params$.surv_juv_outmigration_san_joaquin_large
 )
 }
 \arguments{
-\item{..surv_juv_outmigration_sj_int}{intercept, source: calibration}
+\item{..surv_juv_outmigration_sj_int}{Intercept}
 
-\item{.medium}{parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}}
+\item{.medium}{Size related intercept for medium sized fish}
 
-\item{.large}{parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}}
+\item{.large}{Size related intercept for large sized fish}
 }
 \description{
 Calculates the San Joaquin River juvenile out migration survival
+}
+\details{
+See \code{\link{params}} for details on parameter sources
 }
