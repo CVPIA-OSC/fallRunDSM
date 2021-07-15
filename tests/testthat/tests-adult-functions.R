@@ -2,15 +2,14 @@ library(testthat)
 library(fallRunDSM)
 # tests for adult functions
 # Lists inputs to use in testing
-list2env(load_baseline_data(), envir = .GlobalEnv)
 year <- 1
 month <- 9
-bypass_is_overtopped <- as.logical(tisdale_bypass_watershed + yolo_bypass_watershed)
-avg_migratory_temp <- rowMeans(migratory_temperature_proportion_over_20[ , 10:12])
-accumulated_degree_days <- cbind(oct = rowSums(degree_days[ , 10:12, year]),
-                                 nov = rowSums(degree_days[ , 11:12, year]),
-                                 dec = degree_days[ , 12, year])
-average_degree_days <- apply(accumulated_degree_days, 1, weighted.mean, month_return_proportions)
+bypass_is_overtopped <- as.logical(params$tisdale_bypass_watershed + params$yolo_bypass_watershed)
+avg_migratory_temp <- rowMeans(params$migratory_temperature_proportion_over_20[ , 10:12])
+accumulated_degree_days <- cbind(oct = rowSums(params$degree_days[ , 10:12, year]),
+                                 nov = rowSums(params$degree_days[ , 11:12, year]),
+                                 dec = params$degree_days[ , 12, year])
+average_degree_days <- apply(accumulated_degree_days, 1, weighted.mean, params$month_return_proportions)
 
 # Tests adult straying function
 expected_straying_output <- c(`Upper Sacramento River` = 0.0179218144440285, `Antelope Creek` = 0.0740104504838898,
@@ -32,9 +31,9 @@ expected_straying_output <- c(`Upper Sacramento River` = 0.0179218144440285, `An
 
 test_that('The straying function returns the expected values for year 1', {
   expect_equal(adult_stray(wild = 1,
-                           natal_flow = prop_flow_natal[ , year],
-                           south_delta_watershed = south_delta_routed_watersheds,
-                           cross_channel_gates_closed = cc_gates_days_closed[10]),
+                           natal_flow = params$prop_flow_natal[ , year],
+                           south_delta_watershed = params$south_delta_routed_watersheds,
+                           cross_channel_gates_closed = params$cc_gates_days_closed[10]),
                expected_straying_output)
 })
 
@@ -59,7 +58,7 @@ expected_surv_en_route <- c(`Upper Sacramento River` = 0.811708351611047, `Antel
 test_that('The adult enroute survival function returns the expected values for year 1', {
   expect_equal(surv_adult_enroute(migratory_temp = avg_migratory_temp,
                                   bypass_overtopped = bypass_is_overtopped,
-                                  adult_harvest = adult_harvest_rate),
+                                  adult_harvest = params$adult_harvest_rate),
                expected_surv_en_route)
 })
 
@@ -104,9 +103,9 @@ expected_egg_surv <- c(`Upper Sacramento River` = 0.508283676958069, `Antelope C
                        `San Joaquin River` = 0)
 
 test_that('The egg_to_fry survival function returns the expected values for year 1', {
-  expect_equal(egg_to_fry_surv <- surv_egg_to_fry(proportion_natural = 1 - proportion_hatchery,
-                                                  scour = prob_nest_scoured,
-                                                  temperature_effect = mean_egg_temp_effect),
+  expect_equal(egg_to_fry_surv <- surv_egg_to_fry(proportion_natural = 1 - params$proportion_hatchery,
+                                                  scour = params$prob_nest_scoured,
+                                                  temperature_effect = params$mean_egg_temp_effect),
                expected_egg_surv)
 })
 
@@ -213,6 +212,7 @@ test_that("Get spawning adults returns the expected values", {
   set.seed(2021)
   spawning_adults <- get_spawning_adults(year = year, adults = adults,
                                          hatch_adults = hatch_adults,
+                                         month_return_proportions = params$month_return_proportions,
                                          mode = "seed",
                                          prop_flow_natal = fallRunDSM::params$prop_flow_natal,
                                          south_delta_routed_watersheds = fallRunDSM::params$south_delta_routed_watersheds,
@@ -237,36 +237,25 @@ test_that("Get spawning adults returns the expected values", {
 
 # Tests spawn success function
 init_adults <- expected_spawners$init_adults
-min_spawn_habitat <- apply(spawning_habitat[ , 10:12, year], 1, min)
+min_spawn_habitat <- apply(params$spawning_habitat[ , 10:12, year], 1, min)
 
-expected_juveniles <- structure(c(23562632.6818975, 95877.4873630614, 400486.276068609,
-                                  14696.4466670538, 15466.5250672724, 1230801.9983072, 11392333.5307564,
-                                  1505953.40992132, 2237111.18034545, 770950.13685259, 15511.9369082167,
-                                  1660902.32553158, 62818.1321951005, 14307.5895999286, 14822.7873816012,
-                                  0, 0, 15335.6115608913, 26878201.5853304, 9066230.947591, 0,
-                                  0, 30332561.2074681, 0, 14870.5408311819, 651645.917994897, 5091505.90089442,
-                                  1736248.62081574, 6286476.48377482, 1223531.384084, 0, 0, 0,
+expected_juveniles <- structure(c(63013983, 17382827, 14181724, 12267298, 11294498,
+                                  171886959, 15665034, 1666415, 58531016, 76100699, 5360762, 13988979,
+                                  8495281, 17170683, 26113261, 0, 0, 1808535, 47588280, 32767726,
+                                  0, 0, 285959988, 0, 6277630, 14431357, 12732900, 22170279, 14001095,
+                                  49874514, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                  0, 0, 0, 0, 0, 0, 0), .Dim = c(31L, 4L),
-                                .Dimnames = list(c("Upper Sacramento River",
-                                                   "Antelope Creek", "Battle Creek", "Bear Creek", "Big Chico Creek",
-                                                   "Butte Creek", "Clear Creek", "Cottonwood Creek", "Cow Creek",
-                                                   "Deer Creek", "Elder Creek", "Mill Creek", "Paynes Creek", "Stony Creek",
-                                                   "Thomes Creek", "Upper-mid Sacramento River", "Sutter Bypass",
-                                                   "Bear River", "Feather River", "Yuba River", "Lower-mid Sacramento River",
-                                                   "Yolo Bypass", "American River", "Lower Sacramento River", "Calaveras River",
-                                                   "Cosumnes River", "Mokelumne River", "Merced River", "Stanislaus River",
-                                                   "Tuolumne River", "San Joaquin River"), c("fry", "", "", "")))
+                                  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), .Dim = c(31L, 4L), .Dimnames = list(
+                                    NULL, c("fry", "", "", "")))
 
 test_that("spawn success function returns the expected value", {
   set.seed(2021)
   juveniles <- spawn_success(escapement = init_adults,
                              adult_prespawn_survival = expected_prespawn_surv,
                              egg_to_fry_survival = expected_egg_surv,
-                             prob_scour = prob_nest_scoured,
+                             prob_scour = fallRunDSM::params$prob_nest_scoured,
                              spawn_habitat = min_spawn_habitat)
   expect_equal(round(juveniles, 2), round(expected_juveniles, 2))
 })
