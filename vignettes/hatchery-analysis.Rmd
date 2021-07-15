@@ -40,11 +40,6 @@ cwt_data <- read_csv(system.file("extdata", "hatchery-data", "hatchery_fish_fate
                        package = "fallRunDSM", mustWork = TRUE)) %>%
   rename("Hatch_flag" = Hatch.flag)
 
-# Do not get the correct values using this for proportion spring run
-# prop_spring <- cwt_data %>% filter(Run == "Spring") %>%
-#   group_by(Year) %>%
-#   summarise(prop = n()/nrow(cwt_data))
-
 proportion_spring_run <- dplyr::tibble(prp = c(0.076777295, 0.056932196, 0.081441457), 
                                        Year = c(2010, 2011, 2012))
 
