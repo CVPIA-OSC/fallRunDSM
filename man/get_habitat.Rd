@@ -23,22 +23,22 @@ get_habitat(
 
 \item{month}{The current simulation month, 1-8}
 
-\item{inchannel_habitat_fry}{Variable describing fry inchannel rearing habitat}
+\item{inchannel_habitat_fry}{3 dimensional array [watersheds, months, years] representing fry inchannel habitat in square meters}
 
-\item{inchannel_habitat_juvenile}{Variable describing juvenile inchannel rearing habitat}
+\item{inchannel_habitat_juvenile}{3 dimensional array [watersheds, months, years] representing juvenile inchannel habitat in square meters}
 
-\item{floodplain_habitat}{Variable describing floodplain rearing habitat}
+\item{floodplain_habitat}{3 dimensional array [watersheds, months, years] representing floodplain habitat in square meters}
 
-\item{sutter_habitat}{Variable describing sutter bypass rearing habitat}
+\item{sutter_habitat}{2 dimensional array [months, years] representing sutter bypass habitat in square meters}
 
-\item{yolo_habitat}{Variable describing yolo bypass rearing habitat}
+\item{yolo_habitat}{2 dimensional array [months, years] representing yolo bypass habitat in square meters}
 
-\item{north_delta_habitat}{Variable describing north delta rearing habitat}
+\item{north_delta_habitat}{2 dimensional array [months, years] representing north delta habitat in square meters}
 
-\item{south_delta_habitat}{Variable describing south delta rearing habitat}
+\item{south_delta_habitat}{2 dimensional array [months, years] representing south delta habitat in square meters}
 }
 \description{
-3 dimensional array [watersheds, months, years] representing fry inchannel and floodplain rearing habitat in square meters
+Returns the appropriate habitat for spawning and rearing based on habitat inputs and a given simulation year and month
 }
 \details{
 See \code{\link{params}} for details on parameter sources
