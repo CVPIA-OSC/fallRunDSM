@@ -223,51 +223,51 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
 #' @source IP-117068
 #' @export
 get_rearing_survival <- function(year, month,
-                                       survival_adjustment,
-                                       mode,
-                                       avg_temp,
-                                       avg_temp_delta,
-                                       prob_strand_early,
-                                       prob_strand_late,
-                                       proportion_diverted,
-                                       total_diverted,
-                                       delta_proportion_diverted,
-                                       delta_total_diverted,
-                                       weeks_flooded,
-                                       prop_high_predation,
-                                       contact_points,
-                                       delta_contact_points,
-                                       delta_prop_high_predation,
-                                       ..surv_juv_rear_int,
-                                       .surv_juv_rear_contact_points,
-                                       ..surv_juv_rear_contact_points,
-                                       .surv_juv_rear_prop_diversions,
-                                       ..surv_juv_rear_prop_diversions,
-                                       .surv_juv_rear_total_diversions,
-                                       ..surv_juv_rear_total_diversions,
-                                       ..surv_juv_bypass_int,
-                                       ..surv_juv_delta_int,
-                                       .surv_juv_delta_contact_points,
-                                       ..surv_juv_delta_contact_points,
-                                       .surv_juv_delta_total_diverted,
-                                       ..surv_juv_delta_total_diverted,
-                                       .surv_juv_rear_avg_temp_thresh,
-                                       .surv_juv_rear_high_predation,
-                                       .surv_juv_rear_stranded,
-                                       .surv_juv_rear_medium,
-                                       .surv_juv_rear_large,
-                                       .surv_juv_rear_floodplain,
-                                       .surv_juv_bypass_avg_temp_thresh,
-                                       .surv_juv_bypass_high_predation,
-                                       .surv_juv_bypass_medium,
-                                       .surv_juv_bypass_large,
-                                       .surv_juv_bypass_floodplain,
-                                       .surv_juv_delta_avg_temp_thresh,
-                                       .surv_juv_delta_high_predation,
-                                       .surv_juv_delta_prop_diverted,
-                                       .surv_juv_delta_medium,
-                                       .surv_juv_delta_large,
-                                       min_survival_rate) {
+                                 survival_adjustment,
+                                 mode,
+                                 avg_temp,
+                                 avg_temp_delta,
+                                 prob_strand_early,
+                                 prob_strand_late,
+                                 proportion_diverted,
+                                 total_diverted,
+                                 delta_proportion_diverted,
+                                 delta_total_diverted,
+                                 weeks_flooded,
+                                 prop_high_predation,
+                                 contact_points,
+                                 delta_contact_points,
+                                 delta_prop_high_predation,
+                                 ..surv_juv_rear_int,
+                                 .surv_juv_rear_contact_points,
+                                 ..surv_juv_rear_contact_points,
+                                 .surv_juv_rear_prop_diversions,
+                                 ..surv_juv_rear_prop_diversions,
+                                 .surv_juv_rear_total_diversions,
+                                 ..surv_juv_rear_total_diversions,
+                                 ..surv_juv_bypass_int,
+                                 ..surv_juv_delta_int,
+                                 .surv_juv_delta_contact_points,
+                                 ..surv_juv_delta_contact_points,
+                                 .surv_juv_delta_total_diverted,
+                                 ..surv_juv_delta_total_diverted,
+                                 .surv_juv_rear_avg_temp_thresh,
+                                 .surv_juv_rear_high_predation,
+                                 .surv_juv_rear_stranded,
+                                 .surv_juv_rear_medium,
+                                 .surv_juv_rear_large,
+                                 .surv_juv_rear_floodplain,
+                                 .surv_juv_bypass_avg_temp_thresh,
+                                 .surv_juv_bypass_high_predation,
+                                 .surv_juv_bypass_medium,
+                                 .surv_juv_bypass_large,
+                                 .surv_juv_bypass_floodplain,
+                                 .surv_juv_delta_avg_temp_thresh,
+                                 .surv_juv_delta_high_predation,
+                                 .surv_juv_delta_prop_diverted,
+                                 .surv_juv_delta_medium,
+                                 .surv_juv_delta_large,
+                                 min_survival_rate) {
 
   aveT20 <- rbinom(31, 1, boot::inv.logit(-14.32252 + 0.72102 * avg_temp[ , month , year]))
   maxT25 <- rbinom(31, 1, boot::inv.logit(-23.1766 + 1.4566 * avg_temp[ , month, year]))
@@ -383,7 +383,7 @@ get_rearing_survival <- function(year, month,
 #' @export
 surv_juv_outmigration_sac <- function(flow_cms){
 
-  result <- rep((flow_cms <= 122)*0.03 + (flow_cms > 122 & flow_cms <= 303)*0.189 + (flow_cms > 303)*0.508,4)
+  result <- rep((flow_cms <= 122) * 0.03 + (flow_cms > 122 & flow_cms <= 303) * 0.189 + (flow_cms > 303) * 0.508, 4)
   setNames(result, fallRunDSM::size_class_labels)
 }
 
@@ -421,6 +421,7 @@ surv_juv_outmigration_san_joaquin <- function(..surv_juv_outmigration_sj_int = f
 #' @param .perc_diversions Coefficient for perc_diversions variable
 #' @param .medium Size related intercept for medium sized fish
 #' @param .large Size related intercept for large sized fish
+#' @param model_weights weights for competing models
 #' @source IP-117068
 #' @export
 surv_juv_outmigration_sac_delta <- function(delta_flow, avg_temp, perc_diversions,
@@ -431,25 +432,25 @@ surv_juv_outmigration_sac_delta <- function(delta_flow, avg_temp, perc_diversion
                                             .avg_temp = fallRunDSM::params$.surv_juv_outmigration_sac_delta_avg_temp,
                                             .perc_diversions = fallRunDSM::params$.surv_juv_outmigration_sac_delta_perc_diversions,
                                             .medium = fallRunDSM::params$.surv_juv_outmigration_sac_delta_medium,
-                                            .large = fallRunDSM::params$.surv_juv_outmigration_sac_delta_large){
-
-  model_weight <- 1/3
+                                            .large = fallRunDSM::params$.surv_juv_outmigration_sac_delta_large,
+                                            model_weights = fallRunDSM::params$surv_juv_outmigration_sac_delta_model_weights){
 
   base_score1 <- .intercept_one + .delta_flow * delta_flow
   base_score2 <- .intercept_two + .avg_temp * avg_temp
   base_score3 <- .intercept_three + .perc_diversions * perc_diversions
 
-  s <- model_weight * (boot::inv.logit(base_score1) +
-                         boot::inv.logit(base_score2) +
-                         boot::inv.logit(base_score3))
+  s <- min(sum(model_weights * c(boot::inv.logit(base_score1),
+                                 boot::inv.logit(base_score2),
+                                 boot::inv.logit(base_score3))), 1)
 
-  m <- model_weight * (boot::inv.logit(base_score1 + .medium) +
-                         boot::inv.logit(base_score2 + .medium) +
-                         boot::inv.logit(base_score3 + .medium))
 
-  vl <- l <- model_weight * (boot::inv.logit(base_score1 + .large) +
-                               boot::inv.logit(base_score2 + .large) +
-                               boot::inv.logit(base_score3 + .large))
+  m <- min(sum(model_weights * c(boot::inv.logit(base_score1 + .medium),
+                                 boot::inv.logit(base_score2 + .medium),
+                                 boot::inv.logit(base_score3 + .medium))), 1)
+
+  vl <- l <- min(sum(model_weights * c(boot::inv.logit(base_score1 + .large),
+                                       boot::inv.logit(base_score2 + .large),
+                                       boot::inv.logit(base_score3 + .large))), 1)
 
   cbind(s = s, m = m, l = l, vl = vl)
 }
@@ -642,38 +643,40 @@ surv_juv_outmigration_delta <- function(prop_DCC_closed, hor_barr, freeport_flow
 #' @param .surv_juv_outmigration_san_joaquin_medium Size related intercept for \code{\link{surv_juv_outmigration_san_joaquin}} medium sized fish
 #' @param .surv_juv_outmigration_san_joaquin_large Size related intercept for \code{\link{surv_juv_outmigration_san_joaquin}} large sized fish
 #' @param min_survival_rate estimated survival rate if temperature threshold is exceeded
+#' @param surv_juv_outmigration_sac_delta_model_weights weights for competing models
 #' @source IP-117068
 #' @export
 get_migratory_survival <- function(year, month,
-                                         cc_gates_prop_days_closed,
-                                         freeport_flows,
-                                         vernalis_flows,
-                                         stockton_flows,
-                                         vernalis_temps,
-                                         prisoners_point_temps,
-                                         CVP_exports,
-                                         SWP_exports,
-                                         upper_sacramento_flows,
-                                         delta_inflow,
-                                         avg_temp_delta,
-                                         avg_temp,
-                                         delta_proportion_diverted,
-                                         .surv_juv_outmigration_sac_delta_intercept_one,
-                                         .surv_juv_outmigration_sac_delta_intercept_two,
-                                         .surv_juv_outmigration_sac_delta_intercept_three,
-                                         .surv_juv_outmigration_sac_delta_delta_flow,
-                                         .surv_juv_outmigration_sac_delta_avg_temp,
-                                         .surv_juv_outmigration_sac_delta_perc_diversions,
-                                         .surv_juv_outmigration_sac_delta_medium,
-                                         .surv_juv_outmigration_sac_delta_large,
-                                         ..surv_juv_outmigration_sj_int,
-                                         ..surv_juv_outmigration_sac_int_one,
-                                         ..surv_juv_outmigration_sac_prop_diversions,
-                                         ..surv_juv_outmigration_sac_total_diversions,
-                                         ..surv_juv_outmigration_sac_int_two,
-                                         .surv_juv_outmigration_san_joaquin_medium,
-                                         .surv_juv_outmigration_san_joaquin_large,
-                                         min_survival_rate) {
+                                   cc_gates_prop_days_closed,
+                                   freeport_flows,
+                                   vernalis_flows,
+                                   stockton_flows,
+                                   vernalis_temps,
+                                   prisoners_point_temps,
+                                   CVP_exports,
+                                   SWP_exports,
+                                   upper_sacramento_flows,
+                                   delta_inflow,
+                                   avg_temp_delta,
+                                   avg_temp,
+                                   delta_proportion_diverted,
+                                   .surv_juv_outmigration_sac_delta_intercept_one,
+                                   .surv_juv_outmigration_sac_delta_intercept_two,
+                                   .surv_juv_outmigration_sac_delta_intercept_three,
+                                   .surv_juv_outmigration_sac_delta_delta_flow,
+                                   .surv_juv_outmigration_sac_delta_avg_temp,
+                                   .surv_juv_outmigration_sac_delta_perc_diversions,
+                                   .surv_juv_outmigration_sac_delta_medium,
+                                   .surv_juv_outmigration_sac_delta_large,
+                                   ..surv_juv_outmigration_sj_int,
+                                   ..surv_juv_outmigration_sac_int_one,
+                                   ..surv_juv_outmigration_sac_prop_diversions,
+                                   ..surv_juv_outmigration_sac_total_diversions,
+                                   ..surv_juv_outmigration_sac_int_two,
+                                   .surv_juv_outmigration_san_joaquin_medium,
+                                   .surv_juv_outmigration_san_joaquin_large,
+                                   min_survival_rate,
+                                   surv_juv_outmigration_sac_delta_model_weights) {
 
   aveT20 <- rbinom(31, 1, boot::inv.logit(-14.32252 + 0.72102 * avg_temp[ , month , year]))
   maxT25 <- rbinom(31, 1, boot::inv.logit(-23.1766 + 1.4566 * avg_temp[ , month, year]))
@@ -711,7 +714,8 @@ get_migratory_survival <- function(year, month,
                                                               .avg_temp = .surv_juv_outmigration_sac_delta_avg_temp,
                                                               .perc_diversions = .surv_juv_outmigration_sac_delta_perc_diversions,
                                                               .medium = .surv_juv_outmigration_sac_delta_medium,
-                                                              .large = .surv_juv_outmigration_sac_delta_large) #Sac.Delt.S
+                                                              .large = .surv_juv_outmigration_sac_delta_large,
+                                                              model_weights = surv_juv_outmigration_sac_delta_model_weights) #Sac.Delt.S
 
   bay_delta_migration_surv <- mean(c(0.43, 0.46, 0.26, 0.25, 0.39)) # Bay.S Chipps island to bay
 

@@ -94,6 +94,7 @@ params <- list(
   .surv_juv_outmigration_sac_delta_perc_diversions = -0.033,
   .surv_juv_outmigration_sac_delta_medium = 1.48,
   .surv_juv_outmigration_sac_delta_large = 2.223,
+  surv_juv_outmigration_sac_delta_model_weights = rep(1/3, 3),
 
   ## Variable from load baseline data
   # DSMflow variables -----
