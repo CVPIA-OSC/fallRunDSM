@@ -57,16 +57,22 @@
 #' @description SIT defined diversity groups developed from the Central Valley Chinook Salmon and Steelhead Recovery Plan \href{https://archive.fisheries.noaa.gov/wcr/publications/recovery_planning/salmon_steelhead/domains/california_central_valley/cv_chin_stlhd_r_plan_fs_071614.pdf}{NOAA 2014}
 "diversity_group"
 
-#' @rdname growth
-#' @description Growth rates determined by expert SIT judgment based on the following: \href{https://link.springer.com/article/10.1007/s10641-009-9473-8}{Limm, M.P., Marchetti, M.P.  (2009)}
-#' \href{https://www.tandfonline.com/doi/abs/10.1577/T08-112.1}{Rene E. Henery, Ted R. Sommer & Charles R. Goldman (2010)}
-#' \href{https://link.springer.com/article/10.1007/s10641-008-9367-1}{Jeffres, C.A., Opperman, J.J. & Moyle, P.B. (2008)}
-"growth_rates"
+#' @title Growth Rates
+#' @description Growth rates determined by expert SIT judgment based on the following:
+#' \itemize{
+#'   \item \href{https://link.springer.com/article/10.1007/s10641-009-9473-8}{Limm, M.P., Marchetti, M.P.  (2009)}
+#'   \item \href{https://www.tandfonline.com/doi/abs/10.1577/T08-112.1}{Rene E. Henery, Ted R. Sommer & Charles R. Goldman (2010)}
+#'   \item \href{https://link.springer.com/article/10.1007/s10641-008-9367-1}{Jeffres, C.A., Opperman, J.J. & Moyle, P.B. (2008)}
+#' }
+#' @name growth_rates
+NULL
 
-#' @rdname growth_floodplain
-#' @description Growth rates determined by expert SIT judgment based on the following: \href{https://link.springer.com/article/10.1007/s10641-009-9473-8}{Limm, M.P., Marchetti, M.P.  (2009)}
-#' \href{https://www.tandfonline.com/doi/abs/10.1577/T08-112.1}{Rene E. Henery, Ted R. Sommer & Charles R. Goldman (2010)}
-#' \href{https://link.springer.com/article/10.1007/s10641-008-9367-1}{Jeffres, C.A., Opperman, J.J. & Moyle, P.B. (2008)}
+#' @rdname growth_rates
+#' @format NULL
+"growth_rates_inchannel"
+
+#' @rdname growth_rates
+#' @format NULL
 "growth_rates_floodplain"
 
 #' @title Model Parameters
@@ -209,7 +215,7 @@
 #' \itemize{
 #'   \item \code{freeport_flows}: More details at \code{\link[DSMflow]{freeport_flow}}
 #'   \item \code{cc_gates_days_closed}: More details at \code{\link[DSMflow]{delta_cross_channel_closed}}
-#'   \item \code{growth_rates}: More details at: \code{\link{growth_rates}}
+#'   \item \code{growth_rates}: More details at: \code{\link{growth_rates_inchannel}}
 #' }
 #' @section Tributary Routing:
 #' \itemize{
@@ -227,7 +233,7 @@
 #' }
 #' @section Tributary Rearing:
 #' \itemize{
-#'   \item \code{growth_rates}: More details at: \code{\link{growth_rates}}
+#'   \item \code{growth_rates}: More details at: \code{\link{growth_rates_inchannel}}
 #'   \item \code{growth_rates_floodplain}: More details at: \code{\link{growth_rates_floodplain}}
 #'   \item \code{weeks_flooded}: More details at: \code{\link[DSMhabitat]{weeks_flooded}}
 #'
