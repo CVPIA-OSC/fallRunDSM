@@ -38,7 +38,8 @@ get_migratory_survival(
   ..surv_juv_outmigration_sac_int_two,
   .surv_juv_outmigration_san_joaquin_medium,
   .surv_juv_outmigration_san_joaquin_large,
-  min_survival_rate
+  min_survival_rate,
+  surv_juv_outmigration_sac_delta_model_weights
 )
 }
 \arguments{
@@ -85,6 +86,8 @@ get_migratory_survival(
 \item{.surv_juv_outmigration_san_joaquin_large}{Size related intercept for \code{\link{surv_juv_outmigration_san_joaquin}} large sized fish}
 
 \item{min_survival_rate}{estimated survival rate if temperature threshold is exceeded}
+
+\item{surv_juv_outmigration_sac_delta_model_weights}{weights for competing models}
 }
 \description{
 Calculates the juvenile out migration survival rates in all
