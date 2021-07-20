@@ -10,3 +10,85 @@ home:
     href: https://www.fws.gov/lodi/anadromous_fish_restoration/afrp_index.htm
   - text: Bureau of Reclamation's CVPIA website
     href: https://www.usbr.gov/mp/cvpia/
+
+reference:
+- title: Life Cycle Model and Model Parameters
+  desc: The fall run life cycle model and it's parameters
+  contents:
+  - fall_run_model
+  - params
+
+- title: Survival Sub-models
+  desc: Functions that calculate survival
+  contents:
+  - surv_adult_enroute
+  - surv_adult_prespawn
+  - surv_egg_to_fry
+  - surv_juv_bypass
+  - surv_juv_delta
+  - surv_juv_outmigration_delta
+  - surv_juv_outmigration_sac
+  - surv_juv_outmigration_sac_delta
+  - surv_juv_outmigration_san_joaquin
+  - surv_juv_rear
+  - spawn_success
+  - ocean_entry_success
+
+- title: Growth and Movement Sub-models
+  desc: Functions that calculate growth and movement
+  contents:
+  - adult_stray
+  - pulse_movement
+  - fill
+  - route
+  - route_and_rear_deltas
+  - route_bypass
+  - route_regional
+  - route_south_delta
+  - growth
+  - growth_floodplain
+  - rear
+  - migrate
+  - ocean_transition_month
+
+- title: Datasets
+  desc: Data used by the lifecycle model
+  contents:
+  - adult_seeds
+  - adult_harvest_rate
+  - cross_channel_stray_rate
+  - growth_rates
+  - hatchery_allocation
+  - diversity_group
+  - mass_by_size_class
+  - month_return_proportions
+  - natural_adult_removal_rate
+  - proportion_hatchery
+  - stray_rate
+
+- title: Wrapper and Helper Functions
+  desc: Convenience functions that call multiple sub-models or are used within submodels.
+  contents:
+  - get_habitat
+  - get_rearing_survival
+  - get_migratory_survival
+  - get_spawning_adults
+  - territory_by_size
+  - gamma_MOM
+  - days_in_month
+
+navbar:
+  structure:
+    left:  [home, reference, news]
+    right: [github]
+  type: default
+  left:
+  - text: 'Reference'
+    href: reference/index.html
+  - text: 'News'
+    href: news/index.html
+
+repo:
+ url:
+  home: https://github.com/CVPIA-OSC/fallRunDSM
+  issue: https://github.com/CVPIA-OSC/fallRunDSM/issues/
