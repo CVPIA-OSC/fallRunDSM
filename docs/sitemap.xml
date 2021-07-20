@@ -25,10 +25,7 @@
     <loc>https://CVPIA-OSC.github.io/fallRunDSM//reference/fall_run_model.html</loc>
   </url>
   <url>
-    <loc>https://CVPIA-OSC.github.io/fallRunDSM//reference/fill_natal.html</loc>
-  </url>
-  <url>
-    <loc>https://CVPIA-OSC.github.io/fallRunDSM//reference/fill_regional.html</loc>
+    <loc>https://CVPIA-OSC.github.io/fallRunDSM//reference/fill.html</loc>
   </url>
   <url>
     <loc>https://CVPIA-OSC.github.io/fallRunDSM//reference/gamma_MOM.html</loc>
@@ -50,6 +47,9 @@
   </url>
   <url>
     <loc>https://CVPIA-OSC.github.io/fallRunDSM//reference/growth_floodplain.html</loc>
+  </url>
+  <url>
+    <loc>https://CVPIA-OSC.github.io/fallRunDSM//reference/growth_rates.html</loc>
   </url>
   <url>
     <loc>https://CVPIA-OSC.github.io/fallRunDSM//reference/hatchery_allocation.html</loc>

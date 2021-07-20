@@ -1,13 +1,19 @@
-#' @title Filling Natal Tributary Habitat
+#' @title Filling Natal Tributary and Regional Habitat
 #' @description Allocates juvenile fish onto the floodplain, in-channel, and once
-#' available habitat is full in the natal stream, assigns fish to out migrate
+#' available habitat is full, assigns fish to out migrate.
+#' The \code{fill_natal} function is used to route fish within their natal tributary
+#' and the \code{fill_regional} function is used to route fish on the mainstem, bypasses, and deltas.
 #' @param juveniles An n by 4 matrix of juvenile fish size s, m, l, vl
 #' @param inchannel_habitat The available tributary habitat in square meters
-#' @param floodplain_habitat The available floodplain habitat in square meters
+#' @param floodplain_habitat The available floodplain habitat in square meters (NULL for bypasses and delta)
 #' @param territory_size A length 4 array of juvenile fish territory requirements s, m, l, vl
 #' @param up_to_size_class Which size class and under is moved to floodplain and
 #' inchannel habitat (small = 1, medium = 2, large = 3, very large = 4)
 #' @source IP-117068
+#' @name fill
+NULL
+
+#' @rdname fill
 #' @export
 fill_natal <- function(juveniles, inchannel_habitat, floodplain_habitat,
                        territory_size = fallRunDSM::params$territory_size,
@@ -40,17 +46,7 @@ fill_natal <- function(juveniles, inchannel_habitat, floodplain_habitat,
   list(inchannel = river_rear, floodplain = flood_rear, migrants = migrants)
 }
 
-#' @title Filling Regional Habitat
-#' @description Allocates juvenile fish onto the floodplain, in-channel, and once
-#' available habitat is full, assigns fish to out migrate. Function is used to route fish
-#' on the mainstem, bypasses, and deltas.
-#' @param juveniles An n by 4 matrix of juvenile fish size s, m, l, vl
-#' @param habitat The available habitat in square meters (in-channel for tributaries)
-#' @param floodplain_habitat The available tributary floodplain habitat in square meters (NULL for bypasses and delta)
-#' @param territory_size A length 4 array of juvenile fish territory requirements s, m, l, vl
-#' @param up_to_size_class Which size class and under is moved to floodplain and
-#' inchannel habitat (small = 1, medium = 2, large = 3, very large = 4)
-#' @source IP-117068
+#' @rdname fill
 #' @export
 fill_regional <- function(juveniles, habitat, floodplain_habitat = NULL,
                           territory_size = fallRunDSM::params$territory_size,

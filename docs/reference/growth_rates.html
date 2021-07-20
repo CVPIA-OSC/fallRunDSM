@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Adult Prespawn Survival — surv_adult_prespawn • fallRunDSM</title>
+<title>Growth Rates — growth_rates • fallRunDSM</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,13 @@
 
 
 
-<meta property="og:title" content="Adult Prespawn Survival — surv_adult_prespawn" />
-<meta property="og:description" content="Calculate the adult prespawn survival" />
+<meta property="og:title" content="Growth Rates — growth_rates" />
+<meta property="og:description" content="Growth rates determined by expert SIT judgment based on the following:
+Limm, M.P., Marchetti, M.P.  (2009)
+Rene E. Henery, Ted R. Sommer &amp;amp; Charles R. Goldman (2010)
+Jeffres, C.A., Opperman, J.J. &amp;amp; Moyle, P.B. (2008)
+
+" />
 
 
 
@@ -105,44 +110,25 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Adult Prespawn Survival</h1>
+    <h1>Growth Rates</h1>
     
-    <div class="hidden name"><code>surv_adult_prespawn.Rd</code></div>
+    <div class="hidden name"><code>growth_rates.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Calculate the adult prespawn survival</p>
+    <p>Growth rates determined by expert SIT judgment based on the following:</p><ul>
+<li><p><a href='https://link.springer.com/article/10.1007/s10641-009-9473-8'>Limm, M.P., Marchetti, M.P.  (2009)</a></p></li>
+<li><p><a href='https://www.tandfonline.com/doi/abs/10.1577/T08-112.1'>Rene E. Henery, Ted R. Sommer &amp; Charles R. Goldman (2010)</a></p></li>
+<li><p><a href='https://link.springer.com/article/10.1007/s10641-008-9367-1'>Jeffres, C.A., Opperman, J.J. &amp; Moyle, P.B. (2008)</a></p></li>
+</ul>
+
     </div>
 
-    <pre class="usage"><span class='fu'>surv_adult_prespawn</span><span class='op'>(</span>
-  <span class='va'>deg_day</span>,
-  ..surv_adult_prespawn_int <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>..surv_adult_prespawn_int</span>,
-  .deg_day <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>.adult_prespawn_deg_day</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='va'>growth_rates_inchannel</span>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>deg_day</th>
-      <td><p>Variable describing average degree days</p></td>
-    </tr>
-    <tr>
-      <th>..surv_adult_prespawn_int</th>
-      <td><p>Intercept</p></td>
-    </tr>
-    <tr>
-      <th>.deg_day</th>
-      <td><p>Coefficient for <code>deg_day</code> variable</p></td>
-    </tr>
-    </table>
+<span class='va'>growth_rates_floodplain</span></pre>
 
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p>IP-117068</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>See <code><a href='params.html'>params</a></code> for details on parameter sources</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
