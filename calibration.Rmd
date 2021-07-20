@@ -58,11 +58,11 @@ For calibration, we have prepared the GrandTab data in two ways:
 2. `DSMCalibrationData::grandtab_imputed` - This data will be used to calculate the number of juveniles during the 20 year simulation. The GrandTab data is incomplete for many watersheds during the 20 year period of calibration. For watersheds with no GrandTab data, we used 40 as the default escapement value. For watersheds with incomplete data, we used the mean escapement value. 
 
 ```{r}
-grandtab_observed
+grandtab_observed$fall
 ```
 
 ```{r}
-grandtab_imputed
+grandtab_imputed$fall
 ```
 
 ### Selected Proxy Years
@@ -147,7 +147,7 @@ fall_run_fitness <- function(
   merced_ocean_entry_surv,
   stan_ocean_entry_surv,
   tuol_ocean_entry_surv) {
-  params_init <- DSMCalibrationData::fall_run_calibration_params
+  params_init <- fallRunDSM::params
   
   params_init$..surv_adult_enroute_int = surv_adult_enroute
   params_init$..surv_adult_prespawn_int = surv_adult_prespawn
