@@ -69,6 +69,10 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
   juveniles_at_chipps <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
   # proportion_natural <- matrix(NA_real_, nrow = 31, ncol = 20, dimnames = list(fallRunDSM::watershed_labels, 1:20))
 
+  if (mode == 'calibrate') {
+    calculated_adults <- matrix(0, nrow = 31, ncol = 30)
+  }
+
   adults <- switch (mode,
                     "seed" = fallRunDSM::adult_seeds,
                     "simulate" = seeds,
@@ -570,9 +574,14 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
     }))
 
     # distribute returning adults for future spawning
-    if (mode != "calibrate") {
+    if (mode == "calibrate" && year < 6) {
+      calculated_adults[1:31, (year + 2):(year + 4)] <- calculated_adults[1:31, (year + 2):(year + 4)] + adults_returning
+    } else if (mode == "calibrate" && year == 5) {
+      adults <- calculated_adults
+    } else {
       adults[1:31, (year + 2):(year + 4)] <- adults[1:31, (year + 2):(year + 4)] + adults_returning
     }
+
 
   } # end year for loop
 
