@@ -92,24 +92,33 @@ test_that('The migratory_juv_surv function for lower mid sac returns the expecte
 
 
 # Tests migratory survival for sac delta outmigration survival function
-expected_sac_delta_mig_surv <- c(s = 0.362190749437925, m = 0.443032155770409, l = 0.526431119237078,
-                                 vl = 0.526431119237078)
+expected_sac_delta_mig_surv <- c(s = 1, m = 1, l = 1, vl = 1) #TODO check this, seems weird that they would be 1
 test_that('The migratory_juv_surv function for sac delta returns the expected values for row one of year 1 month 9', {
   expect_equal(surv_juv_outmigration_sac_delta(delta_flow = fallRunDSM::params$delta_inflow[month, year, ],
                                                avg_temp = fallRunDSM::params$avg_temp_delta[month, year, ],
-                                               perc_diversions = fallRunDSM::params$delta_proportion_diverted * 100)[1,],
+                                               perc_diversions = fallRunDSM::params$delta_proportion_diverted * 100,
+                                               .intercept_one = fallRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_one,
+                                               .intercept_two = fallRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_two,
+                                               .intercept_three = fallRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_three,
+                                               .delta_flow = fallRunDSM::params$.surv_juv_outmigration_sac_delta_delta_flow,
+                                               .avg_temp = fallRunDSM::params$.surv_juv_outmigration_sac_delta_avg_temp,
+                                               .perc_diversions = fallRunDSM::params$.surv_juv_outmigration_sac_delta_perc_diversions,
+                                               .medium = fallRunDSM::params$.surv_juv_outmigration_sac_delta_medium,
+                                               .large = fallRunDSM::params$.surv_juv_outmigration_sac_delta_large,
+                                               model_weights = fallRunDSM::params$surv_juv_outmigration_sac_delta_model_weights)[1,],
                expected_sac_delta_mig_surv)
 })
 
 # tests the surv_juv_outmigration_delta function'
-expected_surv_juv_outmigration <- structure(c(0.266668614822945, 2.26283033759458e-26, 1.49657237445669e-25,
-                                              3.67469661043849e-14, 0.266668614822945, 2.26283033759458e-26,
-                                              1.49657237445669e-25, 3.67469661043849e-14, 0.266668614822945,
-                                              2.26283033759458e-26, 1.49657237445669e-25, 3.67469661043849e-14,
-                                              0.373914118050784, 4.49218800782043e-26, 2.2667851513676e-25,
-                                              8.17576203365024e-14), .Dim = c(4L, 4L),
-                                            .Dimnames = list(c("northern_fish", "cosumnes_mokelumne_fish", "calaveras_fish", "southern_fish"),
-                                                             c("s", "m", "l", "vl")))
+expected_surv_juv_outmigration <- structure(c(0.266668614822945, 0.000123932662831837, 0.000819655793037249,
+                                              0.00566155265467863, 0.266668614822945, 0.000123932662831837,
+                                              0.000819655793037249, 0.00566155265467863, 0.266668614822945,
+                                              0.000123932662831837, 0.000819655793037249, 0.00566155265467863,
+                                              0.373914118050784, 0.000245928323835351, 0.00124096914866476,
+                                              0.0110614050155086),
+                                            .Dim = c(4L, 4L),
+                                            .Dimnames = list(c("northern_fish",  "cosumnes_mokelumne_fish", "calaveras_fish", "southern_fish"),
+                                                              c("s", "m", "l", "vl")))
 test_that('tests that the surv_juv_outmigration_delta function returns the correct value', {
   expect_equal(surv_juv_outmigration_delta(prop_DCC_closed = fallRunDSM::params$cc_gates_prop_days_closed[month],
                                            hor_barr = 0,
@@ -226,23 +235,32 @@ test_that("get_rearing_survival returns the expected result", {
   expect_equal(survival, expected_survival)
 })
 
-expected_migratory_survival <- list(delta = structure(c(0.266668614822945, 4.23117924253791e-24,
-                                                        2.79838300757807e-23, 2.25682449302165e-13, 0.266668614822945,
-                                                        4.23117924253791e-24, 2.79838300757807e-23, 2.25682449302165e-13,
-                                                        0.266668614822945, 4.23117924253791e-24, 2.79838300757807e-23,
-                                                        2.25682449302165e-13, 0.373914118050784, 8.39976923434414e-24,
-                                                        4.2385741964001e-23, 5.04188928377011e-13), .Dim = c(4L, 4L), .Dimnames = list(
+expected_migratory_survival <- list(delta = structure(c(0.266668614822945, 0.000123932662831837,
+                                                        0.000819655793037249, 0.00566155265467863, 0.266668614822945,
+                                                        0.000123932662831837, 0.000819655793037249, 0.00566155265467863,
+                                                        0.266668614822945, 0.000123932662831837, 0.000819655793037249,
+                                                        0.00566155265467863, 0.373914118050784, 0.000245928323835351,
+                                                        0.00124096914866476, 0.0110614050155086),
+                                                      .Dim = c(4L, 4L),
+                                                      .Dimnames = list(
                                                           c("northern_fish", "cosumnes_mokelumne_fish", "calaveras_fish",
-                                                            "southern_fish"), c("s", "m", "l", "vl"))),
+                                                            "southern_fish"),
+                                                          c("s", "m", "l", "vl"))),
                                     san_joaquin = structure(c(0.0293122307513563, 0.117118990875781, 0.218061322644411, 0.218061322644411),
                                                             .Dim = c(1L,  4L),
-                                                            .Dimnames = list(NULL, c("s", "m", "l", "vl"))), uppermid_sac = c(s = 0.189, m = 0.189, l = 0.189, vl = 0.189),
-                                    lowermid_sac = c(s = 0.189, m = 0.189, l = 0.189, vl = 0.189), lower_sac = c(s = 0.189, m = 0.189,  l = 0.189, vl = 0.189),
-                                    sutter = structure(c(0.01, 0.01, 0.01, 1), .Dim = c(1L, 4L), .Dimnames = list(NULL, c("s", "m", "l",  "vl"))),
-                                    yolo = structure(c(0.01, 0.01, 0.01, 1), .Dim = c(1L,  4L),
+                                                            .Dimnames = list(NULL, c("s", "m", "l", "vl"))),
+                                    uppermid_sac = c(s = 0.189,  m = 0.189, l = 0.189, vl = 0.189),
+                                    lowermid_sac = c(s = 0.189, m = 0.189, l = 0.189, vl = 0.189),
+                                    lower_sac = c(s = 0.189, m = 0.189, l = 0.189, vl = 0.189),
+                                    sutter = structure(c(0.01, 0.01, 0.01, 1),
+                                                       .Dim = c(1L, 4L),
+                                                       .Dimnames = list(NULL, c("s", "m", "l", "vl"))),
+                                    yolo = structure(c(0.01, 0.01, 0.01, 1),
+                                                     .Dim = c(1L, 4L),
                                                      .Dimnames = list(NULL, c("s", "m", "l", "vl"))),
-                                    sac_delta = structure(c(0.361381001327841,   0.347809975853572, 0.440065384516238, 0.389390815487792, 0.521492554744754,  0.43386557081536, 0.521492554744754, 0.43386557081536),
-                                                          .Dim = c(2L, 4L), .Dimnames = list(c("North Delta", "South Delta"), c("s", "m", "l", "vl"))),
+                                    sac_delta = structure(c(0.709190977181413, 0.82945620000403, 0.955358125560114, 0.955358125560114),
+                                                          .Dim = c(1L, 4L),
+                                                          .Dimnames = list(NULL, c("s", "m", "l", "vl"))),
                                     bay_delta = 0.358)
 
 test_that("get_migratory_survival returns the expected result", {
@@ -276,7 +294,8 @@ test_that("get_migratory_survival returns the expected result", {
                                                      ..surv_juv_outmigration_sac_int_two = fallRunDSM::params$..surv_juv_outmigration_sac_int_two,
                                                      .surv_juv_outmigration_san_joaquin_medium = fallRunDSM::params$.surv_juv_outmigration_san_joaquin_medium,
                                                      .surv_juv_outmigration_san_joaquin_large = fallRunDSM::params$.surv_juv_outmigration_san_joaquin_large,
-                                                     min_survival_rate = fallRunDSM::params$min_survival_rate) #migratory_survival$uppermid_sac)
+                                                     min_survival_rate = fallRunDSM::params$min_survival_rate,
+                                                     surv_juv_outmigration_sac_delta_model_weights = fallRunDSM::params$surv_juv_outmigration_sac_delta_model_weights) #migratory_survival$uppermid_sac)
   expect_equal(migratory_survival, expected_migratory_survival)
 })
 
