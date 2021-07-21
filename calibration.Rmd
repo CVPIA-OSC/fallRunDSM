@@ -147,7 +147,7 @@ fall_run_fitness <- function(
   merced_ocean_entry_surv,
   stan_ocean_entry_surv,
   tuol_ocean_entry_surv) {
-  params_init <- DSMCalibrationData::fall_run_calibration_params
+  params_init <- fallRunDSM::params
   
   params_init$..surv_adult_enroute_int = surv_adult_enroute
   params_init$..surv_adult_prespawn_int = surv_adult_prespawn

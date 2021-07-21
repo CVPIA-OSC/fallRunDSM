@@ -59,7 +59,10 @@ get_spawning_adults <- function(year, adults, hatch_adults, mode,
 
     init_adults <- rowSums(adults_by_month)
     surviving_natural_adults <- rowSums(natural_adults_by_month)
-    proportion_natural <- 1 - fallRunDSM::params$proportion_hatchery
+    if (mode == "calibrate")
+      proportion_natural <- surviving_natural_adults/init_adults
+    else
+      proportion_natural <- 1 - fallRunDSM::params$proportion_hatchery
     init_adults_by_month <- natural_adults_by_month
 
   } else  {
