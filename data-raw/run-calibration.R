@@ -195,8 +195,8 @@ fall_run_fitness <- function(
                           seeds = seeds,
                           ..params = params_init)
 
-  sum(((preds$natural_spawners - (known_adults * preds$proportion_natural)) /
-         rowMeans(known_adults, na.rm = TRUE)) ^ 2, na.rm = TRUE)
+  sum(((preds$natural_spawners[, 6:20] - (known_adults[, 6:20] * preds$proportion_natural[, 6:20])) /
+         rowMeans(known_adults[, 6:20], na.rm = TRUE)) ^ 2, na.rm = TRUE)
 }
 
 
@@ -231,8 +231,8 @@ res <- ga(type = "real-valued",
             ),
           lower = rep(-3.5, 41),
           upper = rep(3.5, 41),
-          popSize = 10,
-          maxiter = 5,
+          popSize = 50,
+          maxiter = 10,
           run = 20,
           parallel = TRUE,
           population = init_to_previous_calibration)
