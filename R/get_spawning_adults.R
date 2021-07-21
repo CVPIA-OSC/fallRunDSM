@@ -115,14 +115,14 @@ get_spawning_adults <- function(year, adults, hatch_adults, mode,
 
     en_route_temps <- migratory_temperature_proportion_over_20[, 10:12]
 
-    adult_en_route_surv <- sapply(1:3, function(month) {
+    adult_en_route_surv <- pmin(sapply(1:3, function(month) {
       adult_en_route_surv <- surv_adult_enroute(migratory_temp = en_route_temps[,month],
                                                 bypass_overtopped = bypass_is_overtopped[,month],
                                                 adult_harvest = .adult_en_route_adult_harvest_rate,
                                                 ..surv_adult_enroute_int = ..surv_adult_enroute_int,
                                                 .migratory_temp = .adult_en_route_migratory_temp,
                                                 .bypass_overtopped = .adult_en_route_bypass_overtopped)
-    })
+    }), 1)
 
 
     adults_survived_to_spawning <- sapply(1:3, function(month) {

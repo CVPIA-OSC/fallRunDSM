@@ -367,11 +367,11 @@ get_rearing_survival <- function(year, month,
 
   return(
     list(
-      inchannel = river_surv,
-      floodplain = flood_surv,
-      sutter = sutter_surv,
-      yolo = yolo_surv,
-      delta = delta_juv_surv)
+      inchannel = pmin(river_surv, 1),
+      floodplain = pmin(flood_surv, 1),
+      sutter = pmin(sutter_surv, 1),
+      yolo = pmin(yolo_surv, 1),
+      delta = pmin(delta_juv_surv, 1))
   )
 }
 
@@ -726,14 +726,14 @@ get_migratory_survival <- function(year, month,
 
   return(
     list(
-      delta = delta_survival,
-      san_joaquin = sj_migration_surv,
-      uppermid_sac = uppermid_sac_migration_surv,
-      lowermid_sac = lowermid_sac_migration_surv,
-      lower_sac = lower_sac_migration_surv,
-      sutter = bp_surv,
-      yolo = bp_surv,
-      sac_delta = sac_delta_migration_surv,
-      bay_delta = bay_delta_migration_surv
+      delta = pmin(delta_survival, 1),
+      san_joaquin = pmin(sj_migration_surv, 1),
+      uppermid_sac = pmin(uppermid_sac_migration_surv, 1),
+      lowermid_sac = pmin(lowermid_sac_migration_surv, 1),
+      lower_sac = pmin(lower_sac_migration_surv, 1),
+      sutter = pmin(bp_surv, 1),
+      yolo = pmin(bp_surv, 1),
+      sac_delta = pmin(sac_delta_migration_surv, 1),
+      bay_delta = pmin(bay_delta_migration_surv, 1)
     ))
 }
