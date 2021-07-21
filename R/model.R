@@ -43,7 +43,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
     ..params$floodplain_habitat <- scenario_data$floodplain_habitat
     ..params$weeks_flooded <- scenario_data$weeks_flooded
 
-    if (TRUE) {
+    if (mode == "calibrate") {
       ..params <- DSMCalibrationData::set_synth_years(..params)
     }
   }
@@ -68,6 +68,8 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
   south_delta_fish <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
   juveniles_at_chipps <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
   # proportion_natural <- matrix(NA_real_, nrow = 31, ncol = 20, dimnames = list(fallRunDSM::watershed_labels, 1:20))
+
+
 
   adults <- switch (mode,
                     "seed" = fallRunDSM::adult_seeds,
@@ -197,8 +199,6 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                                .surv_juv_delta_medium = ..params$.surv_juv_delta_medium,
                                                .surv_juv_delta_large = ..params$.surv_juv_delta_large,
                                                min_survival_rate = ..params$min_survival_rate)
-
-      if (any(unlist(rearing_survival) > 1)) warning(sprintf("there was a value greater than one"))
 
       migratory_survival <- get_migratory_survival(year, month,
                                                    cc_gates_prop_days_closed = ..params$cc_gates_prop_days_closed,
@@ -572,9 +572,8 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
     }))
 
     # distribute returning adults for future spawning
-    if (mode != "calibrate") {
-      adults[1:31, (year + 2):(year + 4)] <- adults[1:31, (year + 2):(year + 4)] + adults_returning
-    }
+
+    adults[1:31, (year + 2):(year + 4)] <- adults[1:31, (year + 2):(year + 4)] + adults_returning
 
   } # end year for loop
 
