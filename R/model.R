@@ -43,7 +43,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
     ..params$floodplain_habitat <- scenario_data$floodplain_habitat
     ..params$weeks_flooded <- scenario_data$weeks_flooded
 
-    if (mode == "calibrate") {
+    if (TRUE) {
       ..params <- DSMCalibrationData::set_synth_years(..params)
     }
   }
@@ -197,6 +197,8 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                                .surv_juv_delta_medium = ..params$.surv_juv_delta_medium,
                                                .surv_juv_delta_large = ..params$.surv_juv_delta_large,
                                                min_survival_rate = ..params$min_survival_rate)
+
+      if (any(unlist(rearing_survival) > 1)) warning(sprintf("there was a value greater than one"))
 
       migratory_survival <- get_migratory_survival(year, month,
                                                    cc_gates_prop_days_closed = ..params$cc_gates_prop_days_closed,
