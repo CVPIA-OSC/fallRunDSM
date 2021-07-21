@@ -79,7 +79,7 @@ datatable(fall,
 #### Fitting a Generalized Linear Model 
 
 A generalized linear model is fit using the datatable above to predict the stray rate. 
-** TODO:This is what they did but the results don't match up with the coefficents given in the straying submodel...there must be another straying analysis somehere
+** TODO:This is what they did but the results don't match up with the coefficents given in the straying submodel...there must be another straying analysis somewhere
 
 ```{r}
 glm_stray_rate <- glm(cbind(no_stray, no_tagged) ~ brood_year + delta + bay + wild, 

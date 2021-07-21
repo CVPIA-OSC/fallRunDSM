@@ -79,12 +79,18 @@ reference:
 
 navbar:
   structure:
-    left:  [home, reference, news]
+    left:  [home, reference, articles, news]
     right: [github]
   type: default
   left:
   - text: 'Reference'
     href: reference/index.html
+  - text: 'Articles'
+    menu:
+      - text: 'Hatchery Analysis'
+        href: articles/hatchery-analysis.html
+      - text: 'Temperature Modeling'
+        href: articles/temperature-model.html
   - text: 'News'
     href: news/index.html
 

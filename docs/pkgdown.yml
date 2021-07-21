@@ -1,8 +1,11 @@
-pandoc: 2.7.3
+pandoc: '2.12'
 pkgdown: 1.6.1
 pkgdown_sha: ~
-articles: {}
-last_built: 2021-07-20T17:00Z
+articles:
+  hatchery-analysis: hatchery-analysis.html
+  straying-model: straying-model.html
+  temperature-model: temperature-model.html
+last_built: 2021-07-21T18:25Z
 urls:
   reference: https://CVPIA-OSC.github.io/fallRunDSM//reference
   article: https://CVPIA-OSC.github.io/fallRunDSM//articles
