@@ -9,7 +9,7 @@ params <- list(
   proportion_hatchery = fallRunDSM::proportion_hatchery,
   month_return_proportions = fallRunDSM::month_return_proportions,
   survival_betas = fallRunDSM::survival_betas,
-  growth_rates = fallRunDSM::growth_rates,
+  growth_rates = fallRunDSM::growth_rates_inchannel,
   growth_rates_floodplain = fallRunDSM::growth_rates_floodplain,
   mass_by_size_class = fallRunDSM::mass_by_size_class,
   cross_channel_stray_rate = fallRunDSM::cross_channel_stray_rate,
@@ -94,6 +94,7 @@ params <- list(
   .surv_juv_outmigration_sac_delta_perc_diversions = -0.033,
   .surv_juv_outmigration_sac_delta_medium = 1.48,
   .surv_juv_outmigration_sac_delta_large = 2.223,
+  surv_juv_outmigration_sac_delta_model_weights = rep(1/3, 3),
 
   ## Variable from load baseline data
   # DSMflow variables -----

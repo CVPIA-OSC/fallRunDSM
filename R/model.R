@@ -8,13 +8,18 @@
 #' returned value can be fed into the model again as the value for the seeds argument
 #' @param ..params Parameters for model and submodels
 #' @source IP-117068
+#' @examples
+#' fall_run_seeds <- fallRunDSM::fall_run_model(mode = "seed")
+#' fallRunDSM::fall_run_model(scenario = DSMscenario::scenarios$ONE,
+#'                            mode = "simulate",
+#'                            seeds = fall_run_seeds)
 #' @export
 fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibrate"),
                            seeds = NULL, ..params = fallRunDSM::params){
 
   mode <- match.arg(mode)
 
-  if (mode == "simulate") {
+  if (mode == "simulate" || mode == "calibrate") {
     if (is.null(scenario)) {
       # the do nothing scenario to force habitat degradation
       scenario <- DSMscenario::scenarios$NO_ACTION
@@ -29,14 +34,18 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
     )
 
     scenario_data <- DSMscenario::load_scenario(scenario,
-                                   habitat_inputs = habitats,
-                                   species = DSMscenario::species$FALL_RUN)
+                                                habitat_inputs = habitats,
+                                                species = DSMscenario::species$FALL_RUN)
 
     ..params$spawning_habitat <- scenario_data$spawning_habitat
     ..params$inchannel_habitat_fry <- scenario_data$inchannel_habitat_fry
     ..params$inchannel_habitat_juvenile <- scenario_data$inchannel_habitat_juvenile
     ..params$floodplain_habitat <- scenario_data$floodplain_habitat
     ..params$weeks_flooded <- scenario_data$weeks_flooded
+
+    if (mode == "calibrate") {
+      ..params <- DSMCalibrationData::set_synth_years(..params)
+    }
   }
 
   output <- list(
@@ -63,13 +72,13 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
   adults <- switch (mode,
                     "seed" = fallRunDSM::adult_seeds,
                     "simulate" = seeds,
-                    "calibrate" = fallRunDSM::imputed_grandtab
+                    "calibrate" = seeds,
   )
 
   simulation_length <- switch(mode,
-                       "seed" = 5,
-                       "simulate" = 20,
-                       "calibrate" = 20)
+                              "seed" = 5,
+                              "simulate" = 20,
+                              "calibrate" = 20)
 
   for (year in 1:simulation_length) {
     adults_in_ocean <- numeric(31)
@@ -143,82 +152,83 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                              delta_habitat = ..params$delta_habitat)
 
       rearing_survival <- get_rearing_survival(year, month,
-                                                     survival_adjustment = scenario_data$survival_adjustment,
-                                                     mode = mode,
-                                                     avg_temp = ..params$avg_temp,
-                                                     avg_temp_delta = ..params$avg_temp_delta,
-                                                     prob_strand_early = ..params$prob_strand_early,
-                                                     prob_strand_late = ..params$prob_strand_late,
-                                                     proportion_diverted = ..params$proportion_diverted,
-                                                     total_diverted = ..params$total_diverted,
-                                                     delta_proportion_diverted = ..params$delta_proportion_diverted,
-                                                     delta_total_diverted = ..params$delta_total_diverted,
-                                                     weeks_flooded = ..params$weeks_flooded,
-                                                     prop_high_predation = ..params$prop_high_predation,
-                                                     contact_points = ..params$contact_points,
-                                                     delta_contact_points = ..params$delta_contact_points,
-                                                     delta_prop_high_predation = ..params$delta_prop_high_predation,
-                                                     ..surv_juv_rear_int= ..params$..surv_juv_rear_int,
-                                                     .surv_juv_rear_contact_points = ..params$.surv_juv_rear_contact_points,
-                                                     ..surv_juv_rear_contact_points = ..params$..surv_juv_rear_contact_points,
-                                                     .surv_juv_rear_prop_diversions = ..params$.surv_juv_rear_prop_diversions,
-                                                     ..surv_juv_rear_prop_diversions = ..params$..surv_juv_rear_prop_diversions,
-                                                     .surv_juv_rear_total_diversions = ..params$.surv_juv_rear_total_diversions,
-                                                     ..surv_juv_rear_total_diversions = ..params$..surv_juv_rear_total_diversions,
-                                                     ..surv_juv_bypass_int = ..params$..surv_juv_bypass_int,
-                                                     ..surv_juv_delta_int = ..params$..surv_juv_delta_int,
-                                                     .surv_juv_delta_contact_points = ..params$.surv_juv_delta_contact_points,
-                                                     ..surv_juv_delta_contact_points = ..params$..surv_juv_delta_contact_points,
-                                                     .surv_juv_delta_total_diverted = ..params$.surv_juv_delta_total_diverted,
-                                                     ..surv_juv_delta_total_diverted = ..params$..surv_juv_delta_total_diverted,
-                                                     .surv_juv_rear_avg_temp_thresh = ..params$.surv_juv_rear_avg_temp_thresh,
-                                                     .surv_juv_rear_high_predation = ..params$.surv_juv_rear_high_predation,
-                                                     .surv_juv_rear_stranded = ..params$.surv_juv_rear_stranded,
-                                                     .surv_juv_rear_medium = ..params$.surv_juv_rear_medium,
-                                                     .surv_juv_rear_large = ..params$.surv_juv_rear_large,
-                                                     .surv_juv_rear_floodplain = ..params$.surv_juv_rear_floodplain,
-                                                     .surv_juv_bypass_avg_temp_thresh = ..params$.surv_juv_bypass_avg_temp_thresh,
-                                                     .surv_juv_bypass_high_predation = ..params$.surv_juv_bypass_high_predation,
-                                                     .surv_juv_bypass_medium = ..params$.surv_juv_bypass_medium,
-                                                     .surv_juv_bypass_large = ..params$.surv_juv_bypass_large,
-                                                     .surv_juv_bypass_floodplain = ..params$.surv_juv_bypass_floodplain,
-                                                     .surv_juv_delta_avg_temp_thresh = ..params$.surv_juv_delta_avg_temp_thresh,
-                                                     .surv_juv_delta_high_predation = ..params$.surv_juv_delta_high_predation,
-                                                     .surv_juv_delta_prop_diverted = ..params$.surv_juv_delta_prop_diverted,
-                                                     .surv_juv_delta_medium = ..params$.surv_juv_delta_medium,
-                                                     .surv_juv_delta_large = ..params$.surv_juv_delta_large,
-                                                     min_survival_rate = ..params$min_survival_rate)
+                                               survival_adjustment = scenario_data$survival_adjustment,
+                                               mode = mode,
+                                               avg_temp = ..params$avg_temp,
+                                               avg_temp_delta = ..params$avg_temp_delta,
+                                               prob_strand_early = ..params$prob_strand_early,
+                                               prob_strand_late = ..params$prob_strand_late,
+                                               proportion_diverted = ..params$proportion_diverted,
+                                               total_diverted = ..params$total_diverted,
+                                               delta_proportion_diverted = ..params$delta_proportion_diverted,
+                                               delta_total_diverted = ..params$delta_total_diverted,
+                                               weeks_flooded = ..params$weeks_flooded,
+                                               prop_high_predation = ..params$prop_high_predation,
+                                               contact_points = ..params$contact_points,
+                                               delta_contact_points = ..params$delta_contact_points,
+                                               delta_prop_high_predation = ..params$delta_prop_high_predation,
+                                               ..surv_juv_rear_int= ..params$..surv_juv_rear_int,
+                                               .surv_juv_rear_contact_points = ..params$.surv_juv_rear_contact_points,
+                                               ..surv_juv_rear_contact_points = ..params$..surv_juv_rear_contact_points,
+                                               .surv_juv_rear_prop_diversions = ..params$.surv_juv_rear_prop_diversions,
+                                               ..surv_juv_rear_prop_diversions = ..params$..surv_juv_rear_prop_diversions,
+                                               .surv_juv_rear_total_diversions = ..params$.surv_juv_rear_total_diversions,
+                                               ..surv_juv_rear_total_diversions = ..params$..surv_juv_rear_total_diversions,
+                                               ..surv_juv_bypass_int = ..params$..surv_juv_bypass_int,
+                                               ..surv_juv_delta_int = ..params$..surv_juv_delta_int,
+                                               .surv_juv_delta_contact_points = ..params$.surv_juv_delta_contact_points,
+                                               ..surv_juv_delta_contact_points = ..params$..surv_juv_delta_contact_points,
+                                               .surv_juv_delta_total_diverted = ..params$.surv_juv_delta_total_diverted,
+                                               ..surv_juv_delta_total_diverted = ..params$..surv_juv_delta_total_diverted,
+                                               .surv_juv_rear_avg_temp_thresh = ..params$.surv_juv_rear_avg_temp_thresh,
+                                               .surv_juv_rear_high_predation = ..params$.surv_juv_rear_high_predation,
+                                               .surv_juv_rear_stranded = ..params$.surv_juv_rear_stranded,
+                                               .surv_juv_rear_medium = ..params$.surv_juv_rear_medium,
+                                               .surv_juv_rear_large = ..params$.surv_juv_rear_large,
+                                               .surv_juv_rear_floodplain = ..params$.surv_juv_rear_floodplain,
+                                               .surv_juv_bypass_avg_temp_thresh = ..params$.surv_juv_bypass_avg_temp_thresh,
+                                               .surv_juv_bypass_high_predation = ..params$.surv_juv_bypass_high_predation,
+                                               .surv_juv_bypass_medium = ..params$.surv_juv_bypass_medium,
+                                               .surv_juv_bypass_large = ..params$.surv_juv_bypass_large,
+                                               .surv_juv_bypass_floodplain = ..params$.surv_juv_bypass_floodplain,
+                                               .surv_juv_delta_avg_temp_thresh = ..params$.surv_juv_delta_avg_temp_thresh,
+                                               .surv_juv_delta_high_predation = ..params$.surv_juv_delta_high_predation,
+                                               .surv_juv_delta_prop_diverted = ..params$.surv_juv_delta_prop_diverted,
+                                               .surv_juv_delta_medium = ..params$.surv_juv_delta_medium,
+                                               .surv_juv_delta_large = ..params$.surv_juv_delta_large,
+                                               min_survival_rate = ..params$min_survival_rate)
 
       migratory_survival <- get_migratory_survival(year, month,
-                                                         cc_gates_prop_days_closed = ..params$cc_gates_prop_days_closed,
-                                                         freeport_flows = ..params$freeport_flows,
-                                                         vernalis_flows = ..params$vernalis_flows,
-                                                         stockton_flows = ..params$stockton_flows,
-                                                         vernalis_temps = ..params$vernalis_temps,
-                                                         prisoners_point_temps = ..params$prisoners_point_temps,
-                                                         CVP_exports = ..params$CVP_exports,
-                                                         SWP_exports = ..params$SWP_exports,
-                                                         upper_sacramento_flows = ..params$upper_sacramento_flows,
-                                                         delta_inflow = ..params$delta_inflow,
-                                                         avg_temp_delta = ..params$avg_temp_delta,
-                                                         avg_temp = ..params$avg_temp,
-                                                         delta_proportion_diverted = ..params$delta_proportion_diverted,
-                                                         .surv_juv_outmigration_sac_delta_intercept_one = ..params$.surv_juv_outmigration_sac_delta_intercept_one,
-                                                         .surv_juv_outmigration_sac_delta_intercept_two = ..params$.surv_juv_outmigration_sac_delta_intercept_two,
-                                                         .surv_juv_outmigration_sac_delta_intercept_three = ..params$.surv_juv_outmigration_sac_delta_intercept_three,
-                                                         .surv_juv_outmigration_sac_delta_delta_flow = ..params$.surv_juv_outmigration_sac_delta_delta_flow,
-                                                         .surv_juv_outmigration_sac_delta_avg_temp = ..params$.surv_juv_outmigration_sac_delta_avg_temp,
-                                                         .surv_juv_outmigration_sac_delta_perc_diversions = ..params$.surv_juv_outmigration_sac_delta_perc_diversions,
-                                                         .surv_juv_outmigration_sac_delta_medium = ..params$.surv_juv_outmigration_sac_delta_medium,
-                                                         .surv_juv_outmigration_sac_delta_large = ..params$.surv_juv_outmigration_sac_delta_large,
-                                                         ..surv_juv_outmigration_sj_int = ..params$..surv_juv_outmigration_sj_int,
-                                                         ..surv_juv_outmigration_sac_int_one = ..params$..surv_juv_outmigration_sac_int_one,
-                                                         ..surv_juv_outmigration_sac_prop_diversions = ..params$..surv_juv_outmigration_sac_prop_diversions,
-                                                         ..surv_juv_outmigration_sac_total_diversions = ..params$..surv_juv_outmigration_sac_total_diversions,
-                                                         ..surv_juv_outmigration_sac_int_two = ..params$..surv_juv_outmigration_sac_int_two,
-                                                         .surv_juv_outmigration_san_joaquin_medium = ..params$.surv_juv_outmigration_san_joaquin_medium,
-                                                         .surv_juv_outmigration_san_joaquin_large = ..params$.surv_juv_outmigration_san_joaquin_large,
-                                                         min_survival_rate = ..params$min_survival_rate)
+                                                   cc_gates_prop_days_closed = ..params$cc_gates_prop_days_closed,
+                                                   freeport_flows = ..params$freeport_flows,
+                                                   vernalis_flows = ..params$vernalis_flows,
+                                                   stockton_flows = ..params$stockton_flows,
+                                                   vernalis_temps = ..params$vernalis_temps,
+                                                   prisoners_point_temps = ..params$prisoners_point_temps,
+                                                   CVP_exports = ..params$CVP_exports,
+                                                   SWP_exports = ..params$SWP_exports,
+                                                   upper_sacramento_flows = ..params$upper_sacramento_flows,
+                                                   delta_inflow = ..params$delta_inflow,
+                                                   avg_temp_delta = ..params$avg_temp_delta,
+                                                   avg_temp = ..params$avg_temp,
+                                                   delta_proportion_diverted = ..params$delta_proportion_diverted,
+                                                   .surv_juv_outmigration_sac_delta_intercept_one = ..params$.surv_juv_outmigration_sac_delta_intercept_one,
+                                                   .surv_juv_outmigration_sac_delta_intercept_two = ..params$.surv_juv_outmigration_sac_delta_intercept_two,
+                                                   .surv_juv_outmigration_sac_delta_intercept_three = ..params$.surv_juv_outmigration_sac_delta_intercept_three,
+                                                   .surv_juv_outmigration_sac_delta_delta_flow = ..params$.surv_juv_outmigration_sac_delta_delta_flow,
+                                                   .surv_juv_outmigration_sac_delta_avg_temp = ..params$.surv_juv_outmigration_sac_delta_avg_temp,
+                                                   .surv_juv_outmigration_sac_delta_perc_diversions = ..params$.surv_juv_outmigration_sac_delta_perc_diversions,
+                                                   .surv_juv_outmigration_sac_delta_medium = ..params$.surv_juv_outmigration_sac_delta_medium,
+                                                   .surv_juv_outmigration_sac_delta_large = ..params$.surv_juv_outmigration_sac_delta_large,
+                                                   ..surv_juv_outmigration_sj_int = ..params$..surv_juv_outmigration_sj_int,
+                                                   ..surv_juv_outmigration_sac_int_one = ..params$..surv_juv_outmigration_sac_int_one,
+                                                   ..surv_juv_outmigration_sac_prop_diversions = ..params$..surv_juv_outmigration_sac_prop_diversions,
+                                                   ..surv_juv_outmigration_sac_total_diversions = ..params$..surv_juv_outmigration_sac_total_diversions,
+                                                   ..surv_juv_outmigration_sac_int_two = ..params$..surv_juv_outmigration_sac_int_two,
+                                                   .surv_juv_outmigration_san_joaquin_medium = ..params$.surv_juv_outmigration_san_joaquin_medium,
+                                                   .surv_juv_outmigration_san_joaquin_large = ..params$.surv_juv_outmigration_san_joaquin_large,
+                                                   min_survival_rate = ..params$min_survival_rate,
+                                                   surv_juv_outmigration_sac_delta_model_weights = ..params$surv_juv_outmigration_sac_delta_model_weights)
 
       migrants <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
 

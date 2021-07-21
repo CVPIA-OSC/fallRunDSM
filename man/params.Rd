@@ -168,7 +168,7 @@ period in front are model or submodel coefficients. Parameters with double perio
 \itemize{
   \item \code{freeport_flows}: More details at \code{\link[DSMflow]{freeport_flow}}
   \item \code{cc_gates_days_closed}: More details at \code{\link[DSMflow]{delta_cross_channel_closed}}
-  \item \code{growth_rates}: More details at: \code{\link{growth_rates}}
+  \item \code{growth_rates}: More details at: \code{\link{growth_rates_inchannel}}
 }
 }
 
@@ -192,7 +192,7 @@ period in front are model or submodel coefficients. Parameters with double perio
 \section{Tributary Rearing}{
 
 \itemize{
-  \item \code{growth_rates}: More details at: \code{\link{growth_rates}}
+  \item \code{growth_rates}: More details at: \code{\link{growth_rates_inchannel}}
   \item \code{growth_rates_floodplain}: More details at: \code{\link{growth_rates_floodplain}}
   \item \code{weeks_flooded}: More details at: \code{\link[DSMhabitat]{weeks_flooded}}
 
