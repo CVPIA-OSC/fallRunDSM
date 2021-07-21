@@ -1,14 +1,16 @@
 #' @title Get habitat Values
 #' @source IP-117068
-#' @param year TODO
-#' @param month TODO
-#' @param inchannel_habitat_fry TODO
-#' @param inchannel_habitat_juvenile TODO
-#' @param floodplain_habitat TODO
-#' @param sutter_habitat TODO
-#' @param yolo_habitat TODO
-#' @param north_delta_habitat TODO
-#' @param south_delta_habitat TODO
+#' @description Returns the appropriate habitat for spawning and rearing based on habitat inputs and a given simulation year and month
+#' @details See \code{\link{params}} for details on parameter sources
+#' @param year The current simulation year, 1-20
+#' @param month The current simulation month, 1-8
+#' @param inchannel_habitat_fry 3 dimensional array [watersheds, months, years] representing fry inchannel habitat in square meters
+#' @param inchannel_habitat_juvenile 3 dimensional array [watersheds, months, years] representing juvenile inchannel habitat in square meters
+#' @param floodplain_habitat 3 dimensional array [watersheds, months, years] representing floodplain habitat in square meters
+#' @param sutter_habitat 2 dimensional array [months, years] representing sutter bypass habitat in square meters
+#' @param yolo_habitat 2 dimensional array [months, years] representing yolo bypass habitat in square meters
+#' @param north_delta_habitat 2 dimensional array [months, years] representing north delta habitat in square meters
+#' @param south_delta_habitat 2 dimensional array [months, years] representing south delta habitat in square meters
 #' @export
 get_habitat <- function(year, month,
                         inchannel_habitat_fry,

@@ -12,8 +12,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Get habitat Values — get_habitat" />
-<meta property="og:description" content="Get habitat Values" />
+<meta property="og:description" content="Returns the appropriate habitat for spawning and rearing based on habitat inputs and a given simulation year and month" />
 
 
 
@@ -79,17 +79,19 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
+  <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../news/index.html">News</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/CVPIA-OSC/fallRunDSM">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -109,15 +111,67 @@
     </div>
 
     <div class="ref-description">
-    <p>Get habitat Values</p>
+    <p>Returns the appropriate habitat for spawning and rearing based on habitat inputs and a given simulation year and month</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_habitat</span><span class='op'>(</span><span class='va'>year</span>, <span class='va'>month</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>get_habitat</span><span class='op'>(</span>
+  <span class='va'>year</span>,
+  <span class='va'>month</span>,
+  <span class='va'>inchannel_habitat_fry</span>,
+  <span class='va'>inchannel_habitat_juvenile</span>,
+  <span class='va'>floodplain_habitat</span>,
+  <span class='va'>sutter_habitat</span>,
+  <span class='va'>yolo_habitat</span>,
+  <span class='va'>delta_habitat</span>
+<span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>year</th>
+      <td><p>The current simulation year, 1-20</p></td>
+    </tr>
+    <tr>
+      <th>month</th>
+      <td><p>The current simulation month, 1-8</p></td>
+    </tr>
+    <tr>
+      <th>inchannel_habitat_fry</th>
+      <td><p>3 dimensional array [watersheds, months, years] representing fry inchannel habitat in square meters</p></td>
+    </tr>
+    <tr>
+      <th>inchannel_habitat_juvenile</th>
+      <td><p>3 dimensional array [watersheds, months, years] representing juvenile inchannel habitat in square meters</p></td>
+    </tr>
+    <tr>
+      <th>floodplain_habitat</th>
+      <td><p>3 dimensional array [watersheds, months, years] representing floodplain habitat in square meters</p></td>
+    </tr>
+    <tr>
+      <th>sutter_habitat</th>
+      <td><p>2 dimensional array [months, years] representing sutter bypass habitat in square meters</p></td>
+    </tr>
+    <tr>
+      <th>yolo_habitat</th>
+      <td><p>2 dimensional array [months, years] representing yolo bypass habitat in square meters</p></td>
+    </tr>
+    <tr>
+      <th>north_delta_habitat</th>
+      <td><p>2 dimensional array [months, years] representing north delta habitat in square meters</p></td>
+    </tr>
+    <tr>
+      <th>south_delta_habitat</th>
+      <td><p>2 dimensional array [months, years] representing south delta habitat in square meters</p></td>
+    </tr>
+    </table>
 
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
     <p>IP-117068</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>See <code><a href='params.html'>params</a></code> for details on parameter sources</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

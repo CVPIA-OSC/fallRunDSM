@@ -12,8 +12,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -79,17 +79,19 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
+  <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../news/index.html">News</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/CVPIA-OSC/fallRunDSM">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -119,12 +121,13 @@
   <span class='va'>cross_channel_gates_closed</span>,
   prop_bay_trans <span class='op'>=</span> <span class='fl'>0</span>,
   prop_delta_trans <span class='op'>=</span> <span class='fl'>0</span>,
-  .intercept <span class='op'>=</span> <span class='fl'>3</span>,
-  .wild <span class='op'>=</span> <span class='op'>-</span><span class='fl'>5.5</span>,
-  .natal_flow <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1.99</span>,
-  .cross_channel_gates_closed <span class='op'>=</span> <span class='op'>-</span><span class='fl'>0.174</span>,
-  .prop_bay_trans <span class='op'>=</span> <span class='fl'>2.09</span>,
-  .prop_delta_trans <span class='op'>=</span> <span class='fl'>2.89</span>
+  .intercept <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>.adult_stray_intercept</span>,
+  .wild <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>.adult_stray_wild</span>,
+  .natal_flow <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>.adult_stray_natal_flow</span>,
+ 
+    .cross_channel_gates_closed <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>.adult_stray_cross_channel_gates_closed</span>,
+  .prop_bay_trans <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>.adult_stray_prop_bay_trans</span>,
+  .prop_delta_trans <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>.adult_stray_prop_delta_trans</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -156,33 +159,36 @@
     </tr>
     <tr>
       <th>.intercept</th>
-      <td><p>Intercept, source: Empirical model fit using 2008–2011 tagging data provided by East Bay Municipal Utility District</p></td>
+      <td><p>Intercept</p></td>
     </tr>
     <tr>
       <th>.wild</th>
-      <td><p>Coefficient for <code>wild</code> variable, source: Estimated with coded wire tag data 2010–2013 <a href='https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&amp;usg= AOvVaw0VgMOwD7knFfSxRZy6k8RG'>(Kormos et al. 2012, Palmer-Zwahlen &amp; Kormos 2013-2015, Palmer-Zwahlen et al. 2018)</a></p></td>
+      <td><p>Coefficient for <code>wild</code> variable</p></td>
     </tr>
     <tr>
       <th>.natal_flow</th>
-      <td><p>Coefficient for <code>natal_flow</code> variable, source: Empirical model fit using 2008–2011 tagging data provided by East Bay Municipal Utility District</p></td>
+      <td><p>Coefficient for <code>natal_flow</code> variable</p></td>
     </tr>
     <tr>
       <th>.cross_channel_gates_closed</th>
-      <td><p>Coefficient for <code>cross_channel_gates_closed</code> variable, Source: Empirical model fit using  2008–2011 tagging data provided by East Bay Municipal Utility District.</p></td>
+      <td><p>Coefficient for <code>cross_channel_gates_closed</code> variable</p></td>
     </tr>
     <tr>
       <th>.prop_bay_trans</th>
-      <td><p>Coefficient for <code>prop_bay_trans</code> variable, source: Estimated with coded wire tag data 2010–2013 <a href='https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&amp;usg= AOvVaw0VgMOwD7knFfSxRZy6k8RG'>(Kormos et al. 2012, Palmer-Zwahlen &amp; Kormos 2013-2015, Palmer-Zwahlen et al. 2018)</a></p></td>
+      <td><p>Coefficient for <code>prop_bay_trans</code> variable</p></td>
     </tr>
     <tr>
       <th>.prop_delta_trans</th>
-      <td><p>Coefficient for <code>prop_delta_trans</code> variable, source: Estimated with coded wire tag data 2010–2013 <a href='https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&amp;usg= AOvVaw0VgMOwD7knFfSxRZy6k8RG'>(Kormos et al. 2012, Palmer-Zwahlen &amp; Kormos 2013-2015, Palmer-Zwahlen et al. 2018)</a></p></td>
+      <td><p>Coefficient for <code>prop_delta_trans</code> variable</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
     <p>IP-117068</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>See <code><a href='params.html'>params</a></code> for details on parameter sources</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -12,8 +12,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -79,17 +79,19 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
+  <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../news/index.html">News</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/CVPIA-OSC/fallRunDSM">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -115,10 +117,10 @@
     <pre class="usage"><span class='fu'>surv_egg_to_fry</span><span class='op'>(</span>
   <span class='va'>proportion_natural</span>,
   <span class='va'>scour</span>,
-  <span class='va'>temperature_effect</span>,
-  ..surv_egg_to_fry_int <span class='op'>=</span> <span class='fl'>0.041</span>,
-  .proportion_natural <span class='op'>=</span> <span class='fl'>0.533</span>,
-  .scour <span class='op'>=</span> <span class='op'>-</span><span class='fl'>0.655</span>
+  temperature_effect <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>mean_egg_temp_effect</span>,
+  ..surv_egg_to_fry_int <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>..surv_egg_to_fry_int</span>,
+  .proportion_natural <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>.surv_egg_to_fry_proportion_natural</span>,
+  .scour <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>.surv_egg_to_fry_scour</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -139,21 +141,24 @@ Fall and spring estimated by C. Hammersmark (CBEC Ecoengineering Inc.). Winter-r
     </tr>
     <tr>
       <th>..surv_egg_to_fry_int</th>
-      <td><p>Intercept, source: Calibration</p></td>
+      <td><p>Intercept</p></td>
     </tr>
     <tr>
       <th>.proportion_natural</th>
-      <td><p>Coefficient for proportion_natural variable, Source: <a href='https://cdnsciencepub.com/doi/abs/10.1139/F10-168'>Chilcote et al. (2011)</a></p></td>
+      <td><p>Coefficient for <code>proportion_natural</code> variable</p></td>
     </tr>
     <tr>
       <th>.scour</th>
-      <td><p>Coefficient for scour variable, Source: <a href='https://dsm-docs.s3-us-west-2.amazonaws.com/montogemery_1996.pdf'>Montgomery et al. (1996)</a></p></td>
+      <td><p>Coefficient for <code>scour</code> variable</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
     <p>IP-117068</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>See <code><a href='params.html'>params</a></code> for details on parameter sources</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

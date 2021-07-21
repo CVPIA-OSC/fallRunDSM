@@ -12,8 +12,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -80,17 +80,19 @@ migrate due to pulse flow" />
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
+  <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../news/index.html">News</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/CVPIA-OSC/fallRunDSM">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -116,14 +118,14 @@ migrate due to pulse flow</p>
 
     <pre class="usage"><span class='fu'>pulse_movement</span><span class='op'>(</span>
   <span class='va'>proportion_pulse</span>,
-  .intercept <span class='op'>=</span> <span class='op'>-</span><span class='fl'>7.70744</span>,
-  .proportion_pulse <span class='op'>=</span> <span class='fl'>0.26579</span>,
-  .medium <span class='op'>=</span> <span class='fl'>1.66845</span>,
-  .large <span class='op'>=</span> <span class='fl'>0.5706</span>,
-  .vlarge <span class='op'>=</span> <span class='op'>-</span><span class='fl'>4.305</span>,
-  .medium_pulse <span class='op'>=</span> <span class='op'>-</span><span class='fl'>0.25477</span>,
-  .large_pulse <span class='op'>=</span> <span class='op'>-</span><span class='fl'>0.44778</span>,
-  .very_large_pulse <span class='op'>=</span> <span class='fl'>0.329</span>
+  .intercept <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>.pulse_movement_intercept</span>,
+  .proportion_pulse <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>.pulse_movement_proportion_pulse</span>,
+  .medium <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>.pulse_movement_medium</span>,
+  .large <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>.pulse_movement_large</span>,
+  .vlarge <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>.pulse_movement_vlarge</span>,
+  .medium_pulse <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>.pulse_movement_medium_pulse</span>,
+  .large_pulse <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>.pulse_movement_large_pulse</span>,
+  .very_large_pulse <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>.pulse_movement_very_large_pulse</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -136,41 +138,44 @@ by the standard deviation of flow divided by the median flow for each month</p><
     </tr>
     <tr>
       <th>.intercept</th>
-      <td><p>Intercept, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.</p></td>
+      <td><p>Intercept</p></td>
     </tr>
     <tr>
       <th>.proportion_pulse</th>
-      <td><p>Coefficient for the proportion_pulse variable, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.</p></td>
+      <td><p>Coefficient for the <code>proportion_pulse</code> variable</p></td>
     </tr>
     <tr>
       <th>.medium</th>
-      <td><p>parameter for medium sized fish, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.</p></td>
+      <td><p>Size related intercept for medium sized fish</p></td>
     </tr>
     <tr>
       <th>.large</th>
-      <td><p>parameter for large sized fish, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.</p></td>
+      <td><p>Size related intercept for large sized fish</p></td>
     </tr>
     <tr>
       <th>.vlarge</th>
-      <td><p>parameter for very large sized fish, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.</p></td>
+      <td><p>Size related intercept for very large sized fish</p></td>
     </tr>
     <tr>
       <th>.medium_pulse</th>
-      <td><p>Additional coefficient for proportion_pulse variable for medium size fish, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.</p></td>
+      <td><p>Additional coefficient for <code>proportion_pulse</code> variable for medium size fish</p></td>
     </tr>
     <tr>
       <th>.large_pulse</th>
-      <td><p>Additional coefficient for proportion_pulse variable for large size fish, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.</p></td>
+      <td><p>Additional coefficient for <code>proportion_pulse</code> variable for large size fish</p></td>
     </tr>
     <tr>
       <th>.very_large_pulse</th>
-      <td><p>Additional coefficient for proportion_pulse variable for very large size fish, source: Empirical model fit to CVPIA Chinook salmon screw trap abundance estimates from American River, Stanislaus River, Feather River, Mokelumne River, Sacramento River, Tuolumne River, Clear Creek 2008–2015.</p></td>
+      <td><p>Additional coefficient for <code>proportion_pulse</code> variable for very large size fish</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
     <p>IP-117068</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>See <code><a href='params.html'>params</a></code> for details on parameter sources</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

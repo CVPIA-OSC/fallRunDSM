@@ -12,8 +12,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -79,17 +79,19 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
+  <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../news/index.html">News</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/CVPIA-OSC/fallRunDSM">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -116,9 +118,9 @@
   <span class='va'>migratory_temp</span>,
   <span class='va'>bypass_overtopped</span>,
   <span class='va'>adult_harvest</span>,
-  ..surv_adult_enroute_int <span class='op'>=</span> <span class='fl'>3</span>,
-  .migratory_temp <span class='op'>=</span> <span class='op'>-</span><span class='fl'>0.26</span>,
-  .bypass_overtopped <span class='op'>=</span> <span class='op'>-</span><span class='fl'>0.019</span>
+  ..surv_adult_enroute_int <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>..surv_adult_enroute_int</span>,
+  .migratory_temp <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>.adult_en_route_migratory_temp</span>,
+  .bypass_overtopped <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>.adult_en_route_bypass_overtopped</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -134,25 +136,28 @@
     </tr>
     <tr>
       <th>adult_harvest</th>
-      <td><p>Adult harvest rate (Estimated with Coded Wire Tag data 2012–2013 (Palmer-Zwahlen &amp; Kormos 2015; Palmer-Zwahlen et al. 2018))</p></td>
+      <td><p>Adult harvest rate</p></td>
     </tr>
     <tr>
       <th>..surv_adult_enroute_int</th>
-      <td><p>intercept, source: calibration</p></td>
+      <td><p>Intercept</p></td>
     </tr>
     <tr>
       <th>.migratory_temp</th>
-      <td><p>coefficient for <code>migratory_temp</code> variable, source: <a href='https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&amp;usg= AOvVaw0VgMOwD7knFfSxRZy6k8RG'>Schreck et al. (1994)</a></p></td>
+      <td><p>Coefficient for <code>migratory_temp</code> variable</p></td>
     </tr>
     <tr>
       <th>.bypass_overtopped</th>
-      <td><p>coefficient for <code>bypass_overtopped</code> variable, source: Expert opinion Ted Sommer, California Department of Water Resources (tributaries above bypasses only)</p></td>
+      <td><p>Coefficient for <code>bypass_overtopped</code> variable</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
     <p>IP-117068</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>See <code><a href='params.html'>params</a></code> for details on parameter sources</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

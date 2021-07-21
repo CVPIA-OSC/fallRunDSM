@@ -3,26 +3,28 @@
 #' @param adults potential spawning adults for each watershed (length = 31) values must be integer
 #' @param hatch_adults total hatchery adults
 #' @param seeds a value meant to be inherited to determine if model is in seeding stage or not
-#' @param month_return_proportions the proportion of fish returning for each month
-#' @param prop_flow_natal
-#' @param south_delta_routed_watersheds
-#' @param cc_gates_days_closed
-#' @param gates_overtopped
-#' @param tisdale_bypass_watershed
-#' @param yolo_bypass_watershed
-#' @param migratory_temperature_proportion_over_20
-#' @param ..surv_adult_enroute_int TODO
-#' @param .adult_stray_intercept TODO
-#' @param .adult_stray_wild TODO
-#' @param .adult_stray_natal_flow TODO
-#' @param .adult_stray_cross_channel_gates_closed TODO
-#' @param .adult_stray_prop_bay_trans TODO
-#' @param .adult_stray_prop_delta_trans TODO
-#' @param .adult_en_route_adult_harvest_rate TODO
+#' @param month_return_proportions The proportion of fish returning for each month
+#' @param prop_flow_natal More details at \code{\link[DSMflow]{proportion_flow_natal}}
+#' @param south_delta_routed_watersheds More details at \code{\link[DSMhabitat]{south_delta_routed_watersheds}}
+#' @param cc_gates_days_closed More details at \code{\link[DSMflow]{delta_cross_channel_closed}}
+#' @param gates_overtopped More details at \code{\link[DSMflow]{gates_overtopped}}
+#' @param tisdale_bypass_watershed More details at \code{\link[DSMhabitat]{tisdale_bypass_watershed}}
+#' @param yolo_bypass_watershed More details at \code{\link[DSMhabitat]{yolo_bypass_watershed}}
+#' @param migratory_temperature_proportion_over_20 More details at \code{\link[DSMtemperature]{migratory_temperature_proportion_over_20}}
+#' @param .adult_stray_intercept Intercept for \code{\link{adult_stray}}
+#' @param .adult_stray_wild Coefficient for \code{\link{adult_stray}} \code{wild} variable
+#' @param .adult_stray_natal_flow  Coefficient for \code{\link{adult_stray}} \code{natal_flow} variable
+#' @param .adult_stray_cross_channel_gates_closed  Coefficient for \code{\link{adult_stray}} \code{cross_channel_gates_closed} variable
+#' @param .adult_stray_prop_bay_trans  Coefficient for \code{\link{adult_stray}} \code{prop_bay_trans} variable
+#' @param .adult_stray_prop_delta_trans  Coefficient for \code{\link{adult_stray}} \code{prop_delta_trans} variable
+#' @param ..surv_adult_enroute_int Intercept for \code{\link{surv_adult_enroute}}
+#' @param .adult_en_route_migratory_temp Coefficient for \code{\link{surv_adult_enroute}} \code{migratory_temp} variable
+#' @param .adult_en_route_bypass_overtopped Coefficient for \code{\link{surv_adult_enroute}} \code{bypass_overtopped} variable
+#' @param .adult_en_route_adult_harvest_rate  Adult harvest rate for \code{\link{surv_adult_enroute}}
 #' @source IP-117068
 #' @export
 get_spawning_adults <- function(year, adults, hatch_adults, mode,
-                                month_return_proportions=fallRunDSM::params$month_return_proportions,
+                                month_return_proportions,
                                 prop_flow_natal,
                                 south_delta_routed_watersheds,
                                 cc_gates_days_closed,

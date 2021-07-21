@@ -11,14 +11,17 @@ surv_juv_outmigration_sac_delta(
   delta_flow,
   avg_temp,
   perc_diversions,
-  .intercept_one = -3.5,
-  .intercept_two = 0.3,
-  .intercept_three = -3.5,
-  .delta_flow = 0.0013,
-  .avg_temp = 0.386,
-  .perc_diversions = -0.033,
-  .medium = 1.48,
-  .large = 2.223
+  .intercept_one = fallRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_one,
+  .intercept_two = fallRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_two,
+ 
+    .intercept_three = fallRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_three,
+  .delta_flow = fallRunDSM::params$.surv_juv_outmigration_sac_delta_delta_flow,
+  .avg_temp = fallRunDSM::params$.surv_juv_outmigration_sac_delta_avg_temp,
+ 
+    .perc_diversions = fallRunDSM::params$.surv_juv_outmigration_sac_delta_perc_diversions,
+  .medium = fallRunDSM::params$.surv_juv_outmigration_sac_delta_medium,
+  .large = fallRunDSM::params$.surv_juv_outmigration_sac_delta_large,
+  model_weights = fallRunDSM::params$surv_juv_outmigration_sac_delta_model_weights
 )
 }
 \arguments{
@@ -28,22 +31,27 @@ surv_juv_outmigration_sac_delta(
 
 \item{perc_diversions}{Variable describing monthly mean percent diverted}
 
-\item{.intercept_one}{Intercept for model one, source: TODO}
+\item{.intercept_one}{Intercept for model one}
 
-\item{.intercept_two}{Intercept for model two, source: TODO}
+\item{.intercept_two}{Intercept for model two}
 
-\item{.intercept_three}{Intercept for model three, source: TODO}
+\item{.intercept_three}{Intercept for model three}
 
-\item{.delta_flow}{Coefficient for delta_flow variable, source: TODO}
+\item{.delta_flow}{Coefficient for delta_flow variable}
 
-\item{.avg_temp}{Coefficient for avg_temp variable, source: TODO}
+\item{.avg_temp}{Coefficient for avg_temp variable}
 
-\item{.perc_diversions}{Coefficient for perc_diversions variable, source: TODO}
+\item{.perc_diversions}{Coefficient for perc_diversions variable}
 
-\item{.medium}{parameter for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}}
+\item{.medium}{Size related intercept for medium sized fish}
 
-\item{.large}{parameter for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}}
+\item{.large}{Size related intercept for large sized fish}
+
+\item{model_weights}{weights for competing models}
 }
 \description{
 Calculates the Sacramento Delta juvenile out migration survival
+}
+\details{
+See \code{\link{params}} for details on parameter sources
 }

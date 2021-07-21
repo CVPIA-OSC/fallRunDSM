@@ -12,8 +12,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -79,17 +79,19 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
+  <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../news/index.html">News</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/CVPIA-OSC/fallRunDSM">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -116,9 +118,9 @@
   <span class='va'>migrants</span>,
   <span class='va'>month</span>,
   <span class='va'>avg_ocean_transition_month</span>,
-  length <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>0.0897309864</span>, <span class='op'>-</span><span class='fl'>0.0709704348</span>, <span class='op'>-</span><span class='fl'>0.0208590732</span>, <span class='fl'>0.0732620916</span><span class='op'>)</span>,
-  ..ocean_entry_success_int <span class='op'>=</span> <span class='va'>..ocean_entry_success_int</span>,
-  .months <span class='op'>=</span> <span class='fl'>0.35</span>
+  .ocean_entry_success_length <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>.ocean_entry_success_length</span>,
+  ..ocean_entry_success_int <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>..ocean_entry_success_int</span>,
+  .ocean_entry_success_months <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>.ocean_entry_success_months</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -137,22 +139,25 @@
       <td><p>Variable representing the average month juveniles transition to the ocean</p></td>
     </tr>
     <tr>
-      <th>length</th>
-      <td><p>Variable representing the fork lengths for each size classes. <a href='https://dsm-docs.s3-us-west-2.amazonaws.com/Satterthwaite_et_al_2014.pdf'>Satterthwaite et al. (2014)</a></p></td>
+      <th>.ocean_entry_success_length</th>
+      <td><p>Size related intercept representing the fork lengths for each size classes</p></td>
     </tr>
     <tr>
       <th>..ocean_entry_success_int</th>
-      <td><p>Intercept, source: Calibration (Varies by tributary )</p></td>
+      <td><p>Intercept</p></td>
     </tr>
     <tr>
-      <th>.month</th>
-      <td><p>Coefficient for month variable, source: <a href='https://dsm-docs.s3-us-west-2.amazonaws.com/Satterthwaite_et_al_2014.pdf'>Satterthwaite et al. (2014)</a></p></td>
+      <th>.ocean_entry_success_months</th>
+      <td><p>Coefficient for month variable</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
     <p>IP-117068</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>See <code><a href='params.html'>params</a></code> for details on parameter sources</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
