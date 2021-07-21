@@ -2,6 +2,11 @@ library(fallRunDSM)
 library(GA)
 library(tidyverse)
 
+calib_seeds <- matrix(0, nrow = 31, ncol = 25)
+calib_seeds[, 1:5] <- DSMCalibrationData::grandtab_imputed$fall[, 1:5]
+
+
+
 init_to_previous_calibration <- function(object) {
   prevs <- c(3, 3, 0.041, 3.5, -3.5, 1.5, -2.5, -2.9, -1.1092908, -3.5,
          3.5, 3.5, -3.5, 2.5, -1.2, 1.9999999, -0.2, -0.1081707, -3.4999959,
