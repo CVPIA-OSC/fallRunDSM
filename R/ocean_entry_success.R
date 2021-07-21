@@ -24,6 +24,8 @@ ocean_entry_success <- function(migrants, month, avg_ocean_transition_month,
                                               .ocean_entry_success_length))
   }
 
+  survival_probs <- pmin(survival_probs, 1)
+
   if (max(migrants) <= 1000000000) {
     survived <- t(sapply(1:31, function(watershed) {
       rbinom(4, size = migrants[watershed, ], prob = survival_probs[watershed, ])
