@@ -3,12 +3,12 @@ library(GA)
 library(tidyverse)
 
 init_to_previous_calibration <- function(object) {
-  x <- c(3, 3, 0.041, 3.5, -3.5, 1.5, -2.5, -2.9, -1.1092908, -3.5,
+  prevs <- c(3, 3, 0.041, 3.5, -3.5, 1.5, -2.5, -2.9, -1.1092908, -3.5,
          3.5, 3.5, -3.5, 2.5, -1.2, 1.9999999, -0.2, -0.1081707, -3.4999959,
          -0.4, 0.0358, 0.05, 0.215, -3.5, 1.4, 0.0358, 0.5, -3.5, 1.2,
          -0.5108849, -3.3233638, -3.2304288, -3.4148335, -3.5, -3.5, -1.308341,
          -1.9841364, 2.5000007, -3.5, -3, -0.9)
-  sapply(1:length(x), function(p) rnorm(object@popSize, mean = x[p]))
+  sapply(1:length(prevs), function(p) rnorm(object@popSize, mean = prevs[p]))
 }
 
 default_calibration_values <-
@@ -228,7 +228,8 @@ res <- ga(type = "real-valued",
           popSize = 10,
           maxiter = 6,
           run = 20,
-          parallel = TRUE)
+          parallel = TRUE,
+          population = init_to_previous_calibration)
 
 res@population
 
