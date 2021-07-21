@@ -1,5 +1,6 @@
 library(fallRunDSM)
 library(GA)
+library(tidyverse)
 
 init_to_previous_calibration <- function(object) {
   x <- c(3, 3, 0.041, 3.5, -3.5, 1.5, -2.5, -2.9, -1.1092908, -3.5,
@@ -227,8 +228,7 @@ res <- ga(type = "real-valued",
           popSize = 10,
           maxiter = 6,
           run = 20,
-          parallel = TRUE,
-          population = init_to_previous_calibration)
+          parallel = TRUE)
 
 res@population
 
@@ -262,23 +262,19 @@ update_params <- function(x, params) {
   surv_juv_delta_contact_points = x[26]
   surv_juv_delta_total_diverted = x[27]
   surv_juv_outmigration_sj_int = x[28]
-  surv_juv_outmigration_sac_int_one = x[29]
-  surv_juv_outmigration_sac_prop_diversions = x[30]
-  surv_juv_outmigration_sac_total_diversions = x[31]
-  surv_juv_outmigration_sac_int_two = x[32]
-  default_ocean_entry_surv = x[33]
-  upsac_ocean_entry_surv = x[34]
-  butte_ocean_entry_surv = x[35]
-  deer_ocean_entry_surv = x[36]
-  mill_ocean_entry_surv = x[37]
-  midsactribs_ocean_entry_surv = x[38]
-  yuba_ocean_entry_surv = x[39]
-  american_ocean_entry_surv = x[40]
-  deltatribs_ocean_entry_surv = x[41]
-  moke_ocean_entry_surv = x[42]
-  merced_ocean_entry_surv = x[43]
-  stan_ocean_entry_surv = x[44]
-  tuol_ocean_entry_surv = x[45]
+  default_ocean_entry_surv = x[29]
+  upsac_ocean_entry_surv = x[30]
+  butte_ocean_entry_surv = x[31]
+  deer_ocean_entry_surv = x[32]
+  mill_ocean_entry_surv = x[33]
+  midsactribs_ocean_entry_surv = x[34]
+  yuba_ocean_entry_surv = x[35]
+  american_ocean_entry_surv = x[36]
+  deltatribs_ocean_entry_surv = x[37]
+  moke_ocean_entry_surv = x[38]
+  merced_ocean_entry_surv = x[39]
+  stan_ocean_entry_surv = x[40]
+  tuol_ocean_entry_surv = x[41]
 
   params$..surv_adult_enroute_int = surv_adult_enroute
   params$..surv_adult_prespawn_int = surv_adult_prespawn
@@ -322,10 +318,6 @@ update_params <- function(x, params) {
   params$..surv_juv_delta_contact_points = surv_juv_delta_contact_points
   params$..surv_juv_delta_total_diverted = surv_juv_delta_total_diverted
   params$..surv_juv_outmigration_sj_int = surv_juv_outmigration_sj_int
-  params$..surv_juv_outmigration_sac_int_one = surv_juv_outmigration_sac_int_one
-  params$..surv_juv_outmigration_sac_prop_diversions = surv_juv_outmigration_sac_prop_diversions
-  params$..surv_juv_outmigration_sac_total_diversions = surv_juv_outmigration_sac_total_diversions
-  params$..surv_juv_outmigration_sac_int_two = surv_juv_outmigration_sac_int_two
   params$..ocean_entry_success_int = c(
     `Upper Sacramento River` = upsac_ocean_entry_surv,
     `Antelope Creek` = default_ocean_entry_surv,
@@ -365,23 +357,7 @@ update_params <- function(x, params) {
 
 
 # Run 1: ------------------------------------
-# popSize: 300
-r1_solution <- c(x1 = -0.472529709339142, x2 = -1.44439278542995, x3 = 0.988817736506462,
-                 x4 = 2.50532048940659, x5 = 1.35760186612606, x6 = -2.09184224903584,
-                 x7 = -0.433051019906998, x8 = 0.25920145213604, x9 = 0.556612581014633,
-                 x10 = 2.02825719118118, x11 = -1.73714965581894, x12 = 0.520071893930435,
-                 x13 = -1.56682170927525, x14 = 0.0598606616258621, x15 = -0.977261185646057,
-                 x16 = -0.467498913407326, x17 = -0.0934182703495026, x18 = 1.18510973453522,
-                 x19 = -1.47366148233414, x20 = -1.58797347545624, x21 = -0.222748830914497,
-                 x22 = 0.12713634967804, x23 = 0.992635726928711, x24 = -0.910120874643326,
-                 x25 = 0.586663618683815, x26 = 1.00564421713352, x27 = 0.486529305577278,
-                 x28 = 0.412815645337105, x29 = 0.570559486746788, x30 = 1.17298486828804,
-                 x31 = -0.396348416805267, x32 = -0.978902637958527, x33 = 1.23354262113571,
-                 x34 = 0.808096870779991, x35 = 1.70666721463203, x36 = -1.05763009190559,
-                 x37 = -1.07385520637035, x38 = -0.038622722029686, x39 = -1.04971331357956,
-                 x40 = -0.43839356303215, x41 = -0.147409707307816, x42 = -0.911901116371155,
-                 x43 = 0.834318086504936, x44 = -2.00661407411098, x45 = 0.992038950324059
-)
+r1_solution <- res@solution
 
 r1_params <- update_params(x = r1_solution, fallRunDSM::params)
 
@@ -395,7 +371,7 @@ r1_nat_spawners <- as_tibble(r1_sim$natural_spawners) %>%
   filter(!(watershed %in% remove_these))
 
 
-r1_observed <- as_tibble(test_prop_nat * DSMCalibrationData::grandtab_observed$fall) %>%
+r1_observed <- as_tibble(r1_sim$proportion_natural * DSMCalibrationData::grandtab_observed$fall) %>%
   mutate(watershed = DSMscenario::watershed_labels) %>%
   gather(year, spawners, -watershed) %>%
   mutate(type = "observed") %>%
