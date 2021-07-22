@@ -1,4 +1,4 @@
 library(testthat)
-library(fallRunDSM)
+library(winterRunDSM)
 
-test_check("fallRunDSM")
+test_check("winterRunDSM")
