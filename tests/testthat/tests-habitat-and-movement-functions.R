@@ -500,3 +500,50 @@ test_that('The route_and_rear_deltas() function returns the expected values for 
                                                   territory_size = fallRunDSM::params$territory_size)
   expect_equal(expected_delta_routing, delta_routing)
 })
+
+# Test that fill functions work as expected
+# Natal fill
+expected_fill_natal <- list(inchannel = structure(c(5709299, 95877.4873630614, 212364,
+                                                    14696.4466670538, 15466.5250672724, 0, 795147, 619988.40992132,
+                                                    2237111.18034545, 770950.136852591, 0, 1611780, 62818.1321951005,
+                                                    0, 0, 0, 0, 0, 984556.584059399, 1384583, 0, 0, 4613083, 0, 0,
+                                                    0, 1450304.04898684, 1231967.55285853, 880247, 0, 0, 0, 0, 0,
+                                                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                                    0, 0, 0, 0, 0, 0), .Dim = c(31L, 4L)),
+                            floodplain = structure(c(0,
+                                                     0, 0, 0, 0, 1230801.99830721, 29301, 885965, 0, 0, 15511.9369082167,
+                                                     0, 0, 14307.5895999285, 14822.7873816012, 0, 0, 15335.6115608913,
+                                                     25893645, 6075573, 0, 0, 6013361, 0, 14870.5408311819, 651645.917994898,
+                                                     1609788, 0, 2360509, 1223531.384084, 0, 0, 0, 0, 0, 0, 0, 0,
+                                                     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                                     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                                     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                                     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                                     0, 0), .Dim = c(31L, 4L)),
+                            migrants = structure(c(17853333.6818975,
+                                                   0, 188122.276147004, 0, 0, 0, 10567885.5307564, 0, 0, 0, 0, 49122.32553158,
+                                                   0, 0, 0, 0, 0, 0, 0, 1606074.94759099, 0, 0, 12778932.6695231,
+                                                   0, 0, 0, 0, 0, 3045720.48377481, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                                   0), .Dim = c(31L, 4L),
+                                                 .Dimnames = list(c("Upper Sacramento River",
+                                                                    "Antelope Creek", "Battle Creek", "Bear Creek", "Big Chico Creek",
+                                                                    "Butte Creek", "Clear Creek", "Cottonwood Creek", "Cow Creek",
+                                                                    "Deer Creek", "Elder Creek", "Mill Creek", "Paynes Creek", "Stony Creek",
+                                                                    "Thomes Creek", "Upper-mid Sacramento River", "Sutter Bypass",
+                                                                    "Bear River", "Feather River", "Yuba River", "Lower-mid Sacramento River",
+                                                                    "Yolo Bypass", "American River", "Lower Sacramento River", "Calaveras River",
+                                                                    "Cosumnes River", "Mokelumne River", "Merced River", "Stanislaus River",
+                                                                    "Tuolumne River", "San Joaquin River"), c("fry", "", "", ""))))
+test_that('the fill_natal() function returns the expected output', {
+  expect_equal(fill_natal(juveniles = juveniles, inchannel_habitat = expected_habitat$inchannel,
+                          floodplain_habitat = expected_habitat$floodplain,
+                          territory_size = fallRunDSM::params$territory_size),
+               expected_fill_natal)
+})
