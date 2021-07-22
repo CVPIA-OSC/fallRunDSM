@@ -1,6 +1,20 @@
 library(tidyverse)
 library(DSMCalibrationData)
 
+# watershed labels
+watershed_labels <- c("Upper Sacramento River", "Antelope Creek", "Battle Creek",
+                      "Bear Creek", "Big Chico Creek", "Butte Creek", "Clear Creek",
+                      "Cottonwood Creek", "Cow Creek", "Deer Creek", "Elder Creek",
+                      "Mill Creek", "Paynes Creek", "Stony Creek", "Thomes Creek",
+                      "Upper-mid Sacramento River", "Sutter Bypass", "Bear River",
+                      "Feather River", "Yuba River", "Lower-mid Sacramento River",
+                      "Yolo Bypass", "American River", "Lower Sacramento River", "Calaveras River",
+                      "Cosumnes River", "Mokelumne River", "Merced River", "Stanislaus River",
+                      "Tuolumne River", "San Joaquin River")
+
+usethis::use_data(watershed_labels)
+
+
 adult_seeds <- matrix(0, nrow = 31, ncol = 30)
 no_fr_spawn <- !as.logical(DSMhabitat::watershed_species_present[1:31, ]$fr *
               DSMhabitat::watershed_species_present[1:31,]$spawn)
@@ -16,7 +30,7 @@ adult_seed_values <- DSMCalibrationData::mean_escapement_2013_2017 %>%
 
 adult_seeds[ , 1] <- adult_seed_values
 
-rownames(adult_seeds) <- DSMhabitat::watershed_species_present$watershed_name[-32]
+rownames(adult_seeds) <- watershed_labels
 usethis::use_data(adult_seeds, overwrite = TRUE)
 
 proportion_hatchery <- c(0.37, 0.2, 0.9, 0.37968253968254, 0.2, 0.115, 0.2225, 0.3525,
@@ -26,7 +40,7 @@ proportion_hatchery <- c(0.37, 0.2, 0.9, 0.37968253968254, 0.2, 0.115, 0.2225, 0
                          0.37968253968254, 0.0766666666666667, 0.02, 0.7575, 0.745, 0.705,
                          0.465, 0.37968253968254) # differs based on run? TODO
 
-names(proportion_hatchery) <- DSMhabitat::watershed_metadata$watershed[-32]
+names(proportion_hatchery) <- watershed_labels
 
 usethis::use_data(proportion_hatchery, overwrite = TRUE)
 
@@ -51,11 +65,11 @@ usethis::use_data(mass_by_size_class, overwrite = TRUE)
 
 # TODO come up with better names
 cross_channel_stray_rate <- c(rep(1, 15), 0, 0, 2, 2, 2, 0, 0, 3, 0, rep(0, 7)) / 24
-names(cross_channel_stray_rate) <- DSMhabitat::watershed_metadata$watershed[-32]
+names(cross_channel_stray_rate) <- watershed_labels
 usethis::use_data(cross_channel_stray_rate, overwrite = TRUE)
 
 stray_rate <- c(rep(1, 15), 0, 0, 1, 1, 1, 0, 0, 1, 0, rep(1, 6), 0) / 25
-names(stray_rate) <- DSMhabitat::watershed_metadata$watershed[-32]
+names(stray_rate) <- watershed_labels
 usethis::use_data(stray_rate, overwrite = TRUE)
 
 
@@ -70,13 +84,13 @@ oth.aloc <- c(rep(1,15),0,0,1,1,1,0,0,1,0,rep(1,6),0)/25
 adult_harvest_rate <- c(0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14,
                         0.14, 0.14, 0.14, 0.14, 0.14, 0, 0, 0.14, 0.1, 0.1, 0, 0, 0.33,
                         0, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0)
-names(adult_harvest_rate) <- DSMhabitat::watershed_metadata$watershed[-32]
+names(adult_harvest_rate) <- watershed_labels
 usethis::use_data(adult_harvest_rate, overwrite = TRUE)
 
 natural_adult_removal_rate <- c(0, 0, 0.7456033, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                 0, 0.2442951, 0, 0, 0, 0.2291128, 0, 0, 0, 0.3944915, 0.2737981,
                                 0, 0, 0)  # differs based on run
-names(natural_adult_removal_rate) <- DSMhabitat::watershed_metadata$watershed[-32]
+names(natural_adult_removal_rate) <- watershed_labels
 usethis::use_data(natural_adult_removal_rate, overwrite = TRUE)
 
 
@@ -86,7 +100,7 @@ hatchery_allocation <- c(0.067203316, 0.000177541, 0.150929409, 0.000154172, 0.0
                          0, 0, 0.000154172, 0.482868351, 0.077602736, 0, 0, 0.133611589,
                          0, 0.000296477, 0.000154172, 0.02819385, 0.013632706, 0.014822544,
                          0.004880526, 0) # differs based on run
-names(hatchery_allocation) <- DSMhabitat::watershed_metadata$watershed[-32]
+names(hatchery_allocation) <- watershed_labels
 usethis::use_data(hatchery_allocation, overwrite = TRUE)
 
 
@@ -95,20 +109,6 @@ original_groups <- read_csv("data-raw/misc/Grouping.csv")
 diversity_group <- original_groups$DiversityGroup
 names(diversity_group) <- original_groups$watershed
 usethis::use_data(diversity_group, overwrite = TRUE)
-
-
-
-watershed_labels <- c("Upper Sacramento River", "Antelope Creek", "Battle Creek",
-                      "Bear Creek", "Big Chico Creek", "Butte Creek", "Clear Creek",
-                      "Cottonwood Creek", "Cow Creek", "Deer Creek", "Elder Creek",
-                      "Mill Creek", "Paynes Creek", "Stony Creek", "Thomes Creek",
-                      "Upper-mid Sacramento River", "Sutter Bypass", "Bear River",
-                      "Feather River", "Yuba River", "Lower-mid Sacramento River",
-                      "Yolo Bypass", "American River", "Lower Sacramento River", "Calaveras River",
-                      "Cosumnes River", "Mokelumne River", "Merced River", "Stanislaus River",
-                      "Tuolumne River", "San Joaquin River")
-
-usethis::use_data(watershed_labels)
 
 size_class_labels <- c('s', 'm', 'l', 'vl')
 
