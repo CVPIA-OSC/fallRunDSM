@@ -73,22 +73,23 @@ hatchery_allocation <- c(1, rep(0, 30)) # differs based on run
 names(hatchery_allocation) <- watershed_labels
 usethis::use_data(hatchery_allocation, overwrite = TRUE)
 
-
+# Watershed grouping based on SIT expert opinion
 original_groups <- read_csv("data-raw/misc/Grouping.csv")
 
 diversity_group <- original_groups$DiversityGroup
 names(diversity_group) <- original_groups$watershed
 usethis::use_data(diversity_group, overwrite = TRUE)
 
+# Fish size class labels
 size_class_labels <- c('s', 'm', 'l', 'vl')
-
 usethis::use_data(size_class_labels)
 
 # calculate growth rates
 growth_rates_inchannel <- growth()
-usethis::use_data(growth_rates_inchannel)
+usethis::use_data(growth_rates_inchannel, overwrite = TRUE)
+
 growth_rates_floodplain <- growth_floodplain()
-usethis::use_data(growth_rates_floodplain)
+usethis::use_data(growth_rates_floodplain, overwrite = TRUE)
 
 
 
