@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Structured Decision Fall Run Model for CVPIA • fallRunDSM</title>
+<title>Structured Decision Winter Run Model for CVPIA • winterRunDSM</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Structured Decision Fall Run Model for CVPIA">
+<script src="pkgdown.js"></script><meta property="og:title" content="Structured Decision Winter Run Model for CVPIA">
 <meta property="og:description" content="SDM is a key effort by CVPIA agencies to continuously improve project 
     recommendations and prioritization toward the anadromous fish doubling goal. 
     Our intent is to improve collaboration under a science-based framework that is 
@@ -34,7 +34,7 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="index.html">fallRunDSM</a>
+        <a class="navbar-link" href="index.html">winterRunDSM</a>
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0</span>
       </span>
     </div>
@@ -50,7 +50,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/CVPIA-OSC/fallRunDSM">
+  <a href="https://github.com/CVPIA-OSC/winterRunDSM">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -67,9 +67,9 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="fall-chinook-salmon-science-integration-team-model" class="section level1">
+<div id="winter-chinook-salmon-science-integration-team-model" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#fall-chinook-salmon-science-integration-team-model" class="anchor"></a>Fall Chinook Salmon Science Integration Team Model</h1></div>
+<a href="#winter-chinook-salmon-science-integration-team-model" class="anchor"></a>Winter Chinook Salmon Science Integration Team Model</h1></div>
 <div id="primary-authors" class="section level2">
 <h2 class="hasAnchor">
 <a href="#primary-authors" class="anchor"></a>Primary Authors:</h2>
@@ -99,10 +99,10 @@ Corvallis, Oregon 97331-3803, <a href="mailto:adam.duarte@oregonstate.edu" class
 <div id="package-installation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#package-installation" class="anchor"></a>Package Installation</h3>
-<p>The <code>fallRunDSM</code> package depends on a number of packages developed by the <a href="https://github.com/CVPIA-OSC">CVPIA Open Science Collaborative</a>. To install <code>fallRunDSM</code> and additional <code>CVPIA-OSC</code> packages use the <code><a href="https://remotes.r-lib.org/reference/install_github.html">remotes::install_github()</a></code> function.</p>
+<p>The <code>winterRunDSM</code> package depends on a number of packages developed by the <a href="https://github.com/CVPIA-OSC">CVPIA Open Science Collaborative</a>. To install <code>winterRunDSM</code> and additional <code>CVPIA-OSC</code> packages use the <code><a href="https://remotes.r-lib.org/reference/install_github.html">remotes::install_github()</a></code> function.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("remotes")</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"CVPIA-OSC/fallRunDSM"</span><span class="op">)</span>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"CVPIA-OSC/winterRunDSM"</span><span class="op">)</span>
 <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"CVPIA-OSC/DSMscenario"</span><span class="op">)</span>
 
 <span class="co"># optional - need if calibrating model</span>
@@ -116,17 +116,17 @@ Corvallis, Oregon 97331-3803, <a href="mailto:adam.duarte@oregonstate.edu" class
 <div id="run-model" class="section level3">
 <h3 class="hasAnchor">
 <a href="#run-model" class="anchor"></a>Run Model</h3>
-<p>The <code><a href="reference/fall_run_model.html">fall_run_model()</a></code> is a Fall Run Chinook life cycle model used for <a href="http://cvpia.scienceintegrationteam.com/">CVPIA’s Structured Decision Making Process</a>. Running the model simulates Fall Run Chinook population dynamics across 31 watersheds in California over a 20 year period.</p>
-<p>The following code runs the fall run model with SIT defined scenario 1:</p>
+<p>The <code><a href="reference/winter_run_model.html">winter_run_model()</a></code> is a Winter Run Chinook life cycle model used for <a href="http://cvpia.scienceintegrationteam.com/">CVPIA’s Structured Decision Making Process</a>. Running the model simulates Winter Run Chinook population dynamics across 31 watersheds in California over a 20 year period.</p>
+<p>The following code runs the winter run model with SIT defined scenario 1:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># seed the model</span>
-<span class="va">fall_run_seeds</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fall_run_model.html">fall_run_model</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"seed"</span><span class="op">)</span>
+<span class="va">winter_run_seeds</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/winter_run_model.html">winter_run_model</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"seed"</span><span class="op">)</span>
 
 <span class="co"># run the 20 year simulation</span>
-<span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fall_run_model.html">fall_run_model</a></span><span class="op">(</span>scenario <span class="op">=</span> <span class="fu">DSMscenario</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/DSMscenario/man/scenarios.html">scenarios</a></span><span class="op">$</span><span class="va">ONE</span>,
+<span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/winter_run_model.html">winter_run_model</a></span><span class="op">(</span>scenario <span class="op">=</span> <span class="fu">DSMscenario</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/DSMscenario/man/scenarios.html">scenarios</a></span><span class="op">$</span><span class="va">ONE</span>,
                           mode <span class="op">=</span> <span class="st">"simulate"</span>,
-                          seeds <span class="op">=</span> <span class="va">fall_run_seeds</span><span class="op">)</span></code></pre></div>
-<p>The following code runs the fall run model with a custom scenario defined in <code>scenario_df</code>:</p>
+                          seeds <span class="op">=</span> <span class="va">winter_run_seeds</span><span class="op">)</span></code></pre></div>
+<p>The following code runs the winter run model with a custom scenario defined in <code>scenario_df</code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># define scenario</span>
 <span class="va">scenario_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>watershed <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Upper Sacramento River"</span>, <span class="st">"Battle Creek"</span><span class="op">)</span>,
@@ -139,12 +139,12 @@ Corvallis, Oregon 97331-3803, <a href="mailto:adam.duarte@oregonstate.edu" class
 <span class="va">scenario</span> <span class="op">&lt;-</span> <span class="fu">DSMscenario</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DSMscenario/man/get_action_matrices.html">get_action_matrices</a></span><span class="op">(</span><span class="va">scenario_df</span><span class="op">)</span>
 
 <span class="co"># seed model</span>
-<span class="va">fall_run_seeds</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fall_run_model.html">fall_run_model</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"seed"</span><span class="op">)</span>
+<span class="va">winter_run_seeds</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/winter_run_model.html">winter_run_model</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"seed"</span><span class="op">)</span>
 
 <span class="co"># evaluate the impact of your scenario over the 20 year simulation</span>
-<span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fall_run_model.html">fall_run_model</a></span><span class="op">(</span>scenario <span class="op">=</span> <span class="va">scenario</span>,
+<span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/winter_run_model.html">winter_run_model</a></span><span class="op">(</span>scenario <span class="op">=</span> <span class="va">scenario</span>,
                           mode <span class="op">=</span> <span class="st">"simulate"</span>,
-                          seeds <span class="op">=</span> <span class="va">fall_run_seeds</span><span class="op">)</span></code></pre></div>
+                          seeds <span class="op">=</span> <span class="va">winter_run_seeds</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
 <div id="details-on-supporting-data" class="section level2">
@@ -153,16 +153,16 @@ Corvallis, Oregon 97331-3803, <a href="mailto:adam.duarte@oregonstate.edu" class
 <div id="dependencies" class="section level3">
 <h3 class="hasAnchor">
 <a href="#dependencies" class="anchor"></a>Dependencies</h3>
-<p>The <code>fallRunDSM</code> package uses data from several other packages within the <a href="https://github.com/CVPIA-OSC">CVPIA Open Science Collaborative</a>. These relationships are visualized in the dependency graph below.</p>
+<p>The <code>winterRunDSM</code> package uses data from several other packages within the <a href="https://github.com/CVPIA-OSC">CVPIA Open Science Collaborative</a>. These relationships are visualized in the dependency graph below.</p>
 <p><img src="reference/figures/dependencyChain.svg" width="100%"></p>
 </div>
 <div id="flow-habitat-and-temperature-data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#flow-habitat-and-temperature-data" class="anchor"></a>Flow, Habitat, and Temperature Data</h3>
-<p>All data used in the <code>fallRunDSM</code> is passed in as a argument to <code><a href="reference/fall_run_model.html">fall_run_model()</a></code> from a <code><a href="reference/params.html">fallRunDSM::params</a></code> data list that is composed of data objects from the following packages:</p>
+<p>All data used in the <code>winterRunDSM</code> is passed in as a argument to <code><a href="reference/winter_run_model.html">winter_run_model()</a></code> from a <code><a href="reference/params.html">winterRunDSM::params</a></code> data list that is composed of data objects from the following packages:</p>
 <ul>
 <li>
-<strong>Flow Data</strong>: View detailed documentation of flow data inputs at <a href="https://cvpia-osc.github.io/DSMflow/">DSMflow</a>. Flow inputs to the <code>fallRunDSM</code> are generated using CalSim 2 data.</li>
+<strong>Flow Data</strong>: View detailed documentation of flow data inputs at <a href="https://cvpia-osc.github.io/DSMflow/">DSMflow</a>. Flow inputs to the <code>winterRunDSM</code> are generated using CalSim 2 data.</li>
 <li>
 <strong>Habitat Data</strong>: View detailed documentation of habitat data inputs at <a href="https://cvpia-osc.github.io/DSMhabitat/">DSMhabitat</a>. Modeling details for each stream can be viewed <a href="https://cvpia-osc.github.io/DSMhabitat/reference/habitat_data.html#modeling-details-for-streams">here</a>.</li>
 <li>
@@ -172,8 +172,8 @@ Corvallis, Oregon 97331-3803, <a href="mailto:adam.duarte@oregonstate.edu" class
 <div id="scenario-functionality" class="section level3">
 <h3 class="hasAnchor">
 <a href="#scenario-functionality" class="anchor"></a>Scenario Functionality</h3>
-<p>Running scenarios through the <code><a href="reference/fall_run_model.html">fall_run_model()</a></code> model the impact of restoration actions on Fall Run Chinook populations. The <a href="http://cvpia.scienceintegrationteam.com/">CVPIA SIT (Science Integration Team)</a> has developed restoration action portfolios composed of actions preformed on watersheds over a set time period.</p>
-<p>There are seven predefined scenarios that were developed by the CVPIA SIT. Additional scenarios can be defined by creating a <code>scenario_df</code> describing watershed, action, start year, end year, and units of effort. The function <code>get_action_matrices()</code> takes a user defined <code>scenario_df</code> and returns a scenario in the correct format to be used as the <code>scenario</code> input for <code><a href="reference/fall_run_model.html">fall_run_model()</a></code>. For additional description on how to build a scenario view <code>load_scenario()</code> documentation by searching <code>?DSMscenario::load_scenario()</code></p>
+<p>Running scenarios through the <code><a href="reference/winter_run_model.html">winter_run_model()</a></code> model the impact of restoration actions on winter Run Chinook populations. The <a href="http://cvpia.scienceintegrationteam.com/">CVPIA SIT (Science Integration Team)</a> has developed restoration action portfolios composed of actions preformed on watersheds over a set time period.</p>
+<p>There are seven predefined scenarios that were developed by the CVPIA SIT. Additional scenarios can be defined by creating a <code>scenario_df</code> describing watershed, action, start year, end year, and units of effort. The function <code>get_action_matrices()</code> takes a user defined <code>scenario_df</code> and returns a scenario in the correct format to be used as the <code>scenario</code> input for <code><a href="reference/winter_run_model.html">winter_run_model()</a></code>. For additional description on how to build a scenario view <code>load_scenario()</code> documentation by searching <code>?DSMscenario::load_scenario()</code></p>
 </div>
 <div id="calibration-data" class="section level3">
 <h3 class="hasAnchor">
@@ -193,9 +193,9 @@ Corvallis, Oregon 97331-3803, <a href="mailto:adam.duarte@oregonstate.edu" class
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/CVPIA-OSC/fallRunDSM">https://​github.com/​CVPIA-OSC/​fallRunDSM</a>
+<li>Browse source code at <br><a href="https://github.com/CVPIA-OSC/winterRunDSM">https://​github.com/​CVPIA-OSC/​winterRunDSM</a>
 </li>
-<li>Report a bug at <br><a href="https://github.com/CVPIA-OSC/fallRunDSM/issues">https://​github.com/​CVPIA-OSC/​fallRunDSM/​issues</a>
+<li>Report a bug at <br><a href="https://github.com/CVPIA-OSC/winterRunDSM/issues">https://​github.com/​CVPIA-OSC/​winterRunDSM/​issues</a>
 </li>
 <li>Fish and Wildlife Service's CVPIA website at <br><a href="https://www.fws.gov/lodi/anadromous_fish_restoration/afrp_index.htm">https://​www.fws.gov/​lodi/​anadromous_fish_restoration/​afrp_index.htm</a>
 </li>

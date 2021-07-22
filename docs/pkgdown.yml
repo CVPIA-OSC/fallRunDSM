@@ -1,9 +1,9 @@
-pandoc: 2.7.3
+pandoc: '2.12'
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles: {}
-last_built: 2021-07-20T17:00Z
+last_built: 2021-07-22T22:12Z
 urls:
-  reference: https://CVPIA-OSC.github.io/fallRunDSM//reference
-  article: https://CVPIA-OSC.github.io/fallRunDSM//articles
+  reference: https://CVPIA-OSC.github.io/winterRunDSM//reference
+  article: https://CVPIA-OSC.github.io/winterRunDSM//articles
 
