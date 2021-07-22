@@ -1,4 +1,4 @@
-# Fall Chinook Salmon Science Integration Team Model
+# Winter Chinook Salmon Science Integration Team Model
 
 ## Primary Authors:                                                     
                                                                      
@@ -23,12 +23,12 @@ IP-117068
 ## Usage
 
 ### Package Installation
-The `fallRunDSM` package depends on a number of packages developed by the [CVPIA Open Science Collaborative](https://github.com/CVPIA-OSC). 
-To install `fallRunDSM` and additional `CVPIA-OSC` packages use the `remotes::install_github()` function. 
+The `winterRunDSM` package depends on a number of packages developed by the [CVPIA Open Science Collaborative](https://github.com/CVPIA-OSC). 
+To install `winterRunDSM` and additional `CVPIA-OSC` packages use the `remotes::install_github()` function. 
 
 ```r
 # install.packages("remotes")
-remotes::install_github("CVPIA-OSC/fallRunDSM")
+remotes::install_github("CVPIA-OSC/winterRunDSM")
 remotes::install_github("CVPIA-OSC/DSMscenario")
 
 # optional - need if calibrating model
@@ -41,21 +41,21 @@ remotes::install_github("CVPIA-OSC/DSMtemperature")
 ```
 
 ### Run Model
-The `fall_run_model()` is a Fall Run Chinook life cycle model used for [CVPIA's Structured Decision Making Process](http://cvpia.scienceintegrationteam.com/).
-Running the model simulates Fall Run Chinook population dynamics across 31 watersheds in California over a 20 year period. 
+The `winter_run_model()` is a Winter Run Chinook life cycle model used for [CVPIA's Structured Decision Making Process](http://cvpia.scienceintegrationteam.com/).
+Running the model simulates Winter Run Chinook population dynamics across 31 watersheds in California over a 20 year period. 
 
-The following code runs the fall run model with SIT defined scenario 1:
+The following code runs the winter run model with SIT defined scenario 1:
 ```r
 # seed the model
-fall_run_seeds <- fall_run_model(mode = "seed")
+winter_run_seeds <- winter_run_model(mode = "seed")
 
 # run the 20 year simulation
-results <- fall_run_model(scenario = DSMscenario::scenarios$ONE,
+results <- winter_run_model(scenario = DSMscenario::scenarios$ONE,
                           mode = "simulate",
-                          seeds = fall_run_seeds)
+                          seeds = winter_run_seeds)
 ```
 
-The following code runs the fall run model with a custom scenario defined in `scenario_df`:
+The following code runs the winter run model with a custom scenario defined in `scenario_df`:
 ```r
 # define scenario
 scenario_df <- data.frame(watershed = c("Upper Sacramento River", "Battle Creek"),
@@ -68,35 +68,35 @@ scenario_df <- data.frame(watershed = c("Upper Sacramento River", "Battle Creek"
 scenario <- DSMscenario::get_action_matrices(scenario_df)
 
 # seed model
-fall_run_seeds <- fall_run_model(mode = "seed")
+winter_run_seeds <- winter_run_model(mode = "seed")
 
 # evaluate the impact of your scenario over the 20 year simulation
-results <- fall_run_model(scenario = scenario,
+results <- winter_run_model(scenario = scenario,
                           mode = "simulate",
-                          seeds = fall_run_seeds)
+                          seeds = winter_run_seeds)
 ```
 
 ## Details on Supporting Data
 
 ### Dependencies
-The `fallRunDSM` package uses data from several other packages within the [CVPIA Open Science Collaborative](https://github.com/CVPIA-OSC). These relationships are visualized in the dependency graph below. 
+The `winterRunDSM` package uses data from several other packages within the [CVPIA Open Science Collaborative](https://github.com/CVPIA-OSC). These relationships are visualized in the dependency graph below. 
 
 <img src="man/figures/dependencyChain.svg" width="100%"/>
 
 ### Flow, Habitat, and Temperature Data
 
-All data used in the `fallRunDSM` is passed in as a argument to `fall_run_model()` from a `fallRunDSM::params` data list that is composed of data objects from the following packages:
+All data used in the `winterRunDSM` is passed in as a argument to `winter_run_model()` from a `winterRunDSM::params` data list that is composed of data objects from the following packages:
 
-* **Flow Data**: View detailed documentation of flow data inputs at [DSMflow](https://cvpia-osc.github.io/DSMflow/). Flow inputs to the `fallRunDSM` are generated using CalSim 2 data.
+* **Flow Data**: View detailed documentation of flow data inputs at [DSMflow](https://cvpia-osc.github.io/DSMflow/). Flow inputs to the `winterRunDSM` are generated using CalSim 2 data.
 * **Habitat Data**: View detailed documentation of habitat data inputs at [DSMhabitat](https://cvpia-osc.github.io/DSMhabitat/). Modeling details for each stream can be viewed [here](https://cvpia-osc.github.io/DSMhabitat/reference/habitat_data.html#modeling-details-for-streams).
 * **Temperature Data**: View detailed documentation of temperature data inputs at [DSMtemperature](https://cvpia-osc.github.io/DSMtemperature/). Modeling details for each stream can be viewed [here](https://cvpia-osc.github.io/DSMtemperature/reference/stream_temperature.html#watershed-modeling-details).
 
 ### Scenario Functionality
 
-Running scenarios through the `fall_run_model()` model the impact of restoration actions on Fall Run Chinook populations. 
+Running scenarios through the `winter_run_model()` model the impact of restoration actions on winter Run Chinook populations. 
 The [CVPIA SIT (Science Integration Team)](http://cvpia.scienceintegrationteam.com/) has developed restoration action portfolios composed of actions preformed on watersheds over a set time period. 
 
-There are seven predefined scenarios that were developed by the CVPIA SIT. Additional scenarios can be defined by creating a `scenario_df` describing watershed, action, start year, end year, and units of effort. The function `get_action_matrices()` takes a user defined `scenario_df` and returns a scenario in the correct format to be used as the `scenario` input for `fall_run_model()`. For additional description on how to build a scenario view `load_scenario()` documentation by searching `?DSMscenario::load_scenario()`  
+There are seven predefined scenarios that were developed by the CVPIA SIT. Additional scenarios can be defined by creating a `scenario_df` describing watershed, action, start year, end year, and units of effort. The function `get_action_matrices()` takes a user defined `scenario_df` and returns a scenario in the correct format to be used as the `scenario` input for `winter_run_model()`. For additional description on how to build a scenario view `load_scenario()` documentation by searching `?DSMscenario::load_scenario()`  
 
 ### Calibration Data
 
