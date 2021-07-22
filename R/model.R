@@ -35,7 +35,7 @@ winter_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "cali
 
     scenario_data <- DSMscenario::load_scenario(scenario,
                                                 habitat_inputs = habitats,
-                                                species = DSMscenario::species$Winter_RUN)
+                                                species = DSMscenario::species$WINTER_RUN)
 
     ..params$spawning_habitat <- scenario_data$spawning_habitat
     ..params$inchannel_habitat_fry <- scenario_data$inchannel_habitat_fry
@@ -121,15 +121,32 @@ winter_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "cali
       ..surv_egg_to_fry_int = ..params$..surv_egg_to_fry_int
     )
 
-    min_spawn_habitat <- apply(..params$spawning_habitat[ , 10:12, year], 1, min)
+    min_spawn_habitat <- apply(..params$spawning_habitat[ , 1:4, year], 1, min)
 
-    accumulated_degree_days <- cbind(oct = rowSums(..params$degree_days[ , 10:12, year]),
-                                     nov = rowSums(..params$degree_days[ , 11:12, year]),
-                                     dec = ..params$degree_days[ , 12, year])
+    accumulated_degree_days <- cbind(jan = rowSums(..params$degree_days[ , 1:4, year]),
+                                     feb = rowSums(..params$degree_days[ , 2:4, year] ),
+                                     march = rowSums(..params$degree_days[ , 3:4, year] ),
+                                     april = ..params$degree_days[ , 4, year])
 
     average_degree_days <- apply(accumulated_degree_days, 1, weighted.mean, ..params$month_return_proportions)
 
     prespawn_survival <- surv_adult_prespawn(average_degree_days,
+                                             ..surv_adult_prespawn_int = ..params$..surv_adult_prespawn_int,
+                                             .deg_day = ..params$.adult_prespawn_deg_day)
+    # init adult who survived prespawn period
+    init_adults <-  rbinom(n = 31, size = round(init_adults), prob = prespawn_survival)
+
+    # Deg days during spawning period
+    spawntime_proportions <- c(0.2222222, 0.5555556, 0.2222222)
+    spawners_by_month <- matrix(0, nrow = 31, ncol = 3, dimnames = list(watershed_labels, c("May", "June", "July")))
+    spawners_by_month[1,] <- as.vector(rmultinom(1, round(init_adults[1]), spawntime_proportions))
+
+    spawning_accumulated_degree_days <- cbind(may = ..params$degree_days[ , 5, year], # Spawn in may only may degree days
+                                              june = rowSums(..params$degree_days[ , 5:6, year]),
+                                              july = rowSums(..params$degree_days[ , 5:7, year]))
+
+    spawning_average_degree_days <- apply(spawning_accumulated_degree_days, 1, weighted.mean, spawntime_proportions)
+    prespawn_survival <- surv_adult_prespawn(spawning_average_degree_days,
                                              ..surv_adult_prespawn_int = ..params$..surv_adult_prespawn_int,
                                              .deg_day = ..params$.adult_prespawn_deg_day)
 
