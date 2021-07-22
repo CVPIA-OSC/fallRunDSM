@@ -6,9 +6,10 @@ year <- 1
 month <- 9
 bypass_is_overtopped <- as.logical(winterRunDSM::params$tisdale_bypass_watershed + winterRunDSM::params$yolo_bypass_watershed)
 avg_migratory_temp <- rowMeans(winterRunDSM::params$migratory_temperature_proportion_over_20[ , 10:12])
-accumulated_degree_days <- cbind(oct = rowSums(winterRunDSM::params$degree_days[ , 10:12, year]),
-                                 nov = rowSums(winterRunDSM::params$degree_days[ , 11:12, year]),
-                                 dec = winterRunDSM::params$degree_days[ , 12, year])
+accumulated_degree_days <- cbind(jan = rowSums(winterRunDSM::params$degree_days[ , 1:4, year]),
+                                 feb = rowSums(winterRunDSM::params$degree_days[ , 2:4, year]),
+                                 march = rowSums(winterRunDSM::params$degree_days[ , 3:4, year]),
+                                 april = winterRunDSM::params$degree_days[ , 4, year])
 average_degree_days <- apply(accumulated_degree_days, 1, weighted.mean, month_return_proportions)
 
 # Tests adult straying function
@@ -63,21 +64,21 @@ test_that('The adult enroute survival function returns the expected values for y
 })
 
 # Tests prespawn survival
-expected_prespawn_surv <- c(`Upper Sacramento River` = 0.930203323682749, `Antelope Creek` = 0.93835716913923,
-                            `Battle Creek` = 0.932576236368561, `Bear Creek` = 0.935727582051041,
-                            `Big Chico Creek` = 0.932331806687191, `Butte Creek` = 0.933019862449048,
-                            `Clear Creek` = 0.933110040704823, `Cottonwood Creek` = 0.933981593081506,
-                            `Cow Creek` = 0.933821003367044, `Deer Creek` = 0.937041118846014,
-                            `Elder Creek` = 0.937981289865876, `Mill Creek` = 0.933133138318533,
-                            `Paynes Creek` = 0.938053638431211, `Stony Creek` = 0.931275828832128,
-                            `Thomes Creek` = 0.931514570483139, `Upper-mid Sacramento River` = 0.952574126822433,
-                            `Sutter Bypass` = 0.952574126822433, `Bear River` = 0.939879063993009,
-                            `Feather River` = 0.944337042511458, `Yuba River` = 0.928339777198531,
+expected_prespawn_surv <- c(`Upper Sacramento River` = 0.921833381565262, `Antelope Creek` = 0.923683697482191,
+                            `Battle Creek` = 0.918989018551566, `Bear Creek` = 0.911686427429973,
+                            `Big Chico Creek` = 0.92746673029119, `Butte Creek` = 0.9283917315897,
+                            `Clear Creek` = 0.931673539698316, `Cottonwood Creek` = 0.922669421058016,
+                            `Cow Creek` = 0.922034266973123, `Deer Creek` = 0.925338898971336,
+                            `Elder Creek` = 0.921614841328478, `Mill Creek` = 0.923219176714856,
+                            `Paynes Creek` = 0.922016080237681, `Stony Creek` = 0.92455337220333,
+                            `Thomes Creek` = 0.924364638581071, `Upper-mid Sacramento River` = 0.952574126822433,
+                            `Sutter Bypass` = 0.952574126822433, `Bear River` = 0.928298230007684,
+                            `Feather River` = 0.937505481324392, `Yuba River` = 0.918420271387002,
                             `Lower-mid Sacramento River` = 0.952574126822433, `Yolo Bypass` = 0.952574126822433,
-                            `American River` = 0.929873866760164, `Lower Sacramento River` = 0.952574126822433,
-                            `Calaveras River` = 0.937946974912232, `Cosumnes River` = 0.930513801329565,
-                            `Mokelumne River` = 0.922045673822907, `Merced River` = 0.926083513871507,
-                            `Stanislaus River` = 0.929123817753324, `Tuolumne River` = 0.925978406656304,
+                            `American River` = 0.925479299116992, `Lower Sacramento River` = 0.952574126822433,
+                            `Calaveras River` = 0.924152467804049, `Cosumnes River` = 0.919014268861845,
+                            `Mokelumne River` = 0.918379447564648, `Merced River` = 0.916469920035829,
+                            `Stanislaus River` = 0.922811061016294, `Tuolumne River` = 0.920992871793231,
                             `San Joaquin River` = 0.952574126822433)
 
 test_that('The prespawn survival function returns the expected values for year 1', {
@@ -86,26 +87,27 @@ test_that('The prespawn survival function returns the expected values for year 1
 })
 
 # Tests egg to fry surv
-expected_egg_surv <- c(`Upper Sacramento River` = 0.508283676958069, `Antelope Creek` = 0.535399956490784,
-                       `Battle Creek` = 0.453066456696592, `Bear Creek` = 0.493791973234685,
-                       `Big Chico Creek` = 0.516182007507822, `Butte Creek` = 0.556564999873063,
-                       `Clear Creek` = 0.544088820855689, `Cottonwood Creek` = 0.471535406023962,
-                       `Cow Creek` = 0.548107361679654, `Deer Creek` = 0.551271274174912,
-                       `Elder Creek` = 0.49914209957619, `Mill Creek` = 0.498951249626129,
-                       `Paynes Creek` = 0.49539261838608, `Stony Creek` = 0.488109078491193,
-                       `Thomes Creek` = 0.495131822625042, `Upper-mid Sacramento River` = 0,
-                       `Sutter Bypass` = 0, `Bear River` = 0.512991581615581, `Feather River` = 0.437030519553356,
-                       `Yuba River` = 0.502413166776223, `Lower-mid Sacramento River` = 0,
-                       `Yolo Bypass` = 0, `American River` = 0.478141299898216, `Lower Sacramento River` = 0,
-                       `Calaveras River` = 0.503706109834966, `Cosumnes River` = 0.518675616972662,
-                       `Mokelumne River` = 0.461524353396851, `Merced River` = 0.329759126931278,
-                       `Stanislaus River` = 0.472280880371357, `Tuolumne River` = 0.511951882200814,
-                       `San Joaquin River` = 0)
+expected_egg_surv <- c(`Upper Sacramento River` = 0.381246067692528, `Antelope Creek` = 0.409716513722015,
+                       `Battle Creek` = 0.409716513722015, `Bear Creek` = 0.409716513722015,
+                       `Big Chico Creek` = 0.410698870109287, `Butte Creek` = 0.410698870109287,
+                       `Clear Creek` = 0.40873243623163, `Cottonwood Creek` = 0.412658353683433,
+                       `Cow Creek` = 0.409716513722015, `Deer Creek` = 0.40873243623163,
+                       `Elder Creek` = 0.413635448257544, `Mill Creek` = 0.410698870109287,
+                       `Paynes Creek` = 0.409716513722015, `Stony Creek` = 0.40873243623163,
+                       `Thomes Creek` = 0.410698870109287, `Upper-mid Sacramento River` = 0.395790554477812,
+                       `Sutter Bypass` = 0.413635448257544, `Bear River` = 0.409716513722015,
+                       `Feather River` = 0.393776360769257, `Yuba River` = 0.411679488887492,
+                       `Lower-mid Sacramento River` = 0.412658353683433, `Yolo Bypass` = 0.413635448257544,
+                       `American River` = 0.412658353683433, `Lower Sacramento River` = 0.412658353683433,
+                       `Calaveras River` = 0.40873243623163, `Cosumnes River` = 0.411679488887492,
+                       `Mokelumne River` = 0.409716513722015, `Merced River` = 0.409716513722015,
+                       `Stanislaus River` = 0.409716513722015, `Tuolumne River` = 0.40873243623163,
+                       `San Joaquin River` = 0.412658353683433)
 
 test_that('The egg_to_fry survival function returns the expected values for year 1', {
   expect_equal(egg_to_fry_surv <- surv_egg_to_fry(proportion_natural = 1 - proportion_hatchery,
-                                                  scour = test_data$prob_nest_scoured,
-                                                  temperature_effect = test_data$mean_egg_temp_effect),
+                                                  scour = winterRunDSM::params$prob_nest_scoured,
+                                                  temperature_effect = winterRunDSM::params$..surv_egg_to_fry_mean_egg_temp_effect),
                expected_egg_surv)
 })
 
