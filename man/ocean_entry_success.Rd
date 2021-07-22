@@ -11,9 +11,9 @@ ocean_entry_success(
   migrants,
   month,
   avg_ocean_transition_month,
-  .ocean_entry_success_length = fallRunDSM::params$.ocean_entry_success_length,
-  ..ocean_entry_success_int = fallRunDSM::params$..ocean_entry_success_int,
-  .ocean_entry_success_months = fallRunDSM::params$.ocean_entry_success_months
+  .ocean_entry_success_length = winterRunDSM::params$.ocean_entry_success_length,
+  ..ocean_entry_success_int = winterRunDSM::params$..ocean_entry_success_int,
+  .ocean_entry_success_months = winterRunDSM::params$.ocean_entry_success_months
 )
 }
 \arguments{
