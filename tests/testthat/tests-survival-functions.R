@@ -79,14 +79,14 @@ test_that('The migratory_juv_surv function for lower mid sac returns the expecte
 
 
 # Tests migratory survival for san joaquin fish survival function
-expected_lms_mig_surv <- structure(c(0.0293122307513563, 0.117118990875781, 0.218061322644411,
-                                     0.218061322644411), .Dim = c(1L, 4L),
-                                   .Dimnames = list(NULL,
-                                                    c("s", "m", "l", "vl")))
+expected_sj_mig_surv <- structure(c(0.0465823740391211, 0.176705306337067, 0.310918056813447,
+                                    0.310918056813447),
+                                  .Dim = c(1L, 4L),
+                                  .Dimnames = list(NULL,   c("s", "m", "l", "vl")))
 
 test_that('The migratory_juv_surv function for lower mid sac returns the expected values for year 1 month 9', {
   expect_equal(surv_juv_outmigration_san_joaquin(),
-               expected_lms_mig_surv)
+               expected_sj_mig_surv)
 })
 
 # Tests migratory survival for sac delta outmigration survival function
