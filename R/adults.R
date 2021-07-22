@@ -17,12 +17,12 @@
 #' @export
 adult_stray <- function(wild, natal_flow, south_delta_watershed, cross_channel_gates_closed,
                         prop_bay_trans = 0, prop_delta_trans = 0,
-                        .intercept = fallRunDSM::params$.adult_stray_intercept,
-                        .wild = fallRunDSM::params$.adult_stray_wild,
-                        .natal_flow = fallRunDSM::params$.adult_stray_natal_flow,
-                        .cross_channel_gates_closed = fallRunDSM::params$.adult_stray_cross_channel_gates_closed,
-                        .prop_bay_trans = fallRunDSM::params$.adult_stray_prop_bay_trans,
-                        .prop_delta_trans = fallRunDSM::params$.adult_stray_prop_delta_trans){
+                        .intercept = winterRunDSM::params$.adult_stray_intercept,
+                        .wild = winterRunDSM::params$.adult_stray_wild,
+                        .natal_flow = winterRunDSM::params$.adult_stray_natal_flow,
+                        .cross_channel_gates_closed = winterRunDSM::params$.adult_stray_cross_channel_gates_closed,
+                        .prop_bay_trans = winterRunDSM::params$.adult_stray_prop_bay_trans,
+                        .prop_delta_trans = winterRunDSM::params$.adult_stray_prop_delta_trans){
 
   boot::inv.logit(
     .intercept +
@@ -48,9 +48,9 @@ adult_stray <- function(wild, natal_flow, south_delta_watershed, cross_channel_g
 #' @export
 
 surv_adult_enroute <- function(migratory_temp, bypass_overtopped, adult_harvest,
-                               ..surv_adult_enroute_int = fallRunDSM::params$..surv_adult_enroute_int,
-                               .migratory_temp = fallRunDSM::params$.adult_en_route_migratory_temp,
-                               .bypass_overtopped = fallRunDSM::params$.adult_en_route_bypass_overtopped) {
+                               ..surv_adult_enroute_int = winterRunDSM::params$..surv_adult_enroute_int,
+                               .migratory_temp = winterRunDSM::params$.adult_en_route_migratory_temp,
+                               .bypass_overtopped = winterRunDSM::params$.adult_en_route_bypass_overtopped) {
 
   pmax(boot::inv.logit(..surv_adult_enroute_int +
                        .migratory_temp * migratory_temp +
@@ -66,8 +66,8 @@ surv_adult_enroute <- function(migratory_temp, bypass_overtopped, adult_harvest,
 #' @source IP-117068
 #' @export
 surv_adult_prespawn <- function(deg_day,
-                                ..surv_adult_prespawn_int = fallRunDSM::params$..surv_adult_prespawn_int,
-                                .deg_day = fallRunDSM::params$.adult_prespawn_deg_day){
+                                ..surv_adult_prespawn_int = winterRunDSM::params$..surv_adult_prespawn_int,
+                                .deg_day = winterRunDSM::params$.adult_prespawn_deg_day){
 
   boot::inv.logit(..surv_adult_prespawn_int + .deg_day * deg_day)
 }
