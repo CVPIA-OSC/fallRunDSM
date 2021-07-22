@@ -14,19 +14,19 @@ watershed_labels <- c("Upper Sacramento River", "Antelope Creek", "Battle Creek"
 
 usethis::use_data(watershed_labels)
 
-
+# Winter run Adult Seeds from grandtab data
 adult_seeds <- matrix(0, nrow = 31, ncol = 30)
-no_fr_spawn <- !as.logical(DSMhabitat::watershed_species_present[1:31, ]$fr *
+no_wr_spawn <- !as.logical(DSMhabitat::watershed_species_present[1:31, ]$wr *
               DSMhabitat::watershed_species_present[1:31,]$spawn)
 
 adult_seed_values <- DSMCalibrationData::mean_escapement_2013_2017 %>%
-  bind_cols(no_fr_spawn = no_fr_spawn) %>%
-  select(watershed, Fall, no_fr_spawn) %>%
-  mutate(corrected_fall = case_when(
-    no_fr_spawn ~ 0,
-    is.na(Fall) | Fall < 10 ~ 12,
-    TRUE ~ Fall)
-  ) %>% pull(corrected_fall)
+  bind_cols(no_wr_spawn = no_wr_spawn) %>%
+  select(watershed, Winter, no_wr_spawn) %>%
+  mutate(corrected_winter = case_when(
+    no_wr_spawn ~ 0,
+    is.na(Winter) | Winter < 10 ~ 12,
+    TRUE ~ Winter)
+  ) %>% pull(corrected_winter)
 
 adult_seeds[ , 1] <- adult_seed_values
 
