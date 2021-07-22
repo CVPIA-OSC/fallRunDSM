@@ -1,6 +1,6 @@
-Package: fallRunDSM
+Package: winterRunDSM
 Type: Package
-Title: Structured Decision Fall Run Model for CVPIA
+Title: Structured Decision Winter Run Model for CVPIA
 Version: 2.0
 Authors@R: c(
     person("James", "Petterson", email = "jt.peterson@oregonstate.edu", role = "aut"),
@@ -16,8 +16,8 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
-URL: https://CVPIA-OSC.github.io/fallRunDSM/
-BugReports: https://github.com/CVPIA-OSC/fallRunDSM/issues
+URL: https://CVPIA-OSC.github.io/winterRunDSM/
+BugReports: https://github.com/CVPIA-OSC/winterRunDSM/issues
 Imports: 
     boot
 Suggests: 
