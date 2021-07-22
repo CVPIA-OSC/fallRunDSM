@@ -103,3 +103,27 @@ test_that('The migratory_juv_surv function for sac delta returns the expected va
                                                perc_diversions = fallRunDSM::params$delta_proportion_diverted[month, year, "North Delta"] * 100),
                expected_sac_delta_mig_surv)
 })
+
+# tests the surv_juv_outmigration_delta function'
+expected_surv_juv_outmigration <- structure(c(0.266668614822945, 0.000123932662831837, 0.000819655793037249,
+                                              0.00566155265467863, 0.266668614822945, 0.000123932662831837,
+                                              0.000819655793037249, 0.00566155265467863, 0.266668614822945,
+                                              0.000123932662831837, 0.000819655793037249, 0.00566155265467863,
+                                              0.373914118050784, 0.000245928323835351, 0.00124096914866476,
+                                              0.0110614050155086),
+                                            .Dim = c(4L, 4L),
+                                            .Dimnames = list(c("northern_fish",  "cosumnes_mokelumne_fish", "calaveras_fish", "southern_fish"),
+                                                             c("s", "m", "l", "vl")))
+test_that('tests that the surv_juv_outmigration_delta function returns the correct value', {
+  expect_equal(surv_juv_outmigration_delta(prop_DCC_closed = fallRunDSM::params$cc_gates_prop_days_closed[month],
+                                           hor_barr = 0,
+                                           freeport_flow = fallRunDSM::params$freeport_flows[month, year],
+                                           vernalis_flow = fallRunDSM::params$vernalis_flows[month, year],
+                                           stockton_flow = fallRunDSM::params$stockton_flows[month, year],
+                                           vernalis_temperature = fallRunDSM::params$vernalis_temps[month, year],
+                                           prisoners_point_temperature = fallRunDSM::params$prisoners_point_temps[month, year],
+                                           CVP_exp = fallRunDSM::params$CVP_exports[month, year],
+                                           SWP_exp = fallRunDSM::params$SWP_exports[month, year],
+                                           trap_trans = 0),
+               expected_surv_juv_outmigration)
+})
