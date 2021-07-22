@@ -59,9 +59,7 @@ usethis::use_data(mass_by_size_class, overwrite = TRUE)
 # usethis::use_data(stray_rate, overwrite = TRUE)
 
 # differs based on run ------
-adult_harvest_rate <- c(0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14,
-                        0.14, 0.14, 0.14, 0.14, 0.14, 0, 0, 0.14, 0.1, 0.1, 0, 0, 0.33,
-                        0, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0)
+adult_harvest_rate <- c(0.2, rep(0, 30)) # from Corey Phillis
 names(adult_harvest_rate) <- watershed_labels
 usethis::use_data(adult_harvest_rate, overwrite = TRUE)
 
