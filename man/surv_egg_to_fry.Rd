@@ -10,7 +10,7 @@ IP-117068
 surv_egg_to_fry(
   proportion_natural,
   scour,
-  temperature_effect = winterRunDSM::params$mean_egg_temp_effect,
+  temperature_effect = winterRunDSM::params$..surv_egg_to_fry_mean_egg_temp_effect,
   ..surv_egg_to_fry_int = winterRunDSM::params$..surv_egg_to_fry_int,
   .proportion_natural = winterRunDSM::params$.surv_egg_to_fry_proportion_natural,
   .scour = winterRunDSM::params$.surv_egg_to_fry_scour

@@ -2,7 +2,7 @@
 % Please edit documentation in R/model.R
 \name{winter_run_model}
 \alias{winter_run_model}
-\title{Fall Run Chinook Model}
+\title{Winter Run Chinook Model}
 \source{
 IP-117068
 }
@@ -26,7 +26,7 @@ returned value can be fed into the model again as the value for the seeds argume
 \item{..params}{Parameters for model and submodels}
 }
 \description{
-Fall Run Chinook life cycle model used for CVPIA's Structured
+Winter Run Chinook life cycle model used for CVPIA's Structured
 Decision Making Process
 }
 \examples{
