@@ -13,9 +13,9 @@ spawn_success(
   egg_to_fry_survival,
   prob_scour,
   spawn_habitat,
-  sex_ratio = fallRunDSM::params$spawn_success_sex_ratio,
-  redd_size = fallRunDSM::params$spawn_success_redd_size,
-  fecundity = fallRunDSM::params$spawn_success_fecundity
+  sex_ratio = winterRunDSM::params$spawn_success_sex_ratio,
+  redd_size = winterRunDSM::params$spawn_success_redd_size,
+  fecundity = winterRunDSM::params$spawn_success_fecundity
 )
 }
 \arguments{
