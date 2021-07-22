@@ -233,6 +233,30 @@ test_that("Get spawning adults returns the expected values", {
   expect_equal(spawning_adults, expected_spawners)
 })
 
+# Tests spawn success function
+init_adults <- expected_spawners$init_adults
+min_spawn_habitat <- apply(params$spawning_habitat[ , 10:12, year], 1, min)
+
+expected_juveniles <- structure(c(63013983, 17382827, 14181724, 12267298, 11294498,
+                                  171886959, 15665034, 1490579, 58531016, 22030799, 5360762, 13988979,
+                                  8495281, 17170683, 26113261, 0, 0, 1808535, 47588280, 32767726,
+                                  0, 0, 285959988, 0, 6277630, 14431357, 12732900, 22170279, 14001095,
+                                  49874514, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), .Dim = c(31L, 4L), .Dimnames = list(
+                                    NULL, c("fry", "", "", "")))
+
+test_that("spawn success function returns the expected value", {
+  set.seed(2021)
+  juveniles <- spawn_success(escapement = init_adults,
+                             adult_prespawn_survival = expected_prespawn_surv,
+                             egg_to_fry_survival = expected_egg_surv,
+                             prob_scour = fallRunDSM::params$prob_nest_scoured,
+                             spawn_habitat = min_spawn_habitat)
+  expect_equal(round(juveniles, 2), round(expected_juveniles, 2))
+})
 
 
 
