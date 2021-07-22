@@ -266,3 +266,41 @@ test_that('The route_bypass() function returns the expected values for year 1 mo
                                territory_size = winterRunDSM::params$territory_size)
   expect_equal(route_sutter, expected_route_sutter)
 })
+
+# Test the route regional function
+expected_route_regional <- list(inchannel = structure(c(2437809, 0, 10084, 0, 2, 0, 1217820,
+                                                        75, 0, 0, 0, 55, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), .Dim = c(15L, 4L), .Dimnames = list(
+                                                          c("Upper Sacramento River", "Antelope Creek", "Battle Creek",
+                                                            "Bear Creek", "Big Chico Creek", "Butte Creek", "Clear Creek",
+                                                            "Cottonwood Creek", "Cow Creek", "Deer Creek", "Elder Creek",
+                                                            "Mill Creek", "Paynes Creek", "Stony Creek", "Thomes Creek"
+                                                          ), c("s", "m", "l", "vl"))),
+                                floodplain = structure(c(1768816,
+                                                         0, 7317, 0, 1, 0, 883632, 54, 0, 0, 0, 40, 0, 0, 1, 0, 0, 0,
+                                                         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                                         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                                ),
+                                .Dim = c(15L, 4L),
+                                .Dimnames = list(c("Upper Sacramento River",
+                                                   "Antelope Creek", "Battle Creek", "Bear Creek", "Big Chico Creek",
+                                                   "Butte Creek", "Clear Creek", "Cottonwood Creek", "Cow Creek",
+                                                   "Deer Creek", "Elder Creek", "Mill Creek", "Paynes Creek", "Stony Creek",
+                                                   "Thomes Creek"), c("s", "m", "l", "vl"))),
+                                migrants = structure(c(1527499L,
+                                                       0L, 6363L, 0L, 2L, 0L, 763762L, 37L, 0L, 0L, 0L, 33L, 0L, 1L,
+                                                       0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L,
+                                                       0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L,
+                                                       0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L), .Dim = c(15L, 4L)))
+test_that('The route_regional() function returns the expected values for year 1 month 3', {
+  set.seed(2021)
+  route <- route_regional(month = month,
+                          migrants = sutter_fish,
+                          inchannel_habitat = expected_habitat$inchannel[16],
+                          floodplain_habitat = expected_habitat$floodplain[16],
+                          prop_pulse_flows = winterRunDSM::params$prop_pulse_flows[16, , drop = FALSE],
+                          migration_survival_rate = migratory_survival$uppermid_sac,
+                          territory_size = winterRunDSM::params$territory_size)
+  expect_equal(route, expected_route_regional)
+})
