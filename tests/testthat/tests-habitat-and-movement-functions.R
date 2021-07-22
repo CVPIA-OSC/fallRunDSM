@@ -612,3 +612,26 @@ test_that('the fill_regional() function returns the expected output', {
                              territory_size = fallRunDSM::params$territory_size),
                expected_fill_regional)
 })
+
+# Tests migrate function
+migrants <- structure(c(50, 0, 0, 0, 0, 0, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        0, 0, 50, 0, 50, 0, 0, 0, 0, 0, 50, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 110, 0, 0, 110, 0, 0, 0,
+                        0, 0, 0, 50, 0, 0, 50, 0, 0, 50, 0, 0, 0, 50, 0, 0, 0, 0, 0, 0, 0,
+                        0, 0, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        0, 0, 0, 110, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        0, 0), .Dim = c(31L, 4L))
+expected_migrants <- structure(c(9L, 0L, 0L, 0L, 0L, 0L, 0L, 10L, 0L, 0L, 0L, 0L,
+                                 0L, 0L, 0L, 0L, 0L, 0L, 0L, 8L, 0L, 16L, 0L, 0L, 0L, 0L, 0L,
+                                 10L, 0L, 12L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L,
+                                 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 12L, 13L, 0L, 0L, 22L, 0L,
+                                 0L, 0L, 0L, 0L, 0L, 12L, 0L, 0L, 11L, 0L, 0L, 9L, 0L, 0L, 0L,
+                                 11L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 12L, 0L, 0L, 0L,
+                                 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L,
+                                 0L, 22L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L,
+                                 0L, 0L, 0L, 0L, 0L, 0L), .Dim = c(31L, 4L))
+test_that('the migrate() funciton returns the expected output', {
+  set.seed(2021)
+  current_migrants <- migrate(migrants = migrants, migration_survival_rate = migratory_survival$uppermid_sac)
+  expect_equal(current_migrants, expected_migrants)
+})
