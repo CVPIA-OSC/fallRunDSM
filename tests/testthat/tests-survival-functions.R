@@ -228,3 +228,69 @@ test_that("get_rearing_survival returns the expected result", {
                                    min_survival_rate = fallRunDSM::params$min_survival_rate)
   expect_equal(survival, expected_survival)
 })
+
+expected_migratory_survival <- list(delta = structure(c(0.266668614822945, 0.000123932662831837,
+                                                        0.000819655793037249, 0.00566155265467863, 0.266668614822945,
+                                                        0.000123932662831837, 0.000819655793037249, 0.00566155265467863,
+                                                        0.266668614822945, 0.000123932662831837, 0.000819655793037249,
+                                                        0.00566155265467863, 0.373914118050784, 0.000245928323835351,
+                                                        0.00124096914866476, 0.0110614050155086),
+                                                      .Dim = c(4L, 4L),
+                                                      .Dimnames = list(
+                                                        c("northern_fish", "cosumnes_mokelumne_fish", "calaveras_fish",
+                                                          "southern_fish"),
+                                                        c("s", "m", "l", "vl"))),
+                                    san_joaquin = structure(c(0.0293122307513563, 0.117118990875781, 0.218061322644411, 0.218061322644411),
+                                                            .Dim = c(1L,  4L),
+                                                            .Dimnames = list(NULL, c("s", "m", "l", "vl"))),
+                                    uppermid_sac = c(s = 0.189,  m = 0.189, l = 0.189, vl = 0.189),
+                                    lowermid_sac = c(s = 0.189, m = 0.189, l = 0.189, vl = 0.189),
+                                    lower_sac = c(s = 0.189, m = 0.189, l = 0.189, vl = 0.189),
+                                    sutter = structure(c(0.01, 0.01, 0.01, 1),
+                                                       .Dim = c(1L, 4L),
+                                                       .Dimnames = list(NULL, c("s", "m", "l", "vl"))),
+                                    yolo = structure(c(0.01, 0.01, 0.01, 1),
+                                                     .Dim = c(1L, 4L),
+                                                     .Dimnames = list(NULL, c("s", "m", "l", "vl"))),
+                                    sac_delta = structure(c(0.709190977181413, 0.82945620000403, 0.955358125560114, 0.955358125560114),
+                                                          .Dim = c(1L, 4L),
+                                                          .Dimnames = list(NULL, c("s", "m", "l", "vl"))),
+                                    bay_delta = 0.358)
+
+test_that("get_migratory_survival returns the expected result", {
+  set.seed(2021)
+  migratory_survival <- get_migratory_survival(year = year, month = month,
+                                               cc_gates_prop_days_closed = fallRunDSM::params$cc_gates_prop_days_closed,
+                                               freeport_flows = fallRunDSM::params$freeport_flows,
+                                               vernalis_flows = fallRunDSM::params$vernalis_flows,
+                                               stockton_flows = fallRunDSM::params$stockton_flows,
+                                               vernalis_temps = fallRunDSM::params$vernalis_temps,
+                                               prisoners_point_temps = fallRunDSM::params$prisoners_point_temps,
+                                               CVP_exports = fallRunDSM::params$CVP_exports,
+                                               SWP_exports = fallRunDSM::params$SWP_exports,
+                                               upper_sacramento_flows = fallRunDSM::params$upper_sacramento_flows,
+                                               delta_inflow = fallRunDSM::params$delta_inflow,
+                                               avg_temp_delta = fallRunDSM::params$avg_temp_delta,
+                                               avg_temp = fallRunDSM::params$avg_temp,
+                                               delta_proportion_diverted = fallRunDSM::params$delta_proportion_diverted,
+                                               .surv_juv_outmigration_sac_delta_intercept_one = fallRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_one,
+                                               .surv_juv_outmigration_sac_delta_intercept_two = fallRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_two,
+                                               .surv_juv_outmigration_sac_delta_intercept_three = fallRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_three,
+                                               .surv_juv_outmigration_sac_delta_delta_flow = fallRunDSM::params$.surv_juv_outmigration_sac_delta_delta_flow,
+                                               .surv_juv_outmigration_sac_delta_avg_temp = fallRunDSM::params$.surv_juv_outmigration_sac_delta_avg_temp,
+                                               .surv_juv_outmigration_sac_delta_perc_diversions = fallRunDSM::params$.surv_juv_outmigration_sac_delta_perc_diversions,
+                                               .surv_juv_outmigration_sac_delta_medium = fallRunDSM::params$.surv_juv_outmigration_sac_delta_medium,
+                                               .surv_juv_outmigration_sac_delta_large = fallRunDSM::params$.surv_juv_outmigration_sac_delta_large,
+                                               ..surv_juv_outmigration_sj_int = fallRunDSM::params$..surv_juv_outmigration_sj_int,
+                                               ..surv_juv_outmigration_sac_int_one = fallRunDSM::params$..surv_juv_outmigration_sac_int_one,
+                                               ..surv_juv_outmigration_sac_prop_diversions = fallRunDSM::params$..surv_juv_outmigration_sac_prop_diversions,
+                                               ..surv_juv_outmigration_sac_total_diversions = fallRunDSM::params$..surv_juv_outmigration_sac_total_diversions,
+                                               ..surv_juv_outmigration_sac_int_two = fallRunDSM::params$..surv_juv_outmigration_sac_int_two,
+                                               .surv_juv_outmigration_san_joaquin_medium = fallRunDSM::params$.surv_juv_outmigration_san_joaquin_medium,
+                                               .surv_juv_outmigration_san_joaquin_large = fallRunDSM::params$.surv_juv_outmigration_san_joaquin_large,
+                                               min_survival_rate = fallRunDSM::params$min_survival_rate,
+                                               surv_juv_outmigration_sac_delta_model_weights = fallRunDSM::params$surv_juv_outmigration_sac_delta_model_weights) #migratory_survival$uppermid_sac)
+  expect_equal(migratory_survival, expected_migratory_survival)
+})
+
+
