@@ -104,8 +104,8 @@ expected_egg_surv <- c(`Upper Sacramento River` = 0.508283676958069, `Antelope C
 
 test_that('The egg_to_fry survival function returns the expected values for year 1', {
   expect_equal(egg_to_fry_surv <- surv_egg_to_fry(proportion_natural = 1 - proportion_hatchery,
-                                                  scour = test_data$prob_nest_scoured,
-                                                  temperature_effect = test_data$mean_egg_temp_effect),
+                                                  scour = fallRunDSM::params$prob_nest_scoured,
+                                                  temperature_effect = fallRunDSM::params$mean_egg_temp_effect),
                expected_egg_surv)
 })
 
