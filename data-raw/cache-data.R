@@ -38,15 +38,9 @@ proportion_hatchery <- c(0.1759966, rep(0, 30))
 names(proportion_hatchery) <- watershed_labels
 usethis::use_data(proportion_hatchery, overwrite = TRUE)
 
-
-# @title Hatchery Returns
-# @export
-# emanuel: not needed
-# total_hatchery_returning <- round(stats::runif(1,83097.01, 532203.1)) # what is this
-
 # Proportion of Adults Spawning October to December
-month_return_proportions <- c(0.2222222,0.5555556,0.2222222)
-names(month_return_proportions) <- month.abb[10:12]
+month_return_proportions <-  c(0.125, 0.375, 0.375, 0.125)
+names(month_return_proportions) <- month.abb[1:4]
 usethis::use_data(month_return_proportions, overwrite = TRUE)
 
 # Mass by size class
