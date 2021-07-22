@@ -49,3 +49,28 @@ test_that('The get_habitat function returns the expected values for year 1 and m
                            yolo_habitat = fallRunDSM::params$yolo_habitat,
                            delta_habitat = fallRunDSM::params$delta_habitat), expected_habitat)
 })
+
+# Test movement functions
+avg_ocean_transition_month <- 1
+migrants_at_golden_gate <- structure(c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3281, 3370, 281, 866,
+                                       0, 4173, 141, 3, 13810, 2580, 1228, 676, 751, 0, 1, 0, 0, 2264,
+                                       37421, 14922, 0, 0, 103480, 0, 0, 0, 0, 0, 0, 0, 0), .Dim = c(31L,4L))
+# Test that we have the expected amount of ocean entry success for
+expected_ocean_entry_success <- c(1865, 2989, 246, 775, 0, 313, 120, 3, 12140, 233, 1095, 51,
+                                  643, 0, 1, 0, 0, 115, 2237, 880, 0, 0, 38360, 0, 0, 0, 0, 0,
+                                  0, 0, 0)
+
+test_that('The ocean entry success function returns the expected values for year 1 month 3', {
+  set.seed(2021)
+  expect_equal(ocean_entry_success(migrants = migrants_at_golden_gate,
+                                   month = month,
+                                   avg_ocean_transition_month = avg_ocean_transition_month,
+                                   .ocean_entry_success_length = fallRunDSM::params$.ocean_entry_success_length,
+                                   ..ocean_entry_success_int = fallRunDSM::params$..ocean_entry_success_int,
+                                   .ocean_entry_success_months = fallRunDSM::params$.ocean_entry_success_months),
+               expected_ocean_entry_success)
+})
