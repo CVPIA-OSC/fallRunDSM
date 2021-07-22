@@ -1,5 +1,5 @@
-#' @title Fall Run Chinook Model
-#' @description Fall Run Chinook life cycle model used for CVPIA's Structured
+#' @title Winter Run Chinook Model
+#' @description Winter Run Chinook life cycle model used for CVPIA's Structured
 #' Decision Making Process
 #' @param scenario Model inputs, can be modified to test management actions
 #' @param mode The mode to run model in. Can be \code{"seed"}, \code{"simulate"}, \code{"calibrate"}
@@ -35,7 +35,7 @@ winter_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "cali
 
     scenario_data <- DSMscenario::load_scenario(scenario,
                                                 habitat_inputs = habitats,
-                                                species = DSMscenario::species$FALL_RUN)
+                                                species = DSMscenario::species$Winter_RUN)
 
     ..params$spawning_habitat <- scenario_data$spawning_habitat
     ..params$inchannel_habitat_fry <- scenario_data$inchannel_habitat_fry
