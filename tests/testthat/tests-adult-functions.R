@@ -1,8 +1,7 @@
 library(testthat)
-library(fallRunDSM)
+library(winterRunDSM)
 # tests for adult functions
 # Lists inputs to use in testing
-test_data <- fallRunDSM::load_baseline_data()
 year <- 1
 month <- 9
 bypass_is_overtopped <- as.logical(test_data$tisdale_bypass_watershed + test_data$yolo_bypass_watershed)
