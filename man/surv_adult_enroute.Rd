@@ -11,9 +11,9 @@ surv_adult_enroute(
   migratory_temp,
   bypass_overtopped,
   adult_harvest,
-  ..surv_adult_enroute_int = fallRunDSM::params$..surv_adult_enroute_int,
-  .migratory_temp = fallRunDSM::params$.adult_en_route_migratory_temp,
-  .bypass_overtopped = fallRunDSM::params$.adult_en_route_bypass_overtopped
+  ..surv_adult_enroute_int = winterRunDSM::params$..surv_adult_enroute_int,
+  .migratory_temp = winterRunDSM::params$.adult_en_route_migratory_temp,
+  .bypass_overtopped = winterRunDSM::params$.adult_en_route_bypass_overtopped
 )
 }
 \arguments{
