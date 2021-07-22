@@ -2,14 +2,13 @@ library(testthat)
 library(fallRunDSM)
 # tests for adult functions
 # Lists inputs to use in testing
-test_data <- fallRunDSM::load_baseline_data()
 year <- 1
 month <- 9
-bypass_is_overtopped <- as.logical(test_data$tisdale_bypass_watershed + test_data$yolo_bypass_watershed)
-avg_migratory_temp <- rowMeans(test_data$migratory_temperature_proportion_over_20[ , 10:12])
-accumulated_degree_days <- cbind(oct = rowSums(test_data$degree_days[ , 10:12, year]),
-                                 nov = rowSums(test_data$degree_days[ , 11:12, year]),
-                                 dec = test_data$degree_days[ , 12, year])
+bypass_is_overtopped <- as.logical(fallRunDSM::params$tisdale_bypass_watershed + fallRunDSM::params$yolo_bypass_watershed)
+avg_migratory_temp <- rowMeans(fallRunDSM::params$migratory_temperature_proportion_over_20[ , 10:12])
+accumulated_degree_days <- cbind(oct = rowSums(fallRunDSM::params$degree_days[ , 10:12, year]),
+                                 nov = rowSums(fallRunDSM::params$degree_days[ , 11:12, year]),
+                                 dec = fallRunDSM::params$degree_days[ , 12, year])
 average_degree_days <- apply(accumulated_degree_days, 1, weighted.mean, month_return_proportions)
 
 # Tests adult straying function
@@ -32,9 +31,9 @@ expected_straying_output <- c(`Upper Sacramento River` = 0.0179218144440285, `An
 
 test_that('The straying function returns the expected values for year 1', {
   expect_equal(adult_stray(wild = 1,
-                           natal_flow = test_data$prop_flow_natal[ , year],
-                           south_delta_watershed = test_data$south_delta_routed_watersheds,
-                           cross_channel_gates_closed = test_data$cc_gates_days_closed[10]),
+                           natal_flow = fallRunDSM::params$prop_flow_natal[ , year],
+                           south_delta_watershed = fallRunDSM::params$south_delta_routed_watersheds,
+                           cross_channel_gates_closed = fallRunDSM::params$cc_gates_days_closed[10]),
                expected_straying_output)
 })
 
