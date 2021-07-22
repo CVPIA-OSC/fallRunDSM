@@ -63,9 +63,8 @@ adult_harvest_rate <- c(0.2, rep(0, 30)) # from Corey Phillis
 names(adult_harvest_rate) <- watershed_labels
 usethis::use_data(adult_harvest_rate, overwrite = TRUE)
 
-natural_adult_removal_rate <- c(0, 0, 0.7456033, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                0, 0.2442951, 0, 0, 0, 0.2291128, 0, 0, 0, 0.3944915, 0.2737981,
-                                0, 0, 0)  # differs based on run
+# Natural adult removal rate
+natural_adult_removal_rate <- c(mean(c(0.18, 0.09, 0.07, 0.13, 0.02, 0.03)), rep(0, 30)) # from Doug Killam 2012 - 2017 data
 names(natural_adult_removal_rate) <- watershed_labels
 usethis::use_data(natural_adult_removal_rate, overwrite = TRUE)
 
