@@ -70,16 +70,10 @@ test_that('The bypass_juv_surv function returns the expected values for year 1 m
 })
 
 # Tests migratory survival for lower mid sac fish survival function
-expected_lms_mig_surv <- structure(c(0.991560590050647, 0.998053508596856,
-                                     0.999072190870173, 0.999072190870173),
-                                   .Dim = c(1L, 4L), .Dimnames = list(NULL,
-                                                                   c("s", "m", "l", "vl")))
+expected_lms_mig_surv <- c(s = 0.189, m = 0.189, l = 0.189, vl = 0.189)
 
 test_that('The migratory_juv_surv function for lower mid sac returns the expected values for year 1 month 9', {
-  expect_equal(surv_juv_outmigration_sac(flow_cms = test_data$upper_sacramento_flows[month, year],
-                                         avg_temp = test_data$avg_temp[21, month, year],
-                                         total_diversions = test_data$total_diverted[21],
-                                         prop_diversions = test_data$proportion_diverted[21]),
+  expect_equal(surv_juv_outmigration_sac(flow_cms = winterRunDSM::params$upper_sacramento_flows[month, year]),
                expected_lms_mig_surv)
 })
 
