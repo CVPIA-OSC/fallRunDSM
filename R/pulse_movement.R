@@ -15,14 +15,14 @@
 #' @source IP-117068
 #' @export
 pulse_movement <- function(proportion_pulse,
-                           .intercept = fallRunDSM::params$.pulse_movement_intercept,
-                           .proportion_pulse = fallRunDSM::params$.pulse_movement_proportion_pulse,
-                           .medium = fallRunDSM::params$.pulse_movement_medium,
-                           .large = fallRunDSM::params$.pulse_movement_large,
-                           .vlarge = fallRunDSM::params$.pulse_movement_vlarge,
-                           .medium_pulse = fallRunDSM::params$.pulse_movement_medium_pulse,
-                           .large_pulse = fallRunDSM::params$.pulse_movement_large_pulse,
-                           .very_large_pulse = fallRunDSM::params$.pulse_movement_very_large_pulse){
+                           .intercept = winterRunDSM::params$.pulse_movement_intercept,
+                           .proportion_pulse = winterRunDSM::params$.pulse_movement_proportion_pulse,
+                           .medium = winterRunDSM::params$.pulse_movement_medium,
+                           .large = winterRunDSM::params$.pulse_movement_large,
+                           .vlarge = winterRunDSM::params$.pulse_movement_vlarge,
+                           .medium_pulse = winterRunDSM::params$.pulse_movement_medium_pulse,
+                           .large_pulse = winterRunDSM::params$.pulse_movement_large_pulse,
+                           .very_large_pulse = winterRunDSM::params$.pulse_movement_very_large_pulse){
 
   s <- boot::inv.logit(.intercept + .proportion_pulse * proportion_pulse)
 
