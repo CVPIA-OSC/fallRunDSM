@@ -235,3 +235,67 @@ test_that("get_rearing_survival returns the expected result", {
                                    min_survival_rate = winterRunDSM::params$min_survival_rate)
   expect_equal(survival, expected_survival)
 })
+
+# Adds test for migratory surv function
+expected_migratory_survival <- list(delta = structure(c(0.266668614822945, 4.23117924253791e-24,
+                                                        2.79838300757807e-23, 2.25682449302165e-13, 0.266668614822945,
+                                                        4.23117924253791e-24, 2.79838300757807e-23, 2.25682449302165e-13,
+                                                        0.266668614822945, 4.23117924253791e-24, 2.79838300757807e-23,
+                                                        2.25682449302165e-13, 0.373914118050784, 8.39976923434414e-24,
+                                                        4.2385741964001e-23, 5.04188928377011e-13),
+                                                      .Dim = c(4L, 4L),
+                                                      .Dimnames = list(
+                                                          c("northern_fish", "cosumnes_mokelumne_fish", "calaveras_fish",
+                                                            "southern_fish"), c("s", "m", "l", "vl"))),
+                                    san_joaquin = structure(c(0.0465823740391211, 0.176705306337067, 0.310918056813447, 0.310918056813447),
+                                                            .Dim = c(1L, 4L),
+                                                            .Dimnames = list(NULL, c("s", "m", "l", "vl"))),
+                                    uppermid_sac = c(s = 0.189, m = 0.189, l = 0.189, vl = 0.189),
+                                    lowermid_sac = c(s = 0.189,  m = 0.189, l = 0.189, vl = 0.189),
+                                    lower_sac = c(s = 0.189, m = 0.189, l = 0.189, vl = 0.189),
+                                    sutter = structure(c(0.01, 0.01, 0.01, 1),
+                                                       .Dim = c(1L, 4L),
+                                                       .Dimnames = list(NULL, c("s", "m", "l", "vl"))),
+                                    yolo = structure(c(0.01, 0.01, 0.01, 1),
+                                                     .Dim = c(1L, 4L),
+                                                     .Dimnames = list(NULL, c("s", "m", "l", "vl"))),
+                                    sac_delta = structure(c(0.709190977181413,  0.82945620000403, 0.955358125560114, 0.955358125560114),
+                                                          .Dim = c(1L, 4L),
+                                                          .Dimnames = list(NULL, c("s", "m", "l", "vl"))),
+                                    bay_delta = 0.358)
+
+test_that("get_migratory_survival returns the expected result", {
+  set.seed(2021)
+  migratory_survival <- get_migratory_survival(year = year, month = month,
+                                               cc_gates_prop_days_closed = winterRunDSM::params$cc_gates_prop_days_closed,
+                                               freeport_flows = winterRunDSM::params$freeport_flows,
+                                               vernalis_flows = winterRunDSM::params$vernalis_flows,
+                                               stockton_flows = winterRunDSM::params$stockton_flows,
+                                               vernalis_temps = winterRunDSM::params$vernalis_temps,
+                                               prisoners_point_temps = winterRunDSM::params$prisoners_point_temps,
+                                               CVP_exports = winterRunDSM::params$CVP_exports,
+                                               SWP_exports = winterRunDSM::params$SWP_exports,
+                                               upper_sacramento_flows = winterRunDSM::params$upper_sacramento_flows,
+                                               delta_inflow = winterRunDSM::params$delta_inflow,
+                                               avg_temp_delta = winterRunDSM::params$avg_temp_delta,
+                                               avg_temp = winterRunDSM::params$avg_temp,
+                                               delta_proportion_diverted = winterRunDSM::params$delta_proportion_diverted,
+                                               .surv_juv_outmigration_sac_delta_intercept_one = winterRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_one,
+                                               .surv_juv_outmigration_sac_delta_intercept_two = winterRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_two,
+                                               .surv_juv_outmigration_sac_delta_intercept_three = winterRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_three,
+                                               .surv_juv_outmigration_sac_delta_delta_flow = winterRunDSM::params$.surv_juv_outmigration_sac_delta_delta_flow,
+                                               .surv_juv_outmigration_sac_delta_avg_temp = winterRunDSM::params$.surv_juv_outmigration_sac_delta_avg_temp,
+                                               .surv_juv_outmigration_sac_delta_perc_diversions = winterRunDSM::params$.surv_juv_outmigration_sac_delta_perc_diversions,
+                                               .surv_juv_outmigration_sac_delta_medium = winterRunDSM::params$.surv_juv_outmigration_sac_delta_medium,
+                                               .surv_juv_outmigration_sac_delta_large = winterRunDSM::params$.surv_juv_outmigration_sac_delta_large,
+                                               ..surv_juv_outmigration_sj_int = winterRunDSM::params$..surv_juv_outmigration_sj_int,
+                                               ..surv_juv_outmigration_sac_int_one = winterRunDSM::params$..surv_juv_outmigration_sac_int_one,
+                                               ..surv_juv_outmigration_sac_prop_diversions = winterRunDSM::params$..surv_juv_outmigration_sac_prop_diversions,
+                                               ..surv_juv_outmigration_sac_total_diversions = winterRunDSM::params$..surv_juv_outmigration_sac_total_diversions,
+                                               ..surv_juv_outmigration_sac_int_two = winterRunDSM::params$..surv_juv_outmigration_sac_int_two,
+                                               .surv_juv_outmigration_san_joaquin_medium = winterRunDSM::params$.surv_juv_outmigration_san_joaquin_medium,
+                                               .surv_juv_outmigration_san_joaquin_large = winterRunDSM::params$.surv_juv_outmigration_san_joaquin_large,
+                                               surv_juv_outmigration_sac_delta_model_weights = winterRunDSM::params$surv_juv_outmigration_sac_delta_model_weights,
+                                               min_survival_rate = winterRunDSM::params$min_survival_rate) #migratory_survival$uppermid_sac)
+  expect_equal(migratory_survival, expected_migratory_survival)
+})
