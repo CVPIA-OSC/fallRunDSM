@@ -68,13 +68,8 @@ natural_adult_removal_rate <- c(mean(c(0.18, 0.09, 0.07, 0.13, 0.02, 0.03)), rep
 names(natural_adult_removal_rate) <- watershed_labels
 usethis::use_data(natural_adult_removal_rate, overwrite = TRUE)
 
-
-hatchery_allocation <- c(0.067203316, 0.000177541, 0.150929409, 0.000154172, 0.000177541,
-                         0.000792731, 0.010619948, 0.008426863, 0.002838529, 0.001160381,
-                         0.000154172, 0.000662392, 0.000177541, 0.000154172, 0.000154172,
-                         0, 0, 0.000154172, 0.482868351, 0.077602736, 0, 0, 0.133611589,
-                         0, 0.000296477, 0.000154172, 0.02819385, 0.013632706, 0.014822544,
-                         0.004880526, 0) # differs based on run
+# Hatchery allocation
+hatchery_allocation <- c(1, rep(0, 30)) # differs based on run
 names(hatchery_allocation) <- watershed_labels
 usethis::use_data(hatchery_allocation, overwrite = TRUE)
 
