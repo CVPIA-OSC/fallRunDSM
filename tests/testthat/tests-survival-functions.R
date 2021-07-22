@@ -1,8 +1,7 @@
 library(testthat)
-library(fallRunDSM)
+library(winterRunDSM)
 # tests for survival functions
 # Lists inputs to use in testing
-test_data <- fallRunDSM::load_baseline_data()
 year <- 1
 month <- 9
 aveT20 <- c(0L, 0L, 0L, 1L, 1L, 0L, 0L, 0L, 1L, 0L, 0L, 1L, 0L, 1L, 0L,
@@ -19,24 +18,20 @@ betas <- as.matrix(survival_betas[, 3:16])
 bp_survival_betas <- as.matrix(survival_betas[c(17, 22), c(3, 4, 5, 13, 14, 15)])
 
 # Tests surv_juv_rear survival function
-expected_surv_juv_rear <- list(inchannel = cbind(s = 0.313393973985376,
-                                                 m = 0.667233816948951,
-                                                 l = 0.808253327118087,
-                                                 vl = 1),
-                               floodplain = structure(c(0.520325456943001, 0.802578450626017,
-                                                        0.89145699095444, 1),
-                                                      .Dim = c(1L, 4L),
-                                                      .Dimnames = list("Upper Sacramento River",
-                                                                       c("s", "m", "l", "vl"))))
+expected_surv_juv_rear <- list(inchannel = structure(c(0.373145308705724, 0.723372636446464,
+                                                       0.846089404751765, 1), .Dim = c(1L, 4L),
+                                                     .Dimnames = list(NULL,   c("s", "m", "l", "vl"))),
+                               floodplain = structure(c(0.567765169512671, 0.835659795386719, 0.912083864792188, 1),
+                                                      .Dim = c(1L, 4L),  .Dimnames = list( "Upper Sacramento River", c("s", "m", "l", "vl"))))
 test_that('The surv_juv_rear function returns the expected values for year 1 month 9 watershed 1', {
   expect_equal(surv_juv_rear(max_temp_thresh = maxT25[1],
                              avg_temp_thresh = aveT20[1],
                              high_predation = high_predation[1],
-                             contact_points = test_data$contact_points[1],
-                             prop_diversions = test_data$proportion_diverted[1],
-                             total_diversions = test_data$total_diverted[1],
+                             contact_points = winterRunDSM::params$contact_points[1],
+                             prop_diversions = winterRunDSM::params$proportion_diverted[1],
+                             total_diversions = winterRunDSM::params$total_diverted[1],
                              stranded = ws_strand[1],
-                             weeks_flooded = test_data$weeks_flooded[, month, year][1],
+                             weeks_flooded = winterRunDSM::params$weeks_flooded[, month, year][1],
                              ..surv_juv_rear_int = betas[1, 1],
                              ..surv_juv_rear_contact_points = -0.0067662,
                              ..surv_juv_rear_prop_diversions = -0.1755,
@@ -53,7 +48,7 @@ expected_delta_juv_surv <- structure(c(0.0133399021276623, 1e-04, 0.056063924564
 test_that('The delta_juv_surv function returns the expected values for year 1 month 9', {
   expect_equal(surv_juv_delta(max_temp_thresh = maxT25D,
                               avg_temp_thresh = aveT20D,
-                              high_predation = test_data$delta_prop_high_predation,
+                              high_predation = winterRunDSM::params$delta_prop_high_predation,
                               contact_points = test_data$delta_contact_points,
                               prop_diverted = test_data$delta_proportion_diverted,
                               total_diverted = test_data$delta_total_diverted),
