@@ -115,7 +115,7 @@ winter_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "cali
     egg_to_fry_surv <- surv_egg_to_fry(
       proportion_natural = 1 - ..params$proportion_hatchery,
       scour = ..params$prob_nest_scoured,
-      temperature_effect = ..params$mean_egg_temp_effect,
+      temperature_effect = ..params$..surv_egg_to_fry_mean_egg_temp_effect,
       .proportion_natural = ..params$.surv_egg_to_fry_proportion_natural,
       .scour = ..params$.surv_egg_to_fry_scour,
       ..surv_egg_to_fry_int = ..params$..surv_egg_to_fry_int
