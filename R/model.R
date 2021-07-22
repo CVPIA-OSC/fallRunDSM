@@ -569,18 +569,21 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
     output$juvenile_biomass[ , year] <- juveniles_at_chipps %*% fallRunDSM::params$mass_by_size_class
 
-    adults_returning <- t(sapply(1:31, function(i) {
-      rmultinom(1, adults_in_ocean[i], prob = c(.25, .5, .25))
-    }))
+      adults_returning <- t(sapply(1:31, function(i) {
+          rmultinom(1, adults_in_ocean[i], prob = c(.25, .5, .25))
+      }))
 
-    # distribute returning adults for future spawning
-    if (mode == "calibrate" && year < 6) {
-      calculated_adults[1:31, (year + 2):(year + 4)] <- calculated_adults[1:31, (year + 2):(year + 4)] + adults_returning
-    } else if (mode == "calibrate" && year == 5) {
-      adults <- calculated_adults
-    } else {
-      adults[1:31, (year + 2):(year + 4)] <- adults[1:31, (year + 2):(year + 4)] + adults_returning
-    }
+
+
+      # distribute returning adults for future spawning
+      if (mode == "calibrate" && year < 6) {
+        calculated_adults[1:31, (year + 2):(year + 4)] <- calculated_adults[1:31, (year + 2):(year + 4)] + adults_returning
+        if (year == 5) {
+          adults <- calculated_adults
+        }
+      } else {
+        adults[1:31, (year + 2):(year + 4)] <- adults[1:31, (year + 2):(year + 4)] + adults_returning
+      }
 
 
   } # end year for loop

@@ -1,0 +1,47 @@
+ga_population_init <- function(object) {
+  prevs <-   as.numeric(c(
+    params$..surv_adult_enroute_int,
+    params$..surv_adult_prespawn_int,
+    params$..surv_egg_to_fry_int,
+    params$..surv_juv_rear_int["Antelope Creek"], # all upper sac use same
+    params$..surv_juv_rear_int["Sutter Bypass"],
+    params$..surv_juv_rear_int["Upper Sacramento River"],
+    params$..surv_juv_rear_int["Butte Creek"],
+    params$..surv_juv_rear_int["Deer Creek"],
+    params$..surv_juv_rear_int["Mill Creek"],
+    params$..surv_juv_rear_int["Upper-mid Sacramento River"],
+    params$..surv_juv_rear_int["Bear River"],
+    params$..surv_juv_rear_int["Feather River"],
+    params$..surv_juv_rear_int["Yuba River"],
+    params$..surv_juv_rear_int["American River"],
+    params$..surv_juv_rear_int["Calaveras River"],
+    params$..surv_juv_rear_int["Mokelumne River"],
+    params$..surv_juv_rear_int["Merced River"],
+    params$..surv_juv_rear_int["Stanislaus River"],
+    params$..surv_juv_rear_int["Tuolumne River"],
+    params$..surv_juv_rear_int["San Joaquin River"],
+    params$..surv_juv_rear_contact_points,
+    params$..surv_juv_rear_prop_diversions,
+    params$..surv_juv_rear_total_diversions,
+    params$..surv_juv_bypass_int,
+    params$..surv_juv_delta_int,
+    params$..surv_juv_delta_contact_points,
+    params$..surv_juv_delta_total_diverted,
+    params$..surv_juv_outmigration_sj_int,
+    params$..ocean_entry_success_int["Battle Creek"],
+    params$..ocean_entry_success_int["Upper Sacramento River"],
+    params$..ocean_entry_success_int["Butte Creek"],
+    params$..ocean_entry_success_int["Deer Creek"],
+    params$..ocean_entry_success_int["Mill Creek"],
+    params$..ocean_entry_success_int["Bear River"],
+    params$..ocean_entry_success_int["Yuba River"],
+    params$..ocean_entry_success_int["American River"],
+    params$..ocean_entry_success_int["Calaveras River"],
+    params$..ocean_entry_success_int["Mokelumne River"],
+    params$..ocean_entry_success_int["Merced River"],
+    params$..ocean_entry_success_int["Stanislaus River"],
+    params$..ocean_entry_success_int["Tuolumne River"]
+  ))
+
+  sapply(1:length(prevs), function(p) rnorm(object@popSize, mean = prevs[p], sd = .25))
+}

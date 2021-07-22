@@ -19,7 +19,7 @@ spawn_success <- function(escapement, adult_prespawn_survival, egg_to_fry_surviv
 
   capacity <- spawn_habitat / redd_size
 
-  spawner_potential <- if(max(escapement) <= 1000000000) {
+  spawner_potential <- if(max(escapement) <= 1e9) {
     rbinom(31, round(escapement), (adult_prespawn_survival * sex_ratio))
   } else {
     round(escapement * adult_prespawn_survival * sex_ratio)
@@ -29,7 +29,7 @@ spawn_success <- function(escapement, adult_prespawn_survival, egg_to_fry_surviv
 
   fry <- spawners * (1 - prob_scour) * fecundity * egg_to_fry_survival
 
-  fry <- if(max(fry) <= 1000000000) {
+  fry <- if(max(fry) <= 1e9) {
     pmax(round(rnorm(31, fry, (sqrt(fry) / 2))), 0)
   } else {
     round(fry)

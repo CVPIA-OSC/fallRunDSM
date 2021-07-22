@@ -48,7 +48,7 @@ get_spawning_adults <- function(year, adults, hatch_adults, mode,
   if (mode %in% c("seed", "calibrate") && year < 6) {
     adult_index <- ifelse(mode == "seed", 1, year)
     adults_by_month <- t(sapply(1:31, function(watershed) {
-      rmultinom(1, adults[watershed, adult_index], month_return_proportions)
+        rmultinom(1, adults[watershed, adult_index], month_return_proportions)
     }))
 
     natural_adults_by_month <- sapply(1:3, function(month) {
@@ -65,11 +65,11 @@ get_spawning_adults <- function(year, adults, hatch_adults, mode,
   } else  {
 
     adults_by_month <- t(sapply(1:31, function(watershed) {
-      rmultinom(1, adults[watershed, year], month_return_proportions)
+        rmultinom(1, adults[watershed, year], month_return_proportions)
     }))
 
     hatchery_by_month <- t(sapply(1:31, function(watershed) {
-      rmultinom(1, hatch_adults[watershed], month_return_proportions)
+        rmultinom(1, hatch_adults[watershed], month_return_proportions)
     }))
 
     #TODO random variable
@@ -92,12 +92,12 @@ get_spawning_adults <- function(year, adults, hatch_adults, mode,
 
     south_delta_routed_adults <- round(colSums(straying_adults * south_delta_routed_watersheds))
     south_delta_stray_adults <- sapply(1:3, function(month) {
-      as.vector(rmultinom(1, south_delta_routed_adults[month], fallRunDSM::params$cross_channel_stray_rate))
+        as.vector(rmultinom(1, south_delta_routed_adults[month], fallRunDSM::params$cross_channel_stray_rate))
     })
 
     remaining_stray_adults <- round(colSums(straying_adults * (1 - south_delta_routed_watersheds)))
     stray_adults <- sapply(1:3, function(month) {
-      as.vector(rmultinom(1, remaining_stray_adults[month], fallRunDSM::params$stray_rate))
+        as.vector(rmultinom(1, remaining_stray_adults[month], fallRunDSM::params$stray_rate))
     })
 
 

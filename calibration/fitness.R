@@ -1,0 +1,137 @@
+# Fitness Function ------------------
+fall_run_fitness <- function(
+  known_adults,
+  seeds,
+  params,
+  surv_adult_enroute,
+  surv_adult_prespawn,
+  surv_egg_to_fry,
+  uppermidsactribs_surv_juv,
+  bypass_surv_juv,
+  upsac_surv_juv,
+  butte_surv_juv,
+  deer_surv_juv,
+  mill_surv_juv,
+  sac_surv_juv,
+  bear_surv_juv,
+  feather_surv_juv,
+  yuba_surv_juv,
+  american_surv_juv,
+  deltatribs_surv_juv,
+  moke_surv_juv,
+  merced_surv_juv,
+  stan_surv_juv,
+  tuol_surv_juv,
+  sj_surv_juv,
+  surv_juv_rear_contact_points,
+  surv_juv_rear_prop_diversions,
+  surv_juv_rear_total_diversions,
+  surv_juv_bypass_int,
+  surv_juv_delta_int,
+  surv_juv_delta_contact_points,
+  surv_juv_delta_total_diverted,
+  surv_juv_outmigration_sj_int,
+  default_ocean_entry_surv,
+  upsac_ocean_entry_surv,
+  butte_ocean_entry_surv,
+  deer_ocean_entry_surv,
+  mill_ocean_entry_surv,
+  midsactribs_ocean_entry_surv,
+  yuba_ocean_entry_surv,
+  american_ocean_entry_surv,
+  deltatribs_ocean_entry_surv,
+  moke_ocean_entry_surv,
+  merced_ocean_entry_surv,
+  stan_ocean_entry_surv,
+  tuol_ocean_entry_surv) {
+
+  params_init <- params
+
+  params_init$..surv_adult_enroute_int = surv_adult_enroute
+  params_init$..surv_adult_prespawn_int = surv_adult_prespawn
+  params_init$..surv_egg_to_fry_int = surv_egg_to_fry
+  params_init$..surv_juv_rear_int = c(`Upper Sacramento River` = upsac_surv_juv,
+                                      `Antelope Creek` = uppermidsactribs_surv_juv,
+                                      `Battle Creek` = uppermidsactribs_surv_juv,
+                                      `Bear Creek` = uppermidsactribs_surv_juv,
+                                      `Big Chico Creek` = uppermidsactribs_surv_juv,
+                                      `Butte Creek` = butte_surv_juv,
+                                      `Clear Creek` = uppermidsactribs_surv_juv,
+                                      `Cottonwood Creek` = uppermidsactribs_surv_juv,
+                                      `Cow Creek` = uppermidsactribs_surv_juv,
+                                      `Deer Creek` = deer_surv_juv,
+                                      `Elder Creek` = uppermidsactribs_surv_juv,
+                                      `Mill Creek` = mill_surv_juv,
+                                      `Paynes Creek` = uppermidsactribs_surv_juv,
+                                      `Stony Creek` = uppermidsactribs_surv_juv,
+                                      `Thomes Creek` = uppermidsactribs_surv_juv,
+                                      `Upper-mid Sacramento River` = sac_surv_juv,
+                                      `Sutter Bypass` = bypass_surv_juv,
+                                      `Bear River` = uppermidsactribs_surv_juv,
+                                      `Feather River` = uppermidsactribs_surv_juv,
+                                      `Yuba River` = yuba_surv_juv,
+                                      `Lower-mid Sacramento River` = sac_surv_juv,
+                                      `Yolo Bypass` = bypass_surv_juv,
+                                      `American River` = american_surv_juv,
+                                      `Lower Sacramento River` = sac_surv_juv,
+                                      `Calaveras River` = deltatribs_surv_juv,
+                                      `Cosumnes River` = deltatribs_surv_juv,
+                                      `Mokelumne River` = moke_surv_juv,
+                                      `Merced River` = merced_surv_juv,
+                                      `Stanislaus River` = stan_surv_juv,
+                                      `Tuolumne River` = tuol_surv_juv,
+                                      `San Joaquin River` = sj_surv_juv)
+  params_init$..surv_juv_rear_contact_points = surv_juv_rear_contact_points
+  params_init$..surv_juv_rear_prop_diversions = surv_juv_rear_prop_diversions
+  params_init$..surv_juv_rear_total_diversions = surv_juv_rear_total_diversions
+  params_init$..surv_juv_bypass_int = surv_juv_bypass_int
+  params_init$..surv_juv_delta_int = surv_juv_delta_int
+  params_init$..surv_juv_delta_contact_points = surv_juv_delta_contact_points
+  params_init$..surv_juv_delta_total_diverted = surv_juv_delta_total_diverted
+  params_init$..surv_juv_outmigration_sj_int = surv_juv_outmigration_sj_int
+  params_init$..ocean_entry_success_int = c(
+    `Upper Sacramento River` = upsac_ocean_entry_surv,
+    `Antelope Creek` = default_ocean_entry_surv,
+    `Battle Creek` = default_ocean_entry_surv,
+    `Bear Creek` = default_ocean_entry_surv,
+    `Big Chico Creek` = default_ocean_entry_surv,
+    `Butte Creek` = butte_ocean_entry_surv,
+    `Clear Creek` = default_ocean_entry_surv,
+    `Cottonwood Creek` = default_ocean_entry_surv,
+    `Cow Creek` = default_ocean_entry_surv,
+    `Deer Creek` = deer_ocean_entry_surv,
+    `Elder Creek` = default_ocean_entry_surv,
+    `Mill Creek` = mill_ocean_entry_surv,
+    `Paynes Creek` = default_ocean_entry_surv,
+    `Stony Creek` = default_ocean_entry_surv,
+    `Thomes Creek` = default_ocean_entry_surv,
+    `Upper-mid Sacramento River` = default_ocean_entry_surv,
+    `Sutter Bypass` = default_ocean_entry_surv,
+    `Bear River` = midsactribs_ocean_entry_surv,
+    `Feather River` = midsactribs_ocean_entry_surv,
+    `Yuba River` = yuba_ocean_entry_surv,
+    `Lower-mid Sacramento River` = default_ocean_entry_surv,
+    `Yolo Bypass` = default_ocean_entry_surv,
+    `American River` = american_ocean_entry_surv,
+    `Lower Sacramento River` = default_ocean_entry_surv,
+    `Calaveras River` = deltatribs_ocean_entry_surv,
+    `Cosumnes River` = deltatribs_ocean_entry_surv,
+    `Mokelumne River` = moke_ocean_entry_surv,
+    `Merced River` = merced_ocean_entry_surv,
+    `Stanislaus River` = stan_ocean_entry_surv,
+    `Tuolumne River` = tuol_ocean_entry_surv,
+    `San Joaquin River` = default_ocean_entry_surv)
+
+
+  tryCatch({
+    set.seed(10)
+    preds <- fall_run_model(mode = "calibrate",
+                            seeds = seeds,
+                            ..params = params_init)
+    sum(((preds$natural_spawners[, 6:19] - (known_adults[, 6:19] * preds$proportion_natural[, 6:19]))^2 /
+           rowMeans(known_adults[, 6:19], na.rm = TRUE)), na.rm = TRUE)
+  },
+  error = function(e) return(1e12),
+  warning = function(w) return(1e12)
+  )
+}
