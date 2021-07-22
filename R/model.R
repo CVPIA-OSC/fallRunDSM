@@ -85,7 +85,7 @@ winter_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "cali
     annual_migrants <- matrix(0, nrow = 31, ncol = 4, dimnames = list(winterRunDSM::watershed_labels, winterRunDSM::size_class_labels))
     avg_ocean_transition_month <- ocean_transition_month() # 2
 
-    hatch_adults <- rmultinom(1, size = round(runif(1, 83097.01,532203.1)), prob = ..params$hatchery_allocation)[ , 1]
+    hatch_adults <- rmultinom(1, size = round(runif(1, 355, 775)), prob = ..params$hatchery_allocation)[ , 1]
     spawners <- get_spawning_adults(year, round(adults), hatch_adults, mode = mode,
                                     month_return_proportions = ..params$month_return_proportions,
                                     prop_flow_natal = ..params$prop_flow_natal,
