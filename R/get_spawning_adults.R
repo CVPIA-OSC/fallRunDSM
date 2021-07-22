@@ -54,12 +54,12 @@ get_spawning_adults <- function(year, adults, hatch_adults, mode,
     natural_adults_by_month <- sapply(1:3, function(month) {
       rbinom(n = 31,
              size = round(adults_by_month[, month]),
-             prob = 1 - fallRunDSM::params$natural_adult_removal_rate)
+             prob = 1 - winterRunDSM::params$natural_adult_removal_rate)
     })
 
     init_adults <- rowSums(adults_by_month)
     surviving_natural_adults <- rowSums(natural_adults_by_month)
-    proportion_natural <- 1 - fallRunDSM::params$proportion_hatchery
+    proportion_natural <- 1 - winterRunDSM::params$proportion_hatchery
     init_adults_by_month <- natural_adults_by_month
 
   } else  {
@@ -92,12 +92,12 @@ get_spawning_adults <- function(year, adults, hatch_adults, mode,
 
     south_delta_routed_adults <- round(colSums(straying_adults * south_delta_routed_watersheds))
     south_delta_stray_adults <- sapply(1:3, function(month) {
-      as.vector(rmultinom(1, south_delta_routed_adults[month], fallRunDSM::params$cross_channel_stray_rate))
+      as.vector(rmultinom(1, south_delta_routed_adults[month], winterRunDSM::params$cross_channel_stray_rate))
     })
 
     remaining_stray_adults <- round(colSums(straying_adults * (1 - south_delta_routed_watersheds)))
     stray_adults <- sapply(1:3, function(month) {
-      as.vector(rmultinom(1, remaining_stray_adults[month], fallRunDSM::params$stray_rate))
+      as.vector(rmultinom(1, remaining_stray_adults[month], winterRunDSM::params$stray_rate))
     })
 
 
@@ -130,7 +130,7 @@ get_spawning_adults <- function(year, adults, hatch_adults, mode,
     })
 
     surviving_natural_adults_by_month <- sapply(1:3, function(month) {
-      rbinom(31, round(adults_survived_to_spawning[, month]), (1 - fallRunDSM::params$natural_adult_removal_rate))
+      rbinom(31, round(adults_survived_to_spawning[, month]), (1 - winterRunDSM::params$natural_adult_removal_rate))
     })
 
     surviving_hatchery_adults_by_month <- sapply(1:3, function(month) {
