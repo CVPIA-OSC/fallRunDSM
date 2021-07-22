@@ -10,7 +10,7 @@ library(tidyverse)
 library(parallel)
 library(doParallel)
 library(remotes)
-library(fallRunDSM)
+library(winterRunDSM)
 
 # set up for parallel processing ----------------------------------
 no_cores <- detectCores(logical = TRUE)
@@ -21,22 +21,22 @@ registerDoParallel(cl)
 # seeds,I want both the models to be using the same seed therefore I leave the seeding
 # out of the iterations, if we want seeding to happen every iteration we simply move
 # this like into each of the model run functions below
-fall_run_seeds <- fall_run_model(mode = "seed")
+winter_run_seeds <- winter_run_model(mode = "seed")
 
 
 # base run, with NO ACTION
 run_base <- function(...) {
-  fall_run_model(scenario = DSMscenario::scenarios$NO_ACTION, mode = "simulate", seeds = fall_run_seeds)
+  winter_run_model(scenario = DSMscenario::scenarios$NO_ACTION, mode = "simulate", seeds = winter_run_seeds)
 }
 
 # scenario run with scenario = 5
 run_scenario5 <- function(...) {
-  fall_run_model(scenario = DSMscenario::scenarios$FIVE, mode = "simulate", seeds = fall_run_seeds)
+  winter_run_model(scenario = DSMscenario::scenarios$FIVE, mode = "simulate", seeds = winter_run_seeds)
 }
 
 
 # register the functions for use in parallel mode
-clusterExport(cl, list('run_base', 'run_scenario5', 'fall_run_model', 'fall_run_seeds'))
+clusterExport(cl, list('run_base', 'run_scenario5', 'winter_run_model', 'winter_run_seeds'))
 
 # total number of times to run the model
 model_iters <- 250
