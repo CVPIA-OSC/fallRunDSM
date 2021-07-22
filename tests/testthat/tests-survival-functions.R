@@ -90,11 +90,12 @@ test_that('The migratory_juv_surv function for lower mid sac returns the expecte
 })
 
 # Tests migratory survival for sac delta outmigration survival function
-expected_sac_delta_mig_surv <- c(s = 0.362285441652534, m = 0.44305372307621, l = 0.526441379341886,
-                                 vl = 0.526441379341886)
+expected_sac_delta_mig_surv <- structure(c(0.361381001327841, 0.440065384516238, 0.521492554744754,
+                                           0.521492554744754),
+                                         .Dim = c(1L, 4L), .Dimnames = list(NULL,  c("s", "m", "l", "vl")))
 test_that('The migratory_juv_surv function for sac delta returns the expected values for row one of year 1 month 9', {
-  expect_equal(surv_juv_outmigration_sac_delta(delta_flow = test_data$delta_inflow[month, year, ],
-                                               avg_temp = test_data$avg_temp_delta[month, year, ],
-                                               perc_diversions = test_data$delta_proportion_diverted * 100)[1,],
+  expect_equal(surv_juv_outmigration_sac_delta(delta_flow = fallRunDSM::params$delta_inflow[month, year, "North Delta"],
+                                               avg_temp = fallRunDSM::params$avg_temp_delta[month, year, "North Delta"],
+                                               perc_diversions = fallRunDSM::params$delta_proportion_diverted[month, year, "North Delta"] * 100),
                expected_sac_delta_mig_surv)
 })
