@@ -11,17 +11,17 @@ surv_juv_outmigration_sac_delta(
   delta_flow,
   avg_temp,
   perc_diversions,
-  .intercept_one = fallRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_one,
-  .intercept_two = fallRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_two,
+  .intercept_one = winterRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_one,
+  .intercept_two = winterRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_two,
  
-    .intercept_three = fallRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_three,
-  .delta_flow = fallRunDSM::params$.surv_juv_outmigration_sac_delta_delta_flow,
-  .avg_temp = fallRunDSM::params$.surv_juv_outmigration_sac_delta_avg_temp,
+    .intercept_three = winterRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_three,
+  .delta_flow = winterRunDSM::params$.surv_juv_outmigration_sac_delta_delta_flow,
+  .avg_temp = winterRunDSM::params$.surv_juv_outmigration_sac_delta_avg_temp,
  
-    .perc_diversions = fallRunDSM::params$.surv_juv_outmigration_sac_delta_perc_diversions,
-  .medium = fallRunDSM::params$.surv_juv_outmigration_sac_delta_medium,
-  .large = fallRunDSM::params$.surv_juv_outmigration_sac_delta_large,
-  model_weights = fallRunDSM::params$surv_juv_outmigration_sac_delta_model_weights
+    .perc_diversions = winterRunDSM::params$.surv_juv_outmigration_sac_delta_perc_diversions,
+  .medium = winterRunDSM::params$.surv_juv_outmigration_sac_delta_medium,
+  .large = winterRunDSM::params$.surv_juv_outmigration_sac_delta_large,
+  model_weights = winterRunDSM::params$surv_juv_outmigration_sac_delta_model_weights
 )
 }
 \arguments{

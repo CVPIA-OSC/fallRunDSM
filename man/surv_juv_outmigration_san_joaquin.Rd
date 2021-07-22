@@ -8,9 +8,9 @@ IP-117068
 }
 \usage{
 surv_juv_outmigration_san_joaquin(
-  ..surv_juv_outmigration_sj_int = fallRunDSM::params$..surv_juv_outmigration_sj_int,
-  .medium = fallRunDSM::params$.surv_juv_outmigration_san_joaquin_medium,
-  .large = fallRunDSM::params$.surv_juv_outmigration_san_joaquin_large
+  ..surv_juv_outmigration_sj_int = winterRunDSM::params$..surv_juv_outmigration_sj_int,
+  .medium = winterRunDSM::params$.surv_juv_outmigration_san_joaquin_medium,
+  .large = winterRunDSM::params$.surv_juv_outmigration_san_joaquin_large
 )
 }
 \arguments{

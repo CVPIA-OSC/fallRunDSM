@@ -16,21 +16,23 @@ surv_juv_rear(
   total_diversions,
   stranded,
   weeks_flooded,
-  ..surv_juv_rear_int = fallRunDSM::params$..surv_juv_rear_int,
-  .avg_temp_thresh = fallRunDSM::params$.surv_juv_rear_avg_temp_thresh,
-  .high_predation = fallRunDSM::params$.surv_juv_rear_high_predation,
-  .surv_juv_rear_contact_points = fallRunDSM::params$.surv_juv_rear_contact_points,
-  ..surv_juv_rear_contact_points = fallRunDSM::params$..surv_juv_rear_contact_points,
-  .surv_juv_rear_prop_diversions = fallRunDSM::params$.surv_juv_rear_prop_diversions,
-  ..surv_juv_rear_prop_diversions = fallRunDSM::params$..surv_juv_rear_prop_diversions,
-  .surv_juv_rear_total_diversions = fallRunDSM::params$.surv_juv_rear_total_diversions,
+  ..surv_juv_rear_int = winterRunDSM::params$..surv_juv_rear_int,
+  .avg_temp_thresh = winterRunDSM::params$.surv_juv_rear_avg_temp_thresh,
+  .high_predation = winterRunDSM::params$.surv_juv_rear_high_predation,
+  .surv_juv_rear_contact_points = winterRunDSM::params$.surv_juv_rear_contact_points,
+  ..surv_juv_rear_contact_points = winterRunDSM::params$..surv_juv_rear_contact_points,
+  .surv_juv_rear_prop_diversions = winterRunDSM::params$.surv_juv_rear_prop_diversions,
  
-    ..surv_juv_rear_total_diversions = fallRunDSM::params$..surv_juv_rear_total_diversions,
-  .stranded = fallRunDSM::params$.surv_juv_rear_stranded,
-  .medium = fallRunDSM::params$.surv_juv_rear_medium,
-  .large = fallRunDSM::params$.surv_juv_rear_large,
-  .floodplain = fallRunDSM::params$.surv_juv_rear_floodplain,
-  min_survival_rate = fallRunDSM::params$min_survival_rate
+    ..surv_juv_rear_prop_diversions = winterRunDSM::params$..surv_juv_rear_prop_diversions,
+ 
+    .surv_juv_rear_total_diversions = winterRunDSM::params$.surv_juv_rear_total_diversions,
+ 
+    ..surv_juv_rear_total_diversions = winterRunDSM::params$..surv_juv_rear_total_diversions,
+  .stranded = winterRunDSM::params$.surv_juv_rear_stranded,
+  .medium = winterRunDSM::params$.surv_juv_rear_medium,
+  .large = winterRunDSM::params$.surv_juv_rear_large,
+  .floodplain = winterRunDSM::params$.surv_juv_rear_floodplain,
+  min_survival_rate = winterRunDSM::params$min_survival_rate
 )
 }
 \arguments{
