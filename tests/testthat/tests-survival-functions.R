@@ -40,18 +40,20 @@ test_that('The surv_juv_rear function returns the expected values for year 1 mon
 })
 
 # Tests surv_juv_delta survival function
-expected_delta_juv_surv <- structure(c(0.0133399021276623, 1e-04, 0.0560639245646203, 1e-04,
-                                       0.111000112182202, 1e-04, 1, 1),
+expected_delta_juv_surv <- structure(c(0.0932457862245425, 1e-04, 0.0932457862245425, 1e-04,
+                                       0.0932457862245425, 1e-04, 0.0932457862245425, 1),
                                      .Dim = c(2L, 4L),
-                                     .Dimnames = list(NULL, c("s", "m", "l", "vl")))
+                                     .Dimnames = list(c("North Delta", "South Delta"),
+                                                      c("s",  "m", "l", "vl")))
 
 test_that('The delta_juv_surv function returns the expected values for year 1 month 9', {
-  expect_equal(surv_juv_delta(max_temp_thresh = maxT25D,
+  expect_equal(surv_juv_delta(avg_temp = winterRunDSM::params$avg_temp_delta[month, year, "North Delta"],
+                              max_temp_thresh = maxT25D,
                               avg_temp_thresh = aveT20D,
                               high_predation = winterRunDSM::params$delta_prop_high_predation,
-                              contact_points = test_data$delta_contact_points,
-                              prop_diverted = test_data$delta_proportion_diverted,
-                              total_diverted = test_data$delta_total_diverted),
+                              contact_points = winterRunDSM::params$delta_contact_points,
+                              prop_diverted = winterRunDSM::params$delta_proportion_diverted,
+                              total_diverted = winterRunDSM::params$delta_total_diverted),
                expected_delta_juv_surv)
 })
 
