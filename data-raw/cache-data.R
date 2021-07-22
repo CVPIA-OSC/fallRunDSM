@@ -33,15 +33,9 @@ adult_seeds[ , 1] <- adult_seed_values
 rownames(adult_seeds) <- watershed_labels
 usethis::use_data(adult_seeds, overwrite = TRUE)
 
-proportion_hatchery <- c(0.37, 0.2, 0.9, 0.37968253968254, 0.2, 0.115, 0.2225, 0.3525,
-                         0.2, 0.16, 0.37968253968254, 0.1525, 0.365, 0.37968253968254,
-                         0.37968253968254, 0.37968253968254, 0.37968253968254, 0, 0.855,
-                         0.54, 0.37968253968254, 0.37968253968254, 0.571666666666667,
-                         0.37968253968254, 0.0766666666666667, 0.02, 0.7575, 0.745, 0.705,
-                         0.465, 0.37968253968254) # differs based on run? TODO
-
+# Proportion hatchery based on CWT reports
+proportion_hatchery <- c(0.1759966, rep(0, 30))
 names(proportion_hatchery) <- watershed_labels
-
 usethis::use_data(proportion_hatchery, overwrite = TRUE)
 
 
@@ -50,8 +44,7 @@ usethis::use_data(proportion_hatchery, overwrite = TRUE)
 # emanuel: not needed
 # total_hatchery_returning <- round(stats::runif(1,83097.01, 532203.1)) # what is this
 
-# @title Proportion of Adults Spawning October to December
-# @export
+# Proportion of Adults Spawning October to December
 month_return_proportions <- c(0.2222222,0.5555556,0.2222222)
 names(month_return_proportions) <- month.abb[10:12]
 usethis::use_data(month_return_proportions, overwrite = TRUE)
