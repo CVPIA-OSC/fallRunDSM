@@ -9,13 +9,13 @@
 #' @param ..params Parameters for model and submodels
 #' @source IP-117068
 #' @examples
-#' fall_run_seeds <- fallRunDSM::fall_run_model(mode = "seed")
-#' fallRunDSM::fall_run_model(scenario = DSMscenario::scenarios$ONE,
+#' winter_run_seeds <- winterRunDSM::winter_run_model(mode = "seed")
+#' winterRunDSM::winter_run_model(scenario = DSMscenario::scenarios$ONE,
 #'                            mode = "simulate",
-#'                            seeds = fall_run_seeds)
+#'                            seeds = winter_run_seeds)
 #' @export
-fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibrate"),
-                           seeds = NULL, ..params = fallRunDSM::params){
+winter_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibrate"),
+                           seeds = NULL, ..params = winterRunDSM::params){
 
   mode <- match.arg(mode)
 
@@ -51,26 +51,26 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
   output <- list(
 
     # SIT METRICS
-    spawners = matrix(0, nrow = 31, ncol = 20, dimnames = list(fallRunDSM::watershed_labels, 1:20)),
-    natural_spawners = matrix(0, nrow = 31, ncol = 20, dimnames = list(fallRunDSM::watershed_labels, 1:20)),
-    juvenile_biomass = matrix(0, nrow = 31, ncol = 20, dimnames = list(fallRunDSM::watershed_labels, 1:20)),
-    proportion_natural = matrix(NA_real_, nrow = 31, ncol = 20, dimnames = list(fallRunDSM::watershed_labels, 1:20))
+    spawners = matrix(0, nrow = 31, ncol = 20, dimnames = list(winterRunDSM::watershed_labels, 1:20)),
+    natural_spawners = matrix(0, nrow = 31, ncol = 20, dimnames = list(winterRunDSM::watershed_labels, 1:20)),
+    juvenile_biomass = matrix(0, nrow = 31, ncol = 20, dimnames = list(winterRunDSM::watershed_labels, 1:20)),
+    proportion_natural = matrix(NA_real_, nrow = 31, ncol = 20, dimnames = list(winterRunDSM::watershed_labels, 1:20))
   )
 
   # initialize 31 x 4 matrices for natal fish, migrants, and ocean fish
-  lower_mid_sac_fish <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
-  lower_sac_fish <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
-  upper_mid_sac_fish <- matrix(0, nrow = 15, ncol = 4, dimnames = list(fallRunDSM::watershed_labels[1:15], fallRunDSM::size_class_labels))
-  sutter_fish <- matrix(0, nrow = 15, ncol = 4, dimnames = list(fallRunDSM::watershed_labels[1:15], fallRunDSM::size_class_labels))
-  yolo_fish <- matrix(0, nrow = 3, ncol = 4, dimnames = list(fallRunDSM::watershed_labels[18:20], fallRunDSM::size_class_labels))
-  san_joaquin_fish <- matrix(0, nrow = 3, ncol = 4, dimnames = list(fallRunDSM::watershed_labels[28:30], fallRunDSM::size_class_labels))
-  north_delta_fish <- matrix(0, nrow = 23, ncol = 4, dimnames = list(fallRunDSM::watershed_labels[1:23], fallRunDSM::size_class_labels))
-  south_delta_fish <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
-  juveniles_at_chipps <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
-  # proportion_natural <- matrix(NA_real_, nrow = 31, ncol = 20, dimnames = list(fallRunDSM::watershed_labels, 1:20))
+  lower_mid_sac_fish <- matrix(0, nrow = 31, ncol = 4, dimnames = list(winterRunDSM::watershed_labels, winterRunDSM::size_class_labels))
+  lower_sac_fish <- matrix(0, nrow = 31, ncol = 4, dimnames = list(winterRunDSM::watershed_labels, winterRunDSM::size_class_labels))
+  upper_mid_sac_fish <- matrix(0, nrow = 15, ncol = 4, dimnames = list(winterRunDSM::watershed_labels[1:15], winterRunDSM::size_class_labels))
+  sutter_fish <- matrix(0, nrow = 15, ncol = 4, dimnames = list(winterRunDSM::watershed_labels[1:15], winterRunDSM::size_class_labels))
+  yolo_fish <- matrix(0, nrow = 3, ncol = 4, dimnames = list(winterRunDSM::watershed_labels[18:20], winterRunDSM::size_class_labels))
+  san_joaquin_fish <- matrix(0, nrow = 3, ncol = 4, dimnames = list(winterRunDSM::watershed_labels[28:30], winterRunDSM::size_class_labels))
+  north_delta_fish <- matrix(0, nrow = 23, ncol = 4, dimnames = list(winterRunDSM::watershed_labels[1:23], winterRunDSM::size_class_labels))
+  south_delta_fish <- matrix(0, nrow = 31, ncol = 4, dimnames = list(winterRunDSM::watershed_labels, winterRunDSM::size_class_labels))
+  juveniles_at_chipps <- matrix(0, nrow = 31, ncol = 4, dimnames = list(winterRunDSM::watershed_labels, winterRunDSM::size_class_labels))
+  # proportion_natural <- matrix(NA_real_, nrow = 31, ncol = 20, dimnames = list(winterRunDSM::watershed_labels, 1:20))
 
   adults <- switch (mode,
-                    "seed" = fallRunDSM::adult_seeds,
+                    "seed" = winterRunDSM::adult_seeds,
                     "simulate" = seeds,
                     "calibrate" = seeds,
   )
@@ -82,7 +82,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
   for (year in 1:simulation_length) {
     adults_in_ocean <- numeric(31)
-    annual_migrants <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
+    annual_migrants <- matrix(0, nrow = 31, ncol = 4, dimnames = list(winterRunDSM::watershed_labels, winterRunDSM::size_class_labels))
     avg_ocean_transition_month <- ocean_transition_month() # 2
 
     hatch_adults <- rmultinom(1, size = round(runif(1, 83097.01,532203.1)), prob = ..params$hatchery_allocation)[ , 1]
@@ -230,7 +230,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                                    min_survival_rate = ..params$min_survival_rate,
                                                    surv_juv_outmigration_sac_delta_model_weights = ..params$surv_juv_outmigration_sac_delta_model_weights)
 
-      migrants <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
+      migrants <- matrix(0, nrow = 31, ncol = 4, dimnames = list(winterRunDSM::watershed_labels, winterRunDSM::size_class_labels))
 
       if (month == 8) {
         # all remaining fish outmigrate
@@ -320,14 +320,14 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
         sutter_fish <- rear(juveniles = sutter_fish$inchannel,
                             survival_rate = matrix(rep(rearing_survival$sutter, nrow(sutter_fish$inchannel)), ncol = 4, byrow = TRUE),
-                            growth = fallRunDSM::params$growth_rates)
+                            growth = winterRunDSM::params$growth_rates)
 
         upper_mid_sac_fish <- rear(juveniles = upper_mid_sac_fish$inchannel,
                                    survival_rate = rearing_survival$inchannel[16, ],
-                                   growth = fallRunDSM::params$growth_rates,
+                                   growth = winterRunDSM::params$growth_rates,
                                    floodplain_juveniles = upper_mid_sac_fish$floodplain,
                                    floodplain_survival_rate = rearing_survival$floodplain[16, ],
-                                   floodplain_growth = fallRunDSM::params$growth_rates_floodplain,
+                                   floodplain_growth = winterRunDSM::params$growth_rates_floodplain,
                                    weeks_flooded = rep(..params$weeks_flooded[16, month, year], nrow(upper_mid_sac_fish$inchannel)))
 
         upper_mid_sac_fish <- upper_mid_sac_fish$inchannel + upper_mid_sac_fish$floodplain
@@ -355,10 +355,10 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
         lower_mid_sac_trib_rear <- rear(juveniles = lower_mid_sac_trib_fish$inchannel,
                                         survival_rate = rearing_survival$inchannel[18:20, ],
-                                        growth = fallRunDSM::params$growth_rates,
+                                        growth = winterRunDSM::params$growth_rates,
                                         floodplain_juveniles = lower_mid_sac_trib_fish$floodplain,
                                         floodplain_survival_rate = rearing_survival$floodplain[18:20, ],
-                                        floodplain_growth = fallRunDSM::params$growth_rates_floodplain,
+                                        floodplain_growth = winterRunDSM::params$growth_rates_floodplain,
                                         weeks_flooded = ..params$weeks_flooded[18:20, month, year])
 
         juveniles[18:20, ] <- lower_mid_sac_trib_rear$inchannel + lower_mid_sac_trib_rear$floodplain
@@ -383,14 +383,14 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
         # rear
         yolo_fish <- rear(juveniles = yolo_fish$inchannel,
                           survival_rate = matrix(rep(rearing_survival$yolo, nrow(yolo_fish$inchannel)), ncol = 4, byrow = TRUE),
-                          growth = fallRunDSM::params$growth_rates)
+                          growth = winterRunDSM::params$growth_rates)
 
         lower_mid_sac_fish <- rear(juveniles = lower_mid_sac_fish$inchannel,
                                    survival_rate = rearing_survival$inchannel[21, ],
-                                   growth = fallRunDSM::params$growth_rates,
+                                   growth = winterRunDSM::params$growth_rates,
                                    floodplain_juveniles = lower_mid_sac_fish$floodplain,
                                    floodplain_survival_rate = rearing_survival$floodplain[21, ],
-                                   floodplain_growth = fallRunDSM::params$growth_rates_floodplain,
+                                   floodplain_growth = winterRunDSM::params$growth_rates_floodplain,
                                    weeks_flooded = rep(..params$weeks_flooded[21, month, year], nrow(lower_mid_sac_fish$inchannel)))
 
         lower_mid_sac_fish <- lower_mid_sac_fish$inchannel + lower_mid_sac_fish$floodplain
@@ -416,10 +416,10 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
         lower_sac_trib_rear <- rear(juveniles = lower_sac_trib_fish$inchannel,
                                     survival_rate = rearing_survival$inchannel[23, , drop = FALSE],
-                                    growth = fallRunDSM::params$growth_rates,
+                                    growth = winterRunDSM::params$growth_rates,
                                     floodplain_juveniles = lower_sac_trib_fish$floodplain,
                                     floodplain_survival_rate = rearing_survival$floodplain[23, , drop = FALSE],
-                                    floodplain_growth = fallRunDSM::params$growth_rates_floodplain,
+                                    floodplain_growth = winterRunDSM::params$growth_rates_floodplain,
                                     weeks_flooded = ..params$weeks_flooded[23, month, year])
 
         juveniles[23, ] <- lower_sac_trib_rear$inchannel + lower_sac_trib_rear$floodplain
@@ -438,10 +438,10 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
         lower_sac_fish <- rear(juveniles = lower_sac_fish$inchannel,
                                survival_rate = rearing_survival$inchannel[24, ],
-                               growth = fallRunDSM::params$growth_rates,
+                               growth = winterRunDSM::params$growth_rates,
                                floodplain_juveniles = lower_sac_fish$floodplain,
                                floodplain_survival_rate = rearing_survival$floodplain[24, ],
-                               floodplain_growth = fallRunDSM::params$growth_rates_floodplain,
+                               floodplain_growth = winterRunDSM::params$growth_rates_floodplain,
                                weeks_flooded = rep(..params$weeks_flooded[24, month, year], nrow(lower_sac_fish$inchannel)))
 
         lower_sac_fish <- lower_sac_fish$inchannel + lower_sac_fish$floodplain
@@ -469,10 +469,10 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
         south_delta_trib_rear <- rear(juveniles = south_delta_trib_fish$inchannel,
                                       survival_rate = rearing_survival$inchannel[25:27, ],
-                                      growth = fallRunDSM::params$growth_rates,
+                                      growth = winterRunDSM::params$growth_rates,
                                       floodplain_juveniles = south_delta_trib_fish$floodplain,
                                       floodplain_survival_rate = rearing_survival$floodplain[25:27, ],
-                                      floodplain_growth = fallRunDSM::params$growth_rates_floodplain,
+                                      floodplain_growth = winterRunDSM::params$growth_rates_floodplain,
                                       weeks_flooded = ..params$weeks_flooded[25:27, month, year])
 
         juveniles[25:27, ] <- south_delta_trib_rear$inchannel + south_delta_trib_rear$floodplain
@@ -501,10 +501,10 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
         san_joaquin_trib_rear <- rear(juveniles = san_joaquin_trib_fish$inchannel,
                                       survival_rate = rearing_survival$inchannel[28:30, ],
-                                      growth = fallRunDSM::params$growth_rates,
+                                      growth = winterRunDSM::params$growth_rates,
                                       floodplain_juveniles = san_joaquin_trib_fish$floodplain,
                                       floodplain_survival_rate = rearing_survival$floodplain[28:30, ],
-                                      floodplain_growth = fallRunDSM::params$growth_rates_floodplain,
+                                      floodplain_growth = winterRunDSM::params$growth_rates_floodplain,
                                       weeks_flooded = ..params$weeks_flooded[28:30, month, year])
 
         juveniles[28:30, ] <- san_joaquin_trib_rear$inchannel + san_joaquin_trib_rear$floodplain
@@ -521,10 +521,10 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
         san_joaquin_fish <- rear(juveniles = san_joaquin_fish$inchannel,
                                  survival_rate = rearing_survival$inchannel[31, ],
-                                 growth = fallRunDSM::params$growth_rates,
+                                 growth = winterRunDSM::params$growth_rates,
                                  floodplain_juveniles = san_joaquin_fish$floodplain,
                                  floodplain_survival_rate = rearing_survival$floodplain[31, ],
-                                 floodplain_growth = fallRunDSM::params$growth_rates_floodplain,
+                                 floodplain_growth = winterRunDSM::params$growth_rates_floodplain,
                                  weeks_flooded = rep(..params$weeks_flooded[31, month, year], nrow(san_joaquin_fish$inchannel)))
 
         san_joaquin_fish <- san_joaquin_fish$inchannel + san_joaquin_fish$floodplain
@@ -542,7 +542,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                             migratory_survival_sac_delta = migratory_survival$sac_delta,
                                             migratory_survival_bay_delta = migratory_survival$bay_delta,
                                             juveniles_at_chipps = juveniles_at_chipps,
-                                            growth_rates = fallRunDSM::params$growth_rates,
+                                            growth_rates = winterRunDSM::params$growth_rates,
                                             territory_size = ..params$territory_size)
 
         migrants_at_golden_gate <- delta_fish$migrants_at_golden_gate
@@ -563,7 +563,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
     } # end month loop
 
-    output$juvenile_biomass[ , year] <- juveniles_at_chipps %*% fallRunDSM::params$mass_by_size_class
+    output$juvenile_biomass[ , year] <- juveniles_at_chipps %*% winterRunDSM::params$mass_by_size_class
 
     adults_returning <- t(sapply(1:31, function(i) {
       rmultinom(1, adults_in_ocean[i], prob = c(.25, .5, .25))
@@ -589,7 +589,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
   viable <- spawn_change >= 1 & output$proportion_natural[ , -1] >= 0.9 & output$spawners[ , -1] >= 833
 
   output$viability_metrics <- sapply(1:4, function(group) {
-    colSums(viable[which(fallRunDSM::params$diversity_group == group), ])
+    colSums(viable[which(winterRunDSM::params$diversity_group == group), ])
   })
 
   return(output)
