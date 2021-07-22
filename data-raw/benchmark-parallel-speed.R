@@ -1,13 +1,13 @@
 library(tictoc)
-library(fallRunDSM)
+library(winterRunDSM)
 library(parallel)
 list2env(load_baseline_data(), envir = .GlobalEnv)
 
 number_of_cores <- detectCores()
 
 run_model <- function() {
-  seeded_adults <- fall_run_model()
-  output <- fall_run_model(seeds = seeded_adults)
+  seeded_adults <- winter_run_model()
+  output <- winter_run_model(seeds = seeded_adults)
   return(output)
 }
 
