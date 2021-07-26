@@ -63,13 +63,6 @@ stray_rate <- c(1, 2, 2, 0, 1, 2, 2, 1, 0, 2, 0, 2, 0, 0, 1, 0, 0, 0, 2, 2, 0, 0
 names(stray_rate) <- watershed_labels
 usethis::use_data(stray_rate, overwrite = TRUE)
 
-
-# TODO confirm that these are not being used in the refactored model?
-# TODO better names and refactor
-cc.aloc <- c(rep(1,15),0,0,2,2,2,0,0,3,0,rep(0,7))/24
-oth.aloc <- c(rep(1,15),0,0,1,1,1,0,0,1,0,rep(1,6),0)/25
-
-
 # differs based on run ------
 
 adult_harvest_rate <- c(0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14,
