@@ -1,81 +1,104 @@
-# Run2: with habitat scaling applied after calibration
+source("calibration/scale_habitat_params.R")
+source("calibration/update_params.R")
+load('calibration/best-fit-2021-07-22.rds')
+
+solution <- res@solution
+
+params <- update_params(x = solution, modified_hab_params)
+params <- scale_habitat_params(params)
+params <- DSMCalibrationData::set_synth_years(params)
+
+calib_seeds <- matrix(0, nrow = 31, ncol = 25)
+calib_seeds[, 1:5] <- DSMCalibrationData::grandtab_imputed$fall[, 1:5]
+
+run_model <- function(i) {
+  sim <- fall_run_model(scenario = DSMscenario::scenarios$NO_ACTION_GRANDTAB,
+                        seeds = calib_seeds, mode = "simulate", ..params = params)
+  return(sim)
+}
+
+library(tictoc)
+tic('250 runs')
+results_scaled_habitat <- parallel::mclapply(1:250, function(i) {run_model(i)}, mc.cores = 7)
+toc()
+
+nat_spawn_sh <- map_df(1:250, function(i) {
+  as_tibble(results_scaled_habitat[[i]]$natural_spawner) %>%
+    mutate(watershed = DSMscenario::watershed_labels, run = i) %>%
+    gather(year, nat_spawn, -watershed, -run) %>%
+    mutate(year = as.numeric(year))
+})
+
+prop_nat_sh <- map_df(1:250, function(i) {
+  as_tibble(results_scaled_habitat[[i]]$proportion_natural) %>%
+    mutate(watershed = DSMscenario::watershed_labels, run = i) %>%
+    gather(year, prop_nat, -watershed, -run) %>%
+    mutate(year = as.numeric(year))
+})
+
+remove_these <- names(which(is.na(DSMCalibrationData::grandtab_observed$fall[, 1])))
+
+prop_nat_mean_rates <- prop_nat_sh %>%
+  group_by(watershed) %>%
+  summarise(mean_prop_nat = mean(prop_nat)) %>%
+  ungroup() %>%
+  mutate(fixed_rate = 1-fallRunDSM::params$proportion_hatchery[watershed]) %>%
+  filter(!(watershed %in% remove_these))
+
+grand_tab <- as_tibble(DSMCalibrationData::grandtab_observed$fall) %>%
+  mutate(watershed = DSMscenario::watershed_labels) %>%
+  gather(year, spawners, -watershed) %>%
+  filter(!is.na(spawners)) %>%
+  left_join(prop_nat_mean_rates) %>%
+  mutate(year = as.numeric(year) - 1997,
+         observed_nat_fixed = round((fixed_rate * spawners)),
+         observed_nat_mean = round((mean_prop_nat * spawners)))
+
+all <- nat_spawn_sh %>%
+  left_join(grand_tab) %>%
+  filter(year > 5)
+
+all %>%
+  filter(!(watershed %in% remove_these)) %>%
+  ggplot(aes(x = year, group = run)) +
+  geom_line(aes(y = nat_spawn), alpha = .1) +
+  geom_line(aes(y = observed_nat_fixed), alpha = .1, color = 'red') +
+  facet_wrap(~watershed, scales = 'free_y')
 
 
-vect2 <- c(2.0000000, 0.5059781, 1.6702959, 0.8441507, 1.6434544, 2.0000000, 0.5000000,
-           1.0815585, 1.9624035, 0.6232790, 1.0783194, 1.9318056, 1.2704583, 0.9537940,
-           0.9066874, 2.0000000, 1.0847540, 1.4589099, 2.0000000, 0.5769185, 1.0589013,
-           0.5709694, 2.0000000, 0.6716419, 0.5237730, 1.8253104, 1.0990632, 2.0000000,
-           1.4615010, 1.1809537, 0.9577044, 0.9697722, 1.1437721, 1.7819260)
+all %>%
+  group_by(watershed, year) %>%
+  summarise(nat_spawn = mean(nat_spawn),
+            observed_nat_fixed = mean(observed_nat_fixed),
+            observed_nat_mean = mean(observed_nat_mean)) %>%
+  ungroup() %>%
+  filter(!(watershed %in% remove_these), !is.na(observed_nat_fixed)) %>%
+  # summarise(r = cor(nat_spawn, observed_nat_mean))
+  ggplot(aes(nat_spawn, observed_nat_mean)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0)
 
-modified_hab_params <- fallRunDSM::params
-
-
-modified_hab_params$spawning_habitat[1,,]<-modified_hab_params$spawning_habitat[1,,]*vect2[1] # Upper Sac
-modified_hab_params$spawning_habitat[6,,]<-modified_hab_params$spawning_habitat[6,,]*vect2[2] #Butte
-modified_hab_params$spawning_habitat[7,,]<-modified_hab_params$spawning_habitat[7,,]*vect2[3] #Clear
-modified_hab_params$spawning_habitat[10,,]<-modified_hab_params$spawning_habitat[10,,]*vect2[4] # Deer
-modified_hab_params$spawning_habitat[12,,]<-modified_hab_params$spawning_habitat[12,,]*vect2[5] # Mill
-modified_hab_params$spawning_habitat[19,,]<-modified_hab_params$spawning_habitat[19,,]*vect2[6] # Feather
-modified_hab_params$spawning_habitat[20,,]<-modified_hab_params$spawning_habitat[20,,]*vect2[7]# Yuba
-modified_hab_params$spawning_habitat[23,,]<-modified_hab_params$spawning_habitat[23,,]*vect2[8] # American
-modified_hab_params$spawning_habitat[26,,]<-modified_hab_params$spawning_habitat[26,,]*vect2[9] # Cosumness
-modified_hab_params$spawning_habitat[27,,]<-modified_hab_params$spawning_habitat[27,,]*vect2[10] # Mokelumne
-modified_hab_params$spawning_habitat[28,,]<-modified_hab_params$spawning_habitat[28,,]*vect2[11] # Merced
-modified_hab_params$spawning_habitat[29,,]<-modified_hab_params$spawning_habitat[29,,]*vect2[12] # Stanislaus
-modified_hab_params$spawning_habitat[30,,]<-modified_hab_params$spawning_habitat[30,,]*vect2[13] # Tuolumne
+all %>%
+  group_by(watershed, year) %>%
+  summarise(nat_spawn = mean(nat_spawn),
+            observed_nat_fixed = mean(observed_nat_fixed),
+            observed_nat_mean = mean(observed_nat_mean)) %>%
+  filter(!(watershed %in% remove_these), !is.na(observed_nat_mean)) %>%
+  ungroup() %>%
+  summarise(r = cor(nat_spawn, observed_nat_mean))
 
 
 
-modified_hab_params$inchannel_habitat_fry[1,,]<-modified_hab_params$inchannel_habitat_fry[1,,]*vect2[14] # Upper Sac
-modified_hab_params$inchannel_habitat_fry[6,,]<-modified_hab_params$inchannel_habitat_fry[6,,]*vect2[15] # Butte
-modified_hab_params$inchannel_habitat_fry[7,,]<-modified_hab_params$inchannel_habitat_fry[7,,]*vect2[16] # Clear
-modified_hab_params$inchannel_habitat_fry[10,,]<-modified_hab_params$inchannel_habitat_fry[10,,]*vect2[17] # Deer
-modified_hab_params$inchannel_habitat_fry[12,,]<-modified_hab_params$inchannel_habitat_fry[12,,]*vect2[18] # Mill
-modified_hab_params$inchannel_habitat_fry[16,,]<-modified_hab_params$inchannel_habitat_fry[16,,]*vect2[19] # Upper-mid Sac (corridor for above)
-# Sutter (corridor for above) is changed below
-modified_hab_params$inchannel_habitat_fry[19,,]<-modified_hab_params$inchannel_habitat_fry[19,,]*vect2[20] # Feather
-modified_hab_params$inchannel_habitat_fry[20,,]<-modified_hab_params$inchannel_habitat_fry[20,,]*vect2[21] # Yuba
-modified_hab_params$inchannel_habitat_fry[21,,]<-modified_hab_params$inchannel_habitat_fry[21,,]*vect2[22] # Lower-mid Sac (corridor for above)
-# Yolo (corridor for above) is changed below
-modified_hab_params$inchannel_habitat_fry[23,,]<-modified_hab_params$inchannel_habitat_fry[23,,]*vect2[23] # American
-modified_hab_params$inchannel_habitat_fry[24,,]<-modified_hab_params$inchannel_habitat_fry[24,,]*vect2[24] # Lower Sac (corridor for above)
-modified_hab_params$inchannel_habitat_fry[26,,]<-modified_hab_params$inchannel_habitat_fry[26,,]*vect2[25] # Cosumness
-modified_hab_params$inchannel_habitat_fry[27,,]<-modified_hab_params$inchannel_habitat_fry[27,,]*vect2[26] # Mokelumne
-modified_hab_params$inchannel_habitat_fry[28,,]<-modified_hab_params$inchannel_habitat_fry[28,,]*vect2[27] # Merced
-modified_hab_params$inchannel_habitat_fry[29,,]<-modified_hab_params$inchannel_habitat_fry[29,,]*vect2[28] # Stanislaus
-modified_hab_params$inchannel_habitat_fry[30,,]<-modified_hab_params$inchannel_habitat_fry[30,,]*vect2[29] # Tuolumne
-modified_hab_params$inchannel_habitat_fry[31,,]<-modified_hab_params$inchannel_habitat_fry[31,,]*vect2[30] # SJ (corridor for Merced, Stan, and Tuolumne)
 
 
 
-modified_hab_params$inchannel_habitat_juvenile[1,,]<-modified_hab_params$inchannel_habitat_juvenile[1,,]*vect2[14] # Upper Sac
-modified_hab_params$inchannel_habitat_juvenile[6,,]<-modified_hab_params$inchannel_habitat_juvenile[6,,]*vect2[15] # Butte
-modified_hab_params$inchannel_habitat_juvenile[7,,]<-modified_hab_params$inchannel_habitat_juvenile[7,,]*vect2[16] # Clear
-modified_hab_params$inchannel_habitat_juvenile[10,,]<-modified_hab_params$inchannel_habitat_juvenile[10,,]*vect2[17] # Deer
-modified_hab_params$inchannel_habitat_juvenile[12,,]<-modified_hab_params$inchannel_habitat_juvenile[12,,]*vect2[18] # Mill
-modified_hab_params$inchannel_habitat_juvenile[16,,]<-modified_hab_params$inchannel_habitat_juvenile[16,,]*vect2[19] # Upper-mid Sac (corridor for above)
-# Sutter (corridor for above) is changed below
-modified_hab_params$inchannel_habitat_juvenile[19,,]<-modified_hab_params$inchannel_habitat_juvenile[19,,]*vect2[20] # Feather
-modified_hab_params$inchannel_habitat_juvenile[20,,]<-modified_hab_params$inchannel_habitat_juvenile[20,,]*vect2[21] # Yuba
-modified_hab_params$inchannel_habitat_juvenile[21,,]<-modified_hab_params$inchannel_habitat_juvenile[21,,]*vect2[22] # Lower-mid Sac (corridor for above)
-# Yolo (corridor for above) is changed below
-modified_hab_params$inchannel_habitat_juvenile[23,,]<-modified_hab_params$inchannel_habitat_juvenile[23,,]*vect2[23] # American
-modified_hab_params$inchannel_habitat_juvenile[24,,]<-modified_hab_params$inchannel_habitat_juvenile[24,,]*vect2[24] # Lower Sac (corridor for above)
-modified_hab_params$inchannel_habitat_juvenile[26,,]<-modified_hab_params$inchannel_habitat_juvenile[26,,]*vect2[25] # Cosumness
-modified_hab_params$inchannel_habitat_juvenile[27,,]<-modified_hab_params$inchannel_habitat_juvenile[27,,]*vect2[26] # Mokelumne
-modified_hab_params$inchannel_habitat_juvenile[28,,]<-modified_hab_params$inchannel_habitat_juvenile[28,,]*vect2[27] # Merced
-modified_hab_params$inchannel_habitat_juvenile[29,,]<-modified_hab_params$inchannel_habitat_juvenile[29,,]*vect2[28] # Stanislaus
-modified_hab_params$inchannel_habitat_juvenile[30,,]<-modified_hab_params$inchannel_habitat_juvenile[30,,]*vect2[29] # Tuolumne
-modified_hab_params$inchannel_habitat_juvenile[31,,]<-modified_hab_params$inchannel_habitat_juvenile[31,,]*vect2[30] # SJ (corridor for Merced, Stan, and Tuolumne)
-
-modified_hab_params$sutter_habitat<-modified_hab_params$sutter_habitat*vect2[31]
-modified_hab_params$yolo_habitat<-modified_hab_params$yolo_habitat*vect2[32]
-modified_hab_params$delta_habitat[,,"North Delta"]<-modified_hab_params$delta_habitat[,,"North Delta"]*vect2[33]
-modified_hab_params$delta_habitat[,,"South Delta"]<-modified_hab_params$delta_habitat[,,"South Delta"]*vect2[34]
 
 
-r2_seeds <- fall_run_model(mode = "seed", ..params = modified_hab_params)
-r2_sim <- fall_run_model(seeds = r2_seeds, mode = "simulate", ..params = modified_hab_params)
+
+
+
+
+
 
 
 r2_nat_spawners <- as_tibble(r2_sim$natural_spawners) %>%

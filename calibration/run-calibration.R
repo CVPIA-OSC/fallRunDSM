@@ -11,7 +11,6 @@ source("calibration/update_params.R")
 calib_seeds <- matrix(0, nrow = 31, ncol = 25)
 calib_seeds[, 1:5] <- DSMCalibrationData::grandtab_imputed$fall[, 1:5]
 
-
 # Perform calibration --------------------
 res <- ga(type = "real-valued",
           fitness =
