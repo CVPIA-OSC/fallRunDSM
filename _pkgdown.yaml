@@ -1,5 +1,5 @@
-title: fallRunDSM
-url: https://CVPIA-OSC.github.io/fallRunDSM/
+title: springRunDSM
+url: https://CVPIA-OSC.github.io/springRunDSM/
 template:
   params:
     bootswatch: yeti
@@ -13,9 +13,9 @@ home:
 
 reference:
 - title: Life Cycle Model and Model Parameters
-  desc: The fall run life cycle model and it's parameters
+  desc: The spring run life cycle model and it's parameters
   contents:
-  - fall_run_model
+  - spring_run_model
   - params
 
 - title: Survival Sub-models
@@ -90,5 +90,5 @@ navbar:
 
 repo:
  url:
-  home: https://github.com/CVPIA-OSC/fallRunDSM
-  issue: https://github.com/CVPIA-OSC/fallRunDSM/issues/
+  home: https://github.com/CVPIA-OSC/springRunDSM
+  issue: https://github.com/CVPIA-OSC/springRunDSM/issues/
