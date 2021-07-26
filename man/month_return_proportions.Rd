@@ -5,7 +5,7 @@
 \alias{month_return_proportions}
 \title{Month Return Proportions}
 \format{
-An object of class \code{numeric} of length 3.
+An object of class \code{numeric} of length 4.
 }
 \usage{
 month_return_proportions

@@ -13,7 +13,7 @@ fill_natal(
   juveniles,
   inchannel_habitat,
   floodplain_habitat,
-  territory_size = fallRunDSM::params$territory_size,
+  territory_size = springRunDSM::params$territory_size,
   up_to_size_class = 2
 )
 
@@ -21,7 +21,7 @@ fill_regional(
   juveniles,
   habitat,
   floodplain_habitat = NULL,
-  territory_size = fallRunDSM::params$territory_size,
+  territory_size = springRunDSM::params$territory_size,
   up_to_size_class = 3
 )
 }
