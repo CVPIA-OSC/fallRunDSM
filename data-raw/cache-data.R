@@ -64,17 +64,14 @@ names(stray_rate) <- watershed_labels
 usethis::use_data(stray_rate, overwrite = TRUE)
 
 # differs based on run ------
-
-adult_harvest_rate <- c(0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14, 0.14,
-                        0.14, 0.14, 0.14, 0.14, 0.14, 0, 0, 0.14, 0.1, 0.1, 0, 0, 0.33,
-                        0, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0)
-names(adult_harvest_rate) <- DSMhabitat::watershed_metadata$watershed[-32]
+# No adult harvest for spring run
+adult_harvest_rate <- rep(0, 31)
+names(adult_harvest_rate) <- watershed_labels
 usethis::use_data(adult_harvest_rate, overwrite = TRUE)
 
-natural_adult_removal_rate <- c(0, 0, 0.7456033, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                0, 0.2442951, 0, 0, 0, 0.2291128, 0, 0, 0, 0.3944915, 0.2737981,
-                                0, 0, 0)  # differs based on run
-names(natural_adult_removal_rate) <- DSMhabitat::watershed_metadata$watershed[-32]
+# Feather River(19) has the only non zero value for natural adult removal springrun
+natural_adult_removal_rate <- c(rep(0, 18), 0.22, rep(0, 12)) #differs based on run
+names(natural_adult_removal_rate) <- watershed_labels
 usethis::use_data(natural_adult_removal_rate, overwrite = TRUE)
 
 
