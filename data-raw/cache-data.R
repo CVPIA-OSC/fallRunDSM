@@ -41,17 +41,9 @@ proportion_hatchery <- c(rep(0, 5), butte_creek_hatch, rep(0, 12), feather_river
 names(proportion_hatchery) <- watershed_labels
 usethis::use_data(proportion_hatchery, overwrite = TRUE)
 
-
-
-# @title Hatchery Returns
-# @export
-# emanuel: not needed
-# total_hatchery_returning <- round(stats::runif(1,83097.01, 532203.1)) # what is this
-
-# @title Proportion of Adults Spawning October to December
-# @export
-month_return_proportions <- c(0.2222222,0.5555556,0.2222222)
-names(month_return_proportions) <- month.abb[10:12]
+# Proportion adults spawners (including hatchery fish) across 4 months (March-June)
+month_return_proportions <- c(0.125, 0.375, 0.375, 0.125)
+names(month_return_proportions) <- month.abb[3:6]
 usethis::use_data(month_return_proportions, overwrite = TRUE)
 
 # Mass by size class
