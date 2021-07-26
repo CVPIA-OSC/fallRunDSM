@@ -29,7 +29,6 @@ adult_seed_values <- DSMCalibrationData::mean_escapement_2013_2017 %>%
   ) %>% pull(corrected_spring)
 
 adult_seeds[ , 1] <- adult_seed_values
-
 rownames(adult_seeds) <- watershed_labels
 usethis::use_data(adult_seeds, overwrite = TRUE)
 
@@ -52,8 +51,6 @@ names(mass_by_size_class) <- c("s", "m", "l", "vl")
 usethis::use_data(mass_by_size_class, overwrite = TRUE)
 
 
-
-# TODO come up with better names
 # stray rates differ based on run
 cross_channel_stray_rate <- c(1, 2, 2, 0, 1, 2, 2, 1, 0, 2, 0, 2, 0, 0, 1, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)/20
 names(cross_channel_stray_rate) <- watershed_labels
@@ -81,19 +78,14 @@ hatchery_allocation <- c(0, 0.00012, 0.00445, 0, 0.00076, 0.00285, 0.00038,
 names(hatchery_allocation) <- watershed_labels
 usethis::use_data(hatchery_allocation, overwrite = TRUE)
 
-
+# Sit defined diversity groups
 original_groups <- read_csv("data-raw/misc/Grouping.csv")
-
 diversity_group <- original_groups$DiversityGroup
 names(diversity_group) <- original_groups$watershed
 usethis::use_data(diversity_group, overwrite = TRUE)
 
-
-
-
-
+# Size class labels
 size_class_labels <- c('s', 'm', 'l', 'vl')
-
 usethis::use_data(size_class_labels)
 
 # calculate growth rates
