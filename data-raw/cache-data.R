@@ -33,16 +33,14 @@ adult_seeds[ , 1] <- adult_seed_values
 rownames(adult_seeds) <- watershed_labels
 usethis::use_data(adult_seeds, overwrite = TRUE)
 
-proportion_hatchery <- c(0.37, 0.2, 0.9, 0.37968253968254, 0.2, 0.115, 0.2225, 0.3525,
-                         0.2, 0.16, 0.37968253968254, 0.1525, 0.365, 0.37968253968254,
-                         0.37968253968254, 0.37968253968254, 0.37968253968254, 0, 0.855,
-                         0.54, 0.37968253968254, 0.37968253968254, 0.571666666666667,
-                         0.37968253968254, 0.0766666666666667, 0.02, 0.7575, 0.745, 0.705,
-                         0.465, 0.37968253968254) # differs based on run? TODO
-
-names(proportion_hatchery) <- DSMhabitat::watershed_metadata$watershed[-32]
-
+# Prop hatchery come from 2010-2013 CWI reports
+butte_creek_hatch = mean(c(0.01, 0, 0, 0))
+feather_river_hatch = mean(c(0.78, 0.90, 0.90, 0.84))
+yuba_river_hatch = mean(c(0.71, 0.495, 0.36, 0.40))
+proportion_hatchery <- c(rep(0, 5), butte_creek_hatch, rep(0, 12), feather_river_hatch, yuba_river_hatch, rep(0, 11))
+names(proportion_hatchery) <- watershed_labels
 usethis::use_data(proportion_hatchery, overwrite = TRUE)
+
 
 
 # @title Hatchery Returns
