@@ -121,11 +121,12 @@ spring_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "cali
       ..surv_egg_to_fry_int = ..params$..surv_egg_to_fry_int
     )
 
-    min_spawn_habitat <- apply(..params$spawning_habitat[ , 10:12, year], 1, min)
+    min_spawn_habitat <- apply(..params$spawning_habitat[ , 3:6, year], 1, min)
 
-    accumulated_degree_days <- cbind(oct = rowSums(..params$degree_days[ , 10:12, year]),
-                                     nov = rowSums(..params$degree_days[ , 11:12, year]),
-                                     dec = ..params$degree_days[ , 12, year])
+    accumulated_degree_days <- cbind(march = rowSums(..params$degree_days[ , 3:6, year]),
+                                     april = rowSums(..params$degree_days[ , 4:6, year]),
+                                     may = rowSums(..params$degree_days[ , 5:6, year]),
+                                     june = ..params$degree_days[ , 6, year])
 
     average_degree_days <- apply(accumulated_degree_days, 1, weighted.mean, ..params$month_return_proportions)
 
@@ -142,7 +143,8 @@ spring_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "cali
                                redd_size = ..params$spawn_success_redd_size,
                                fecundity = ..params$spawn_success_fecundity)
 
-    for (month in 1:8) {
+    for (month in c(11, 12, 1:5)) {
+      if (month %in% 1:5) juv_dynamics_year <- year + 1 else juv_dynamics_year <- year
       habitat <- get_habitat(year, month,
                              inchannel_habitat_fry = ..params$inchannel_habitat_fry,
                              inchannel_habitat_juvenile = ..params$inchannel_habitat_juvenile,
