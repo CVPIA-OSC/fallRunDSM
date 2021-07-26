@@ -233,7 +233,7 @@ spring_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "cali
                                                    surv_juv_outmigration_sac_delta_model_weights = ..params$surv_juv_outmigration_sac_delta_model_weights)
 
       migrants <- matrix(0, nrow = 31, ncol = 4, dimnames = list(springRunDSM::watershed_labels, springRunDSM::size_class_labels))
-
+      ## TODO fix timing and add in yearling dynamics here
       if (month == 8) {
         # all remaining fish outmigrate
         sutter_fish <- migrate(sutter_fish, migratory_survival$sutter)
