@@ -134,6 +134,28 @@ spring_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "cali
                                              ..surv_adult_prespawn_int = ..params$..surv_adult_prespawn_int,
                                              .deg_day = ..params$.adult_prespawn_deg_day)
 
+    # Apply SR pools logic
+    init_adults <- rbinom(31, round(init_adults), prespawn_survival)
+
+    # spring run above capacity die, capacity based on spring run pools
+    init_adults <- ifelse(init_adults >= ..params$spring_run_pools, ..params$spring_run_pools, init_adults)
+
+    # Holding period for spring run
+    # apply degree days and prespawn survival
+    init_spawn_holding <- matrix(0, ncol = 2, nrow = 31)
+
+    init_spawn_holding[, 1] <- rbinom(31, init_adults, 0.5)
+    init_spawn_holding[, 2] <- pmax(init_adults - init_spawn_holding[, 1], 0)
+
+    average_degree_days <- ((init_spawn_holding[, 1] * rowSums(..params$degree_days[, 7:10, year])) +
+                              (init_spawn_holding[, 2] * rowSums(..params$degree_days[, 7:9, year])))/init_adults
+
+    average_degree_days <- ifelse(is.nan(average_degree_days), 0, average_degree_days)
+
+    prespawn_survival <- surv_adult_prespawn(average_degree_days,
+                                             ..surv_adult_prespawn_int = ..params$..surv_adult_prespawn_int,
+                                             .deg_day = ..params$.adult_prespawn_deg_day)
+
     juveniles <- spawn_success(escapement = init_adults,
                                adult_prespawn_survival = prespawn_survival,
                                egg_to_fry_survival = egg_to_fry_surv,
