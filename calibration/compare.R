@@ -45,6 +45,7 @@ d %>%
          s7 = (`scenario 7` - base) / base) %>%
   select(s1, s7)
 
+# diagnostic plots of scenario mods to habitat -----
 habitats <- list(
   spawning_habitat = fallRunDSM::params$spawning_habitat,
   inchannel_habitat_fry = fallRunDSM::params$inchannel_habitat_fry,
@@ -52,6 +53,7 @@ habitats <- list(
   floodplain_habitat = fallRunDSM::params$floodplain_habitat,
   weeks_flooded = fallRunDSM::params$weeks_flooded
 )
+
 library(DSMscenario)
 base <- load_scenario(scenario = DSMscenario::scenarios$NO_ACTION,
                       species = DSMscenario::species$FALL_RUN,
