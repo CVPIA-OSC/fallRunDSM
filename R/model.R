@@ -191,7 +191,7 @@ spring_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "cali
                                                contact_points = ..params$contact_points,
                                                delta_contact_points = ..params$delta_contact_points,
                                                delta_prop_high_predation = ..params$delta_prop_high_predation,
-                                               ..surv_juv_rear_int= ..params$..surv_juv_rear_int,
+                                               ..surv_juv_rear_int = ..params$..surv_juv_rear_int,
                                                .surv_juv_rear_contact_points = ..params$.surv_juv_rear_contact_points,
                                                ..surv_juv_rear_contact_points = ..params$..surv_juv_rear_contact_points,
                                                .surv_juv_rear_prop_diversions = ..params$.surv_juv_rear_prop_diversions,
@@ -255,8 +255,17 @@ spring_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "cali
                                                    surv_juv_outmigration_sac_delta_model_weights = ..params$surv_juv_outmigration_sac_delta_model_weights)
 
       migrants <- matrix(0, nrow = 31, ncol = 4, dimnames = list(springRunDSM::watershed_labels, springRunDSM::size_class_labels))
-      ## TODO fix timing and add in yearling dynamics here
-      if (month == 8) {
+      ## TODO check/refactor yearling dynamics
+      if (month == 5) {
+        # yearling logic here
+        # 1 - 15, 18-20, 23, 25:30
+        yearlings <- matrix(0, ncol = 4, nrow = 31,
+                            dimnames = list(watershed_labels, size_class_labels))
+
+        yearlings[c(1:15, 18:20, 23, 25:30), 1:2] <-
+          juveniles[c(1:15, 18:20, 23, 25:30), 1:2]
+        juveniles[c(1:15, 18:20, 23, 25:30), 1:2] <- 0 # set all to zero since they are yearlings now
+
         # all remaining fish outmigrate
         sutter_fish <- migrate(sutter_fish, migratory_survival$sutter)
         upper_mid_sac_fish <- migrate(upper_mid_sac_fish + juveniles[1:15, ], migratory_survival$uppermid_sac)
@@ -293,6 +302,170 @@ spring_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "cali
 
         annual_migrants <- annual_migrants + migrants_at_golden_gate
       } else {
+
+        if (month == 11 & year > 1) {
+          # applying summer year to the yearlings and send them out to the ocean
+          yearlings <- yearling_growth(year = year,
+                                       month = month,
+                                       yearlings = yearlings,
+                                       yearling_territory_size = ..params$yearling_territory_size,
+                                       inchannel_habitat_fry = ..params$inchannel_habitat_fry,
+                                       inchannel_habitat_juvenile = ..params$inchannel_habitat_juvenile,
+                                       floodplain_habitat = ..params$floodplain_habitat,
+                                       sutter_habitat = ..params$sutter_habitat,
+                                       yolo_habitat = ..params$yolo_habitat,
+                                       delta_habitat = ..params$delta_habitat,
+                                       survival_adjustment = scenario_data$survival_adjustment,
+                                       mode = mode,
+                                       avg_temp = ..params$avg_temp,
+                                       avg_temp_delta = ..params$avg_temp_delta,
+                                       prob_strand_early = ..params$prob_strand_early,
+                                       prob_strand_late = ..params$prob_strand_late,
+                                       proportion_diverted = ..params$proportion_diverted,
+                                       total_diverted = ..params$total_diverted,
+                                       delta_proportion_diverted = ..params$delta_proportion_diverted,
+                                       delta_total_diverted = ..params$delta_total_diverted,
+                                       weeks_flooded = ..params$weeks_flooded,
+                                       prop_high_predation = ..params$prop_high_predation,
+                                       contact_points = ..params$contact_points,
+                                       delta_contact_points = ..params$delta_contact_points,
+                                       delta_prop_high_predation = ..params$delta_prop_high_predation,
+                                       ..surv_juv_rear_int = ..params$..surv_juv_rear_int,
+                                       .surv_juv_rear_contact_points = ..params$.surv_juv_rear_contact_points,
+                                       ..surv_juv_rear_contact_points = ..params$..surv_juv_rear_contact_points,
+                                       .surv_juv_rear_prop_diversions = ..params$.surv_juv_rear_prop_diversions,
+                                       ..surv_juv_rear_prop_diversions = ..params$..surv_juv_rear_prop_diversions,
+                                       .surv_juv_rear_total_diversions = ..params$.surv_juv_rear_total_diversions,
+                                       ..surv_juv_rear_total_diversions = ..params$..surv_juv_rear_total_diversions,
+                                       ..surv_juv_bypass_int = ..params$..surv_juv_bypass_int,
+                                       ..surv_juv_delta_int = ..params$..surv_juv_delta_int,
+                                       .surv_juv_delta_contact_points = ..params$.surv_juv_delta_contact_points,
+                                       ..surv_juv_delta_contact_points = ..params$..surv_juv_delta_contact_points,
+                                       .surv_juv_delta_total_diverted = ..params$.surv_juv_delta_total_diverted,
+                                       ..surv_juv_delta_total_diverted = ..params$..surv_juv_delta_total_diverted,
+                                       .surv_juv_rear_avg_temp_thresh = ..params$.surv_juv_rear_avg_temp_thresh,
+                                       .surv_juv_rear_high_predation = ..params$.surv_juv_rear_high_predation,
+                                       .surv_juv_rear_stranded = ..params$.surv_juv_rear_stranded,
+                                       .surv_juv_rear_medium = ..params$.surv_juv_rear_medium,
+                                       .surv_juv_rear_large = ..params$.surv_juv_rear_large,
+                                       .surv_juv_rear_floodplain = ..params$.surv_juv_rear_floodplain,
+                                       .surv_juv_bypass_avg_temp_thresh = ..params$.surv_juv_bypass_avg_temp_thresh,
+                                       .surv_juv_bypass_high_predation = ..params$.surv_juv_bypass_high_predation,
+                                       .surv_juv_bypass_medium = ..params$.surv_juv_bypass_medium,
+                                       .surv_juv_bypass_large = ..params$.surv_juv_bypass_large,
+                                       .surv_juv_bypass_floodplain = ..params$.surv_juv_bypass_floodplain,
+                                       .surv_juv_delta_avg_temp_thresh = ..params$.surv_juv_delta_avg_temp_thresh,
+                                       .surv_juv_delta_high_predation = ..params$.surv_juv_delta_high_predation,
+                                       .surv_juv_delta_prop_diverted = ..params$.surv_juv_delta_prop_diverted,
+                                       .surv_juv_delta_medium = ..params$.surv_juv_delta_medium,
+                                       .surv_juv_delta_large = ..params$.surv_juv_delta_large,
+                                       min_survival_rate = ..params$min_survival_rate)
+
+          sutter_detoured <- t(sapply(1:nrow(yearlings[1:15, ]), function(i) {
+            rbinom(n = 4,
+                   size = round(yearlings[i, ]),
+                   prob = ..params$proportion_flow_bypass[month, year, 1])
+          }))
+
+          yearlings_at_uppermid <- rbind(
+            migrate(yearlings[1:15, ] - sutter_detoured, migratory_survival$uppermid_sac),
+            matrix(0, ncol = 4, nrow = 2)
+          )
+
+          yearlings_at_sutter <- rbind(
+            migrate(sutter_detoured, migratory_survival$sutter),
+            matrix(0, ncol = 4, nrow = 2)
+          )
+
+          yearlings_at_uppermid <- yearlings_at_sutter + yearlings_at_uppermid
+
+          yearlings_at_lowermid <- rbind(yearlings_at_uppermid, yearlings[18:20, ])
+
+          yolo_detoured <- t(sapply(1:nrow(yearlings_at_lowermid), function(i) {
+            rbinom(n = 4,
+                   size = round(yearlings_at_lowermid[i, ]),
+                   prob = ..params$proportion_flow_bypass[month, year, 2])
+          }))
+
+          yearlings_at_lowersac <- rbind(
+            migrate(yearlings_at_lowermid - yolo_detoured, migratory_survival$lowermid_sac),
+            matrix(0, ncol = 4, nrow = 3)
+          )
+
+          yearlings_at_lowersac[23, ] <- yearlings[23, ]
+
+          yearlings_at_lowersac <- migrate(yearlings_at_lowersac, migratory_survival$lower_sac)
+
+          prop_delta_fish_entrained <- route_south_delta(freeport_flow = ..params$freeport_flows[[month, year]] * 35.3147,
+                                                         dcc_closed = ..params$cc_gates_days_closed[month],
+                                                         month = month)
+
+          sac_not_entrained <- t(sapply(1:nrow(yearlings_at_lowersac), function(i) {
+            rbinom(n = 4, yearlings_at_lowersac[i, ], prob = 1 - prop_delta_fish_entrained)
+          }))
+
+          yearlings_at_north_delta <- sac_not_entrained +
+            rbind(migrate(yolo_detoured, migratory_survival$yolo), matrix(0, ncol = 4, nrow = 3))
+
+          yearlings_at_north_delta <- rbind(yearlings_at_north_delta,
+                                            matrix(0, ncol = 4, nrow = 8))
+
+          yearlings_at_south_delta <- rbind(
+            matrix(0, ncol = 4, nrow = 24), # 24 rows for north delta/sac origin fish
+            yearlings[25:27, ], # delta tribs
+            migrate(yearlings[28:30,], migratory_survival$san_joaquin),
+            matrix(0, ncol = 4, nrow = 1) # SJR
+          ) +
+            rbind(
+              yearlings_at_lowersac - sac_not_entrained,
+              matrix(0, ncol = 4, nrow = 8)
+            )
+
+          # estimate fish at Golden Gate Bridge and Chipps Island
+          yearling_holding_south_delta <- matrix(0, nrow = 31, ncol = 4, dimnames = list(watershed_labels, size_class_labels))
+
+          yearling_holding_south_delta[1:24, ] <- t(sapply(1:24, function(i) {
+            rbinom(n = 4, size = round(yearlings_at_south_delta[i, ]), prob = migratory_survival$delta[1, ])
+          }))
+
+          yearling_holding_south_delta[26:27, ] <- t(sapply(26:27, function(i) {
+            rbinom(n = 4, size = round(yearlings_at_south_delta[i, ]), prob = migratory_survival$delta[2, ])
+          }))
+
+          yearling_holding_south_delta[25, ] <- rbinom(n = 4,
+                                                       yearlings_at_south_delta[25, , drop = F],
+                                                       prob = migratory_survival$delta[3, ])
+
+          yearling_holding_south_delta[28:31, ] <- t(sapply(28:31, function(i) {
+            rbinom(n = 4, size = round(yearlings_at_south_delta[i, ]), prob = migratory_survival$delta[4, ])
+          }))
+
+          yearlings_out <- t(sapply(1:nrow(yearlings_at_north_delta), function(i) {
+            rbinom(n = 4,
+                   size = round(yearlings_at_north_delta[i, ]),
+                   prob = migratory_survival$sac_delta[1, ])
+          }))
+
+          survived_yearlings_out <- t(sapply(1:nrow(yearlings_out), function(i) {
+            rbinom(n = 4,
+                   size = round(yearlings_out[i, ]),
+                   prob = migratory_survival$bay_delta)
+          }))
+
+          survived_yearling_holding_south_delta <- t(sapply(1:nrow(yearling_holding_south_delta), function(i) {
+            rbinom(n = 4,
+                   size = round(yearling_holding_south_delta[i, ]),
+                   prob = migratory_survival$bay_delta)
+          }))
+
+          yearlings_at_golden_gate <- survived_yearlings_out + survived_yearling_holding_south_delta
+
+          juveniles_at_chipps <- juveniles_at_chipps + yearlings_out + yearling_holding_south_delta
+
+          adults_in_ocean <- adults_in_ocean + ocean_entry_success(migrants = yearlings_at_golden_gate,
+                                                                   month = 11,
+                                                                   avg_ocean_transition_month = avg_ocean_transition_month)
+        }
         # if month < 8
         # route northern natal fish stay and rear or migrate downstream ------
         upper_sac_trib_fish <-  route(year = year,
