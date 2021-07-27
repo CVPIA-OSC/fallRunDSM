@@ -8,66 +8,48 @@ IP-117068
 }
 \usage{
 surv_juv_delta(
-  avg_temp,
   max_temp_thresh,
   avg_temp_thresh,
   high_predation,
   contact_points,
   prop_diverted,
   total_diverted,
-  ..surv_juv_delta_int = fallRunDSM::params$..surv_juv_delta_int,
-  .avg_temp_thresh = fallRunDSM::params$.surv_juv_delta_avg_temp_thresh,
-  .high_predation = fallRunDSM::params$.surv_juv_delta_high_predation,
-  .surv_juv_delta_contact_points = fallRunDSM::params$.surv_juv_delta_contact_points,
-  ..surv_juv_delta_contact_points = fallRunDSM::params$..surv_juv_delta_contact_points,
-  .prop_diverted = fallRunDSM::params$.surv_juv_delta_prop_diverted,
-  .surv_juv_delta_total_diverted = fallRunDSM::params$.surv_juv_delta_total_diverted,
-  ..surv_juv_delta_total_diverted = fallRunDSM::params$..surv_juv_delta_total_diverted,
-  .medium = fallRunDSM::params$.surv_juv_delta_medium,
-  .large = fallRunDSM::params$.surv_juv_delta_large,
-  min_survival_rate = fallRunDSM::params$min_survival_rate
+  betas = c(intercept = 1.4, `avg temp thresh` = -0.717, predation = -0.122, contact =
+    0.0358 * -0.189, `prop diversions` = -3.51, `total diversions` = 0.5 * -0.0021,
+    medium = 1.48, large = 2.223)
 )
 }
 \arguments{
-\item{avg_temp}{Variable representing average temperature in the delta}
+\item{max_temp_thresh}{The probability of exceeding the max temp threshold}
 
-\item{max_temp_thresh}{Variable representing the probability of exceeding the max temperature}
+\item{avg_temp_thresh}{The probability of exceeding the average temperature}
 
-\item{avg_temp_thresh}{Variable representing the probability of exceeding the average temperature}
+\item{high_predation}{An indicator for high predation in delta}
 
-\item{high_predation}{Variable representing an indicator for high predation in delta}
+\item{contact_points}{The number of contact points in watershed}
 
-\item{contact_points}{Variable representing the number of contact points in watershed}
+\item{betas}{The parameter estimates from calibration}
 
-\item{prop_diverted}{Variable representing the proportion of water diverted}
+\item{prop_diversions}{The proportion of water diverted}
 
-\item{total_diverted}{Variable representing the total diversions}
-
-\item{..surv_juv_delta_int}{intercept, source: calibration}
-
-\item{.avg_temp_thresh}{Coefficient for avg_temp_thresh variable}
-
-\item{.high_predation}{Coefficient for high_predation variable}
-
-\item{.surv_juv_delta_contact_points}{Coefficient for contact_points variable}
-
-\item{..surv_juv_delta_contact_points}{Calibrated coefficient for contact_points variable}
-
-\item{.prop_diverted}{Coefficient for prop_diversions variable}
-
-\item{.surv_juv_delta_total_diverted}{Coefficient for total_diversions variable}
-
-\item{..surv_juv_delta_total_diverted}{Calibrated coefficient for total_diversions variable}
-
-\item{.medium}{size related intercept for medium sized fish}
-
-\item{.large}{size related intercept for large sized fish}
-
-\item{min_survival_rate}{estimated survival rate if temperature threshold is exceeded}
+\item{total_diversions}{The total diversions}
 }
 \description{
 Calculates the juvenile rearing survival in the deltas
 }
-\details{
-See \code{\link{params}} for details on parameter sources
+\section{Parameters}{
+
+Parameters from the model are obtained from either literature, calibration, export elicitation,
+and meta-analysis. The source for each parameter in this function are detailed below.
+\itemize{
+\item intercept: calibration estimate; varies by tributary
+\item average temperature: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/marine_cech_water_temp_effects.pdf}{Marine and Chech (2004)}
+\item predation \href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}
+\item contact points: calibration estimate
+\item proportion diverted: calibration estimate
+\item total diverted: calibration estimate
+\item medium: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
+\item large" \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
 }
+}
+

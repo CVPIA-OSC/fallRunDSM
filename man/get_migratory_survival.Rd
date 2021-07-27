@@ -22,6 +22,8 @@ get_migratory_survival(
   delta_inflow,
   avg_temp_delta,
   avg_temp,
+  total_diverted,
+  proportion_diverted,
   delta_proportion_diverted,
   .surv_juv_outmigration_sac_delta_intercept_one,
   .surv_juv_outmigration_sac_delta_intercept_two,
