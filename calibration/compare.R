@@ -11,6 +11,13 @@ s1 <- to_write_out
 load('calibration/7_output.rds')
 s7 <- to_write_out
 
+load('calibration/1_og_output.rds')
+s1_isnan <- to_write_out
+
+load('calibration/7_og_output.rds')
+s7_isnan <- to_write_out
+
+
 base_valley_nat_spawners <- map_dbl(1:500, ~colSums(base$nat_spawners[,,.])[20])
 s1_valley_nat_spawners <- map_dbl(1:500, ~colSums(s1$nat_spawners[,,.])[20])
 s7_valley_nat_spawners <- map_dbl(1:500, ~colSums(s7$nat_spawners[,,.])[20])
