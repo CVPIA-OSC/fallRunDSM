@@ -8,7 +8,6 @@ params <- list(
   natural_adult_removal_rate = springRunDSM::natural_adult_removal_rate,
   proportion_hatchery = springRunDSM::proportion_hatchery,
   month_return_proportions = springRunDSM::month_return_proportions,
-  survival_betas = springRunDSM::survival_betas,
   growth_rates = springRunDSM::growth_rates_inchannel,
   growth_rates_floodplain = springRunDSM::growth_rates_floodplain,
   mass_by_size_class = springRunDSM::mass_by_size_class,
