@@ -161,7 +161,7 @@ winter_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "cali
 
     for (month in c(9:12, 1:5)) {
       if (month %in% 1:5) juv_dynamics_year <- year + 1 else juv_dynamics_year <- year
-      habitat <- get_habitat(year, month,
+      habitat <- get_habitat(juv_dynamics_year, month,
                              inchannel_habitat_fry = ..params$inchannel_habitat_fry,
                              inchannel_habitat_juvenile = ..params$inchannel_habitat_juvenile,
                              floodplain_habitat = ..params$floodplain_habitat,
@@ -169,7 +169,7 @@ winter_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "cali
                              yolo_habitat = ..params$yolo_habitat,
                              delta_habitat = ..params$delta_habitat)
 
-      rearing_survival <- get_rearing_survival(year, month,
+      rearing_survival <- get_rearing_survival(juv_dynamics_year, month,
                                                survival_adjustment = scenario_data$survival_adjustment,
                                                mode = mode,
                                                avg_temp = ..params$avg_temp,
@@ -216,7 +216,7 @@ winter_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "cali
                                                .surv_juv_delta_large = ..params$.surv_juv_delta_large,
                                                min_survival_rate = ..params$min_survival_rate)
 
-      migratory_survival <- get_migratory_survival(year, month,
+      migratory_survival <- get_migratory_survival(juv_dynamics_year, month,
                                                    cc_gates_prop_days_closed = ..params$cc_gates_prop_days_closed,
                                                    freeport_flows = ..params$freeport_flows,
                                                    vernalis_flows = ..params$vernalis_flows,
