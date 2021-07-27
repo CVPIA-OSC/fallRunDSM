@@ -209,4 +209,11 @@ period in front are model or submodel coefficients. Parameters with double perio
 }
 }
 
+\section{Yearling Growth}{
+
+\itemize{
+  \item \code{yearling_territory_size}: TODO
+}
+}
+
 \keyword{datasets}

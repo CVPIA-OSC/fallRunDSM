@@ -50,6 +50,7 @@ reference:
   - rear
   - migrate
   - ocean_transition_month
+  - yearling_growth
 
 - title: Datasets
   desc: Data used by the lifecycle model

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get Rearing Survival Rates — get_rearing_survival • springRunDSM</title>
+<title>Spring-Run Yearling Growth — yearling_growth • springRunDSM</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,8 @@
 
 
 
-<meta property="og:title" content="Get Rearing Survival Rates — get_rearing_survival" />
-<meta property="og:description" content="Calculates the juvenile inchannel, floodplain, bypasses, and
-deltas rearing survival rates for a month and year of the simulation" />
+<meta property="og:title" content="Spring-Run Yearling Growth — yearling_growth" />
+<meta property="og:description" content="Generates transition probability matrices for yearling growth" />
 
 
 
@@ -106,19 +105,26 @@ deltas rearing survival rates for a month and year of the simulation" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get Rearing Survival Rates</h1>
+    <h1>Spring-Run Yearling Growth</h1>
     
-    <div class="hidden name"><code>get_rearing_survival.Rd</code></div>
+    <div class="hidden name"><code>yearling_growth.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Calculates the juvenile inchannel, floodplain, bypasses, and
-deltas rearing survival rates for a month and year of the simulation</p>
+    <p>Generates transition probability matrices for yearling growth</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_rearing_survival</span><span class='op'>(</span>
+    <pre class="usage"><span class='fu'>yearling_growth</span><span class='op'>(</span>
   <span class='va'>year</span>,
   <span class='va'>month</span>,
+  <span class='va'>yearlings</span>,
+  yearling_territory_size <span class='op'>=</span> <span class='fu'>springRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>yearling_territory_size</span>,
+  <span class='va'>inchannel_habitat_fry</span>,
+  <span class='va'>inchannel_habitat_juvenile</span>,
+  <span class='va'>floodplain_habitat</span>,
+  <span class='va'>sutter_habitat</span>,
+  <span class='va'>yolo_habitat</span>,
+  <span class='va'>delta_habitat</span>,
   <span class='va'>survival_adjustment</span>,
   <span class='va'>mode</span>,
   <span class='va'>avg_temp</span>,
@@ -171,11 +177,35 @@ deltas rearing survival rates for a month and year of the simulation</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>year</th>
-      <td><p>The simulation year, 1-20</p></td>
+      <td><p>Current simulation year</p></td>
     </tr>
     <tr>
-      <th>month</th>
-      <td><p>The simulation month, 1-8</p></td>
+      <th>yearlings</th>
+      <td><p>Yearlings in tributaries</p></td>
+    </tr>
+    <tr>
+      <th>yearling_territory_size</th>
+      <td><p>Array of juvenile fish territory requirements</p></td>
+    </tr>
+    <tr>
+      <th>inchannel_habitat_fry</th>
+      <td><p>3 dimensional array [watersheds, months, years] representing fry inchannel habitat in square meters</p></td>
+    </tr>
+    <tr>
+      <th>inchannel_habitat_juvenile</th>
+      <td><p>3 dimensional array [watersheds, months, years] representing juvenile inchannel habitat in square meters</p></td>
+    </tr>
+    <tr>
+      <th>floodplain_habitat</th>
+      <td><p>3 dimensional array [watersheds, months, years] representing floodplain habitat in square meters</p></td>
+    </tr>
+    <tr>
+      <th>sutter_habitat</th>
+      <td><p>2 dimensional array [months, years] representing sutter bypass habitat in square meters</p></td>
+    </tr>
+    <tr>
+      <th>yolo_habitat</th>
+      <td><p>2 dimensional array [months, years] representing yolo bypass habitat in square meters</p></td>
     </tr>
     <tr>
       <th>avg_temp</th>
@@ -353,11 +383,19 @@ deltas rearing survival rates for a month and year of the simulation</p>
       <th>scenario</th>
       <td><p>The current scenario</p></td>
     </tr>
+    <tr>
+      <th>north_delta_habitat</th>
+      <td><p>2 dimensional array [months, years] representing north delta habitat in square meters</p></td>
+    </tr>
+    <tr>
+      <th>south_delta_habitat</th>
+      <td><p>2 dimensional array [months, years] representing south delta habitat in square meters</p></td>
+    </tr>
     </table>
 
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>IP-117068</p>
+    <p>See <code><a href='params.html'>params</a></code> for details on parameter sources</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

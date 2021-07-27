@@ -8,7 +8,7 @@ yearling_growth(
   year,
   month,
   yearlings,
-  yearling_territory_size = c(0.05423379, 0.14539419, 0.48471474, 0.48471474),
+  yearling_territory_size = springRunDSM::params$yearling_territory_size,
   inchannel_habitat_fry,
   inchannel_habitat_juvenile,
   floodplain_habitat,
