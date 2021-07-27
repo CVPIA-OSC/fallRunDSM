@@ -153,6 +153,8 @@ params <- list(
   .ocean_entry_success_length = c(-0.0897309864, -0.0709704348, -0.0208590732, 0.0732620916),
   .ocean_entry_success_months = 0.35,
 
+  # Yearling
+  yearling_territory_size = c(0.05423379, 0.14539419, 0.48471474, 0.48471474),
   ## Variable from load baseline data
   # DSMflow variables -----
   freeport_flows = DSMflow::freeport_flow,
