@@ -42,7 +42,8 @@ d %>%
   spread(scenario, mean_valley_wide) %>%
   mutate(s1 = (`scenario 1` - base) / base,
          s2 = (`scenario 2` - base) / base,
-         s7 = (`scenario 7` - base) / base)
+         s7 = (`scenario 7` - base) / base) %>%
+  select(s1, s7)
 
 habitats <- list(
   spawning_habitat = fallRunDSM::params$spawning_habitat,
@@ -140,7 +141,7 @@ fp %>%
   filter(watershed %in% DSMscenario::watershed_labels[s7_watersheds_index]) %>%
   gather(version, acres, -watershed, -date)  %>%
   ggplot(aes(date, acres, fill = version)) +
-  geom_col(position = 'dodge') +
+  geom_col(position = 'dodge')
   facet_wrap(~watershed, scales = 'free_y')
 
 

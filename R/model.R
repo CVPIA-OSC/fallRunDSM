@@ -215,6 +215,8 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                                    delta_inflow = ..params$delta_inflow,
                                                    avg_temp_delta = ..params$avg_temp_delta,
                                                    avg_temp = ..params$avg_temp,
+                                                   total_diverted = ..params$total_diverted,
+                                                   proportion_diverted = ..params$proportion_diverted,
                                                    delta_proportion_diverted = ..params$delta_proportion_diverted,
                                                    .surv_juv_outmigration_sac_delta_intercept_one = ..params$.surv_juv_outmigration_sac_delta_intercept_one,
                                                    .surv_juv_outmigration_sac_delta_intercept_two = ..params$.surv_juv_outmigration_sac_delta_intercept_two,
