@@ -16,21 +16,23 @@ surv_juv_rear(
   total_diversions,
   stranded,
   weeks_flooded,
-  ..surv_juv_rear_int = fallRunDSM::params$..surv_juv_rear_int,
-  .avg_temp_thresh = fallRunDSM::params$.surv_juv_rear_avg_temp_thresh,
-  .high_predation = fallRunDSM::params$.surv_juv_rear_high_predation,
-  .surv_juv_rear_contact_points = fallRunDSM::params$.surv_juv_rear_contact_points,
-  ..surv_juv_rear_contact_points = fallRunDSM::params$..surv_juv_rear_contact_points,
-  .surv_juv_rear_prop_diversions = fallRunDSM::params$.surv_juv_rear_prop_diversions,
-  ..surv_juv_rear_prop_diversions = fallRunDSM::params$..surv_juv_rear_prop_diversions,
-  .surv_juv_rear_total_diversions = fallRunDSM::params$.surv_juv_rear_total_diversions,
+  ..surv_juv_rear_int = springRunDSM::params$..surv_juv_rear_int,
+  .avg_temp_thresh = springRunDSM::params$.surv_juv_rear_avg_temp_thresh,
+  .high_predation = springRunDSM::params$.surv_juv_rear_high_predation,
+  .surv_juv_rear_contact_points = springRunDSM::params$.surv_juv_rear_contact_points,
+  ..surv_juv_rear_contact_points = springRunDSM::params$..surv_juv_rear_contact_points,
+  .surv_juv_rear_prop_diversions = springRunDSM::params$.surv_juv_rear_prop_diversions,
  
-    ..surv_juv_rear_total_diversions = fallRunDSM::params$..surv_juv_rear_total_diversions,
-  .stranded = fallRunDSM::params$.surv_juv_rear_stranded,
-  .medium = fallRunDSM::params$.surv_juv_rear_medium,
-  .large = fallRunDSM::params$.surv_juv_rear_large,
-  .floodplain = fallRunDSM::params$.surv_juv_rear_floodplain,
-  min_survival_rate = fallRunDSM::params$min_survival_rate
+    ..surv_juv_rear_prop_diversions = springRunDSM::params$..surv_juv_rear_prop_diversions,
+ 
+    .surv_juv_rear_total_diversions = springRunDSM::params$.surv_juv_rear_total_diversions,
+ 
+    ..surv_juv_rear_total_diversions = springRunDSM::params$..surv_juv_rear_total_diversions,
+  .stranded = springRunDSM::params$.surv_juv_rear_stranded,
+  .medium = springRunDSM::params$.surv_juv_rear_medium,
+  .large = springRunDSM::params$.surv_juv_rear_large,
+  .floodplain = springRunDSM::params$.surv_juv_rear_floodplain,
+  min_survival_rate = springRunDSM::params$min_survival_rate
 )
 }
 \arguments{

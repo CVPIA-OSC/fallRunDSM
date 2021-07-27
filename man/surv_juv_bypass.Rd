@@ -11,13 +11,13 @@ surv_juv_bypass(
   max_temp_thresh,
   avg_temp_thresh,
   high_predation,
-  ..surv_juv_bypass_int = fallRunDSM::params$..surv_juv_bypass_int,
-  .avg_temp_thresh = fallRunDSM::params$.surv_juv_bypass_avg_temp_thresh,
-  .high_predation = fallRunDSM::params$.surv_juv_bypass_high_predation,
-  .medium = fallRunDSM::params$.surv_juv_bypass_medium,
-  .large = fallRunDSM::params$.surv_juv_bypass_large,
-  .floodplain = fallRunDSM::params$.surv_juv_bypass_floodplain,
-  min_survival_rate = fallRunDSM::params$min_survival_rate
+  ..surv_juv_bypass_int = springRunDSM::params$..surv_juv_bypass_int,
+  .avg_temp_thresh = springRunDSM::params$.surv_juv_bypass_avg_temp_thresh,
+  .high_predation = springRunDSM::params$.surv_juv_bypass_high_predation,
+  .medium = springRunDSM::params$.surv_juv_bypass_medium,
+  .large = springRunDSM::params$.surv_juv_bypass_large,
+  .floodplain = springRunDSM::params$.surv_juv_bypass_floodplain,
+  min_survival_rate = springRunDSM::params$min_survival_rate
 )
 }
 \arguments{

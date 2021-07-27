@@ -9,14 +9,14 @@ IP-117068
 \usage{
 pulse_movement(
   proportion_pulse,
-  .intercept = fallRunDSM::params$.pulse_movement_intercept,
-  .proportion_pulse = fallRunDSM::params$.pulse_movement_proportion_pulse,
-  .medium = fallRunDSM::params$.pulse_movement_medium,
-  .large = fallRunDSM::params$.pulse_movement_large,
-  .vlarge = fallRunDSM::params$.pulse_movement_vlarge,
-  .medium_pulse = fallRunDSM::params$.pulse_movement_medium_pulse,
-  .large_pulse = fallRunDSM::params$.pulse_movement_large_pulse,
-  .very_large_pulse = fallRunDSM::params$.pulse_movement_very_large_pulse
+  .intercept = springRunDSM::params$.pulse_movement_intercept,
+  .proportion_pulse = springRunDSM::params$.pulse_movement_proportion_pulse,
+  .medium = springRunDSM::params$.pulse_movement_medium,
+  .large = springRunDSM::params$.pulse_movement_large,
+  .vlarge = springRunDSM::params$.pulse_movement_vlarge,
+  .medium_pulse = springRunDSM::params$.pulse_movement_medium_pulse,
+  .large_pulse = springRunDSM::params$.pulse_movement_large_pulse,
+  .very_large_pulse = springRunDSM::params$.pulse_movement_very_large_pulse
 )
 }
 \arguments{

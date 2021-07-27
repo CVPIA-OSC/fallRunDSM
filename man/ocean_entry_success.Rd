@@ -11,9 +11,9 @@ ocean_entry_success(
   migrants,
   month,
   avg_ocean_transition_month,
-  .ocean_entry_success_length = fallRunDSM::params$.ocean_entry_success_length,
-  ..ocean_entry_success_int = fallRunDSM::params$..ocean_entry_success_int,
-  .ocean_entry_success_months = fallRunDSM::params$.ocean_entry_success_months
+  .ocean_entry_success_length = springRunDSM::params$.ocean_entry_success_length,
+  ..ocean_entry_success_int = springRunDSM::params$..ocean_entry_success_int,
+  .ocean_entry_success_months = springRunDSM::params$.ocean_entry_success_months
 )
 }
 \arguments{
