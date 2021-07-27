@@ -117,6 +117,7 @@ NULL
 #'   \item \code{spawn_success_sex_ratio}: Variable describing the female to male spawning ratio, default 0.5 TODO (find source for default)
 #'   \item \code{spawn_success_redd_size}: Variable describing the size of redds including defensible space, default value 9.29 square meters TODO (find source for default)
 #'   \item \code{spawn_success_fecundity}: Variable describing the number of eggs per female, default value 5522 TODO (find source for default)
+#'   \item \code{spring_run_pools}: More details at \code{\link[DSMhabitat]{spring_run_pools}}
 #' }
 #' @section Egg to Fry Survival:
 #' \itemize{
