@@ -270,7 +270,7 @@ route_and_rear_deltas <- function(year, month, migrants, north_delta_fish, south
                                     habitat = north_delta_habitat,
                                     territory_size = territory_size)
 
-  if (month == 8) {
+  if (month == 5) {
     north_delta_fish = list(migrants = north_delta_fish$inchannel + north_delta_fish$migrants)
     south_delta_fish = list(migrants = south_delta_fish$inchannel + south_delta_fish$migrants)
   }
@@ -299,7 +299,7 @@ route_and_rear_deltas <- function(year, month, migrants, north_delta_fish, south
 
   juveniles_at_chipps <- juveniles_at_chipps + rbind(migrants_out, matrix(0, nrow = 8, ncol = 4)) + south_delta_migrants
 
-  if (month != 8) {
+  if (month != 5) {
     north_delta_fish <- rear(juveniles = north_delta_fish$inchannel,
                              survival_rate = rearing_survival_delta[1, ],
                              growth = growth_rates)
