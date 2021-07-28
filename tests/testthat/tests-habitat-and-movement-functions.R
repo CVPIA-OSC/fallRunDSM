@@ -53,4 +53,26 @@ test_that('The get_habitat function returns the expected values for year 1 and m
                            delta_habitat = springRunDSM::params$delta_habitat), expected_habitat)
 })
 
+# Test movement functions
+# Test that we have the expected amount of ocean entry success for
+migrants_at_golden_gate <- structure(c(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3281, 3370, 281, 866,
+                                       0, 4173, 141, 3, 13810, 2580, 1228, 676, 751, 0, 1, 0, 0, 2264,
+                                       37421, 14922, 0, 0, 103480, 0, 0, 0, 0, 0, 0, 0, 0), .Dim = c(31L,4L))
 
+expected_ocean_entry_success <- c(199, 195, 30, 44, 0, 1341, 23, 0, 839, 785, 65, 60, 57, 0,
+                                 1, 0, 0, 2172, 36102, 1457, 0, 0, 6427, 0, 0, 0, 0, 0, 0, 0, 0)
+
+test_that('The ocean entry success function returns the expected values for year 1 month 3', {
+  set.seed(2021)
+  expect_equal(ocean_entry_success(migrants = migrants_at_golden_gate,
+                                   month = month,
+                                   avg_ocean_transition_month = avg_ocean_transition_month,
+                                   .ocean_entry_success_length = springRunDSM::params$.ocean_entry_success_length,
+                                   ..ocean_entry_success_int = springRunDSM::params$..ocean_entry_success_int,
+                                   .ocean_entry_success_months = springRunDSM::params$.ocean_entry_success_months),
+               expected_ocean_entry_success)
+})
