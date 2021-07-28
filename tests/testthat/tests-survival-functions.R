@@ -230,3 +230,65 @@ test_that("get_rearing_survival returns the expected result", {
                                    min_survival_rate = springRunDSM::params$min_survival_rate)
   expect_equal(survival, expected_survival)
 })
+
+# Adds test for migratory surv function
+expected_migratory_survival <- list(delta = structure(c(0.266668614822945, 4.23117924253791e-24,
+                                                        2.79838300757807e-23, 2.25682449302165e-13, 0.266668614822945,
+                                                        4.23117924253791e-24, 2.79838300757807e-23, 2.25682449302165e-13,
+                                                        0.266668614822945, 4.23117924253791e-24, 2.79838300757807e-23,
+                                                        2.25682449302165e-13, 0.373914118050784, 8.39976923434414e-24,
+                                                        4.2385741964001e-23, 5.04188928377011e-13), .Dim = c(4L, 4L), .Dimnames = list(
+                                                          c("northern_fish", "cosumnes_mokelumne_fish", "calaveras_fish",
+                                                            "southern_fish"), c("s", "m", "l", "vl"))),
+                                    san_joaquin = structure(c(0.0293122307513563, 0.117118990875781, 0.218061322644411, 0.218061322644411),
+                                                            .Dim = c(1L, 4L),
+                                                            .Dimnames = list(NULL, c("s", "m", "l", "vl"))),
+                                    uppermid_sac = c(s = 0.189, m = 0.189, l = 0.189, vl = 0.189),
+                                    lowermid_sac = c(s = 0.189, m = 0.189, l = 0.189, vl = 0.189),
+                                    lower_sac = c(s = 0.189, m = 0.189, l = 0.189, vl = 0.189),
+                                    sutter = structure(c(0.01, 0.01, 0.01, 1),
+                                                       .Dim = c(1L, 4L),
+                                                       .Dimnames = list(NULL, c("s", "m", "l", "vl"))),
+                                    yolo = structure(c(0.01, 0.01, 0.01, 1),
+                                                     .Dim = c(1L, 4L),
+                                                     .Dimnames = list(NULL, c("s", "m", "l", "vl"))),
+                                    sac_delta = structure(c(0.709190977181413, 0.82945620000403, 0.955358125560114, 0.955358125560114),
+                                                          .Dim = c(1L, 4L),
+                                                          .Dimnames = list(NULL, c("s", "m", "l", "vl"))),
+                                    bay_delta = 0.358)
+
+test_that("get_migratory_survival returns the expected result", {
+  set.seed(2021)
+  migratory_survival <- get_migratory_survival(year = year, month = month,
+                                               cc_gates_prop_days_closed = springRunDSM::params$cc_gates_prop_days_closed,
+                                               freeport_flows = springRunDSM::params$freeport_flows,
+                                               vernalis_flows = springRunDSM::params$vernalis_flows,
+                                               stockton_flows = springRunDSM::params$stockton_flows,
+                                               vernalis_temps = springRunDSM::params$vernalis_temps,
+                                               prisoners_point_temps = springRunDSM::params$prisoners_point_temps,
+                                               CVP_exports = springRunDSM::params$CVP_exports,
+                                               SWP_exports = springRunDSM::params$SWP_exports,
+                                               upper_sacramento_flows = springRunDSM::params$upper_sacramento_flows,
+                                               delta_inflow = springRunDSM::params$delta_inflow,
+                                               avg_temp_delta = springRunDSM::params$avg_temp_delta,
+                                               avg_temp = springRunDSM::params$avg_temp,
+                                               delta_proportion_diverted = springRunDSM::params$delta_proportion_diverted,
+                                               .surv_juv_outmigration_sac_delta_intercept_one = springRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_one,
+                                               .surv_juv_outmigration_sac_delta_intercept_two = springRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_two,
+                                               .surv_juv_outmigration_sac_delta_intercept_three = springRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_three,
+                                               .surv_juv_outmigration_sac_delta_delta_flow = springRunDSM::params$.surv_juv_outmigration_sac_delta_delta_flow,
+                                               .surv_juv_outmigration_sac_delta_avg_temp = springRunDSM::params$.surv_juv_outmigration_sac_delta_avg_temp,
+                                               .surv_juv_outmigration_sac_delta_perc_diversions = springRunDSM::params$.surv_juv_outmigration_sac_delta_perc_diversions,
+                                               .surv_juv_outmigration_sac_delta_medium = springRunDSM::params$.surv_juv_outmigration_sac_delta_medium,
+                                               .surv_juv_outmigration_sac_delta_large = springRunDSM::params$.surv_juv_outmigration_sac_delta_large,
+                                               ..surv_juv_outmigration_sj_int = springRunDSM::params$..surv_juv_outmigration_sj_int,
+                                               ..surv_juv_outmigration_sac_int_one = springRunDSM::params$..surv_juv_outmigration_sac_int_one,
+                                               ..surv_juv_outmigration_sac_prop_diversions = springRunDSM::params$..surv_juv_outmigration_sac_prop_diversions,
+                                               ..surv_juv_outmigration_sac_total_diversions = springRunDSM::params$..surv_juv_outmigration_sac_total_diversions,
+                                               ..surv_juv_outmigration_sac_int_two = springRunDSM::params$..surv_juv_outmigration_sac_int_two,
+                                               .surv_juv_outmigration_san_joaquin_medium = springRunDSM::params$.surv_juv_outmigration_san_joaquin_medium,
+                                               .surv_juv_outmigration_san_joaquin_large = springRunDSM::params$.surv_juv_outmigration_san_joaquin_large,
+                                               surv_juv_outmigration_sac_delta_model_weights = springRunDSM::params$surv_juv_outmigration_sac_delta_model_weights,
+                                               min_survival_rate = springRunDSM::params$min_survival_rate) #migratory_survival$uppermid_sac)
+  expect_equal(migratory_survival, expected_migratory_survival)
+})
