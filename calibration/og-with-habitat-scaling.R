@@ -1,9 +1,3 @@
-# TODO
-# this version of the model bring back the old sac outmigration survival and
-# the juv delta survival. This causes nat spawn numbers to be REALLY big. We need
-# update this so that we can get similar values to running the latest version of
-# their model from 11/13/2019
-
 source("calibration/scale_habitat_params.R")
 
 # 2019 calibrated coefficients
@@ -18,41 +12,25 @@ params$floodplain_habitat <- cvpiaData::fr_fp
 dimnames(params$floodplain_habitat) <- dimnames(fallRunDSM::params$floodplain_habitat)
 params$spawning_habitat <- cvpiaData::fr_spawn
 dimnames(params$spawning_habitat) <- dimnames(fallRunDSM::params$spawning_habitat)
-
-#
-params_synth_years <- fallRunDSM::params
-
-# overwrite to 2019 habitat values
-params_synth_years$inchannel_habitat_fry <- cvpiaData::fr_fry
-dimnames(params_synth_years$inchannel_habitat_fry) <- dimnames(fallRunDSM::params$inchannel_habitat_fry)
-params_synth_years$inchannel_habitat_juvenile <-cvpiaData::fr_juv
-dimnames(params_synth_years$inchannel_habitat_juvenile) <- dimnames(fallRunDSM::params$inchannel_habitat_juvenile)
-params_synth_years$floodplain_habitat <- cvpiaData::fr_fp
-dimnames(params_synth_years$floodplain_habitat) <- dimnames(fallRunDSM::params$floodplain_habitat)
-params_synth_years$spawning_habitat <- cvpiaData::fr_spawn
-dimnames(params_synth_years$spawning_habitat) <- dimnames(fallRunDSM::params$spawning_habitat)
-
-
 # Investigate temperature input
 
 # scale habitat using vect2 2019 values
 params <- scale_habitat_params(params)
-params_synth_years <- scale_habitat_params(params_synth_years)
 
 # reorder inputs to 1998-2017
-params_synth_years <- DSMCalibrationData::set_synth_years(params_synth_years)
+params <- DSMCalibrationData::set_synth_years(params)
 
 # set seed with first 5 years of grandtab
 calib_seeds <- matrix(0, nrow = 31, ncol = 25)
 calib_seeds[, 1:5] <- DSMCalibrationData::grandtab_imputed$fall[, 1:5]
 
-run_model_synth_years <- function(i) {
+run_model <- function(i) {
   sim <- fall_run_model(scenario = DSMscenario::scenarios$NO_ACTION_GRANDTAB,
-                        seeds = calib_seeds, mode = "simulate", ..params = params_synth_years)
+                        seeds = calib_seeds, mode = "simulate", ..params = params)
   return(sim)
 }
 
-run_model <- function(i) {
+run_model_not_mixed <- function(i) {
   sim <- fall_run_model(scenario = DSMscenario::scenarios$NO_ACTION,
                         seeds = calib_seeds, mode = "simulate", ..params = params)
   return(sim)
@@ -60,17 +38,24 @@ run_model <- function(i) {
 
 library(tictoc)
 tic('250 runs')
-results_synth_years <- parallel::mclapply(1:250, function(i) {run_model_synth_years(i)}, mc.cores = 7)
+results_og <- parallel::mclapply(1:250, function(i) {run_model(i)}, mc.cores = 7)
 toc()
 
 tic('250 runs')
-results <- parallel::mclapply(1:250, function(i) {run_model(i)}, mc.cores = 7)
+results_og_not_mixed <- parallel::mclapply(1:250, function(i) {run_model_not_mixed(i)}, mc.cores = 7)
 toc()
 
 nat_spawn <- map_df(1:250, function(i) {
   as_tibble(results_og[[i]]$natural_spawner) %>%
     mutate(watershed = DSMscenario::watershed_labels, run = i) %>%
     gather(year, nat_spawn, -watershed, -run) %>%
+    mutate(year = as.numeric(year))
+})
+
+prop_nat <- map_df(1:250, function(i) {
+  as_tibble(results_og[[i]]$proportion_natural) %>%
+    mutate(watershed = DSMscenario::watershed_labels, run = i) %>%
+    gather(year, prop_nat, -watershed, -run) %>%
     mutate(year = as.numeric(year))
 })
 
@@ -81,14 +66,30 @@ nat_spawn_2 <- map_df(1:250, function(i) {
     mutate(year = as.numeric(year))
 })
 
+prop_nat_2 <- map_df(1:250, function(i) {
+  as_tibble(results_og_not_mixed[[i]]$proportion_natural) %>%
+    mutate(watershed = DSMscenario::watershed_labels, run = i) %>%
+    gather(year, prop_nat, -watershed, -run) %>%
+    mutate(year = as.numeric(year))
+})
+
+
 remove_these <- names(which(is.na(DSMCalibrationData::grandtab_observed$fall[, 1])))
+
+prop_nat_mean_rates <- prop_nat %>%
+  group_by(watershed) %>%
+  summarise(mean_prop_nat = mean(prop_nat)) %>%
+  ungroup() %>%
+  mutate(fixed_rate = ) %>%
+  filter(!(watershed %in% remove_these))
 
 grand_tab <- as_tibble(DSMCalibrationData::grandtab_observed$fall) %>%
   mutate(watershed = DSMscenario::watershed_labels) %>%
   gather(year, spawners, -watershed) %>%
   filter(!is.na(spawners)) %>%
   mutate(year = as.numeric(year) - 1997,
-         observed_nat_spawn = round(((1-fallRunDSM::params$proportion_hatchery[watershed]) * spawners)))
+         observed_nat_spawn = spawners*(1-fallRunDSM::params$proportion_hatchery[watershed]))
+
 
 all <- nat_spawn %>%
   left_join(grand_tab) %>%
@@ -108,6 +109,7 @@ all %>%
             observed_nat_spawn = mean(observed_nat_spawn)) %>%
   ungroup() %>%
   filter(!(watershed %in% remove_these), !is.na(observed_nat_spawn)) %>%
+  # summarise(r = cor(nat_spawn, observed_nat_mean))
   ggplot(aes(nat_spawn, observed_nat_spawn)) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0)
