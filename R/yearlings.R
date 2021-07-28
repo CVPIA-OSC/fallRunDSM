@@ -118,8 +118,8 @@ yearling_growth <- function(year,
   for (month in 5:10) {
     # only months 9, 10 experience growth
     if (month %in% 9:10) {
-      growth_rates <- growth()
-      growth_rates_floodplain <- growth_floodplain()
+      growth_rates <- springRunDSM::params$growth_rates
+      growth_rates_floodplain <- springRunDSM::params$growth_rates_floodplain
     }
     this_weeks_flooded <- weeks_flooded[, month, year]
 
