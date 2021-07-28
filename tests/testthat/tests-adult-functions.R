@@ -1,16 +1,17 @@
 library(testthat)
-library(fallRunDSM)
+library(springRunDSM)
 # tests for adult functions
 # Lists inputs to use in testing
-test_data <- fallRunDSM::load_baseline_data()
 year <- 1
 month <- 9
-bypass_is_overtopped <- as.logical(test_data$tisdale_bypass_watershed + test_data$yolo_bypass_watershed)
-avg_migratory_temp <- rowMeans(test_data$migratory_temperature_proportion_over_20[ , 10:12])
-accumulated_degree_days <- cbind(oct = rowSums(test_data$degree_days[ , 10:12, year]),
-                                 nov = rowSums(test_data$degree_days[ , 11:12, year]),
-                                 dec = test_data$degree_days[ , 12, year])
-average_degree_days <- apply(accumulated_degree_days, 1, weighted.mean, month_return_proportions)
+bypass_is_overtopped <- as.logical(springRunDSM::params$tisdale_bypass_watershed + springRunDSM::params$yolo_bypass_watershed)
+avg_migratory_temp <- rowMeans(springRunDSM::params$migratory_temperature_proportion_over_20[ , 3:6])
+accumulated_degree_days <- cbind(march = rowSums(springRunDSM::params$degree_days[ , 3:6, year]),
+                                 april = rowSums(springRunDSM::params$degree_days[ , 4:6, year]),
+                                 may = rowSums(springRunDSM::params$degree_days[ , 5:6, year]),
+                                 june = springRunDSM::params$degree_days[ , 6, year])
+
+average_degree_days <- apply(accumulated_degree_days, 1, weighted.mean, springRunDSM::params$month_return_proportions)
 
 # Tests adult straying function
 expected_straying_output <- c(`Upper Sacramento River` = 0.0179218144440285, `Antelope Creek` = 0.0740104504838898,
@@ -32,53 +33,53 @@ expected_straying_output <- c(`Upper Sacramento River` = 0.0179218144440285, `An
 
 test_that('The straying function returns the expected values for year 1', {
   expect_equal(adult_stray(wild = 1,
-                           natal_flow = test_data$prop_flow_natal[ , year],
-                           south_delta_watershed = test_data$south_delta_routed_watersheds,
-                           cross_channel_gates_closed = test_data$cc_gates_days_closed[10]),
+                           natal_flow = springRunDSM::params$prop_flow_natal[ , year],
+                           south_delta_watershed = springRunDSM::params$south_delta_routed_watersheds,
+                           cross_channel_gates_closed = springRunDSM::params$cc_gates_days_closed[10]),
                expected_straying_output)
 })
 
 #tests adult surv_en_route
-expected_surv_en_route <- c(`Upper Sacramento River` = 0.811708351611047, `Antelope Creek` = 0.811708351611047,
-                            `Battle Creek` = 0.811708351611047, `Bear Creek` = 0.811708351611047,
-                            `Big Chico Creek` = 0.811708351611047, `Butte Creek` = 0.811708351611047,
-                            `Clear Creek` = 0.811708351611047, `Cottonwood Creek` = 0.811708351611047,
-                            `Cow Creek` = 0.811708351611047, `Deer Creek` = 0.811708351611047,
-                            `Elder Creek` = 0.811708351611047, `Mill Creek` = 0.811708351611047,
-                            `Paynes Creek` = 0.811708351611047, `Stony Creek` = 0.811708351611047,
-                            `Thomes Creek` = 0.811708351611047, `Upper-mid Sacramento River` = 0.951708351611047,
-                            `Sutter Bypass` = 0.952574126822433, `Bear River` = 0.811708351611047,
-                            `Feather River` = 0.851708351611047, `Yuba River` = 0.851708351611047,
+expected_surv_en_route <- c(`Upper Sacramento River` = 0.947091312293081, `Antelope Creek` = 0.947091312293081,
+                            `Battle Creek` = 0.947091312293081, `Bear Creek` = 0.947091312293081,
+                            `Big Chico Creek` = 0.947091312293081, `Butte Creek` = 0.947091312293081,
+                            `Clear Creek` = 0.947091312293081, `Cottonwood Creek` = 0.947091312293081,
+                            `Cow Creek` = 0.947091312293081, `Deer Creek` = 0.947091312293081,
+                            `Elder Creek` = 0.947091312293081, `Mill Creek` = 0.947091312293081,
+                            `Paynes Creek` = 0.947091312293081, `Stony Creek` = 0.947091312293081,
+                            `Thomes Creek` = 0.947091312293081, `Upper-mid Sacramento River` = 0.951708351611047,
+                            `Sutter Bypass` = 0.952574126822433, `Bear River` = 0.947091312293081,
+                            `Feather River` = 0.947091312293081, `Yuba River` = 0.947091312293081,
                             `Lower-mid Sacramento River` = 0.952574126822433, `Yolo Bypass` = 0.952574126822433,
-                            `American River` = 0.622574126822433, `Lower Sacramento River` = 0.952574126822433,
-                            `Calaveras River` = 0.852320885972597, `Cosumnes River` = 0.852320885972597,
-                            `Mokelumne River` = 0.852320885972597, `Merced River` = 0.852130112901254,
-                            `Stanislaus River` = 0.852130112901254, `Tuolumne River` = 0.852130112901254,
+                            `American River` = 0.948035342418959, `Lower Sacramento River` = 0.952574126822433,
+                            `Calaveras River` = 0.948535758306968, `Cosumnes River` = 0.948535758306968,
+                            `Mokelumne River` = 0.948535758306968, `Merced River` = 0.948781911699786,
+                            `Stanislaus River` = 0.948781911699786, `Tuolumne River` = 0.948781911699786,
                             `San Joaquin River` = 0.952574126822433)
 
 test_that('The adult enroute survival function returns the expected values for year 1', {
   expect_equal(surv_adult_enroute(migratory_temp = avg_migratory_temp,
                                   bypass_overtopped = bypass_is_overtopped,
-                                  adult_harvest = adult_harvest_rate),
+                                  adult_harvest = springRunDSM::params$adult_harvest_rate),
                expected_surv_en_route)
 })
 
 # Tests prespawn survival
-expected_prespawn_surv <- c(`Upper Sacramento River` = 0.930203323682749, `Antelope Creek` = 0.93835716913923,
-                            `Battle Creek` = 0.932576236368561, `Bear Creek` = 0.935727582051041,
-                            `Big Chico Creek` = 0.932331806687191, `Butte Creek` = 0.933019862449048,
-                            `Clear Creek` = 0.933110040704823, `Cottonwood Creek` = 0.933981593081506,
-                            `Cow Creek` = 0.933821003367044, `Deer Creek` = 0.937041118846014,
-                            `Elder Creek` = 0.937981289865876, `Mill Creek` = 0.933133138318533,
-                            `Paynes Creek` = 0.938053638431211, `Stony Creek` = 0.931275828832128,
-                            `Thomes Creek` = 0.931514570483139, `Upper-mid Sacramento River` = 0.952574126822433,
-                            `Sutter Bypass` = 0.952574126822433, `Bear River` = 0.939879063993009,
-                            `Feather River` = 0.944337042511458, `Yuba River` = 0.928339777198531,
+expected_prespawn_surv <- c(`Upper Sacramento River` = 0.916233382017154, `Antelope Creek` = 0.908449238634334,
+                            `Battle Creek` = 0.895078401560995, `Bear Creek` = 0.882211192329061,
+                            `Big Chico Creek` = 0.898666386649818, `Butte Creek` = 0.898627971647671,
+                            `Clear Creek` = 0.925694019348151, `Cottonwood Creek` = 0.888483035970169,
+                            `Cow Creek` = 0.887779998622643, `Deer Creek` = 0.899075216480382,
+                            `Elder Creek` = 0.903894422010748, `Mill Creek` = 0.897166693462949,
+                            `Paynes Creek` = 0.904784548590046, `Stony Creek` = 0.904261452864779,
+                            `Thomes Creek` = 0.891546089238317, `Upper-mid Sacramento River` = 0.952574126822433,
+                            `Sutter Bypass` = 0.952574126822433, `Bear River` = 0.917059065190712,
+                            `Feather River` = 0.931278440752412, `Yuba River` = 0.901847586287811,
                             `Lower-mid Sacramento River` = 0.952574126822433, `Yolo Bypass` = 0.952574126822433,
-                            `American River` = 0.929873866760164, `Lower Sacramento River` = 0.952574126822433,
-                            `Calaveras River` = 0.937946974912232, `Cosumnes River` = 0.930513801329565,
-                            `Mokelumne River` = 0.922045673822907, `Merced River` = 0.926083513871507,
-                            `Stanislaus River` = 0.929123817753324, `Tuolumne River` = 0.925978406656304,
+                            `American River` = 0.911218876020218, `Lower Sacramento River` = 0.952574126822433,
+                            `Calaveras River` = 0.910456937173659, `Cosumnes River` = 0.881753431703019,
+                            `Mokelumne River` = 0.908795054020212, `Merced River` = 0.895936836571233,
+                            `Stanislaus River` = 0.915735676931185, `Tuolumne River` = 0.899259738897798,
                             `San Joaquin River` = 0.952574126822433)
 
 test_that('The prespawn survival function returns the expected values for year 1', {
@@ -87,26 +88,26 @@ test_that('The prespawn survival function returns the expected values for year 1
 })
 
 # Tests egg to fry surv
-expected_egg_surv <- c(`Upper Sacramento River` = 0.508283676958069, `Antelope Creek` = 0.535399956490784,
-                       `Battle Creek` = 0.453066456696592, `Bear Creek` = 0.493791973234685,
-                       `Big Chico Creek` = 0.516182007507822, `Butte Creek` = 0.556564999873063,
-                       `Clear Creek` = 0.544088820855689, `Cottonwood Creek` = 0.471535406023962,
-                       `Cow Creek` = 0.548107361679654, `Deer Creek` = 0.551271274174912,
-                       `Elder Creek` = 0.49914209957619, `Mill Creek` = 0.498951249626129,
-                       `Paynes Creek` = 0.49539261838608, `Stony Creek` = 0.488109078491193,
-                       `Thomes Creek` = 0.495131822625042, `Upper-mid Sacramento River` = 0,
+expected_egg_surv <- c(`Upper Sacramento River` = 0.55126648754873, `Antelope Creek` = 0.557465511034345,
+                       `Battle Creek` = 0.555249545010465, `Bear Creek` = 0.534371105617283,
+                       `Big Chico Creek` = 0.537367315773288, `Butte Creek` = 0.569124433535414,
+                       `Clear Creek` = 0.569292247931292, `Cottonwood Creek` = 0.506799804331753,
+                       `Cow Creek` = 0.570696629269701, `Deer Creek` = 0.569325901735189,
+                       `Elder Creek` = 0.539482360132187, `Mill Creek` = 0.514366344433048,
+                       `Paynes Creek` = 0.534371105617283, `Stony Creek` = 0.528387818867039,
+                       `Thomes Creek` = 0.535652339961507, `Upper-mid Sacramento River` = 0,
                        `Sutter Bypass` = 0, `Bear River` = 0.512991581615581, `Feather River` = 0.437030519553356,
-                       `Yuba River` = 0.502413166776223, `Lower-mid Sacramento River` = 0,
-                       `Yolo Bypass` = 0, `American River` = 0.478141299898216, `Lower Sacramento River` = 0,
-                       `Calaveras River` = 0.503706109834966, `Cosumnes River` = 0.518675616972662,
-                       `Mokelumne River` = 0.461524353396851, `Merced River` = 0.329759126931278,
-                       `Stanislaus River` = 0.472280880371357, `Tuolumne River` = 0.511951882200814,
+                       `Yuba River` = 0.508044472640408, `Lower-mid Sacramento River` = 0,
+                       `Yolo Bypass` = 0, `American River` = 0.539767947824993, `Lower Sacramento River` = 0,
+                       `Calaveras River` = 0.511435418526615, `Cosumnes River` = 0.520695295226667,
+                       `Mokelumne River` = 0.545634566287998, `Merced River` = 0.388654548325646,
+                       `Stanislaus River` = 0.551201577688213, `Tuolumne River` = 0.564926181881676,
                        `San Joaquin River` = 0)
 
 test_that('The egg_to_fry survival function returns the expected values for year 1', {
   expect_equal(egg_to_fry_surv <- surv_egg_to_fry(proportion_natural = 1 - proportion_hatchery,
-                                                  scour = test_data$prob_nest_scoured,
-                                                  temperature_effect = test_data$mean_egg_temp_effect),
+                                                  scour = springRunDSM::params$prob_nest_scoured,
+                                                  temperature_effect = springRunDSM::params$mean_egg_temp_effect),
                expected_egg_surv)
 })
 
