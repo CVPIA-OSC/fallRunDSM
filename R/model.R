@@ -576,11 +576,8 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
 
       # distribute returning adults for future spawning
-      if (mode == "calibrate" && year < 6) {
+      if (mode == "calibrate") {
         calculated_adults[1:31, (year + 2):(year + 4)] <- calculated_adults[1:31, (year + 2):(year + 4)] + adults_returning
-        if (year == 5) {
-          adults <- calculated_adults
-        }
       } else {
         adults[1:31, (year + 2):(year + 4)] <- adults[1:31, (year + 2):(year + 4)] + adults_returning
       }
@@ -591,7 +588,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
   if (mode == "seed") {
     return(adults[ , 6:30])
   } else if (mode == "calibrate") {
-    return(output)
+    return(calculated_adults)
   }
 
   spawn_change <- sapply(1:19, function(year) {

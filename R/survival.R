@@ -149,7 +149,8 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
                            .large =  fallRunDSM::params$.surv_juv_delta_large,
                            min_survival_rate = fallRunDSM::params$min_survival_rate){
   # north delta
-  north_delta_surv <- rep((avg_temp <= 16.5)*.42 + (avg_temp > 16.5 & avg_temp < 19.5) * 0.42 / (1.55^(avg_temp-15.5)) + (avg_temp > 19.5 & avg_temp < 25)*0.035,4)
+  north_delta_surv <- c(rep((avg_temp <= 16.5)*.42 + (avg_temp > 16.5 & avg_temp < 19.5) * 0.42 /
+                            (1.55^(avg_temp-15.5)) + (avg_temp > 19.5 & avg_temp < 25)*0.035,3), 1)
 
   # south delta
   base_score <- ..surv_juv_delta_int +

@@ -25,7 +25,7 @@ spawn_success <- function(escapement, adult_prespawn_survival, egg_to_fry_surviv
     round(escapement * adult_prespawn_survival * sex_ratio)
   }
 
-  spawners <- pmax(spawner_potential, capacity)
+  spawners <- pmin(spawner_potential, capacity)
 
   fry <- spawners * (1 - prob_scour) * fecundity * egg_to_fry_survival
 
@@ -37,5 +37,6 @@ spawn_success <- function(escapement, adult_prespawn_survival, egg_to_fry_surviv
 
   zeros <- matrix(0, nrow = length(escapement), ncol = 3)
   cbind(fry, zeros)
+
 
 }

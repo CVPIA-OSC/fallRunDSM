@@ -45,7 +45,7 @@ get_spawning_adults <- function(year, adults, hatch_adults, mode,
 
   # during the seeding stage just reuse the seed adults as the input, and apply no
   # en-route survival
-  if (mode %in% c("seed", "calibrate") && year < 6) {
+  if (mode %in% c("seed", "calibrate")) {
     adult_index <- ifelse(mode == "seed", 1, year)
     adults_by_month <- t(sapply(1:31, function(watershed) {
         rmultinom(1, adults[watershed, adult_index], month_return_proportions)
