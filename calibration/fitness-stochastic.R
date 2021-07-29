@@ -1,5 +1,5 @@
 # Fitness Function ------------------
-fall_run_fitness <- function(
+fall_run_fitness_stoch <- function(
   known_adults,
   seeds,
   params,
@@ -124,14 +124,34 @@ fall_run_fitness <- function(
 
 
   tryCatch({
-    set.seed(10)
+    # seed <- sample(1:300, 1)
+    set.seed(1)
     preds <- fall_run_model(mode = "calibrate",
                             seeds = seeds,
                             ..params = params_init)
-    sum(((preds$natural_spawners[, 6:19] - (known_adults[, 6:19] * preds$proportion_natural[, 6:19]))^2 /
-           rowMeans(known_adults[, 6:19], na.rm = TRUE)), na.rm = TRUE)
+
+    keep <- c(1,6,7,10,12,19,20,23,26:30)
+    known_nats <- known_adults[keep, 6:19] * (1 - params_init$proportion_hatchery[keep])
+    mean_escapent <-rowMeans(known_nats, na.rm = TRUE)
+    scaled_nat_obs <- known_nats / mean_escapent
+    scaled_pred <- preds[keep, ] / mean_escapent
+    # num_negative_cor <- sum(sapply(1:length(keep), function(i) {
+    #   cor(scaled_pred[i,], scaled_nat_obs[i,], use = "pairwise.complete.obs")
+    # }) < 0)
+    sse <- sum(((preds[keep,] - known_nats)^2)/mean_escapent, na.rm = TRUE)
+
+    # return(sse * (num_negative_cor+0.001))
+    return(s)
   },
   error = function(e) return(1e12),
   warning = function(w) return(1e12)
   )
 }
+
+
+
+
+
+
+
+
