@@ -1,6 +1,6 @@
 source("calibration/scale_habitat_params.R")
 source("calibration/update_params.R")
-load('calibration/best-fit-2021-07-22.rds')
+load('calibration/0_output.rds')
 
 solution <- res@solution
 

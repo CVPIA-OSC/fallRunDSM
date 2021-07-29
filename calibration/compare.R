@@ -11,23 +11,48 @@ s1 <- to_write_out
 load('calibration/7_output.rds')
 s7 <- to_write_out
 
+load('calibration/1_og_output.rds')
+s1_isnan <- to_write_out
+
+load('calibration/7_og_output.rds')
+s7_isnan <- to_write_out
+
+
 base_valley_nat_spawners <- map_dbl(1:500, ~colSums(base$nat_spawners[,,.])[20])
 s1_valley_nat_spawners <- map_dbl(1:500, ~colSums(s1$nat_spawners[,,.])[20])
 s7_valley_nat_spawners <- map_dbl(1:500, ~colSums(s7$nat_spawners[,,.])[20])
+s1_nan_valley_nat_spawners <- map_dbl(1:300, ~colSums(s1_isnan$nat_spawners[,,.])[20])
+s7_nan_valley_nat_spawners <- map_dbl(1:300, ~colSums(s7_isnan$nat_spawners[,,.])[20])
 
 plot(1:500, cummean(base_valley_nat_spawners))
 plot(1:500, cummean(s1_valley_nat_spawners))
 plot(1:500, cummean(s7_valley_nat_spawners))
+plot(1:300, cummean(s1_nan_valley_nat_spawners))
+plot(1:300, cummean(s7_nan_valley_nat_spawners))
 
+# previous (shiny app):
+# s1: 12.8
+# s7: 37.0
 (mean(s1_valley_nat_spawners) - mean(base_valley_nat_spawners))/ mean(base_valley_nat_spawners)
 (mean(s7_valley_nat_spawners) - mean(base_valley_nat_spawners))/ mean(base_valley_nat_spawners)
+(mean(s1_nan_valley_nat_spawners) - mean(base_valley_nat_spawners))/ mean(base_valley_nat_spawners)
+(mean(s7_nan_valley_nat_spawners) - mean(base_valley_nat_spawners))/ mean(base_valley_nat_spawners)
+
+
 
 base_biomass <- map_dbl(1:500, ~colSums(base$juv_biomass[,,.])[20])
 s1_biomass <- map_dbl(1:500, ~colSums(s1$juv_biomass[,,.])[20])
 s7_biomass <- map_dbl(1:500, ~colSums(s7$juv_biomass[,,.])[20])
+s1_nan_biomass <- map_dbl(1:300, ~colSums(s1_isnan$juv_biomass[,,.])[20])
+s7_nan_biomass <- map_dbl(1:300, ~colSums(s7_isnan$juv_biomass[,,.])[20])
 
+# previous (shiny app):
+# s1: 19.4
+# s7: 29.9
 (mean(s1_biomass) - mean(base_biomass))/ mean(base_biomass)
 (mean(s7_biomass) - mean(base_biomass))/ mean(base_biomass)
+(mean(s1_nan_biomass) - mean(base_biomass))/ mean(base_biomass)
+(mean(s7_nan_biomass) - mean(base_biomass))/ mean(base_biomass)
 
 # new model ---
 d <- read_rds('calibration//base_s1_s2_s7_1000_runs.rds')

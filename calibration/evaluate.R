@@ -14,9 +14,10 @@ source("calibration/update_params.R")
 cores <- parallel::detectCores()
 
 # add solution to evaluate
-solution <- res_stoch@solution
+solution <- res_stoch_round3@solution
+# solution <- res_stoch_corr_penalty@solution
 
-params_calibrate_mode <- update_params(x = solution2, fallRunDSM::params)
+params_calibrate_mode <- update_params(x = solution, fallRunDSM::params)
 run_model <- function(i) {
   sim <- fall_run_model(seeds = DSMCalibrationData::grandtab_imputed$fall, mode = "calibrate",
                         ..params = params_calibrate_mode)
@@ -33,7 +34,7 @@ nat_spawn <- map_df(1:250, function(i) {
   as_tibble(results[[i]]) %>%
     mutate(watershed = DSMscenario::watershed_labels, run = i) %>%
     gather(year, nat_spawn, -watershed, -run) %>%
-    mutate(year = readr::parse_number(year))
+    mutate(year = readr::parse_number(year) + 5)
 })
 
 remove_these <- names(which(is.na(DSMCalibrationData::grandtab_observed$fall[, 1])))
@@ -46,14 +47,14 @@ grand_tab <- as_tibble(DSMCalibrationData::grandtab_observed$fall) %>%
          observed_nat_spawn = round(((1-fallRunDSM::params$proportion_hatchery[watershed]) * spawners)))
 
 all <- nat_spawn %>%
-  left_join(grand_tab) %>%
-  filter(year > 5)
+  left_join(grand_tab)
 
 all %>%
   filter(!(watershed %in% remove_these)) %>%
   ggplot(aes(x = year, group = run)) +
   geom_line(aes(y = nat_spawn), alpha = .1) +
-  geom_line(aes(y = observed_nat_spawn), alpha = .1, color = 'red') +
+  # geom_line(aes(y = observed_nat_spawn), alpha = .1, color = 'red') +
+  geom_point(aes(y = observed_nat_spawn), alpha = .1, color = 'red', size=.8) +
   facet_wrap(~watershed, scales = 'free_y')
 
 all %>%
@@ -62,7 +63,7 @@ all %>%
             observed_nat_spawn = mean(observed_nat_spawn)) %>%
   ungroup() %>%
   filter(!(watershed %in% remove_these), !is.na(observed_nat_spawn)) %>%
-  ggplot(aes(nat_spawn, observed_nat_spawn)) +
+  ggplot(aes(observed_nat_spawn, nat_spawn)) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0)
 
