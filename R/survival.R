@@ -342,9 +342,11 @@ get_rearing_survival <- function(year, month,
                   min_survival_rate = min_survival_rate)
   }))
 
-  river_surv <- matrix(unlist(rear_surv[ , 1]), ncol = 4, byrow = TRUE)
-  flood_surv <- matrix(unlist(rear_surv[ , 2]), ncol = 4, byrow = TRUE)
+  weird_survival_adjustment <- c(1, 0.025, 1, 0.025, 0.025, 1, 1, 0.5, 0.25, 1, 0.025, 1, 0.025,
+                           0.025, 0.025, 1, 1, 0.025, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1)
 
+  river_surv <- matrix(unlist(rear_surv[ , 1]), ncol = 4, byrow = TRUE) * weird_survival_adjustment
+  flood_surv <- matrix(unlist(rear_surv[ , 2]), ncol = 4, byrow = TRUE) * weird_survival_adjustment
 
   if (mode != "seed") {
     river_surv <- pmin(river_surv * survival_adjustment[, year], 1)
@@ -362,8 +364,8 @@ get_rearing_survival <- function(year, month,
                              .floodplain = .surv_juv_bypass_floodplain,
                              min_survival_rate = min_survival_rate)
 
-  sutter_surv <- sqrt(bp_surv)
-  yolo_surv <- sqrt(bp_surv)
+  sutter_surv <- bp_surv
+  yolo_surv <- bp_surv
 
   delta_juv_surv <- surv_juv_delta(max_temp_thresh = maxT25D,
                                    avg_temp_thresh = aveT20D,

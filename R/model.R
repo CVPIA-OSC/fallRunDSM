@@ -19,7 +19,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
   mode <- match.arg(mode)
 
-  if (mode == "simulate" || mode == "calibrate") {
+  if (mode == "simulate") {
     if (is.null(scenario)) {
       # the do nothing scenario to force habitat degradation
       scenario <- DSMscenario::scenarios$NO_ACTION
@@ -43,9 +43,14 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
     ..params$floodplain_habitat <- scenario_data$floodplain_habitat
     ..params$weeks_flooded <- scenario_data$weeks_flooded
 
-    if (mode == "calibrate") {
-      ..params <- DSMCalibrationData::set_synth_years(..params)
-    }
+  }
+
+  if (mode == "calibrate") {
+    ..params <- DSMCalibrationData::set_synth_years(..params)
+    scenario_data <- list(
+      survival_adjustment = matrix(1, nrow = 31, ncol = 21,
+                                   dimnames = list(DSMscenario::watershed_labels,
+                                                   1980:2000)))
   }
 
   output <- list(
@@ -82,7 +87,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
   simulation_length <- switch(mode,
                               "seed" = 5,
                               "simulate" = 20,
-                              "calibrate" = 20)
+                              "calibrate" = 19)
 
   for (year in 1:simulation_length) {
     adults_in_ocean <- numeric(31)
@@ -114,7 +119,6 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
     output$spawners[ , year] <- init_adults
     output$proportion_natural[ , year] <- spawners$proportion_natural
-    output$natural_spawners[ , year] <- spawners$natural_adults
 
     egg_to_fry_surv <- surv_egg_to_fry(
       proportion_natural = 1 - ..params$proportion_hatchery,
@@ -578,22 +582,18 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
 
       # distribute returning adults for future spawning
-      if (mode == "calibrate" && year < 6) {
+      if (mode == "calibrate") {
         calculated_adults[1:31, (year + 2):(year + 4)] <- calculated_adults[1:31, (year + 2):(year + 4)] + adults_returning
-        if (year == 5) {
-          adults <- calculated_adults
-        }
       } else {
         adults[1:31, (year + 2):(year + 4)] <- adults[1:31, (year + 2):(year + 4)] + adults_returning
       }
-
 
   } # end year for loop
 
   if (mode == "seed") {
     return(adults[ , 6:30])
   } else if (mode == "calibrate") {
-    return(output)
+    return(calculated_adults[, 6:19])
   }
 
   spawn_change <- sapply(1:19, function(year) {
