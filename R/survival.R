@@ -296,7 +296,8 @@ get_rearing_survival <- function(year, month,
   # set proportion fish stranding
   prob_ws_strand <- if(month < 4) prob_strand_early else prob_strand_late
 
-  ws_strand <-rbinom(31, 1, prob_ws_strand)
+  # ws_strand <-rbinom(31, 1, prob_ws_strand)
+  ws_strand <- prob_ws_strand # TODO put back to stoch
 
   # proportion and total water diverted
   proportion_diverted <- proportion_diverted[ , month, year]
@@ -343,10 +344,13 @@ get_rearing_survival <- function(year, month,
   }))
 
   weird_survival_adjustment <- c(1, 0.025, 1, 0.025, 0.025, 1, 1, 0.5, 0.25, 1, 0.025, 1, 0.025,
-                           0.025, 0.025, 1, 1, 0.025, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1)
+                                 0.025, 0.025, 1, 1, 0.025, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1)
 
-  river_surv <- matrix(unlist(rear_surv[ , 1]), ncol = 4, byrow = TRUE) * weird_survival_adjustment
-  flood_surv <- matrix(unlist(rear_surv[ , 2]), ncol = 4, byrow = TRUE) * weird_survival_adjustment
+  river_surv <- matrix(unlist(rear_surv[ , 1]), ncol = 4, byrow = TRUE)
+  flood_surv <- matrix(unlist(rear_surv[ , 2]), ncol = 4, byrow = TRUE)
+
+  river_surv[ , 1:3] <- river_surv[ , 1:3] * weird_survival_adjustment
+  flood_surv[ , 1:3] <- flood_surv[ , 1:3] * weird_survival_adjustment
 
   if (mode != "seed") {
     river_surv <- pmin(river_surv * survival_adjustment[, year], 1)
