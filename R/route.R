@@ -190,21 +190,21 @@ route_south_delta <- function(freeport_flow, dcc_closed, month,
 
   #----- First Junction, Sacramento and Sutter/Steamboat  ---------
   # Probability of entering Sutter/Steamboat
-  psi_SS <- boot::inv.logit(.sss_int + .sss_freeport_discharge * standardized_flow)
-  # psi_SS <- .sss_upper_asymptote / (1 + exp(-lpsi_SS))
+  psi_SS_x <- .sss_int + .sss_freeport_discharge * standardized_flow
+  psi_SS <- .sss_upper_asymptote / (1 + exp(-psi_SS_x))
   # Probability of remaining in Sacramento at junction with Sutter/Steamboat
   psi_SAC1 <- 1 - psi_SS
 
   #----- Second junction, Sacramento, DCC, and Georgiana Slough  ---------
   # Probability of entering DCC conditional on arriving at the river junction
   # (i.e, conditional on remaining in the Sacramento River at the Sutter/Steamboat)
-  psi_DCC <- boot::inv.logit(.dcc_intercept + .dcc_freeport_discharge * standardized_flow) * gate_status
+  psi_DCC_x <- .dcc_intercept + .dcc_freeport_discharge * standardized_flow
+  psi_DCC <- (1 / (1 + exp(-psi_DCC_x))) * gate_status
 
   # Probability of entering Geo conditional on arriving at junction and
   # not entering DCC
-  psi_GEO_notDCC <- .gs_lower_asymptote + boot::inv.logit(.gs_intercept +
-                                                  .gs_freeport_discharge * standardized_flow +
-                                                  .gs_dcc_effect_on_routing * gate_status)
+  psi_GEO_notDCC_x <- .gs_intercept + .gs_freeport_discharge * standardized_flow + .gs_dcc_effect_on_routing * gate_status
+  psi_GEO_notDCC <- .gs_lower_asymptote + (1 - .gs_lower_asymptote) / (1 + exp(-psi_GEO_notDCC_x))
 
   # Unconditional probability of entering Georgiana Slough, but conditional
   # on arriving at the junction of Sac, DCC, and Geo.
@@ -240,14 +240,14 @@ route_south_delta <- function(freeport_flow, dcc_closed, month,
 #' @source IP-117068
 #' @export
 route_and_rear_deltas <- function(year, month, migrants, north_delta_fish, south_delta_fish,
-                         north_delta_habitat, south_delta_habitat,
-                         freeport_flows,
-                         cc_gates_days_closed,
-                         rearing_survival_delta, migratory_survival_delta,
-                         migratory_survival_sac_delta, migratory_survival_bay_delta,
-                         juveniles_at_chipps, growth_rates,
-                         location_index = c(rep(1, 24), 3, rep(2, 2), rep(4, 4)),
-                         territory_size) {
+                                  north_delta_habitat, south_delta_habitat,
+                                  freeport_flows,
+                                  cc_gates_days_closed,
+                                  rearing_survival_delta, migratory_survival_delta,
+                                  migratory_survival_sac_delta, migratory_survival_bay_delta,
+                                  juveniles_at_chipps, growth_rates,
+                                  location_index = c(rep(1, 24), 3, rep(2, 2), rep(4, 4)),
+                                  territory_size) {
 
   prop_delta_fish_entrained <- route_south_delta(freeport_flow = freeport_flows[[month, year]] * 35.3147,
                                                  dcc_closed = cc_gates_days_closed[month],
