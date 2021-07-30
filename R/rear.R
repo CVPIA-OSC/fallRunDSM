@@ -15,19 +15,23 @@ rear <- function(juveniles, survival_rate, growth, floodplain_juveniles = NULL,
                  weeks_flooded = NULL){
 
 
-  if (max(juveniles) <= 1e9) {
-    if (is.vector(survival_rate)) {
-      survived <- t(sapply(1:nrow(juveniles), function(watershed) {
-        rbinom(4, size = round(juveniles[watershed, ]), prob = survival_rate)
-      }))
-    } else{
-      survived <- t(sapply(1:nrow(juveniles), function(watershed) {
-        rbinom(4, size = round(juveniles[watershed, ]), prob = survival_rate[watershed, ])
-      }))
-    }
-  } else {
-    survived <- round(juveniles * survival_rate)
-  }
+  # if (max(juveniles) <= 1e9) {
+  #   if (is.vector(survival_rate)) {
+  #     survived <- t(sapply(1:nrow(juveniles), function(watershed) {
+  #       rbinom(4, size = round(juveniles[watershed, ]), prob = survival_rate)
+  #     }))
+  #   } else{
+  #     survived <- t(sapply(1:nrow(juveniles), function(watershed) {
+  #       rbinom(4, size = round(juveniles[watershed, ]), prob = survival_rate[watershed, ])
+  #     }))
+  #   }
+  # } else {
+  #   TODO tell adam about this one
+  #   survived <- t(round(t(juveniles) * survival_rate))
+  # }
+
+  # TODO this is wrong
+  survived <- round(juveniles * survival_rate)
 
   next_juveniles <- round(survived %*% growth)
 
