@@ -19,7 +19,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
   mode <- match.arg(mode)
 
-  if (mode == "simulate" || mode == "calibrate") {
+  if (mode == "simulate") {
     if (is.null(scenario)) {
       # the do nothing scenario to force habitat degradation
       scenario <- DSMscenario::scenarios$NO_ACTION
@@ -43,9 +43,10 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
     ..params$floodplain_habitat <- scenario_data$floodplain_habitat
     ..params$weeks_flooded <- scenario_data$weeks_flooded
 
-    if (mode == "calibrate") {
-      ..params <- DSMCalibrationData::set_synth_years(..params)
-    }
+
+  }
+  if (mode == "calibrate") {
+    ..params <- DSMCalibrationData::set_synth_years(..params)
   }
 
   output <- list(

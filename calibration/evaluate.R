@@ -14,7 +14,7 @@ source("calibration/update_params.R")
 cores <- parallel::detectCores()
 
 # add solution to evaluate
-solution <- res_stoch_round3@solution
+solution <- res_2@solution
 # solution <- res_stoch_corr_penalty@solution
 
 params_calibrate_mode <- update_params(x = solution, fallRunDSM::params)
@@ -34,7 +34,7 @@ nat_spawn <- map_df(1:250, function(i) {
   as_tibble(results[[i]]) %>%
     mutate(watershed = DSMscenario::watershed_labels, run = i) %>%
     gather(year, nat_spawn, -watershed, -run) %>%
-    mutate(year = readr::parse_number(year) + 5)
+    mutate(year = readr::parse_number(year))
 })
 
 remove_these <- names(which(is.na(DSMCalibrationData::grandtab_observed$fall[, 1])))
@@ -47,7 +47,8 @@ grand_tab <- as_tibble(DSMCalibrationData::grandtab_observed$fall) %>%
          observed_nat_spawn = round(((1-fallRunDSM::params$proportion_hatchery[watershed]) * spawners)))
 
 all <- nat_spawn %>%
-  left_join(grand_tab)
+  left_join(grand_tab) %>%
+  filter(year > 5)
 
 all %>%
   filter(!(watershed %in% remove_these)) %>%

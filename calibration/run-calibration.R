@@ -29,14 +29,87 @@ res <- ga(type = "real-valued",
            parallel = TRUE,
            population = ga_population_init)
 
+# calibration where the average escapement is taken outside of the subtraction
+# sse <- sum(((preds[keep,] - known_nats)^2)/mean_escapent, na.rm = TRUE)
+# population set to start from 2019 values
+
+# r = 0.426
+res_2 <- ga(type = "real-valued",
+            fitness =
+              function(x) -fall_run_fitness_stoch(
+                known_adults = DSMCalibrationData::grandtab_observed$fall,
+                seeds = DSMCalibrationData::grandtab_imputed$fall,
+                params = fallRunDSM::params,
+                x[1], x[2], x[3], x[4], x[5], x[6], x[7], x[8], x[9], x[10],
+                x[11], x[12], x[13], x[14], x[15], x[16], x[17], x[18], x[19],
+                x[20], x[21], x[22], x[23], x[24], x[25], x[26], x[27], x[28],
+                x[29], x[30], x[31], x[32], x[33], x[34], x[35], x[36], x[37],
+                x[38], x[39], x[40], x[41]
+              ),
+            lower = c(2.5, rep(-3.5, 40)),
+            upper = rep(3.5, 41),
+            popSize = 75,
+            maxiter = 10000,
+            run = 20,
+            parallel = TRUE,
+            population = ga_population_init)
+
+# calibration where the average escapement is taken outside of the subtraction
+# sse <- sum(((preds[keep,] - known_nats)^2)/mean_escapent, na.rm = TRUE)
+# population set to start from random values
+res_3 <- ga(type = "real-valued",
+            fitness =
+              function(x) -fall_run_fitness_stoch(
+                known_adults = DSMCalibrationData::grandtab_observed$fall,
+                seeds = DSMCalibrationData::grandtab_imputed$fall,
+                params = fallRunDSM::params,
+                x[1], x[2], x[3], x[4], x[5], x[6], x[7], x[8], x[9], x[10],
+                x[11], x[12], x[13], x[14], x[15], x[16], x[17], x[18], x[19],
+                x[20], x[21], x[22], x[23], x[24], x[25], x[26], x[27], x[28],
+                x[29], x[30], x[31], x[32], x[33], x[34], x[35], x[36], x[37],
+                x[38], x[39], x[40], x[41]
+              ),
+            lower = c(2.5, rep(-10, 40)),
+            upper = rep(10, 41),
+            popSize = 100,
+            maxiter = 10000,
+            run = 10,
+            parallel = TRUE,
+            pmutation = .6)
+
+# calibration where the average escapement is taken outside of the subtraction
+# sse <- sum(((preds[keep,] - known_nats)^2)/mean_escapent, na.rm = TRUE)
+# population set to start from random values
+# with Sigma Scaling for the selection method
+res_4 <- ga(type = "real-valued",
+            fitness =
+              function(x) -fall_run_fitness_stoch(
+                known_adults = DSMCalibrationData::grandtab_observed$fall,
+                seeds = DSMCalibrationData::grandtab_imputed$fall,
+                params = fallRunDSM::params,
+                x[1], x[2], x[3], x[4], x[5], x[6], x[7], x[8], x[9], x[10],
+                x[11], x[12], x[13], x[14], x[15], x[16], x[17], x[18], x[19],
+                x[20], x[21], x[22], x[23], x[24], x[25], x[26], x[27], x[28],
+                x[29], x[30], x[31], x[32], x[33], x[34], x[35], x[36], x[37],
+                x[38], x[39], x[40], x[41]
+              ),
+            lower = c(2.5, rep(-3.5, 40)),
+            upper = rep(3.5, 41),
+            popSize = 100,
+            maxiter = 10000,
+            run = 50,
+            parallel = TRUE,
+            selection = gareal_sigmaSelection)
+
+
 
 
 # Evaluate Results ------------------------------------
 
 # watersheds without calibration
 keep <- c(1,6,7,10,12,19,20,23,26:30)
-
-r1_solution <- res@solution
+keep <- 1
+r1_solution <- res_3@solution
 
 r1_params <- update_params(x = r1_solution, fallRunDSM::params)
 
@@ -44,14 +117,14 @@ r1_sim <- fall_run_model(seeds = DSMCalibrationData::grandtab_imputed$fall, mode
                          ..params = r1_params)
 
 
-r1_nat_spawners <- as_tibble(r1_sim[keep,]) %>%
+r1_nat_spawners <- as_tibble(r1_sim[keep, ,drop = F]) %>%
   mutate(watershed = DSMscenario::watershed_labels[keep]) %>%
   gather(year, spawners, -watershed) %>%
   mutate(type = "simulated",
          year = readr::parse_number(year) + 5)
 
 
-r1_observed <- as_tibble((1 - fallRunDSM::params$proportion_hatchery[keep]) * DSMCalibrationData::grandtab_observed$fall[keep,]) %>%
+r1_observed <- as_tibble((1 - fallRunDSM::params$proportion_hatchery[keep]) * DSMCalibrationData::grandtab_observed$fall[keep,, drop=F]) %>%
   mutate(watershed = DSMscenario::watershed_labels[keep]) %>%
   gather(year, spawners, -watershed) %>%
   mutate(type = "observed", year = as.numeric(year) - 1997) %>%
