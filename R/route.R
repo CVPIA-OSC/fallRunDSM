@@ -105,8 +105,12 @@ route_bypass <- function(bypass_fish, bypass_habitat, migration_survival_rate,
 
   bypass_fish$migrants <- t(
     sapply(1:nrow(bypass_fish$migrants), function(i) {
+      if (stochastic) {
+        rbinom(n = 4, size = bypass_fish$migrants[i, ], prob = migration_survival_rate)
+      } else {
+        round(bypass_fish$migrants[i, ] * migration_survival_rate)
+      }
 
-      rbinom(n = 4, size = bypass_fish$migrants[i, ], prob = migration_survival_rate)
     }))
 
   colnames(bypass_fish$migrants) <- c('s', 'm', 'l', 'vl')

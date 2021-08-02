@@ -14,38 +14,66 @@ dimnames(params$floodplain_habitat) <- dimnames(fallRunDSM::params$floodplain_ha
 params$spawning_habitat <- cvpiaData::fr_spawn
 dimnames(params$spawning_habitat) <- dimnames(fallRunDSM::params$spawning_habitat)
 
-# scale habitat
 params <- scale_habitat_params(params)
-# shuffle for synth year series
-params <- DSMCalibrationData::set_synth_years(..params)
-# use old delta temp survival values
-proxy_2000_pp <- which.min(sapply(1:20, function(i) sum(abs(params$prisoners_point_temps[i] - params$prisoners_point_temps[,21]))))
-params$prisoners_point_temps <- cbind(old_inputs$prisoners_point, old_inputs$prisoners_point[,proxy_2000_pp])
+params <- DSMCalibrationData::set_synth_years(params,
+                                              spawn_years = DSMCalibrationData::calibration_year_spawn_index_2019,
+                                              years = DSMCalibrationData::calibration_year_index_2019)
+
+params$prisoners_point_temps <- old_inputs$prisoners_point
 dimnames(params$prisoners_point_temps) <- list(c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
-                                                 "Sep", "Oct", "Nov", "Dec"),
-                                               c("1980", "1981", "1982", "1983",
-                                                 "1984", "1985", "1986", "1987", "1988", "1989", "1990", "1991",
-                                                 "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999",
-                                                 "2000"))
+                                                 "Sep", "Oct", "Nov", "Dec"), c("1998", "1997", "1993", "1981",
+                                                                                "1989", "1993", "1993", "1993", "1998", "1994", "1988", "1994",
+                                                                                "1985", "1997", "1985", "1994", "1992", "1992", "1989", "1998"
+                                                 ))
 
-proxy_2000_vern <- which.min(sapply(1:20, function(i) sum(abs(params$vernalis_temps[i] - params$vernalis_temps[,21]))))
-params$vernalis_temps <- cbind(old_inputs$vernalis, old_inputs$vernalis[,proxy_2000_vern])
+params$vernalis_temps <- old_inputs$vernalis
 dimnames(params$vernalis_temps) <- list(c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
-                                          "Sep", "Oct", "Nov", "Dec"),
-                                        c("1980", "1981", "1982", "1983",
-                                          "1984", "1985", "1986", "1987", "1988", "1989", "1990", "1991",
-                                          "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999",
-                                          "2000"))
+                                          "Sep", "Oct", "Nov", "Dec"), c("1998", "1997", "1993", "1981",
+                                                                         "1989", "1993", "1993", "1993", "1998", "1994", "1988", "1994",
+                                                                         "1985", "1997", "1985", "1994", "1992", "1992", "1989", "1998"
+                                          ))
 
-params$proportion_flow_bypass[ , , 1] <- cbind(old_inputs$prop.q.sutter, old_inputs$prop.q.sutter[ , 20])
+params$proportion_flow_bypass[ , , 1] <- old_inputs$prop.q.sutter
 params$proportion_flow_bypass[ , , 2] <- params$proportion_flow_bypass[,,2]
 dimnames(params$proportion_flow_bypass) <- list(c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
                                                   "Sep", "Oct", "Nov", "Dec"),
-                                                c("1980", "1981", "1982", "1983",
-                                                  "1984", "1985", "1986", "1987", "1988", "1989", "1990", "1991",
-                                                  "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999",
-                                                  "2000"),
+                                                c("1998", "1997", "1993", "1981",
+                                                  "1989", "1993", "1993", "1993", "1998", "1994", "1988", "1994",
+                                                  "1985", "1997", "1985", "1994", "1992", "1992", "1989", "1998"
+                                                ),
                                                 c("Sutter Bypass", "Yolo Bypass"))
+
+
+
+# use old delta temp survival values
+# proxy_2000_pp <- which.min(sapply(1:20, function(i) sum(abs(params$prisoners_point_temps[i] - params$prisoners_point_temps[,21]))))
+# params$prisoners_point_temps <- cbind(old_inputs$prisoners_point, old_inputs$prisoners_point[,proxy_2000_pp])
+# dimnames(params$prisoners_point_temps) <- list(c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
+#                                                  "Sep", "Oct", "Nov", "Dec"),
+#                                                c("1980", "1981", "1982", "1983",
+#                                                  "1984", "1985", "1986", "1987", "1988", "1989", "1990", "1991",
+#                                                  "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999",
+#                                                  "2000"))
+#
+# proxy_2000_vern <- which.min(sapply(1:20, function(i) sum(abs(params$vernalis_temps[i] - params$vernalis_temps[,21]))))
+# params$vernalis_temps <- cbind(old_inputs$vernalis, old_inputs$vernalis[,proxy_2000_vern])
+# dimnames(params$vernalis_temps) <- list(c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
+#                                           "Sep", "Oct", "Nov", "Dec"),
+#                                         c("1980", "1981", "1982", "1983",
+#                                           "1984", "1985", "1986", "1987", "1988", "1989", "1990", "1991",
+#                                           "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999",
+#                                           "2000"))
+#
+# params$proportion_flow_bypass[ , , 1] <- cbind(old_inputs$prop.q.sutter, old_inputs$prop.q.sutter[ , 20])
+# params$proportion_flow_bypass[ , , 2] <- params$proportion_flow_bypass[,,2]
+# dimnames(params$proportion_flow_bypass) <- list(c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
+#                                                   "Sep", "Oct", "Nov", "Dec"),
+#                                                 c("1980", "1981", "1982", "1983",
+#                                                   "1984", "1985", "1986", "1987", "1988", "1989", "1990", "1991",
+#                                                   "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999",
+#                                                   "2000"),
+#                                                 c("Sutter Bypass", "Yolo Bypass"))
+
 
 
 flooded <- params$floodplain_habitat > 0

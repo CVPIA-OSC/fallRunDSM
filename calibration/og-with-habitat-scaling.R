@@ -9,7 +9,7 @@ old_seeds <- read_csv('calibration/filledknownAdults_1998_2016.csv') %>%
 # # 53957
 # grandtab_imputed$fall[,1]
 # old_seeds[,1]
-sim <- fall_run_model(seeds = old_seeds,
+sim <- fall_run_model(seeds = old_seeds, stochastic = FALSE,
                       mode = "calibrate", ..params = params)
 
 keep_num <- c(1,6,7,10,12,19,20,23,26:30)
@@ -33,6 +33,15 @@ both %>%
   select(-spawners) %>%
   # group_by(watershed) %>%
   summarise(r = cor(nat_spawn, observed_nat_spawn, use = 'pairwise.complete.obs'))
+
+
+both %>%
+  select(-spawners) %>%
+  gather(type, spawners, -watershed, -year) %>%
+  ggplot(aes(year, spawners, color = type)) +
+  geom_line() +
+  facet_wrap(~watershed, scales = 'free_y')
+
 
 run_model <- function(i) {
   sim <- fall_run_model(seeds = old_seeds,
