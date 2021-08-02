@@ -15,7 +15,7 @@ rear <- function(juveniles, survival_rate, growth, floodplain_juveniles = NULL,
                  weeks_flooded = NULL, stochastic){
 
 
-  survived <-
+  # survived <-
     # if (is.vector(survival_rate)) {
     #   if (stochastic) {
     #     t(sapply(1:nrow(juveniles), function(watershed) {
