@@ -91,7 +91,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
   for (year in 1:simulation_length) {
     adults_in_ocean <- numeric(31)
     annual_migrants <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
-    avg_ocean_transition_month <- ocean_transition_month() # 2
+    avg_ocean_transition_month <- ocean_transition_month(stochastic = stochastic) # 2
 
     hatch_adults <- if (stochastic) {
       rmultinom(1, size = round(runif(1, 83097.01,532203.1)), prob = ..params$hatchery_allocation)[ , 1]
