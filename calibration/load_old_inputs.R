@@ -14,8 +14,10 @@ dimnames(params$floodplain_habitat) <- dimnames(fallRunDSM::params$floodplain_ha
 params$spawning_habitat <- cvpiaData::fr_spawn
 dimnames(params$spawning_habitat) <- dimnames(fallRunDSM::params$spawning_habitat)
 
+# scale habitat
 params <- scale_habitat_params(params)
-
+# shuffle for synth year series
+params <- DSMCalibrationData::set_synth_years(..params)
 # use old delta temp survival values
 proxy_2000_pp <- which.min(sapply(1:20, function(i) sum(abs(params$prisoners_point_temps[i] - params$prisoners_point_temps[,21]))))
 params$prisoners_point_temps <- cbind(old_inputs$prisoners_point, old_inputs$prisoners_point[,proxy_2000_pp])
