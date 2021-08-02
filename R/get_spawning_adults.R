@@ -41,26 +41,34 @@ get_spawning_adults <- function(year, adults, hatch_adults, mode,
                                 .adult_stray_prop_delta_trans,
                                 .adult_en_route_migratory_temp,
                                 .adult_en_route_bypass_overtopped,
-                                .adult_en_route_adult_harvest_rate) {
+                                .adult_en_route_adult_harvest_rate,
+                                stochastic) {
 
   # during the seeding stage just reuse the seed adults as the input, and apply no
   # en-route survival
   if (mode %in% c("seed", "calibrate")) {
     adult_index <- ifelse(mode == "seed", 1, year)
     adults_by_month <- t(sapply(1:31, function(watershed) {
+      if (stochastic) {
         rmultinom(1, adults[watershed, adult_index], month_return_proportions)
+      } else {
+        round(adults[watershed, adult_index] * month_return_proportions)
+      }
     }))
 
-    natural_adults_by_month <- sapply(1:3, function(month) {
-      rbinom(n = 31,
-             size = round(adults_by_month[, month]),
-             prob = 1 - fallRunDSM::params$natural_adult_removal_rate)
+    adults_by_month_hatchery_removed <- sapply(1:3, function(month) {
+      if (stochastic) {
+        rbinom(n = 31,
+               size = round(adults_by_month[, month]),
+               prob = 1 - fallRunDSM::params$natural_adult_removal_rate)
+      } else {
+        round(adults_by_month[, month] * (1 - fallRunDSM::params$natural_adult_removal_rate))
+      }
     })
 
-    init_adults <- rowSums(adults_by_month)
-    surviving_natural_adults <- rowSums(natural_adults_by_month)
+    init_adults <- rowSums(adults_by_month_hatchery_removed)
     proportion_natural <- 1 - fallRunDSM::params$proportion_hatchery
-    init_adults_by_month <- natural_adults_by_month
+    init_adults_by_month <- adults_by_month_hatchery_removed
 
   } else  {
 
@@ -148,7 +156,6 @@ get_spawning_adults <- function(year, adults, hatch_adults, mode,
 
   list(init_adults = init_adults,
        proportion_natural = replace(proportion_natural, is.nan(proportion_natural), NA_real_),
-       natural_adults = surviving_natural_adults,
        init_adults_by_month = init_adults_by_month)
 
 }

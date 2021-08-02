@@ -30,7 +30,8 @@ route <- function(year, month, juveniles, inchannel_habitat, floodplain_habitat,
                   .pulse_movement_medium_pulse,
                   .pulse_movement_large_pulse,
                   .pulse_movement_very_large_pulse,
-                  territory_size) {
+                  territory_size,
+                  stochastic) {
 
   natal_watersheds <- fill_natal(juveniles = juveniles,
                                  inchannel_habitat = inchannel_habitat,
@@ -50,9 +51,14 @@ route <- function(year, month, juveniles, inchannel_habitat, floodplain_habitat,
 
   # total fish that will migrate because of pulse flows, this derived using total in river
   # and a binomial selection based on pr of movement due to pulse flows
-  pulse_migrants <- t(sapply(1:nrow(juveniles), function(i) {
-    rbinom(n = 4, size = round(natal_watersheds$inchannel[i, ]), prob = prob_pulse_leave[i, ])
-  }))
+
+  pulse_migrants <- if (stochastic) {
+    t(sapply(1:nrow(juveniles), function(i) {
+      rbinom(n = 4, size = round(natal_watersheds$inchannel[i, ]), prob = prob_pulse_leave[i, ])
+    }))
+  } else {
+    round(natal_watersheds$inchannel * prob_pulse_leave)
+  }
 
 
   # update in river fish based on the pulse flow results
@@ -64,13 +70,16 @@ route <- function(year, month, juveniles, inchannel_habitat, floodplain_habitat,
   if (!is.null(detour)) {
     bypass <- ifelse(detour == 'sutter', "Sutter Bypass", "Yolo Bypass")
 
-    detoured_fish <- t(sapply(1:nrow(natal_watersheds$migrants), function(i) {
+    detoured_fish <- if (stochastic) {
+      t(sapply(1:nrow(natal_watersheds$migrants), function(i) {
 
-      rbinom(n = 4,
-             size = round(natal_watersheds$migrants[i, ]),
-             prob = proportion_flow_bypass[month, year, bypass])
-    }))
-
+        rbinom(n = 4,
+               size = round(natal_watersheds$migrants[i, ]),
+               prob = proportion_flow_bypass[month, year, bypass])
+      }))
+    } else {
+      round(natal_watersheds$migrants * proportion_flow_bypass[month, year, bypass])
+    }
     natal_watersheds$migrants <- natal_watersheds$migrants - detoured_fish
     natal_watersheds$detoured <- detoured_fish
   }
@@ -87,7 +96,7 @@ route <- function(year, month, juveniles, inchannel_habitat, floodplain_habitat,
 #' @source IP-117068
 #' @export
 route_bypass <- function(bypass_fish, bypass_habitat, migration_survival_rate,
-                         territory_size) {
+                         territory_size, stochastic) {
 
   bypass_fish <- fill_regional(juveniles = bypass_fish,
                                habitat = bypass_habitat,
@@ -95,8 +104,11 @@ route_bypass <- function(bypass_fish, bypass_habitat, migration_survival_rate,
 
   bypass_fish$migrants <- t(
     sapply(1:nrow(bypass_fish$migrants), function(i) {
-
+      if (stochastic) {
       rbinom(n = 4, size = bypass_fish$migrants[i, ], prob = migration_survival_rate)
+      } else {
+        bypass_fish$migrants[i, ] * migration_survival_rate
+      }
     }))
 
   colnames(bypass_fish$migrants) <- c('s', 'm', 'l', 'vl')
@@ -119,7 +131,8 @@ route_bypass <- function(bypass_fish, bypass_habitat, migration_survival_rate,
 route_regional <- function(month, migrants,
                            inchannel_habitat, floodplain_habitat,
                            prop_pulse_flows, migration_survival_rate,
-                           territory_size) {
+                           territory_size,
+                           stochastic) {
   # fill up upper mainstem, but in river fish can leave due to pulses
 
   regional_fish <- fill_regional(juveniles = migrants,
@@ -131,8 +144,11 @@ route_regional <- function(month, migrants,
   prob_pulse_leave <- matrix(pulse_movement(pulse_flows), ncol = 4, byrow = T)
 
   pulse_migrants <- t(sapply(1:nrow(regional_fish$inchannel), function(i) {
-
-    rbinom(n = 4, size = regional_fish$inchannel[i, ], prob = prob_pulse_leave)
+    if (stochastic) {
+      rbinom(n = 4, size = regional_fish$inchannel[i, ], prob = prob_pulse_leave)
+    } else {
+      round(regional_fish$inchannel[i, ] * prob_pulse_leave)
+    }
   }))
 
   # remove and add migrants
@@ -142,8 +158,11 @@ route_regional <- function(month, migrants,
   # apply survival rate to migrants
   regional_fish$migrants <- t(
     sapply(1:nrow(regional_fish$migrants), function(i) {
-
-      rbinom(n = 4, size = regional_fish$migrants[i, ], prob = migration_survival_rate)
+      if (stochastic) {
+        rbinom(n = 4, size = regional_fish$migrants[i, ], prob = migration_survival_rate)
+      } else {
+        round(regional_fish$migrants[i, ] * migration_survival_rate)
+      }
     }))
 
 
@@ -190,21 +209,21 @@ route_south_delta <- function(freeport_flow, dcc_closed, month,
 
   #----- First Junction, Sacramento and Sutter/Steamboat  ---------
   # Probability of entering Sutter/Steamboat
-  psi_SS <- boot::inv.logit(.sss_int + .sss_freeport_discharge * standardized_flow)
-  # psi_SS <- .sss_upper_asymptote / (1 + exp(-lpsi_SS))
+  psi_SS_x <- .sss_int + .sss_freeport_discharge * standardized_flow
+  psi_SS <- .sss_upper_asymptote / (1 + exp(-psi_SS_x))
   # Probability of remaining in Sacramento at junction with Sutter/Steamboat
   psi_SAC1 <- 1 - psi_SS
 
   #----- Second junction, Sacramento, DCC, and Georgiana Slough  ---------
   # Probability of entering DCC conditional on arriving at the river junction
   # (i.e, conditional on remaining in the Sacramento River at the Sutter/Steamboat)
-  psi_DCC <- boot::inv.logit(.dcc_intercept + .dcc_freeport_discharge * standardized_flow) * gate_status
+  psi_DCC_x <- .dcc_intercept + .dcc_freeport_discharge * standardized_flow
+  psi_DCC <- (1 / (1 + exp(-psi_DCC_x))) * gate_status
 
   # Probability of entering Geo conditional on arriving at junction and
   # not entering DCC
-  psi_GEO_notDCC <- .gs_lower_asymptote + boot::inv.logit(.gs_intercept +
-                                                  .gs_freeport_discharge * standardized_flow +
-                                                  .gs_dcc_effect_on_routing * gate_status)
+  psi_GEO_notDCC_x <- .gs_intercept + .gs_freeport_discharge * standardized_flow + .gs_dcc_effect_on_routing * gate_status
+  psi_GEO_notDCC <- .gs_lower_asymptote + (1 - .gs_lower_asymptote) / (1 + exp(-psi_GEO_notDCC_x))
 
   # Unconditional probability of entering Georgiana Slough, but conditional
   # on arriving at the junction of Sac, DCC, and Geo.
@@ -247,15 +266,19 @@ route_and_rear_deltas <- function(year, month, migrants, north_delta_fish, south
                          migratory_survival_sac_delta, migratory_survival_bay_delta,
                          juveniles_at_chipps, growth_rates,
                          location_index = c(rep(1, 24), 3, rep(2, 2), rep(4, 4)),
-                         territory_size) {
+                         territory_size,
+                         stochastic) {
 
   prop_delta_fish_entrained <- route_south_delta(freeport_flow = freeport_flows[[month, year]] * 35.3147,
                                                  dcc_closed = cc_gates_days_closed[month],
                                                  month = month)
 
   sac_not_entrained <- t(sapply(1:nrow(migrants[1:23, ]), function(i) {
-
+    if (stochastic) {
     rbinom(n = 4, migrants[1:23, ][i, ], prob = 1 - prop_delta_fish_entrained)
+    } else {
+      round(migrants[1:23, ][i, ] * (1 - prop_delta_fish_entrained))
+    }
   }))
 
   # sac salvaged fish trucked to south delta
@@ -276,23 +299,35 @@ route_and_rear_deltas <- function(year, month, migrants, north_delta_fish, south
   }
 
   south_delta_migrants <- t(sapply(1:31, function(i) {
-
+    if (stochastic) {
     rbinom(n = 4, size = round(south_delta_fish$migrants[i, ]), prob = migratory_survival_delta[location_index[i], ])
+    } else {
+      round(south_delta_fish$migrants[i, ] * migratory_survival_delta[location_index[i], ])
+    }
   }))
 
   migrants_out <- t(sapply(1:nrow(north_delta_fish$migrants), function(i) {
-
+    if (stochastic) {
     rbinom(n = 4, size = round(north_delta_fish$migrants[i, ]), prob = migratory_survival_sac_delta[1, ])
+    } else {
+      round(north_delta_fish$migrants[i, ] * migratory_survival_sac_delta[1, ])
+    }
   }))
 
   migrants_out_survived <- t(sapply(1:nrow(migrants_out), function(i) {
-
-    rbinom(n = 4, size = round(migrants_out[i, ]), prob = migratory_survival_bay_delta)
+    if (stochastic) {
+      rbinom(n = 4, size = round(migrants_out[i, ]), prob = migratory_survival_bay_delta)
+    } else {
+      round(migrants_out[i, ] * migratory_survival_bay_delta)
+    }
   }))
 
   south_delta_survived <- t(sapply(1:nrow(south_delta_migrants), function(i) {
-
-    rbinom(n = 4, size = round(south_delta_migrants[i, ]), prob = migratory_survival_bay_delta)
+    if (stochastic) {
+      rbinom(n = 4, size = round(south_delta_migrants[i, ]), prob = migratory_survival_bay_delta)
+    } else {
+      round(south_delta_migrants[i, ] * migratory_survival_bay_delta)
+    }
   }))
 
   migrants_at_golden_gate <- rbind(migrants_out_survived, matrix(0, nrow = 8, ncol = 4)) + south_delta_survived
@@ -302,11 +337,15 @@ route_and_rear_deltas <- function(year, month, migrants, north_delta_fish, south
   if (month != 8) {
     north_delta_fish <- rear(juveniles = north_delta_fish$inchannel,
                              survival_rate = rearing_survival_delta[1, ],
-                             growth = growth_rates)
+                             growth = growth_rates,
+                             delta = TRUE,
+                             stochastic = stochastic)
 
     south_delta_fish <- rear(juveniles = south_delta_fish$inchannel,
                              survival_rate = rearing_survival_delta[2, ],
-                             growth = growth_rates)
+                             growth = growth_rates,
+                             delta = TRUE,
+                             stochastic = stochastic)
 
   }
 

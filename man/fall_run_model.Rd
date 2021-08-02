@@ -11,7 +11,8 @@ fall_run_model(
   scenario = NULL,
   mode = c("seed", "simulate", "calibrate"),
   seeds = NULL,
-  ..params = fallRunDSM::params
+  ..params = fallRunDSM::params,
+  stochastic = FALSE
 )
 }
 \arguments{

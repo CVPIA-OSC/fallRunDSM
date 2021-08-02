@@ -41,7 +41,8 @@ surv_juv_rear <- function(max_temp_thresh, avg_temp_thresh, high_predation,
                           .medium = fallRunDSM::params$.surv_juv_rear_medium,
                           .large = fallRunDSM::params$.surv_juv_rear_large,
                           .floodplain = fallRunDSM::params$.surv_juv_rear_floodplain,
-                          min_survival_rate = fallRunDSM::params$min_survival_rate){
+                          min_survival_rate = fallRunDSM::params$min_survival_rate,
+                          stochastic){
   # determine the proportion of weeks when flooded vs not
   prop_ic <-ifelse(weeks_flooded > 0, (4 - weeks_flooded) / 4, 1)
   prop_fp <- 1 - prop_ic
@@ -57,13 +58,22 @@ surv_juv_rear <- function(max_temp_thresh, avg_temp_thresh, high_predation,
   base_score_floodplain <- ..surv_juv_rear_int + .floodplain +
     (.avg_temp_thresh  * avg_temp_thresh) + (.high_predation * high_predation)
 
-  s1 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_inchannel))
-  m1 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_inchannel + .medium))
-  l1 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_inchannel + .large))
-
-  s2 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_floodplain)) ^ prop_fp
-  m2 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_floodplain + .medium)) ^ prop_fp
-  l2 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_floodplain + .large)) ^ prop_fp
+  if (stochastic) {
+    s1 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_inchannel))
+    m1 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_inchannel + .medium))
+    l1 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_inchannel + .large))
+    s2 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_floodplain)) ^ prop_fp
+    m2 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_floodplain + .medium)) ^ prop_fp
+    l2 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_floodplain + .large)) ^ prop_fp
+  } else {
+    # TODO after J+A discussion update
+    s1 <- (boot::inv.logit(base_score_inchannel) * (1 - max_temp_thresh)) + (min_survival_rate * max_temp_thresh)
+    m1 <- (boot::inv.logit(base_score_inchannel + .medium) * (1 - max_temp_thresh)) + (min_survival_rate * max_temp_thresh)
+    l1 <- (boot::inv.logit(base_score_inchannel + .large) * (1 - max_temp_thresh)) + (min_survival_rate * max_temp_thresh)
+    s2 <- ((boot::inv.logit(base_score_floodplain) * (1 - max_temp_thresh)) + (min_survival_rate * max_temp_thresh)) ^ prop_fp
+    m2 <- ((boot::inv.logit(base_score_floodplain + .medium) * (1 - max_temp_thresh)) + (min_survival_rate * max_temp_thresh)) ^ prop_fp
+    l2 <- ((boot::inv.logit(base_score_floodplain + .large) * (1 - max_temp_thresh)) + (min_survival_rate * max_temp_thresh)) ^ prop_fp
+  }
 
   list(
     inchannel = cbind(s = s1,
@@ -99,15 +109,23 @@ surv_juv_bypass <- function(max_temp_thresh, avg_temp_thresh, high_predation,
                             .medium = fallRunDSM::params$.surv_juv_bypass_medium,
                             .large = fallRunDSM::params$.surv_juv_bypass_large,
                             .floodplain = fallRunDSM::params$.surv_juv_bypass_floodplain,
-                            min_survival_rate = fallRunDSM::params$min_survival_rate){
+                            min_survival_rate = fallRunDSM::params$min_survival_rate,
+                            stochastic){
 
   base_score <- ..surv_juv_bypass_int + .floodplain +
     .avg_temp_thresh * avg_temp_thresh +
     .high_predation * high_predation
 
-  s <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score))
-  m <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score + .medium))
-  l <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score + .large))
+  if (stochastic) {
+    s <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score))
+    m <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score + .medium))
+    l <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score + .large))
+  } else {
+    # TODO update after discussion
+    s <- (boot::inv.logit(base_score) * (1 - max_temp_thresh)) + (min_survival_rate * max_temp_thresh)
+    m <- (boot::inv.logit(base_score + .medium) * (1 - max_temp_thresh)) + (min_survival_rate * max_temp_thresh)
+    l <- (boot::inv.logit(base_score + .large) * (1 - max_temp_thresh)) + (min_survival_rate * max_temp_thresh)
+  }
 
   cbind(s = s, m = m, l = l, vl = 1)
 }
@@ -150,7 +168,7 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
                            min_survival_rate = fallRunDSM::params$min_survival_rate){
   # north delta
   north_delta_surv <- c(rep((avg_temp <= 16.5)*.42 + (avg_temp > 16.5 & avg_temp < 19.5) * 0.42 /
-                            (1.55^(avg_temp-15.5)) + (avg_temp > 19.5 & avg_temp < 25)*0.035,3), 1)
+                              (1.55^(avg_temp-15.5)) + (avg_temp > 19.5 & avg_temp < 25)*0.035,3), 1)
 
   # south delta
   base_score <- ..surv_juv_delta_int +
@@ -160,6 +178,7 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
     .prop_diverted * prop_diverted[2] +
     .surv_juv_delta_total_diverted * ..surv_juv_delta_total_diverted * total_diverted[2]
 
+  #TODO add stochastic branch after discussion
   s <- ifelse(max_temp_thresh[2], min_survival_rate, boot::inv.logit(base_score))
   m <- ifelse(max_temp_thresh[2], min_survival_rate, boot::inv.logit(base_score + .medium))
   l <- ifelse(max_temp_thresh[2], min_survival_rate, boot::inv.logit(base_score + .large))
@@ -268,17 +287,28 @@ get_rearing_survival <- function(year, month,
                                  .surv_juv_delta_prop_diverted,
                                  .surv_juv_delta_medium,
                                  .surv_juv_delta_large,
-                                 min_survival_rate) {
+                                 min_survival_rate,
+                                 stochastic) {
 
-  aveT20 <- rbinom(31, 1, boot::inv.logit(-14.32252 + 0.72102 * avg_temp[ , month , year]))
-  maxT25 <- rbinom(31, 1, boot::inv.logit(-23.1766 + 1.4566 * avg_temp[ , month, year]))
-  aveT20D <- rbinom(2, 1, boot::inv.logit(-18.30017 + 0.96991 * avg_temp_delta[month, year, ]))
-  maxT25D <- rbinom(2, 1, boot::inv.logit(-157.537 + 6.998 * avg_temp_delta[month, year, ]))
+  aveT20 <- boot::inv.logit(-14.32252 + 0.72102 * avg_temp[ , month , year])
+  maxT25 <- boot::inv.logit(-23.1766 + 1.4566 * avg_temp[ , month, year])
+  aveT20D <- boot::inv.logit(-18.30017 + 0.96991 * avg_temp_delta[month, year, ])
+  maxT25D <- boot::inv.logit(-157.537 + 6.998 * avg_temp_delta[month, year, ])
 
+  if (stochastic) {
+    aveT20 <- rbinom(31, 1, aveT20)
+    maxT25 <- rbinom(31, 1, maxT25)
+    aveT20D <- rbinom(2, 1, aveT20D)
+    maxT25D <- rbinom(2, 1, maxT25D)
+  }
   # set proportion fish stranding
   prob_ws_strand <- if(month < 4) prob_strand_early else prob_strand_late
 
-  ws_strand <-rbinom(31, 1, prob_ws_strand)
+  ws_strand <- if (stochastic) {
+    rbinom(31, 1, prob_ws_strand)
+  } else {
+    prob_ws_strand
+  }
 
   # proportion and total water diverted
   proportion_diverted <- proportion_diverted[ , month, year]
@@ -291,7 +321,12 @@ get_rearing_survival <- function(year, month,
 
   # predator information
 
-  high_predation <- rbinom(31, 1, prop_high_predation)
+  high_predation <- if (stochastic) {
+    rbinom(31, 1, prop_high_predation)
+  } else {
+    prop_high_predation
+  }
+
   num_contact_points <- contact_points
   delta_num_contact_points <- delta_contact_points
   delta_high_predation <- delta_prop_high_predation
@@ -321,12 +356,17 @@ get_rearing_survival <- function(year, month,
                   .medium = .surv_juv_rear_medium,
                   .large = .surv_juv_rear_large,
                   .floodplain = .surv_juv_rear_floodplain,
-                  min_survival_rate = min_survival_rate)
+                  min_survival_rate = min_survival_rate,
+                  stochastic = stochastic)
   }))
+
+  weird_survival_adjustment <- c(1, 0.025, 1, 0.025, 0.025, 1, 1, 0.5, 0.25, 1, 0.025, 1, 0.025,
+                                 0.025, 0.025, 1, 1, 0.025, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1)
 
   river_surv <- matrix(unlist(rear_surv[ , 1]), ncol = 4, byrow = TRUE)
   flood_surv <- matrix(unlist(rear_surv[ , 2]), ncol = 4, byrow = TRUE)
-
+  river_surv[ , 1:3] <- river_surv[ , 1:3] * weird_survival_adjustment
+  flood_surv[ , 1:3] <- flood_surv[ , 1:3] * weird_survival_adjustment
 
   if (mode != "seed") {
     river_surv <- pmin(river_surv * survival_adjustment[, year], 1)
@@ -342,11 +382,13 @@ get_rearing_survival <- function(year, month,
                              .medium = .surv_juv_bypass_medium,
                              .large = .surv_juv_bypass_large,
                              .floodplain = .surv_juv_bypass_floodplain,
-                             min_survival_rate = min_survival_rate)
+                             min_survival_rate = min_survival_rate,
+                             stochastic = stochastic)
 
-  sutter_surv <- sqrt(bp_surv)
-  yolo_surv <- sqrt(bp_surv)
+  sutter_surv <- bp_surv
+  yolo_surv <- bp_surv
 
+  # TODO update with stochastic after discussion
   delta_juv_surv <- surv_juv_delta(avg_temp = avg_temp_delta[month, year, "North Delta"],
                                    max_temp_thresh = maxT25D,
                                    avg_temp_thresh = aveT20D,
@@ -677,10 +719,16 @@ get_migratory_survival <- function(year, month,
                                    .surv_juv_outmigration_san_joaquin_medium,
                                    .surv_juv_outmigration_san_joaquin_large,
                                    min_survival_rate,
-                                   surv_juv_outmigration_sac_delta_model_weights) {
+                                   surv_juv_outmigration_sac_delta_model_weights,
+                                   stochastic) {
 
-  aveT20 <- rbinom(31, 1, boot::inv.logit(-14.32252 + 0.72102 * avg_temp[ , month , year]))
-  maxT25 <- rbinom(31, 1, boot::inv.logit(-23.1766 + 1.4566 * avg_temp[ , month, year]))
+  aveT20 <- boot::inv.logit(-14.32252 + 0.72102 * avg_temp[ , month , year])
+  maxT25 <- boot::inv.logit(-23.1766 + 1.4566 * avg_temp[ , month, year])
+
+  if (stochastic) {
+    aveT20 <- rbinom(31, 1, aveT20)
+    maxT25 <- rbinom(31, 1, maxT25)
+  }
 
   delta_survival <- surv_juv_outmigration_delta(
     prop_DCC_closed = cc_gates_prop_days_closed[month],
@@ -723,7 +771,8 @@ get_migratory_survival <- function(year, month,
   bp_surv <- sqrt(surv_juv_bypass(max_temp_thresh = maxT25[22],
                                   avg_temp_thresh = aveT20[22],
                                   high_predation = 0,
-                                  min_survival_rate = min_survival_rate))
+                                  min_survival_rate = min_survival_rate,
+                                  stochastic = stochastic))
 
   return(
     list(

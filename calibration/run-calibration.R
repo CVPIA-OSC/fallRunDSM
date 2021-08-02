@@ -8,13 +8,15 @@ source("calibration/fitness-stochastic.R")
 source("calibration/ga_population_init.R")
 source("calibration/update_params.R")
 
+params <- DSMCalibrationData::set_synth_years(fallRunDSM::params)
+
 # Perform calibration --------------------
 res <- ga(type = "real-valued",
            fitness =
              function(x) -fall_run_fitness_stoch(
                known_adults = DSMCalibrationData::grandtab_observed$fall,
                seeds = DSMCalibrationData::grandtab_imputed$fall,
-               params = fallRunDSM::params,
+               params = params,
                x[1], x[2], x[3], x[4], x[5], x[6], x[7], x[8], x[9], x[10],
                x[11], x[12], x[13], x[14], x[15], x[16], x[17], x[18], x[19],
                x[20], x[21], x[22], x[23], x[24], x[25], x[26], x[27], x[28],
@@ -23,8 +25,8 @@ res <- ga(type = "real-valued",
              ),
            lower = c(2.5, rep(-3.5, 40)),
            upper = rep(3.5, 41),
-           popSize = 75,
-           maxiter = 10000,
+           popSize = 10,
+           maxiter = 5,
            run = 20,
            parallel = TRUE,
            population = ga_population_init)

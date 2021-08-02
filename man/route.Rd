@@ -24,7 +24,8 @@ route(
   .pulse_movement_medium_pulse,
   .pulse_movement_large_pulse,
   .pulse_movement_very_large_pulse,
-  territory_size
+  territory_size,
+  stochastic
 )
 }
 \arguments{
