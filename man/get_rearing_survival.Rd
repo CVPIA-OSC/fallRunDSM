@@ -54,7 +54,8 @@ get_rearing_survival(
   .surv_juv_delta_prop_diverted,
   .surv_juv_delta_medium,
   .surv_juv_delta_large,
-  min_survival_rate
+  min_survival_rate,
+  stochastic
 )
 }
 \arguments{

@@ -11,7 +11,8 @@ route_bypass(
   bypass_fish,
   bypass_habitat,
   migration_survival_rate,
-  territory_size
+  territory_size,
+  stochastic
 )
 }
 \arguments{

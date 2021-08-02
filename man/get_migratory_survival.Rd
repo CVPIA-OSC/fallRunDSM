@@ -39,7 +39,8 @@ get_migratory_survival(
   .surv_juv_outmigration_san_joaquin_medium,
   .surv_juv_outmigration_san_joaquin_large,
   min_survival_rate,
-  surv_juv_outmigration_sac_delta_model_weights
+  surv_juv_outmigration_sac_delta_model_weights,
+  stochastic
 )
 }
 \arguments{
