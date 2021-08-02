@@ -107,7 +107,7 @@ route_bypass <- function(bypass_fish, bypass_habitat, migration_survival_rate,
       if (stochastic) {
       rbinom(n = 4, size = bypass_fish$migrants[i, ], prob = migration_survival_rate)
       } else {
-        bypass_fish$migrants[i, ] * migration_survival_rate
+        round(bypass_fish$migrants[i, ] * migration_survival_rate)
       }
     }))
 
@@ -338,13 +338,11 @@ route_and_rear_deltas <- function(year, month, migrants, north_delta_fish, south
     north_delta_fish <- rear(juveniles = north_delta_fish$inchannel,
                              survival_rate = rearing_survival_delta[1, ],
                              growth = growth_rates,
-                             delta = TRUE,
                              stochastic = stochastic)
 
     south_delta_fish <- rear(juveniles = south_delta_fish$inchannel,
                              survival_rate = rearing_survival_delta[2, ],
                              growth = growth_rates,
-                             delta = TRUE,
                              stochastic = stochastic)
 
   }
