@@ -77,7 +77,7 @@ route <- function(year, month, juveniles, inchannel_habitat, floodplain_habitat,
                  prob = proportion_flow_bypass[month, year, bypass])
         }))
       } else {
-       round(natal_watersheds$migrants * proportion_flow_bypass[month, year, bypass])
+        round(natal_watersheds$migrants * proportion_flow_bypass[month, year, bypass])
       }
 
     natal_watersheds$migrants <- natal_watersheds$migrants - detoured_fish
@@ -146,8 +146,11 @@ route_regional <- function(month, migrants,
   prob_pulse_leave <- matrix(pulse_movement(pulse_flows), ncol = 4, byrow = T)
 
   pulse_migrants <- t(sapply(1:nrow(regional_fish$inchannel), function(i) {
-
-    rbinom(n = 4, size = regional_fish$inchannel[i, ], prob = prob_pulse_leave)
+    if (stochastic) {
+      rbinom(n = 4, size = regional_fish$inchannel[i, ], prob = prob_pulse_leave)
+    } else {
+      round(regional_fish$inchannel[i, ] * prob_pulse_leave)
+    }
   }))
 
   # remove and add migrants
@@ -157,8 +160,11 @@ route_regional <- function(month, migrants,
   # apply survival rate to migrants
   regional_fish$migrants <- t(
     sapply(1:nrow(regional_fish$migrants), function(i) {
-
-      rbinom(n = 4, size = regional_fish$migrants[i, ], prob = migration_survival_rate)
+      if(stochastic) {
+        rbinom(n = 4, size = regional_fish$migrants[i, ], prob = migration_survival_rate)
+      } else {
+        round(regional_fish$migrants[i, ] * migration_survival_rate)
+      }
     }))
 
 
@@ -270,8 +276,11 @@ route_and_rear_deltas <- function(year, month, migrants, north_delta_fish, south
                                                  month = month)
 
   sac_not_entrained <- t(sapply(1:nrow(migrants[1:23, ]), function(i) {
-
-    rbinom(n = 4, migrants[1:23, ][i, ], prob = 1 - prop_delta_fish_entrained)
+    if (stochastic){
+      rbinom(n = 4, migrants[1:23, ][i, ], prob = 1 - prop_delta_fish_entrained)
+    } else {
+      round(migrants[1:23, ][i, ] * (1 - prop_delta_fish_entrained))
+    }
   }))
 
   # sac salvaged fish trucked to south delta
@@ -292,23 +301,35 @@ route_and_rear_deltas <- function(year, month, migrants, north_delta_fish, south
   }
 
   south_delta_migrants <- t(sapply(1:31, function(i) {
-
-    rbinom(n = 4, size = round(south_delta_fish$migrants[i, ]), prob = migratory_survival_delta[location_index[i], ])
+    if (stochastic) {
+      rbinom(n = 4, size = round(south_delta_fish$migrants[i, ]), prob = migratory_survival_delta[location_index[i], ])
+    } else {
+      round(south_delta_fish$migrants[i, ] *  migratory_survival_delta[location_index[i], ])
+    }
   }))
 
   migrants_out <- t(sapply(1:nrow(north_delta_fish$migrants), function(i) {
-
-    rbinom(n = 4, size = round(north_delta_fish$migrants[i, ]), prob = migratory_survival_sac_delta[1, ])
+    if (stochastic) {
+      rbinom(n = 4, size = round(north_delta_fish$migrants[i, ]), prob = migratory_survival_sac_delta[1, ])
+    } else {
+      round(north_delta_fish$migrants[i, ] * migratory_survival_sac_delta[1, ])
+    }
   }))
 
   migrants_out_survived <- t(sapply(1:nrow(migrants_out), function(i) {
-
-    rbinom(n = 4, size = round(migrants_out[i, ]), prob = migratory_survival_bay_delta)
+    if (stochastic) {
+      rbinom(n = 4, size = round(migrants_out[i, ]), prob = migratory_survival_bay_delta)
+    } else {
+      round(migrants_out[i, ] * migratory_survival_bay_delta)
+    }
   }))
 
   south_delta_survived <- t(sapply(1:nrow(south_delta_migrants), function(i) {
-
-    rbinom(n = 4, size = round(south_delta_migrants[i, ]), prob = migratory_survival_bay_delta)
+    if (stochastic) {
+      rbinom(n = 4, size = round(south_delta_migrants[i, ]), prob = migratory_survival_bay_delta)
+    } else {
+      round(south_delta_migrants[i, ] * migratory_survival_bay_delta)
+    }
   }))
 
   migrants_at_golden_gate <- rbind(migrants_out_survived, matrix(0, nrow = 8, ncol = 4)) + south_delta_survived
