@@ -60,19 +60,9 @@ all <- nat_spawn %>%
   left_join(grand_tab)
 
 all %>%
-  filter(!(watershed %in% remove_these)) %>%
   ggplot(aes(x = year, group = run)) +
   geom_line(aes(y = nat_spawn), alpha = .1) +
   geom_line(aes(y = observed_nat_spawn), alpha = .1, color = 'red') +
-  facet_wrap(~watershed, scales = 'free_y')
-
-all %>%
-  filter(!(watershed %in% remove_these)) %>%
-  group_by(watershed, year) %>%
-  summarise(nat_spawn = mean(nat_spawn), observed_nat_spawn = mean(observed_nat_spawn)) %>%
-  ggplot(aes(x = year)) +
-  geom_line(aes(y = nat_spawn)) +
-  geom_line(aes(y = observed_nat_spawn), color = 'red') +
   facet_wrap(~watershed, scales = 'free_y')
 
 all %>%
@@ -85,15 +75,34 @@ all %>%
   geom_point() +
   geom_abline(slope = 1, intercept = 0)
 
+
+fdddd <- function(num) {
+  thing <- as.character(sample(1:3,1))
+  d <- switch(thing,
+         '1' = num * runif(1),
+         '2' = min(num *2, 4000),
+         '3' = log(num))
+  return(round(d))
+}
+
 all %>%
+  mutate(nat_spawn_noise = fdddd(nat_spawn)) %>%
   group_by(watershed, year) %>%
   summarise(nat_spawn = mean(nat_spawn),
+            nat_spawn_noise = mean(nat_spawn_noise),
             observed_nat_spawn = mean(observed_nat_spawn)) %>%
   filter(!is.na(observed_nat_spawn)) %>%
   ungroup() %>%
-  summarise(r = cor(nat_spawn, observed_nat_spawn))
-
-
+  summarise(r = cor(nat_spawn, observed_nat_spawn),
+            r_noise = cor(observed_nat_spawn, nat_spawn_noise))
+  #
+d <- all %>%
+  mutate(nat_spawn_noise = fdddd(nat_spawn)) %>%
+  group_by(watershed, year) %>%
+  summarise(nat_spawn = mean(nat_spawn),
+            nat_spawn_noise = mean(nat_spawn_noise),
+            observed_nat_spawn = mean(observed_nat_spawn))
+  cor(d$nat_spawn_noise, d$observed_nat_spawn, use = 'pairwise.complete.obs')
 # library(tidyverse)
 # r2_sim <- sim
 #

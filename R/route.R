@@ -30,7 +30,8 @@ route <- function(year, month, juveniles, inchannel_habitat, floodplain_habitat,
                   .pulse_movement_medium_pulse,
                   .pulse_movement_large_pulse,
                   .pulse_movement_very_large_pulse,
-                  territory_size) {
+                  territory_size,
+                  stochastic) {
 
   natal_watersheds <- fill_natal(juveniles = juveniles,
                                  inchannel_habitat = inchannel_habitat,
@@ -50,10 +51,14 @@ route <- function(year, month, juveniles, inchannel_habitat, floodplain_habitat,
 
   # total fish that will migrate because of pulse flows, this derived using total in river
   # and a binomial selection based on pr of movement due to pulse flows
-  pulse_migrants <- t(sapply(1:nrow(juveniles), function(i) {
-    rbinom(n = 4, size = round(natal_watersheds$inchannel[i, ]), prob = prob_pulse_leave[i, ])
-  }))
-
+  pulse_migrants <-
+    if (stochastic) {
+      t(sapply(1:nrow(juveniles), function(i) {
+        rbinom(n = 4, size = round(natal_watersheds$inchannel[i, ]), prob = prob_pulse_leave[i, ])
+      }))
+    } else {
+      round(natal_watersheds$inchannel * prob_pulse_leave)
+    }
 
   # update in river fish based on the pulse flow results
   natal_watersheds$inchannel <- (natal_watersheds$inchannel - pulse_migrants)
@@ -64,12 +69,16 @@ route <- function(year, month, juveniles, inchannel_habitat, floodplain_habitat,
   if (!is.null(detour)) {
     bypass <- ifelse(detour == 'sutter', "Sutter Bypass", "Yolo Bypass")
 
-    detoured_fish <- t(sapply(1:nrow(natal_watersheds$migrants), function(i) {
-
-      rbinom(n = 4,
-             size = round(natal_watersheds$migrants[i, ]),
-             prob = proportion_flow_bypass[month, year, bypass])
-    }))
+    detoured_fish <-
+      if (stochastic) {
+        t(sapply(1:nrow(natal_watersheds$migrants), function(i) {
+          rbinom(n = 4,
+                 size = round(natal_watersheds$migrants[i, ]),
+                 prob = proportion_flow_bypass[month, year, bypass])
+        }))
+      } else {
+       round(natal_watersheds$migrants * proportion_flow_bypass[month, year, bypass])
+      }
 
     natal_watersheds$migrants <- natal_watersheds$migrants - detoured_fish
     natal_watersheds$detoured <- detoured_fish
@@ -87,7 +96,8 @@ route <- function(year, month, juveniles, inchannel_habitat, floodplain_habitat,
 #' @source IP-117068
 #' @export
 route_bypass <- function(bypass_fish, bypass_habitat, migration_survival_rate,
-                         territory_size) {
+                         territory_size,
+                         stochastic) {
 
   bypass_fish <- fill_regional(juveniles = bypass_fish,
                                habitat = bypass_habitat,
@@ -119,7 +129,8 @@ route_bypass <- function(bypass_fish, bypass_habitat, migration_survival_rate,
 route_regional <- function(month, migrants,
                            inchannel_habitat, floodplain_habitat,
                            prop_pulse_flows, migration_survival_rate,
-                           territory_size) {
+                           territory_size,
+                           stochastic) {
   # fill up upper mainstem, but in river fish can leave due to pulses
 
   regional_fish <- fill_regional(juveniles = migrants,
@@ -247,7 +258,8 @@ route_and_rear_deltas <- function(year, month, migrants, north_delta_fish, south
                                   migratory_survival_sac_delta, migratory_survival_bay_delta,
                                   juveniles_at_chipps, growth_rates,
                                   location_index = c(rep(1, 24), 3, rep(2, 2), rep(4, 4)),
-                                  territory_size) {
+                                  territory_size,
+                                  stochastic) {
 
   prop_delta_fish_entrained <- route_south_delta(freeport_flow = freeport_flows[[month, year]] * 35.3147,
                                                  dcc_closed = cc_gates_days_closed[month],
