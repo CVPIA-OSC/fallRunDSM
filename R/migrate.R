@@ -4,8 +4,12 @@
 #' @param migration_survival_rate The survival rates for s, m, l, and vl fish
 #' @source IP-117068
 #' @export
-migrate <- function(migrants, migration_survival_rate) {
+migrate <- function(migrants, migration_survival_rate, stochastic) {
   t(sapply(1:nrow(migrants), function(i) {
+    if (stochastic) {
       rbinom(n = 4, size = round(migrants[i, ]), prob = migration_survival_rate)
-    }))
+    } else {
+      round(migrants[i, ] * migration_survival_rate)
+    }
+  }))
 }

@@ -260,17 +260,17 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
       if (month == 8) {
         # all remaining fish outmigrate
-        sutter_fish <- migrate(sutter_fish, migratory_survival$sutter)
-        upper_mid_sac_fish <- migrate(upper_mid_sac_fish + juveniles[1:15, ], migratory_survival$uppermid_sac)
+        sutter_fish <- migrate(sutter_fish, migratory_survival$sutter, stochastic = stochastic)
+        upper_mid_sac_fish <- migrate(upper_mid_sac_fish + juveniles[1:15, ], migratory_survival$uppermid_sac, stochastic = stochastic)
         migrants[1:15, ] <- upper_mid_sac_fish + sutter_fish
-        yolo_fish <- migrate(yolo_fish, migratory_survival$yolo)
+        yolo_fish <- migrate(yolo_fish, migratory_survival$yolo, stochastic = stochastic)
         migrants[18:20, ] <- juveniles[18:20, ] + yolo_fish
-        lower_mid_sac_fish <- migrate(lower_mid_sac_fish + migrants, migratory_survival$lowermid_sac)
+        lower_mid_sac_fish <- migrate(lower_mid_sac_fish + migrants, migratory_survival$lowermid_sac, stochastic = stochastic)
         migrants <- lower_mid_sac_fish
         migrants[23, ] <- juveniles[23, ]
-        lower_sac_fish <- migrate(lower_sac_fish + migrants, migratory_survival$lower_sac)
+        lower_sac_fish <- migrate(lower_sac_fish + migrants, migratory_survival$lower_sac, stochastic = stochastic)
         migrants[25:27, ] <- juveniles[25:27, ]
-        san_joaquin_fish <- migrate(juveniles[28:30, ] + san_joaquin_fish, migratory_survival$san_joaquin)
+        san_joaquin_fish <- migrate(juveniles[28:30, ] + san_joaquin_fish, migratory_survival$san_joaquin, stochastic = stochastic)
         migrants[18:20, ] <- migrants[18:20, ] + yolo_fish
         migrants[28:30, ] <- san_joaquin_fish
 
