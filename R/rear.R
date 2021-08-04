@@ -12,19 +12,16 @@
 #' @export
 rear <- function(juveniles, survival_rate, growth, floodplain_juveniles = NULL,
                  floodplain_survival_rate = NULL, floodplain_growth = NULL,
-                 weeks_flooded = NULL, delta = FALSE,
-                 stochastic){
-
-  # if (length(survival_rate) != length(juveniles)) browser()
+                 weeks_flooded = NULL, stochastic){
   survived <-
     if (is.vector(survival_rate)) {
-      if (stochastic) {
-        t(sapply(1:nrow(juveniles), function(watershed) {
+      t(sapply(1:nrow(juveniles), function(watershed) {
+        if (stochastic) {
           rbinom(4, size = round(juveniles[watershed, ]), prob = survival_rate)
-        }))
-      } else {
-        t(round(t(juveniles) * survival_rate))
-      }
+        } else {
+          round(juveniles[watershed, ] * survival_rate)
+        }
+      }))
     } else {
       t(sapply(1:nrow(juveniles), function(watershed) {
         if (stochastic) {
@@ -34,27 +31,26 @@ rear <- function(juveniles, survival_rate, growth, floodplain_juveniles = NULL,
         }
       }))
     }
-
-
   next_juveniles <- round(survived %*% growth)
-
   if(!is.null(floodplain_juveniles)) {
-    if (stochastic) {
-      if (is.vector(floodplain_survival_rate)) {
-        floodplain_juveniles_survived <- t(sapply(1:nrow(floodplain_juveniles), function(watershed) {
+    floodplain_juveniles_survived <- if (is.vector(floodplain_survival_rate)) {
+      t(sapply(1:nrow(floodplain_juveniles), function(watershed) {
+        if (stochastic) {
           rbinom(4, size = round(floodplain_juveniles[watershed, ]), prob = floodplain_survival_rate)
-        }))
-      } else {
-        floodplain_juveniles_survived <- t(sapply(1:nrow(floodplain_juveniles), function(watershed) {
-          rbinom(4, size = round(floodplain_juveniles[watershed, ]), prob = floodplain_survival_rate[watershed, ])
-        }))
-      }
+        } else {
+          round(floodplain_juveniles[watershed, ] * floodplain_survival_rate)
+        }
+      }))
     } else {
-      floodplain_juveniles_survived <- floodplain_juveniles * floodplain_survival_rate
+      t(sapply(1:nrow(floodplain_juveniles), function(watershed) {
+        if (stochastic) {
+          rbinom(4, size = round(floodplain_juveniles[watershed, ]), prob = floodplain_survival_rate[watershed, ])
+        } else {
+          round(floodplain_juveniles[watershed, ] * floodplain_survival_rate[watershed, ])
+        }
+      }))
     }
-
     next_floodplain_juveniles <- c()
-
     for(i in 1:nrow(floodplain_juveniles)) {
       if (weeks_flooded[i] > 0) {
         watershed_floodplain_juveniles <- floodplain_juveniles_survived[i, ] %*% floodplain_growth[ , , weeks_flooded[i]]
@@ -65,7 +61,5 @@ rear <- function(juveniles, survival_rate, growth, floodplain_juveniles = NULL,
     }
     return(list(inchannel = next_juveniles, floodplain = round(next_floodplain_juveniles)))
   }
-
   return(next_juveniles)
 }
-
