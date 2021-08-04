@@ -10,7 +10,7 @@ migrate <- function(migrants, migration_survival_rate,
     if (stochastic) {
       rbinom(n = 4, size = round(migrants[i, ]), prob = migration_survival_rate)
     } else {
-      round(migrants[i, ] * prob = migration_survival_rate)
+      round(migrants[i, ] * migration_survival_rate)
     }
   }))
 }
