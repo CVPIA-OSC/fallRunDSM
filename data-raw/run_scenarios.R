@@ -6,7 +6,7 @@ res <- read_rds('calibration/solution-res4-08-03.rds')
 solution <- res@solution
 params_2021 <- update_params(x = solution, fallRunDSM::params)
 
-s <- fall_run_model(mode = 'seed')
+s <- fall_run_model(mode = 'seed', ..params = params_2021)
 
 baseline <- fall_run_model(scenario = scenarios$NO_ACTION, mode = 'simulate',
                            stochastic = FALSE, ..params = params_2021, seed = s)
