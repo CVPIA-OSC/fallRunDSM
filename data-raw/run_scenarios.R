@@ -1,5 +1,6 @@
 library(tidyverse)
 library(DSMscenario)
+library(parallel)
 
 source("calibration/update_params.R")
 res <- read_rds('calibration/solution-res4-08-03.rds')
@@ -8,38 +9,53 @@ params_2021 <- update_params(x = solution, fallRunDSM::params)
 
 s <- fall_run_model(mode = 'seed', ..params = params_2021)
 
-baseline <- fall_run_model(scenario = scenarios$NO_ACTION, mode = 'simulate',
-                           stochastic = FALSE, ..params = params_2021, seed = s)
+run_scenario <- function(scenario, seed, params) {
+  output <- fall_run_model(scenario = scenarios$ONE, mode = 'simulate',
+                           stochastic = TRUE, ..params = params, seed = seed)
 
-s1 <- fall_run_model(scenario = scenarios$ONE, mode = 'simulate',
-                     stochastic = FALSE, ..params = params_2021, seed = s)
-s2 <- fall_run_model(scenario = scenarios$TWO, mode = 'simulate',
-                     stochastic = FALSE, ..params = params_2021, seed = s)
-s3 <- fall_run_model(scenario = scenarios$THREE, mode = 'simulate',
-                     stochastic = FALSE, ..params = params_2021, seed = s)
-s4 <- fall_run_model(scenario = scenarios$FOUR, mode = 'simulate',
-                     stochastic = FALSE, ..params = params_2021, seed = s)
-s5 <- fall_run_model(scenario = scenarios$FIVE, mode = 'simulate',
-                     stochastic = FALSE, ..params = params_2021, seed = s)
-s6 <- fall_run_model(scenario = scenarios$SIX, mode = 'simulate',
-                     stochastic = FALSE, ..params = params_2021, seed = s)
-s7 <- fall_run_model(scenario = scenarios$SEVEN, mode = 'simulate',
-                     stochastic = FALSE, ..params = params_2021, seed = s)
+  prop_nat <- colSums(output$spawners * output$proportion_natural, na.rm = TRUE)[20]
+  juv_biomass <- colSums(output$juvenile_biomass)[20]
 
-baseline_prop_nat <- colSums(baseline$spawners * baseline$proportion_natural, na.rm = TRUE)[20]
+  return(list(
+    prop_nat = prop_nat,
+    juv_biomass = juv_biomass
+  ))
+}
 
-s1_prop_nat <- colSums(s1$spawners * s1$proportion_natural, na.rm = TRUE)[20]
-s2_prop_nat <- colSums(s2$spawners * s2$proportion_natural, na.rm = TRUE)[20]
-s3_prop_nat <- colSums(s3$spawners * s3$proportion_natural, na.rm = TRUE)[20]
-s4_prop_nat <- colSums(s4$spawners * s4$proportion_natural, na.rm = TRUE)[20]
-s5_prop_nat <- colSums(s5$spawners * s5$proportion_natural, na.rm = TRUE)[20]
-s6_prop_nat <- colSums(s6$spawners * s6$proportion_natural, na.rm = TRUE)[20]
-s7_prop_nat <- colSums(s7$spawners * s7$proportion_natural, na.rm = TRUE)[20]
+baseline <- run_scenario(scenario = scenarios$NO_ACTION, params = params_2021, seed = s)
+s1 <- run_scenario(scenario = scenarios$ONE, params = params_2021, seed = s)
+s2 <- run_scenario(scenario = scenarios$TWO, params = params_2021, seed = s)
+s3 <- run_scenario(scenario = scenarios$THREE, params = params_2021, seed = s)
+s4 <- run_scenario(scenario = scenarios$FOUR, params = params_2021, seed = s)
+s5 <- run_scenario(scenario = scenarios$FIVE, params = params_2021, seed = s)
+s6 <- run_scenario(scenario = scenarios$SIX, params = params_2021, seed = s)
+s7 <- run_scenario(scenario = scenarios$SEVEN, params = params_2021, seed = s)
 
-x <- c(s1_prop_nat, s2_prop_nat, s3_prop_nat,
-       s4_prop_nat, s5_prop_nat, s6_prop_nat,
-       s7_prop_nat)
+(s1$prop_nat - baseline$prop_nat) / baseline$prop_nat
 
-(x - baseline_prop_nat) / baseline_prop_nat
+prop_nats <- c(s1$prop_nat, s2$prop_nat, s3$prop_nat, s4$prop_nat, s5$prop_nat,
+               s6$prop_nat, s7$prop_nat)
+(prop_nats - baseline$prop_nat) / baseline$prop_nat
 
-round((x  - max(x)) / max(x), 2)
+juv_biomasses <- c(s1$juv_biomass, s2$juv_biomass, s3$juv_biomass, s4$juv_biomass,
+                   s5$juv_biomass, s6$juv_biomass, s7$juv_biomass)
+
+(juv_biomasses - baseline$juv_biomass) / baseline$juv_biomass
+
+library(tictoc)
+cores <- detectCores() - 1
+
+tic('baseline 250 times')
+baseline_results <- mclapply(1:250, function(i) {run_scenario(scenario = scenarios$NO_ACTION,
+                                                              params = params_2021, seed = s)},
+                             mc.cores = cores)
+toc()
+
+s1_results <- mclapply(1:250, function(i) {run_scenario(scenario = scenarios$ONE,
+                                                        params = params_2021, seed = s)},
+                       mc.cores = cores)
+
+plot(1:250, cummean(baseline_results$prop_nat))
+plot(1:250, cummean(s1_results$prop_nat))
+
+(mean(s1_results$prop_nat) - mean(baseline_results$prop_nat)) / mean(baseline_results$prop_nat)
