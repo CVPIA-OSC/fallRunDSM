@@ -7,7 +7,7 @@
 IP-117068
 }
 \usage{
-migrate(migrants, migration_survival_rate)
+migrate(migrants, migration_survival_rate, stochastic)
 }
 \arguments{
 \item{migrants}{An n by 4 matrix of juveniles (watersheds by size class)}

@@ -3,4 +3,4 @@
 .RData
 .Ruserdata
 #man/
-calibration/*.rds
+calibration/fits/*.rds
