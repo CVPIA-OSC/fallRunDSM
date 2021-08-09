@@ -21,7 +21,6 @@ params <- list(
   mass_by_size_class = fallRunDSM::mass_by_size_class,
   cross_channel_stray_rate = fallRunDSM::cross_channel_stray_rate,
   stray_rate = fallRunDSM::stray_rate,
-  adult_harvest_rate = fallRunDSM::adult_harvest_rate,
   diversity_group = fallRunDSM::diversity_group,
 
   # Coefficients for adult submodules
