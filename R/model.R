@@ -36,7 +36,10 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
     scenario_data <- DSMscenario::load_scenario(scenario,
                                                 habitat_inputs = habitats,
-                                                species = DSMscenario::species$FALL_RUN)
+                                                species = DSMscenario::species$FALL_RUN,
+                                                spawn_decay_rate = ..params$spawn_decay_rate,
+                                                rear_decay_rate = ..params$rear_decay_rate,
+                                                stochastic = stochastic)
 
     ..params$spawning_habitat <- scenario_data$spawning_habitat
     ..params$inchannel_habitat_fry <- scenario_data$inchannel_habitat_fry
