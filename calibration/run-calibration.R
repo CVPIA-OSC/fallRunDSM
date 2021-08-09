@@ -10,7 +10,7 @@ source("calibration/update_params.R")
 
 params <- DSMCalibrationData::set_synth_years(fallRunDSM::params)
 
-res4 <- readr::read_rds("~/solution-res4-08-03.rds")
+# run 4 has been the best one so far with an r of .677
 
 # Perform calibration --------------------
 res7 <- ga(type = "real-valued",
@@ -37,11 +37,13 @@ res7 <- ga(type = "real-valued",
 
 # Evaluate Results ------------------------------------
 
-readr::write_rds(res7, "~/solution-res7-08-03.rds")
+readr::write_rds(res7, "~/solution-res7-08-04.rds")
 
+res4 <- readr::read_rds("~/solution-res4-08-03.rds") # best
+res7 <- readr::read_rds("~/solution-res7-08-04.rds")
 # watersheds without calibration
 keep <- c(1,6,7,10,12,19,20,23,26:30)
-r1_solution <- res7@solution
+r1_solution <- res4@solution
 
 r1_params <- update_params(x = r1_solution, fallRunDSM::params)
 r1_params <- DSMCalibrationData::set_synth_years(r1_params)
@@ -76,7 +78,12 @@ r1_eval_df %>%
   spread(type, spawners) %>%
   # filter(watershed == "Yuba River") %>%
   ggplot(aes(observed, simulated)) + geom_point() +
-  geom_abline(intercept = 0, slope = 1)
+  geom_abline(intercept = 0, slope = 1) +
+  labs(title = "Observed vs Predicted  r = .65",
+       x = "Observed Natural Spawners",
+       y = "Predicted Natural Spawners") +
+  xlim(0, 60000) +
+  ylim(0, 30000)
 
 r1_eval_df %>%
   spread(type, spawners) %>%

@@ -7,7 +7,7 @@
 IP-117068
 }
 \usage{
-ocean_transition_month()
+ocean_transition_month(stochastic)
 }
 \description{
 Calculates the month juveniles transition to the ocean

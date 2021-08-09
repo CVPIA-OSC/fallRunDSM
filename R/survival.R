@@ -360,13 +360,9 @@ get_rearing_survival <- function(year, month,
                   stochastic = stochastic)
   }))
 
-  weird_survival_adjustment <- c(1, 0.025, 1, 0.025, 0.025, 1, 1, 0.5, 0.25, 1, 0.025, 1, 0.025,
-                                 0.025, 0.025, 1, 1, 0.025, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1)
 
   river_surv <- matrix(unlist(rear_surv[ , 1]), ncol = 4, byrow = TRUE)
   flood_surv <- matrix(unlist(rear_surv[ , 2]), ncol = 4, byrow = TRUE)
-  river_surv[ , 1:3] <- river_surv[ , 1:3] * weird_survival_adjustment
-  flood_surv[ , 1:3] <- flood_surv[ , 1:3] * weird_survival_adjustment
 
   if (mode != "seed") {
     river_surv <- pmin(river_surv * survival_adjustment[, year], 1)

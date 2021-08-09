@@ -15,7 +15,6 @@ rear(
   floodplain_survival_rate = NULL,
   floodplain_growth = NULL,
   weeks_flooded = NULL,
-  delta = FALSE,
   stochastic
 )
 }

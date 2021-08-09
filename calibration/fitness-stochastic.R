@@ -124,8 +124,6 @@ fall_run_fitness_stoch <- function(
 
 
   tryCatch({
-    # seed <- sample(1:300, 1)
-    # set.seed(1)
     preds <- fall_run_model(mode = "calibrate",
                             seeds = seeds,
                             stochastic = FALSE,
@@ -134,15 +132,12 @@ fall_run_fitness_stoch <- function(
     keep <- c(1,6,7,10,12,19,20,23,26:30)
     known_nats <- known_adults[keep, 6:20] * (1 - params_init$proportion_hatchery[keep])
     mean_escapent <-rowMeans(known_nats, na.rm = TRUE)
-    scaled_nat_obs <- known_nats / mean_escapent
-    scaled_pred <- preds[keep, ] / mean_escapent
-    # num_negative_cor <- sum(sapply(1:length(keep), function(i) {
-    #   cor(scaled_pred[i,], scaled_nat_obs[i,], use = "pairwise.complete.obs")
-    # }) < 0)
+    watershed_cor <- sapply(1:length(keep), function(i) {
+      cor(preds[i,], known_nats[i,], use = "pairwise.complete.obs")
+    })
     sse <- sum(((preds[keep,] - known_nats)^2)/mean_escapent, na.rm = TRUE)
 
-    # return(sse * (num_negative_cor+0.001))
-    return(sse)
+    return(sse * sum(watershed_cor < 0) * 1e5)
   },
   error = function(e) return(1e12),
   warning = function(w) return(1e12)
@@ -152,7 +147,7 @@ fall_run_fitness_stoch <- function(
 
 # x <- runif(41)
 #
-# fall_run_fitness_stoch(
+# print(fall_run_fitness_stoch(
 #   known_adults = DSMCalibrationData::grandtab_observed$fall,
 #   seeds = DSMCalibrationData::grandtab_imputed$fall,
 #   params = params,
@@ -161,8 +156,8 @@ fall_run_fitness_stoch <- function(
 #   x[20], x[21], x[22], x[23], x[24], x[25], x[26], x[27], x[28],
 #   x[29], x[30], x[31], x[32], x[33], x[34], x[35], x[36], x[37],
 #   x[38], x[39], x[40], x[41]
-# )
-
-
+# ))
+#
+#
 
 
