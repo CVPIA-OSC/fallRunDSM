@@ -14,7 +14,8 @@ route_regional(
   floodplain_habitat,
   prop_pulse_flows,
   migration_survival_rate,
-  territory_size
+  territory_size,
+  stochastic
 )
 }
 \arguments{

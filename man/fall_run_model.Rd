@@ -11,7 +11,8 @@ fall_run_model(
   scenario = NULL,
   mode = c("seed", "simulate", "calibrate"),
   seeds = NULL,
-  ..params = fallRunDSM::params
+  ..params = fallRunDSM::params,
+  stochastic = FALSE
 )
 }
 \arguments{
@@ -28,4 +29,10 @@ returned value can be fed into the model again as the value for the seeds argume
 \description{
 Fall Run Chinook life cycle model used for CVPIA's Structured
 Decision Making Process
+}
+\examples{
+fall_run_seeds <- fallRunDSM::fall_run_model(mode = "seed")
+fallRunDSM::fall_run_model(scenario = DSMscenario::scenarios$ONE,
+                           mode = "simulate",
+                           seeds = fall_run_seeds)
 }

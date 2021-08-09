@@ -3,7 +3,13 @@
 \docType{data}
 \name{params}
 \alias{params}
+\alias{params_2019}
 \title{Model Parameters}
+\usage{
+params
+
+params_2019
+}
 \description{
 A list containing all parameters needed for running the \code{\link{fall_run_model}}. Parameters with a single
 period in front are model or submodel coefficients. Parameters with double periods in front of them are calibrated model parameters.

@@ -30,7 +30,8 @@ surv_juv_rear(
   .medium = fallRunDSM::params$.surv_juv_rear_medium,
   .large = fallRunDSM::params$.surv_juv_rear_large,
   .floodplain = fallRunDSM::params$.surv_juv_rear_floodplain,
-  min_survival_rate = fallRunDSM::params$min_survival_rate
+  min_survival_rate = fallRunDSM::params$min_survival_rate,
+  stochastic
 )
 }
 \arguments{

@@ -29,7 +29,8 @@ get_spawning_adults(
   .adult_stray_prop_delta_trans,
   .adult_en_route_migratory_temp,
   .adult_en_route_bypass_overtopped,
-  .adult_en_route_adult_harvest_rate
+  .adult_en_route_adult_harvest_rate,
+  stochastic
 )
 }
 \arguments{

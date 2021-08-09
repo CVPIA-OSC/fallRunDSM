@@ -24,7 +24,8 @@ route_and_rear_deltas(
   juveniles_at_chipps,
   growth_rates,
   location_index = c(rep(1, 24), 3, rep(2, 2), rep(4, 4)),
-  territory_size
+  territory_size,
+  stochastic
 )
 }
 \arguments{

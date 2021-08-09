@@ -25,7 +25,8 @@ surv_juv_delta(
   ..surv_juv_delta_total_diverted = fallRunDSM::params$..surv_juv_delta_total_diverted,
   .medium = fallRunDSM::params$.surv_juv_delta_medium,
   .large = fallRunDSM::params$.surv_juv_delta_large,
-  min_survival_rate = fallRunDSM::params$min_survival_rate
+  min_survival_rate = fallRunDSM::params$min_survival_rate,
+  stochastic
 )
 }
 \arguments{

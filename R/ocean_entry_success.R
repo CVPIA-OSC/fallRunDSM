@@ -12,7 +12,8 @@
 ocean_entry_success <- function(migrants, month, avg_ocean_transition_month,
                                 .ocean_entry_success_length = fallRunDSM::params$.ocean_entry_success_length,
                                 ..ocean_entry_success_int = fallRunDSM::params$..ocean_entry_success_int,
-                                .ocean_entry_success_months = fallRunDSM::params$.ocean_entry_success_months){
+                                .ocean_entry_success_months = fallRunDSM::params$.ocean_entry_success_months,
+                                stochastic){
 
   month_since <- ifelse(month <= avg_ocean_transition_month, 0, max(1, month - avg_ocean_transition_month))
 
@@ -24,7 +25,9 @@ ocean_entry_success <- function(migrants, month, avg_ocean_transition_month,
                                               .ocean_entry_success_length))
   }
 
-  if (max(migrants) <= 1000000000) {
+  survival_probs <- pmin(survival_probs, 1)
+
+  if (stochastic) {
     survived <- t(sapply(1:31, function(watershed) {
       rbinom(4, size = migrants[watershed, ], prob = survival_probs[watershed, ])
     }))
