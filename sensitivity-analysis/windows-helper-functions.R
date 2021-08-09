@@ -4,6 +4,9 @@ library(purrr)
 library(parallel)
 library(doParallel)
 
+# don't need to do anything special for habitat inputs, max theoretical is 2x max value
+# which is less than 1.5
+
 # set up for parallel processing ----------------------------------
 no_cores <- detectCores(logical = TRUE)
 cl <- makeCluster(no_cores-1)
@@ -61,9 +64,15 @@ param_sensitivity <- function(param) {
   purrr::map_df(scalars, ~run_scenarios_scaled_param(param, .))
 }
 
-# x <- param_sensitivity("hatchery_allocation")
 library(tictoc)
-tic('run once')
-xx <- run_scenarios_scaled_param("hatchery_allocation", .5)
-# yy <- run_scenarios_scaled_param("hatchery_allocation", 1.5)
+tic("one param")
+x <- param_sensitivity("hatchery_allocation")
 toc()
+y <- param_sensitivity("hatchery_allocation")
+
+# model weights
+params$surv_juv_outmigration_sac_delta_model_weights
+
+coefficients <- names(params)[grep('\\.', names(params))]
+model_inputs <- names(params)[grep('\\.', names(params), invert = TRUE)]
+

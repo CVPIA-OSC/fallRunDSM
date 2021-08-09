@@ -5,9 +5,11 @@ library(parallel)
 
 run_scenario <- function(scenario, sensi_params) {
   seeds <- fall_run_model(mode = "seed", ..params = sensi_params, stochastic = FALSE)
+
   run <- fall_run_model(scenario = scenario,
                         mode = "simulate", seeds = seeds,
                         ..params = sensi_params, stochastic = FALSE)
+
   return(mean(colSums(run$spawners * run$proportion_natural, na.rm = TRUE)))
 }
 
@@ -46,12 +48,16 @@ run_scenarios_scaled_param <- function(param, scalar) {
                     scenario_13 = scenario_results[14]))
 }
 
-param_sensitivity <- function(param) {
-  scalars <- seq(.5, 1.5, by = .1)
-  purrr::map_df(scalars, ~run_scenarios_scaled_param(param, .))
-}
-
+# param_sensitivity <- function(param) {
+#   scalars <- seq(.5, 1.5, by = .1)
+#   purrr::map_df(scalars, ~run_scenarios_scaled_param(param, .))
+# }
+#
 library(tictoc)
 tic('run once')
 xx <- run_scenarios_scaled_param("hatchery_allocation", .5)
+yy <- run_scenarios_scaled_param("hatchery_allocation", .5)
 toc()
+
+
+# run_scenario(scenario = DSMscenario::scenarios$NO_ACTION, sensi_params = sensi_params)

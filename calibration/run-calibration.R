@@ -4,18 +4,17 @@ library(dplyr)
 library(tidyr)
 library(ggplot2)
 
-source("calibration/fitness-stochastic.R")
-source("calibration/ga_population_init.R")
-source("calibration/update_params.R")
+source("calibration/fitness.R")
+source("calibration/update-params.R")
 
 params <- DSMCalibrationData::set_synth_years(fallRunDSM::params)
 
-# run 4 has been the best one so far with an r of .677
+current_best_solution <- read_rds("calibration/solution-res7-08-05.rds")
 
 # Perform calibration --------------------
-res7 <- ga(type = "real-valued",
+res <- ga(type = "real-valued",
            fitness =
-             function(x) -fall_run_fitness_stoch(
+             function(x) -fall_run_fitness(
                known_adults = DSMCalibrationData::grandtab_observed$fall,
                seeds = DSMCalibrationData::grandtab_imputed$fall,
                params = params,
@@ -32,18 +31,13 @@ res7 <- ga(type = "real-valued",
            run = 50,
            parallel = TRUE,
            pmutation = .4,
-           suggestions = res6@solution)
+           suggestions = current_best_solution@solution)
 
 
 # Evaluate Results ------------------------------------
 
-readr::write_rds(res7, "~/solution-res7-08-04.rds")
-
-res4 <- readr::read_rds("~/solution-res4-08-03.rds") # best
-res7 <- readr::read_rds("~/solution-res7-08-04.rds")
-# watersheds without calibration
 keep <- c(1,6,7,10,12,19,20,23,26:30)
-r1_solution <- res4@solution
+r1_solution <- res@solution
 
 r1_params <- update_params(x = r1_solution, fallRunDSM::params)
 r1_params <- DSMCalibrationData::set_synth_years(r1_params)
