@@ -3,12 +3,15 @@ library(tidyverse)
 # 2019 Calibration Parameters ------------
 params_2019 <- list(
 
+  # Data from DSMscenarios
+  spawn_decay_rate = DSMscenario::spawn_decay_rate,
+  rear_decay_rate = DSMscenario::rear_decay_rate,
+
   # Data from fallRunDSM cache-data (values vary by run)
   hatchery_allocation = fallRunDSM::hatchery_allocation,
   natural_adult_removal_rate = fallRunDSM::natural_adult_removal_rate,
   proportion_hatchery = fallRunDSM::proportion_hatchery,
   month_return_proportions = fallRunDSM::month_return_proportions,
-  survival_betas = fallRunDSM::survival_betas,
   growth_rates = fallRunDSM::growth_rates_inchannel,
   growth_rates_floodplain = fallRunDSM::growth_rates_floodplain,
   mass_by_size_class = fallRunDSM::mass_by_size_class,

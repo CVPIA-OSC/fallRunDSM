@@ -66,7 +66,6 @@ surv_juv_rear <- function(max_temp_thresh, avg_temp_thresh, high_predation,
     m2 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_floodplain + .medium)) ^ prop_fp
     l2 <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score_floodplain + .large)) ^ prop_fp
   } else {
-    # TODO after J+A discussion update
     s1 <- (boot::inv.logit(base_score_inchannel) * (1 - max_temp_thresh)) + (min_survival_rate * max_temp_thresh)
     m1 <- (boot::inv.logit(base_score_inchannel + .medium) * (1 - max_temp_thresh)) + (min_survival_rate * max_temp_thresh)
     l1 <- (boot::inv.logit(base_score_inchannel + .large) * (1 - max_temp_thresh)) + (min_survival_rate * max_temp_thresh)
@@ -121,7 +120,6 @@ surv_juv_bypass <- function(max_temp_thresh, avg_temp_thresh, high_predation,
     m <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score + .medium))
     l <- ifelse(max_temp_thresh, min_survival_rate, boot::inv.logit(base_score + .large))
   } else {
-    # TODO update after discussion
     s <- (boot::inv.logit(base_score) * (1 - max_temp_thresh)) + (min_survival_rate * max_temp_thresh)
     m <- (boot::inv.logit(base_score + .medium) * (1 - max_temp_thresh)) + (min_survival_rate * max_temp_thresh)
     l <- (boot::inv.logit(base_score + .large) * (1 - max_temp_thresh)) + (min_survival_rate * max_temp_thresh)
@@ -165,7 +163,8 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
                            ..surv_juv_delta_total_diverted = fallRunDSM::params$..surv_juv_delta_total_diverted,
                            .medium = fallRunDSM::params$.surv_juv_delta_medium,
                            .large =  fallRunDSM::params$.surv_juv_delta_large,
-                           min_survival_rate = fallRunDSM::params$min_survival_rate){
+                           min_survival_rate = fallRunDSM::params$min_survival_rate,
+                           stochastic){
   # north delta
   north_delta_surv <- c(rep((avg_temp <= 16.5)*.42 + (avg_temp > 16.5 & avg_temp < 19.5) * 0.42 /
                               (1.55^(avg_temp-15.5)) + (avg_temp > 19.5 & avg_temp < 25)*0.035,3), 1)
@@ -178,10 +177,16 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
     .prop_diverted * prop_diverted[2] +
     .surv_juv_delta_total_diverted * ..surv_juv_delta_total_diverted * total_diverted[2]
 
-  #TODO add stochastic branch after discussion
+  if (stochastic) {
   s <- ifelse(max_temp_thresh[2], min_survival_rate, boot::inv.logit(base_score))
   m <- ifelse(max_temp_thresh[2], min_survival_rate, boot::inv.logit(base_score + .medium))
   l <- ifelse(max_temp_thresh[2], min_survival_rate, boot::inv.logit(base_score + .large))
+  } else {
+    s <- (boot::inv.logit(base_score) * (1 - max_temp_thresh[2])) + (min_survival_rate * max_temp_thresh[2])
+    m <- (boot::inv.logit(base_score + .medium) * (1 - max_temp_thresh[2])) + (min_survival_rate * max_temp_thresh[2])
+    l <- (boot::inv.logit(base_score + .large) * (1 - max_temp_thresh[2])) + (min_survival_rate * max_temp_thresh[2])
+  }
+
 
   south_delta_surv <- cbind(s = s, m = m, l = l, vl = 1)
   result <- rbind("north_delta" = north_delta_surv, "south_delta" = south_delta_surv)
@@ -384,7 +389,6 @@ get_rearing_survival <- function(year, month,
   sutter_surv <- bp_surv
   yolo_surv <- bp_surv
 
-  # TODO update with stochastic after discussion
   delta_juv_surv <- surv_juv_delta(avg_temp = avg_temp_delta[month, year, "North Delta"],
                                    max_temp_thresh = maxT25D,
                                    avg_temp_thresh = aveT20D,
@@ -402,7 +406,8 @@ get_rearing_survival <- function(year, month,
                                    .prop_diverted = .surv_juv_delta_prop_diverted,
                                    .medium = .surv_juv_delta_medium,
                                    .large = .surv_juv_delta_large,
-                                   min_survival_rate = min_survival_rate)
+                                   min_survival_rate = min_survival_rate,
+                                   stochastic = stochastic)
 
   return(
     list(
