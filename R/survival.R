@@ -178,9 +178,9 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
     .surv_juv_delta_total_diverted * ..surv_juv_delta_total_diverted * total_diverted[2]
 
   if (stochastic) {
-  s <- ifelse(max_temp_thresh[2], min_survival_rate, boot::inv.logit(base_score))
-  m <- ifelse(max_temp_thresh[2], min_survival_rate, boot::inv.logit(base_score + .medium))
-  l <- ifelse(max_temp_thresh[2], min_survival_rate, boot::inv.logit(base_score + .large))
+    s <- ifelse(max_temp_thresh[2], min_survival_rate, boot::inv.logit(base_score))
+    m <- ifelse(max_temp_thresh[2], min_survival_rate, boot::inv.logit(base_score + .medium))
+    l <- ifelse(max_temp_thresh[2], min_survival_rate, boot::inv.logit(base_score + .large))
   } else {
     s <- (boot::inv.logit(base_score) * (1 - max_temp_thresh[2])) + (min_survival_rate * max_temp_thresh[2])
     m <- (boot::inv.logit(base_score + .medium) * (1 - max_temp_thresh[2])) + (min_survival_rate * max_temp_thresh[2])
@@ -483,19 +483,17 @@ surv_juv_outmigration_sac_delta <- function(delta_flow, avg_temp, perc_diversion
   base_score2 <- .intercept_two + .avg_temp * avg_temp
   base_score3 <- .intercept_three + .perc_diversions * perc_diversions
 
-  s <- pmin(boot::inv.logit(base_score1) * model_weights[1] +
-              boot::inv.logit(base_score2) * model_weights[2] +
-              boot::inv.logit(base_score3) * model_weights[3], 1)
+  s <- boot::inv.logit(base_score1) * model_weights[1] +
+    boot::inv.logit(base_score2) * model_weights[2] +
+    boot::inv.logit(base_score3) * model_weights[3]
 
-  m <- pmin(boot::inv.logit(base_score1 + .medium) * model_weights[1] +
-              boot::inv.logit(base_score2 + .medium) * model_weights[2] +
-              boot::inv.logit(base_score3 + .medium) * model_weights[3], 1)
+  m <- boot::inv.logit(base_score1 + .medium) * model_weights[1] +
+    boot::inv.logit(base_score2 + .medium) * model_weights[2] +
+    boot::inv.logit(base_score3 + .medium) * model_weights[3]
 
-
-  vl <- l <- pmin(boot::inv.logit(base_score1 + .large) * model_weights[1] +
-                    boot::inv.logit(base_score2 + .large) * model_weights[2] +
-                    boot::inv.logit(base_score3 + .large) * model_weights[3], 1)
-
+  vl <- l <- boot::inv.logit(base_score1 + .large) * model_weights[1] +
+    boot::inv.logit(base_score2 + .large) * model_weights[2] +
+    boot::inv.logit(base_score3 + .large) * model_weights[3]
   cbind(s = s, m = m, l = l, vl = vl)
 }
 
