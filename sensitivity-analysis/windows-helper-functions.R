@@ -35,9 +35,19 @@ run_scenarios_scaled_param <- function(param, scalar) {
 
   sensi_params <- fallRunDSM::params
   sensi_params[param][[1]] <-
-    if (param %in% c("mean_egg_temp_effect", "spawn_decay_rate", "rear_decay_rate")) {
-      scaled_param <- sensi_params[param][[1]] * scalar
-      boot::inv.logit(log((scaled_param + 1e-7) / ((1 - scaled_param) + 1e-7)))
+    if (param %in% c("cc_gates_prop_days_closed", "cross_channel_stray_rate",
+                     "delta_prop_high_predation", "delta_proportion_diverted",
+                     "growth_rates", "growth_rates_floodplain",
+                     "hatchery_allocation", "mean_egg_temp_effect",
+                     "migratory_temperature_proportion_over_20", "min_survival_rate",
+                     "month_return_proportions", "natural_adult_removal_rate",
+                     "prob_nest_scoured", "prob_strand_early", "prop_flow_natal",
+                     "prop_high_predation", "prop_pulse_flows", "proportion_diverted",
+                     "proportion_flow_bypass", "rear_decay_rate", "spawn_decay_rate",
+                     "spawn_success_sex_ratio", "stray_rate")) {
+      boot::inv.logit(log((sensi_params[param][[1]] + 1e-7) / ((1 - sensi_params[param][[1]]) + 1e-7)) * scalar)
+    } else if (param == "surv_juv_outmigration_sac_delta_model_weights") {
+      scalar
     } else {
       sensi_params[param][[1]] * scalar
     }
@@ -45,7 +55,7 @@ run_scenarios_scaled_param <- function(param, scalar) {
   scenario_results_list <- parLapply(cl, scenarios,
                                      fun = function(scenario) {
                                        run_scenario(scenario, sensi_params)
-                                       })
+                                     })
 
   scenario_results <- unlist(scenario_results_list)
 
@@ -60,7 +70,18 @@ run_scenarios_scaled_param <- function(param, scalar) {
 }
 
 param_sensitivity <- function(param) {
-  scalars <- seq(.5, 1.5, by = .1)
+  scalars <- if (param == "weeks_flooded") {
+    seq(0, 4, by = 1)
+  } else if (param == "surv_juv_outmigration_sac_delta_model_weights") {
+    # ?
+  } else if (param == "cc_gates_days_closed") {
+    # ?
+    seq(1, 31, by = 1)
+  } else {
+    # default steps
+    seq(.5, 1.5, by = .1)
+  }
+
   purrr::map_df(scalars, ~run_scenarios_scaled_param(param, .))
 }
 
@@ -70,9 +91,8 @@ x <- param_sensitivity("hatchery_allocation")
 toc()
 y <- param_sensitivity("hatchery_allocation")
 
-# model weights
-params$surv_juv_outmigration_sac_delta_model_weights
 
 coefficients <- names(params)[grep('\\.', names(params))]
-model_inputs <- names(params)[grep('\\.', names(params), invert = TRUE)]
+model_inputs <- sort(names(params)[grep('\\.', names(params), invert = TRUE)])
+
 

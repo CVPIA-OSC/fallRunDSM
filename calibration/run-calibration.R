@@ -3,6 +3,7 @@ library(GA)
 library(dplyr)
 library(tidyr)
 library(ggplot2)
+library(readr)
 
 source("calibration/fitness.R")
 source("calibration/update-params.R")
@@ -73,7 +74,7 @@ r1_eval_df %>%
   # filter(watershed == "Yuba River") %>%
   ggplot(aes(observed, simulated)) + geom_point() +
   geom_abline(intercept = 0, slope = 1) +
-  labs(title = "Observed vs Predicted  r = .65",
+  labs(title = "Observed vs Predicted",
        x = "Observed Natural Spawners",
        y = "Predicted Natural Spawners") +
   xlim(0, 60000) +
