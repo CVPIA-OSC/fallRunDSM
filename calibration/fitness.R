@@ -123,21 +123,27 @@ fall_run_fitness <- function(
     `San Joaquin River` = default_ocean_entry_surv)
 
 
+  keep <- c(1,6,7,10,12,19,20,23,26:30)
+  num_obs <- rowSums(!is.na(known_adults[keep, 6:20]))
+  total_obs <- sum(!is.na(known_adults[keep, 6:20]))
+  weights <- num_obs / total_obs
+
+
   tryCatch({
     preds <- fall_run_model(mode = "calibrate",
                             seeds = seeds,
                             stochastic = FALSE,
                             ..params = params_init)
 
-    keep <- c(1,6,7,10,12,19,20,23,26:30)
     known_nats <- known_adults[keep, 6:20] * (1 - params_init$proportion_hatchery[keep])
     mean_escapent <-rowMeans(known_nats, na.rm = TRUE)
+
     watershed_cor <- sapply(1:length(keep), function(i) {
       cor(preds[i,], known_nats[i,], use = "pairwise.complete.obs")
     })
-    sse <- sum(((preds[keep,] - known_nats)^2)/mean_escapent, na.rm = TRUE)
+    sse <- sum(((preds[keep,] - known_nats)^2 * weights)/mean_escapent, na.rm = TRUE)
 
-    return(sse * sum(watershed_cor < 0) * 1e5)
+    return(sse)
   },
   error = function(e) return(1e12),
   warning = function(w) return(1e12)
