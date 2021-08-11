@@ -35,7 +35,8 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
     scenario_data <- DSMscenario::load_scenario(scenario,
                                                 habitat_inputs = habitats,
-                                                species = DSMscenario::species$FALL_RUN)
+                                                species = DSMscenario::species$FALL_RUN,
+                                                stochastic = stochastic)
 
     ..params$spawning_habitat <- scenario_data$spawning_habitat
     ..params$inchannel_habitat_fry <- scenario_data$inchannel_habitat_fry
@@ -76,13 +77,6 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
   if (mode == 'calibrate') {
     calculated_adults <- matrix(0, nrow = 31, ncol = 30)
-    # tibble(
-    #   watershed,
-    #   size,
-    #   year,
-    #   month,
-    #   count
-    # )
   }
 
   adults <- switch (mode,
@@ -116,6 +110,9 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                     tisdale_bypass_watershed = ..params$tisdale_bypass_watershed,
                                     yolo_bypass_watershed = ..params$yolo_bypass_watershed,
                                     migratory_temperature_proportion_over_20 = ..params$migratory_temperature_proportion_over_20,
+                                    natural_adult_removal_rate = ..params$natural_adult_removal_rate,
+                                    cross_channel_stray_rate = ..params$cross_channel_stray_rate,
+                                    stray_rate = ..params$stray_rate,
                                     ..surv_adult_enroute_int = ..params$..surv_adult_enroute_int,
                                     .adult_stray_intercept = ..params$.adult_stray_intercept,
                                     .adult_stray_wild = ..params$.adult_stray_wild,

@@ -32,6 +32,9 @@ get_spawning_adults <- function(year, adults, hatch_adults, mode,
                                 tisdale_bypass_watershed,
                                 yolo_bypass_watershed,
                                 migratory_temperature_proportion_over_20,
+                                natural_adult_removal_rate,
+                                cross_channel_stray_rate,
+                                stray_rate,
                                 ..surv_adult_enroute_int,
                                 .adult_stray_intercept,
                                 .adult_stray_wild,
@@ -60,9 +63,9 @@ get_spawning_adults <- function(year, adults, hatch_adults, mode,
       if (stochastic) {
         rbinom(n = 31,
                size = round(adults_by_month[, month]),
-               prob = 1 - fallRunDSM::params$natural_adult_removal_rate)
+               prob = 1 - natural_adult_removal_rate)
       } else {
-        round(adults_by_month[, month] * (1 - fallRunDSM::params$natural_adult_removal_rate))
+        round(adults_by_month[, month] * (1 - natural_adult_removal_rate))
       }
     })
 
@@ -73,14 +76,21 @@ get_spawning_adults <- function(year, adults, hatch_adults, mode,
   } else  {
 
     adults_by_month <- t(sapply(1:31, function(watershed) {
+      if (stochastic) {
         rmultinom(1, adults[watershed, year], month_return_proportions)
+      } else {
+        round(adults[watershed, year] * month_return_proportions)
+      }
     }))
 
     hatchery_by_month <- t(sapply(1:31, function(watershed) {
+      if (stochastic) {
         rmultinom(1, hatch_adults[watershed], month_return_proportions)
+      } else {
+        round(hatch_adults[watershed] * month_return_proportions)
+      }
     }))
 
-    #TODO random variable
     stray_props <- sapply(10:12, function(month) {
       adult_stray(wild = 1,
                   natal_flow = prop_flow_natal[ , year],
@@ -95,19 +105,30 @@ get_spawning_adults <- function(year, adults, hatch_adults, mode,
     })
 
     straying_adults <- sapply(1:3, function(month) {
-      rbinom(n = 31, adults_by_month[, month], stray_props[, month])
+      if (stochastic) {
+        rbinom(n = 31, adults_by_month[, month], stray_props[, month])
+      } else {
+        round(adults_by_month[, month] * stray_props[, month])
+      }
     })
 
     south_delta_routed_adults <- round(colSums(straying_adults * south_delta_routed_watersheds))
     south_delta_stray_adults <- sapply(1:3, function(month) {
-        as.vector(rmultinom(1, south_delta_routed_adults[month], fallRunDSM::params$cross_channel_stray_rate))
+      if (stochastic) {
+        as.vector(rmultinom(1, south_delta_routed_adults[month], cross_channel_stray_rate))
+      } else {
+        round(south_delta_routed_adults[month] * cross_channel_stray_rate)
+      }
     })
 
     remaining_stray_adults <- round(colSums(straying_adults * (1 - south_delta_routed_watersheds)))
     stray_adults <- sapply(1:3, function(month) {
-        as.vector(rmultinom(1, remaining_stray_adults[month], fallRunDSM::params$stray_rate))
+      if (stochastic) {
+        as.vector(rmultinom(1, remaining_stray_adults[month], stray_rate))
+      } else {
+        round(remaining_stray_adults[month] * stray_rate)
+      }
     })
-
 
     adults_after_stray <- adults_by_month - straying_adults + south_delta_stray_adults + stray_adults
 
@@ -134,15 +155,27 @@ get_spawning_adults <- function(year, adults, hatch_adults, mode,
 
 
     adults_survived_to_spawning <- sapply(1:3, function(month) {
-      rbinom(31, round(adults_after_stray[, month]), adult_en_route_surv[, month])
+      if (stochastic) {
+        rbinom(31, round(adults_after_stray[, month]), adult_en_route_surv[, month])
+      } else {
+        round(adults_after_stray[, month] * adult_en_route_surv[, month])
+      }
     })
 
     surviving_natural_adults_by_month <- sapply(1:3, function(month) {
-      rbinom(31, round(adults_survived_to_spawning[, month]), (1 - fallRunDSM::params$natural_adult_removal_rate))
+      if (stochastic) {
+        rbinom(31, round(adults_survived_to_spawning[, month]), (1 - natural_adult_removal_rate))
+      } else {
+        round(adults_survived_to_spawning[, month] * (1 - natural_adult_removal_rate))
+      }
     })
 
     surviving_hatchery_adults_by_month <- sapply(1:3, function(month) {
-      rbinom(31, round(hatchery_by_month[, month]), adult_en_route_surv[, month])
+      if (stochastic) {
+        rbinom(31, round(hatchery_by_month[, month]), adult_en_route_surv[, month])
+      } else {
+        round(hatchery_by_month[, month] * adult_en_route_surv[, month])
+      }
     })
 
     surviving_natural_adults <- rowSums(surviving_natural_adults_by_month)
