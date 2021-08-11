@@ -59,6 +59,10 @@ run_scenarios_scaled_param <- function(param, scalar) {
 
   scenario_results <- unlist(scenario_results_list)
 
+  if (is.vector(scalar)) {
+    scalar <- paste(round(scalar, 2), collapse = ",")
+  }
+
   return(data.frame(param, scalar, base = scenario_results[1],
                     scenario_1 = scenario_results[2], scenario_2 = scenario_results[3],
                     scenario_3 = scenario_results[4], scenario_4 = scenario_results[5],
@@ -73,9 +77,15 @@ param_sensitivity <- function(param) {
   scalars <- if (param == "weeks_flooded") {
     seq(0, 4, by = 1)
   } else if (param == "surv_juv_outmigration_sac_delta_model_weights") {
-    # ?
+    list(c(0.5,0,0.5),
+         c(0.5,0.5,0),
+         c(1,0,0),
+         rep(1/3,3),
+         c(0,1,0),
+         c(0,0.5,0.5),
+         c(0,0,1))
   } else if (param == "cc_gates_days_closed") {
-    # ?
+    # TODO is this correct ?
     seq(1, 31, by = 1)
   } else {
     # default steps
@@ -87,12 +97,13 @@ param_sensitivity <- function(param) {
 
 library(tictoc)
 tic("one param")
-x <- param_sensitivity("hatchery_allocation")
+x <- param_sensitivity("surv_juv_outmigration_sac_delta_model_weights")
 toc()
+View(x)
+
 y <- param_sensitivity("hatchery_allocation")
 
-
+# how to separate coefficients from other model inputs within params
 coefficients <- names(params)[grep('\\.', names(params))]
 model_inputs <- sort(names(params)[grep('\\.', names(params), invert = TRUE)])
-
 
