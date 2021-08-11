@@ -12,6 +12,10 @@ dimnames(params$inchannel_habitat_fry) <- rear_dimnames
 all_inputs$IChab.juv -> params$inchannel_habitat_juvenile[,,1:20]
 dimnames(params$inchannel_habitat_juvenile) <- rear_dimnames
 
+flood_dimnames <- dimnames(params$floodplain_habitat)
+all_inputs$floodP -> params$floodplain_habitat[,,1:20]
+flood_dimnames -> dimnames(params$floodplain_habitat)
+
 bypass_dimnames <- dimnames(params$sutter_habitat)
 all_inputs$IChab.sutter -> params$sutter_habitat[,1:20]
 dimnames(params$sutter_habitat) <- bypass_dimnames
