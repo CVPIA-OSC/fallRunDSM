@@ -55,7 +55,7 @@ get_spawning_adults <- function(year, adults, hatch_adults, mode,
       if (stochastic) {
         rmultinom(1, adults[watershed, adult_index], month_return_proportions)
       } else {
-        round(adults[watershed, adult_index] * month_return_proportions)
+        adults[watershed, adult_index] * month_return_proportions
       }
     }))
 
@@ -65,7 +65,7 @@ get_spawning_adults <- function(year, adults, hatch_adults, mode,
                size = round(adults_by_month[, month]),
                prob = 1 - natural_adult_removal_rate)
       } else {
-        round(adults_by_month[, month] * (1 - natural_adult_removal_rate))
+        adults_by_month[, month] * (1 - natural_adult_removal_rate)
       }
     })
 

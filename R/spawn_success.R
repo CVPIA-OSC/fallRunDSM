@@ -23,7 +23,7 @@ spawn_success <- function(escapement, adult_prespawn_survival, egg_to_fry_surviv
   spawner_potential <- if(stochastic) {
     rbinom(31, round(escapement), (adult_prespawn_survival * sex_ratio))
   } else {
-    round(escapement * adult_prespawn_survival * sex_ratio)
+    escapement * adult_prespawn_survival * sex_ratio
   }
 
   spawners <- pmin(spawner_potential, capacity)
@@ -34,7 +34,7 @@ spawn_success <- function(escapement, adult_prespawn_survival, egg_to_fry_surviv
     if (stochastic) {
       pmax(round(rnorm(31, fry, (sqrt(fry) / 2))), 0)
     } else {
-      round(fry)
+      fry
     }
 
   zeros <- matrix(0, nrow = length(escapement), ncol = 3)
