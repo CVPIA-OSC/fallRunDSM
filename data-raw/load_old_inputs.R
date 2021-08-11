@@ -67,7 +67,7 @@ all_inputs$t.diver -> params$total_diverted[,,1:20]
 dimnames(params$total_diverted) <- dimnames_31_12_21
 
 dimnames_31_12 <- dimnames(params$prop_pulse_flows)
-as.matrix(all_inputs$prop.pulse[,-1]) -> params$prop_pulse_flows
+as.matrix(all_inputs$prop.pulse[,-1])/100 -> params$prop_pulse_flows
 dimnames(params$prop_pulse_flows) <- dimnames_31_12
 
 all_inputs$dlt.divers -> params$delta_proportion_diverted[,1:20,]
@@ -141,10 +141,30 @@ all_inputs$states$rearDecay -> params$rear_decay_rate
 # all_inputs$dlt.gates$days_closed/days_in_month(1:12)
 
 # TODO this is wierd
-# growthMatrices <- params$growth_rates
+gro_dn <- dimnames(params$growth_rates)
+structure(c(0.0045914028239995, 0, 0, 0, 0.995346079527392, 0.508197615704544,
+            0, 0, 6.2517648608762e-05, 0.491802384294065, 0.750034293109025,
+            0, 0, 1.39133149446025e-12, 0.249965706890975, 1), .Dim = c(4L, 4L)) -> params$growth_rates
 # growthMatrices<-Hab.growth(daily.rates=c(grow.ic,grow.fp),wks.fld=fp.weeks[,mnth,yr+1])
 # trans_mat_river<-growthMatrices$T.mtx.ic
 # trans_mat_flood<-growthMatrices$T.mtx.fp
+gro_dn -> dimnames(params$growth_rates)
+
+structure(c(0.0045914028239995, 0, 0, 0, 0.995346079527392, 0.508197615704544,
+            0, 0, 6.2517648608762e-05, 0.491802384294065, 0.750034293109025,
+            0, 0, 1.39133149446025e-12, 0.249965706890975, 1, 0.00353734264565751,
+            0, 0, 0, 0.898316948523529, 0.389212293741988, 0, 0, 0.0980860690180065,
+            0.603923710042661, 0.57993723717849, 0, 5.96398128066e-05, 0.00686399621535116,
+            0.42006276282151, 1, 0.00248328246731551, 0, 0, 0, 0.801287817519667,
+            0.270226971754649, 0, 0, 0.196109620387404, 0.71604503581461,
+            0.409840181211634, 0, 0.0001192796256132, 0.0137279924307407,
+            0.590159818788366, 1, 0.00142922228897352, 0, 0, 0, 0.704258686515805,
+            0.151241649742527, 0, 0, 0.294133171756802, 0.828166361609913,
+            0.239743125208455, 0, 0.0001789194384198, 0.0205919886475598,
+            0.760256874791545, 1, 0.000375162110631526, 0, 0, 0, 0.607229555511942,
+            0.0322563277056229, 0, 0, 0.3921567231262, 0.940287687428568,
+            0.0696460691689542, 0, 0.0002385592512264, 0.0274559848658086,
+            0.930353930831046, 1), .Dim = c(4L, 4L, 5L)) -> params$growth_rates_floodplain
 
 adam_grand_tab <- structure(c(56214.27, 3090.42, 7366.8125, NA, 2056.035, 9149.258767908,
                               12091.56, 54067.065431528, 119.56, 311.5855914725, 468.509155785,

@@ -37,7 +37,6 @@ both %>%
   # group_by(watershed) %>%
   summarise(r = cor(predicted, observed, use = 'pairwise.complete.obs'))
 
-View(both)
 both %>%
   select(-spawners) %>%
   gather(type, spawners, -watershed, -year) %>%
