@@ -3,23 +3,23 @@ params <- fallRunDSM::params
 
 all_inputs$territory_size -> params$territory_size
 spawn_dimnames <- dimnames(params$spawning_habitat)
-all_inputs$IChab.spawn -> params$spawning_habitat
+all_inputs$IChab.spawn -> params$spawning_habitat[,,1:20]
 dimnames(params$spawning_habitat) <- spawn_dimnames
 
 rear_dimnames <- dimnames(params$inchannel_habitat_fry)
-all_inputs$IChab.fry -> params$inchannel_habitat_fry
+all_inputs$IChab.fry -> params$inchannel_habitat_fry[,,1:20]
 dimnames(params$inchannel_habitat_fry) <- rear_dimnames
-all_inputs$IChab.juv -> params$inchannel_habitat_juvenile
+all_inputs$IChab.juv -> params$inchannel_habitat_juvenile[,,1:20]
 dimnames(params$inchannel_habitat_juvenile) <- rear_dimnames
 
 bypass_dimnames <- dimnames(params$sutter_habitat)
-all_inputs$IChab.sutter -> params$sutter_habitat
+all_inputs$IChab.sutter -> params$sutter_habitat[,1:20]
 dimnames(params$sutter_habitat) <- bypass_dimnames
-all_inputs$IChab.yolo -> params$yolo_habitat
+all_inputs$IChab.yolo -> params$yolo_habitat[,1:20]
 dimnames(params$yolo_habitat) <- bypass_dimnames
 
 delta_dimnames <- dimnames(params$delta_habitat)
-all_inputs$DLThab -> params$delta_habitat
+all_inputs$DLThab -> params$delta_habitat[,1:20,]
 dimnames(params$delta_habitat) <- delta_dimnames
 
 all_inputs$cc.aloc -> params$cross_channel_stray_rate
@@ -34,7 +34,7 @@ all_inputs$prop.hatch -> params$proportion_hatchery
 names(params$proportion_hatchery) <- fallRunDSM::watershed_labels
 
 retq_dimnames <- dimnames(params$prop_flow_natal)
-as.matrix(all_inputs$retQ[,-1]) -> params$prop_flow_natal
+as.matrix(all_inputs$retQ[,-1]) -> params$prop_flow_natal[,1:20]
 dimnames(params$prop_flow_natal) <- retq_dimnames
 
 overtop_dimnames <- dimnames(params$gates_overtopped)
@@ -46,42 +46,42 @@ as.matrix(all_inputs$ptemp20mc[,c(-1,-2)]) -> params$migratory_temperature_propo
 mc_dimnames -> dimnames(params$migratory_temperature_proportion_over_20)
 
 dimnames_31_12_22 <- dimnames(params$degree_days)
-all_inputs$DegDay -> params$degree_days
+all_inputs$DegDay -> params$degree_days[,,1:20]
 dimnames(params$degree_days) <- dimnames_31_12_22
 
 dimnames_31_12_21 <- dimnames(params$avg_temp)
-all_inputs$juv.tmp -> params$avg_temp
+all_inputs$juv.tmp -> params$avg_temp[,,1:20]
 dimnames(params$avg_temp) <- dimnames_31_12_21
 
-all_inputs$p.diver -> params$proportion_diverted
+all_inputs$p.diver -> params$proportion_diverted[,,1:20]
 dimnames(params$proportion_diverted) <- dimnames_31_12_21
-all_inputs$t.diver -> params$total_diverted
+all_inputs$t.diver -> params$total_diverted[,,1:20]
 dimnames(params$total_diverted) <- dimnames_31_12_21
 
 dimnames_31_12 <- dimnames(params$prop_pulse_flows)
 as.matrix(all_inputs$prop.pulse[,-1]) -> params$prop_pulse_flows
 dimnames(params$prop_pulse_flows) <- dimnames_31_12
 
-all_inputs$dlt.divers -> params$delta_proportion_diverted
+all_inputs$dlt.divers -> params$delta_proportion_diverted[,1:20,]
 dimnames(params$delta_proportion_diverted) <- delta_dimnames
-all_inputs$dlt.divers.tot -> params$delta_total_diverted
+all_inputs$dlt.divers.tot -> params$delta_total_diverted[,1:20,]
 dimnames(params$delta_total_diverted) <- delta_dimnames
 
-all_inputs$fp.weeks -> params$weeks_flooded
+all_inputs$fp.weeks -> params$weeks_flooded[,,1:20]
 dimnames(params$weeks_flooded) <- dimnames_31_12_21
 
 upsq_dn <- dimnames(params$upper_sacramento_flows)
-as.matrix(all_inputs$upSacQ) -> params$upper_sacramento_flows
+as.matrix(all_inputs$upSacQ) -> params$upper_sacramento_flows[,1:20]
 upsq_dn -> dimnames(params$upper_sacramento_flows)
 
-all_inputs$Dlt.inf -> params$delta_inflow
+all_inputs$Dlt.inf -> params$delta_inflow[,1:20,]
 dimnames(params$delta_inflow) <- delta_dimnames
-all_inputs$juv.tmp.dlt -> params$avg_temp_delta
+all_inputs$juv.tmp.dlt -> params$avg_temp_delta[,1:20,]
 dimnames(params$avg_temp_delta) <- delta_dimnames
 
 pqb_dn <- dimnames(params$proportion_flow_bypass)
-all_inputs$prop.Q.bypasses[,,1] -> params$proportion_flow_bypass[,,1]
-all_inputs$prop.Q.bypasses[,,5] -> params$proportion_flow_bypass[,,2]
+all_inputs$prop.Q.bypasses[,,1] -> params$proportion_flow_bypass[,1:20,1]
+all_inputs$prop.Q.bypasses[,,5] -> params$proportion_flow_bypass[,1:20,2]
 pqb_dn -> dimnames(params$proportion_flow_bypass)
 
 all_inputs$inps$hatch.alloc -> params$hatchery_allocation
@@ -115,13 +115,13 @@ names(params$delta_prop_high_predation) <- c("North Delta", "South Delta")
 all_inputs$egg.tmp.eff$mean_temp_effect -> params$mean_egg_temp_effect
 
 # synthetic shuffle these
-all_inputs$Q_free[,DSMCalibrationData::calibration_year_index_2019] -> params$freeport_flows
-all_inputs$Q_vern[,DSMCalibrationData::calibration_year_index_2019] -> params$vernalis_flows
-all_inputs$Q_stck[,DSMCalibrationData::calibration_year_index_2019] -> params$stockton_flows
-all_inputs$Temp_vern[,DSMCalibrationData::calibration_year_index_2019] -> params$vernalis_temps
-all_inputs$Temp_pp[,DSMCalibrationData::calibration_year_index_2019] -> params$prisoners_point_temps
-all_inputs$CVP_exp[,DSMCalibrationData::calibration_year_index_2019] -> params$CVP_exports
-all_inputs$SWP_exp[,DSMCalibrationData::calibration_year_index_2019] -> params$SWP_exports
+all_inputs$Q_free -> params$freeport_flows
+all_inputs$Q_vern -> params$vernalis_flows
+all_inputs$Q_stck -> params$stockton_flows
+all_inputs$Temp_vern -> params$vernalis_temps
+all_inputs$Temp_pp -> params$prisoners_point_temps
+all_inputs$CVP_exp -> params$CVP_exports
+all_inputs$SWP_exp -> params$SWP_exports
 
 # spawn_decay_rate = DSMscenario::spawn_decay_rate
 all_inputs$states$spwnDecay -> params$spawn_decay_rate
