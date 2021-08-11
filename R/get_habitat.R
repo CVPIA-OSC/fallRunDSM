@@ -18,6 +18,8 @@ get_habitat <- function(year, month,
                         floodplain_habitat,
                         sutter_habitat,
                         yolo_habitat,
+                        sutter_floodplain_habitat,
+                        yolo_floodplain_habitat,
                         delta_habitat) {
   # set monthly habitat values
   ic_habitat <- if (month < 4) inchannel_habitat_fry[ , month, year] else inchannel_habitat_juvenile[ , month, year]
@@ -25,6 +27,10 @@ get_habitat <- function(year, month,
   fp_habitat <- floodplain_habitat[ , month, year] + floodplain_activation[ , month]
   habitat_sutter <- sutter_habitat[month, year]
   habitat_yolo <- yolo_habitat[month, year]
+
+  floodplain_habitat_sutter <- sutter_floodplain_habitat[month, year]
+  floodplain_habitat_yolo <- yolo_floodplain_habitat[month, year]
+
   north_delta_habitat <- delta_habitat[month, year, 1]
   south_delta_habitat <- delta_habitat[month, year, 2]
 
@@ -33,6 +39,8 @@ get_habitat <- function(year, month,
     floodplain = fp_habitat,
     sutter = habitat_sutter,
     yolo = habitat_yolo,
+    floodplain_habitat_sutter = floodplain_habitat_sutter,
+    floodplain_habitat_yolo = floodplain_habitat_yolo,
     north_delta = north_delta_habitat,
     south_delta = south_delta_habitat
   ))

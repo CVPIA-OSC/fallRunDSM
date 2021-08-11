@@ -1,6 +1,9 @@
 all_inputs <- read_rds('data-raw/misc/all_old_inputs.rds')
 params <- fallRunDSM::params
 
+all_inputs$floodp.sutter -> params$sutter_floodplain_habitat
+all_inputs$floodp.yolo -> params$yolo_floodplain_habitat
+
 all_inputs$territory_size -> params$territory_size
 spawn_dimnames <- dimnames(params$spawning_habitat)
 all_inputs$IChab.spawn -> params$spawning_habitat[,,1:20]
@@ -21,6 +24,7 @@ all_inputs$IChab.sutter -> params$sutter_habitat[,1:20]
 dimnames(params$sutter_habitat) <- bypass_dimnames
 all_inputs$IChab.yolo -> params$yolo_habitat[,1:20]
 dimnames(params$yolo_habitat) <- bypass_dimnames
+
 
 delta_dimnames <- dimnames(params$delta_habitat)
 all_inputs$DLThab -> params$delta_habitat[,1:20,]

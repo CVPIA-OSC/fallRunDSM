@@ -170,6 +170,8 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                              floodplain_habitat = ..params$floodplain_habitat,
                              sutter_habitat = ..params$sutter_habitat,
                              yolo_habitat = ..params$yolo_habitat,
+                             sutter_floodplain_habitat = ..params$sutter_floodplain_habitat,
+                             yolo_floodplain_habitat = ..params$yolo_floodplain_habitat,
                              delta_habitat = ..params$delta_habitat)
 
       rearing_survival <- get_rearing_survival(year, month,
@@ -332,6 +334,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
         # or migrate further downstream or in sutter bypass
         sutter_fish <- route_bypass(bypass_fish = sutter_fish + upper_sac_trib_fish$detoured,
                                     bypass_habitat = habitat$sutter,
+                                    flood_habitat = habitat$floodplain_habitat_sutter,
                                     migration_survival_rate = migratory_survival$sutter,
                                     territory_size = ..params$territory_size,
                                     stochastic = stochastic)
@@ -349,9 +352,15 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
         migrants[1:15, ] <- upper_mid_sac_fish$migrants + sutter_fish$migrants
 
         sutter_fish <- rear(juveniles = sutter_fish$inchannel,
+                            floodplain_juveniles = sutter_fish$floodplain,
                             survival_rate = matrix(rep(rearing_survival$sutter, nrow(sutter_fish$inchannel)), ncol = 4, byrow = TRUE),
+                            floodplain_survival_rate = matrix(rep(rearing_survival$sutter, nrow(sutter_fish$inchannel)), ncol = 4, byrow = TRUE),
                             growth = fallRunDSM::params$growth_rates,
+                            floodplain_growth = ..params$growth_rates_floodplain,
+                            weeks_flooded = rep(..params$weeks_flooded[17, month, year], nrow(sutter_fish$inchannel)),
                             stochastic = stochastic)
+
+        sutter_fish <- sutter_fish$inchannel + sutter_fish$floodplain
 
         upper_mid_sac_fish <- rear(juveniles = upper_mid_sac_fish$inchannel,
                                    survival_rate = rearing_survival$inchannel[16, ],
@@ -399,6 +408,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
         yolo_fish <- route_bypass(bypass_fish = yolo_fish + lower_mid_sac_trib_fish$detoured,
                                   bypass_habitat = habitat$yolo,
+                                  flood_habitat = habitat$floodplain_habitat_yolo,
                                   migration_survival_rate = migratory_survival$yolo,
                                   territory_size = ..params$territory_size,
                                   stochastic = stochastic)
@@ -415,12 +425,17 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                              stochastic = stochastic)
 
         migrants <- lower_mid_sac_fish$migrants
-
         # rear
         yolo_fish <- rear(juveniles = yolo_fish$inchannel,
+                          floodplain_juveniles = yolo_fish$floodplain,
                           survival_rate = matrix(rep(rearing_survival$yolo, nrow(yolo_fish$inchannel)), ncol = 4, byrow = TRUE),
+                          floodplain_survival_rate = matrix(rep(rearing_survival$yolo, nrow(yolo_fish$inchannel)), ncol = 4, byrow = TRUE),
                           growth = fallRunDSM::params$growth_rates,
+                          floodplain_growth = ..params$growth_rates_floodplain,
+                          weeks_flooded = rep(..params$weeks_flooded[22, month, year], nrow(yolo_fish$inchannel)),
                           stochastic = stochastic)
+
+        yolo_fish <- yolo_fish$inchannel + yolo_fish$floodplain
 
         lower_mid_sac_fish <- rear(juveniles = lower_mid_sac_fish$inchannel,
                                    survival_rate = rearing_survival$inchannel[21, ],

@@ -95,12 +95,13 @@ route <- function(year, month, juveniles, inchannel_habitat, floodplain_habitat,
 #' @param territory_size Array of juvenile fish territory requirements for \code{\link{fill_regional}}
 #' @source IP-117068
 #' @export
-route_bypass <- function(bypass_fish, bypass_habitat, migration_survival_rate,
+route_bypass <- function(bypass_fish, bypass_habitat, flood_habitat, migration_survival_rate,
                          territory_size,
                          stochastic) {
 
   bypass_fish <- fill_regional(juveniles = bypass_fish,
                                habitat = bypass_habitat,
+                               floodplain_habitat = flood_habitat,
                                territory_size = territory_size)
 
   bypass_fish$migrants <- t(
