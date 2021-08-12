@@ -9,11 +9,14 @@ IP-117068
 \usage{
 route_regional(
   month,
+  year,
   migrants,
   inchannel_habitat,
   floodplain_habitat,
   prop_pulse_flows,
   migration_survival_rate,
+  proportion_flow_bypass,
+  detour = NULL,
   territory_size,
   stochastic
 )
@@ -30,6 +33,8 @@ route_regional(
 \item{prop_pulse_flows}{The proportion of pulse flows}
 
 \item{migration_survival_rate}{The outmigration survival rate}
+
+\item{detour}{Values can be 'sutter' or 'yolo' if some juveniles are detoured on to that bypass, otherwise NULL}
 
 \item{territory_size}{Array of juvenile fish territory requirements for \code{\link{fill_regional}}}
 }

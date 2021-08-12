@@ -343,7 +343,6 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
         sutter_fish <- route_bypass(bypass_fish = sutter_fish + upper_mid_sac_fish$detoured,
                                     bypass_habitat = habitat$sutter,
-                                    flood_habitat = habitat$floodplain_habitat_sutter,
                                     migration_survival_rate = migratory_survival$sutter,
                                     territory_size = ..params$territory_size,
                                     stochastic = stochastic)
@@ -360,15 +359,10 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
         upper_mid_sac_fish <- upper_mid_sac_fish$inchannel + upper_mid_sac_fish$floodplain
 
         sutter_fish <- rear(juveniles = sutter_fish$inchannel,
-                            floodplain_juveniles = sutter_fish$floodplain,
-                            survival_rate = rearing_survival$sutter[1,],
-                            floodplain_survival_rate = rearing_survival$sutter[1,],
+                            survival_rate = matrix(rep(rearing_survival$sutter, nrow(sutter_fish$inchannel)), ncol = 4, byrow = TRUE),
                             growth = ..params$growth_rates,
-                            floodplain_growth = ..params$growth_rates_floodplain,
-                            weeks_flooded = rep(..params$weeks_flooded[17, month, year], nrow(sutter_fish$inchannel)),
                             stochastic = stochastic)
 
-        sutter_fish <- sutter_fish$inchannel + sutter_fish$floodplain
 
 
         # route migrant fish into Lower-mid Sac Region (fish from watersheds 18:20, and migrants from Upper-mid Sac Region)
@@ -417,7 +411,6 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
         yolo_fish <- route_bypass(bypass_fish = yolo_fish + lower_mid_sac_fish$detoured,
                                   bypass_habitat = habitat$yolo,
-                                  flood_habitat = habitat$floodplain_habitat_yolo,
                                   migration_survival_rate = migratory_survival$yolo,
                                   territory_size = ..params$territory_size,
                                   stochastic = stochastic)
@@ -436,15 +429,10 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
         lower_mid_sac_fish <- lower_mid_sac_fish$inchannel + lower_mid_sac_fish$floodplain
 
         yolo_fish <- rear(juveniles = yolo_fish$inchannel,
-                          floodplain_juveniles = yolo_fish$floodplain,
-                          survival_rate = rearing_survival$yolo[1,],
-                          floodplain_survival_rate = rearing_survival$yolo[1,],
+                          survival_rate = matrix(rep(rearing_survival$yolo, nrow(yolo_fish$inchannel)), ncol = 4, byrow = TRUE),
                           growth = ..params$growth_rates,
-                          floodplain_growth = ..params$growth_rates_floodplain,
-                          weeks_flooded = rep(..params$weeks_flooded[22, month, year], nrow(yolo_fish$inchannel)),
                           stochastic = stochastic)
 
-        yolo_fish <- yolo_fish$inchannel + yolo_fish$floodplain
 
         # route migrant fish into Lower Sac Region (fish from watershed 23, and migrants from Lower-mid Sac Region)
         # regional fish stay and rear
