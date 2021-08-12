@@ -17,8 +17,10 @@ prop_hatch_to_keep <- fallRunDSM::params$proportion_hatchery[keep]
 watersheds_keep <- DSMscenario::watershed_labels[keep]
 names(prop_hatch_to_keep) <- watersheds_keep
 
+current_best_solution <- read_rds("calibration/fits/result-1-2021-08-10.rds")
+
 # add solution to evaluate
-solution <- res5@solution
+solution <- current_best_solution@solution
 # solution <- res_stoch_corr_penalty@solution
 
 params_calibrate_mode <- update_params(x = solution, fallRunDSM::params)
@@ -112,7 +114,8 @@ all %>%
             observed_nat_spawn = mean(observed_nat_spawn)) %>%
   filter(!is.na(observed_nat_spawn)) %>%
   group_by(watershed) %>%
-  summarise(r = cor(nat_spawn, observed_nat_spawn))
+  summarise(r = cor(nat_spawn, observed_nat_spawn)) %>%
+  arrange(desc(r))
 
 
 

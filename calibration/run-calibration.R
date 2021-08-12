@@ -29,7 +29,7 @@ res <- ga(type = "real-valued",
            upper = rep(3.5, 40),
            popSize = 150,
            maxiter = 10000,
-           run = 50,
+           run = 25,
            parallel = TRUE,
            pmutation = .3)
 
