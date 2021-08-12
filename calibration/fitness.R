@@ -6,15 +6,14 @@ fall_run_fitness <- function(
   surv_adult_enroute,
   surv_adult_prespawn,
   surv_egg_to_fry,
-  uppermidsactribs_surv_juv,
   bypass_surv_juv,
   upsac_surv_juv,
   butte_surv_juv,
+  clear_surv_juv,
   deer_surv_juv,
   mill_surv_juv,
   sac_surv_juv,
-  bear_surv_juv,
-  feather_surv_juv,
+  feather_and_bear_surv_juv,
   yuba_surv_juv,
   american_surv_juv,
   deltatribs_surv_juv,
@@ -51,24 +50,24 @@ fall_run_fitness <- function(
   params_init$..surv_adult_prespawn_int = surv_adult_prespawn
   params_init$..surv_egg_to_fry_int = surv_egg_to_fry
   params_init$..surv_juv_rear_int = c(`Upper Sacramento River` = upsac_surv_juv,
-                                      `Antelope Creek` = uppermidsactribs_surv_juv,
-                                      `Battle Creek` = uppermidsactribs_surv_juv,
-                                      `Bear Creek` = uppermidsactribs_surv_juv,
-                                      `Big Chico Creek` = uppermidsactribs_surv_juv,
+                                      `Antelope Creek` = deer_surv_juv,
+                                      `Battle Creek` = deer_surv_juv,
+                                      `Bear Creek` = deer_surv_juv,
+                                      `Big Chico Creek` = deer_surv_juv,
                                       `Butte Creek` = butte_surv_juv,
-                                      `Clear Creek` = uppermidsactribs_surv_juv,
-                                      `Cottonwood Creek` = uppermidsactribs_surv_juv,
-                                      `Cow Creek` = uppermidsactribs_surv_juv,
+                                      `Clear Creek` = clear_surv_juv,
+                                      `Cottonwood Creek` = deer_surv_juv,
+                                      `Cow Creek` = deer_surv_juv,
                                       `Deer Creek` = deer_surv_juv,
-                                      `Elder Creek` = uppermidsactribs_surv_juv,
+                                      `Elder Creek` = deer_surv_juv,
                                       `Mill Creek` = mill_surv_juv,
-                                      `Paynes Creek` = uppermidsactribs_surv_juv,
-                                      `Stony Creek` = uppermidsactribs_surv_juv,
-                                      `Thomes Creek` = uppermidsactribs_surv_juv,
+                                      `Paynes Creek` = deer_surv_juv,
+                                      `Stony Creek` = deer_surv_juv,
+                                      `Thomes Creek` = deer_surv_juv,
                                       `Upper-mid Sacramento River` = sac_surv_juv,
                                       `Sutter Bypass` = bypass_surv_juv,
-                                      `Bear River` = uppermidsactribs_surv_juv,
-                                      `Feather River` = uppermidsactribs_surv_juv,
+                                      `Bear River` = feather_and_bear_surv_juv,
+                                      `Feather River` = feather_and_bear_surv_juv,
                                       `Yuba River` = yuba_surv_juv,
                                       `Lower-mid Sacramento River` = sac_surv_juv,
                                       `Yolo Bypass` = bypass_surv_juv,
@@ -138,9 +137,9 @@ fall_run_fitness <- function(
     known_nats <- known_adults[keep, 6:20] * (1 - params_init$proportion_hatchery[keep])
     mean_escapent <-rowMeans(known_nats, na.rm = TRUE)
 
-    watershed_cor <- sapply(1:length(keep), function(i) {
-      cor(preds[i,], known_nats[i,], use = "pairwise.complete.obs")
-    })
+    # watershed_cor <- sapply(1:length(keep), function(i) {
+    #   cor(preds[i,], known_nats[i,], use = "pairwise.complete.obs")
+    # })
     sse <- sum(((preds[keep,] - known_nats)^2 * weights)/mean_escapent, na.rm = TRUE)
 
     return(sse)

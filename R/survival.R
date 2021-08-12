@@ -178,9 +178,9 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
     .surv_juv_delta_total_diverted * ..surv_juv_delta_total_diverted * total_diverted[2]
 
   if (stochastic) {
-  s <- ifelse(max_temp_thresh[2], min_survival_rate, boot::inv.logit(base_score))
-  m <- ifelse(max_temp_thresh[2], min_survival_rate, boot::inv.logit(base_score + .medium))
-  l <- ifelse(max_temp_thresh[2], min_survival_rate, boot::inv.logit(base_score + .large))
+    s <- ifelse(max_temp_thresh[2], min_survival_rate, boot::inv.logit(base_score))
+    m <- ifelse(max_temp_thresh[2], min_survival_rate, boot::inv.logit(base_score + .medium))
+    l <- ifelse(max_temp_thresh[2], min_survival_rate, boot::inv.logit(base_score + .large))
   } else {
     s <- (boot::inv.logit(base_score) * (1 - max_temp_thresh[2])) + (min_survival_rate * max_temp_thresh[2])
     m <- (boot::inv.logit(base_score + .medium) * (1 - max_temp_thresh[2])) + (min_survival_rate * max_temp_thresh[2])

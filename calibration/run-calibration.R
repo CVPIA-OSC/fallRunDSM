@@ -23,17 +23,17 @@ res <- ga(type = "real-valued",
                x[11], x[12], x[13], x[14], x[15], x[16], x[17], x[18], x[19],
                x[20], x[21], x[22], x[23], x[24], x[25], x[26], x[27], x[28],
                x[29], x[30], x[31], x[32], x[33], x[34], x[35], x[36], x[37],
-               x[38], x[39], x[40], x[41]
+               x[38], x[39], x[40]
              ),
-           lower = c(2.5, rep(-3.5, 40)),
-           upper = rep(3.5, 41),
+           lower = c(2.5, rep(-3.5, 39)),
+           upper = rep(3.5, 40),
            popSize = 150,
            maxiter = 10000,
            run = 50,
            parallel = TRUE,
-           pmutation = .4,
-           suggestions = current_best_solution@solution)
+           pmutation = .3)
 
+readr::write_rds(res, "calibration/fits/result-1-2021-08-10.rds")
 
 # Evaluate Results ------------------------------------
 
