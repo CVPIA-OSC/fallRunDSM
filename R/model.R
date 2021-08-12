@@ -100,7 +100,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
     hatch_adults <- if (stochastic) {
       rmultinom(1, size = round(runif(1, 83097.01,532203.1)), prob = ..params$hatchery_allocation)[ , 1]
     } else {
-      round(runif(1, 83097.01,532203.1) * ..params$hatchery_allocation)
+      round(mean(c(83097.01,532203.1)) * ..params$hatchery_allocation)
     }
 
     spawners <- get_spawning_adults(year, round(adults), hatch_adults, mode = mode,
