@@ -8,7 +8,6 @@
 #' @param inchannel_habitat A vector of available habitat in square meters
 #' @param floodplain_habitat A vector of available floodplain habitat in square meters
 #' @param prop_pulse_flows The proportion of pulse flows
-#' @param detour Values can be 'sutter' or 'yolo' if some juveniles are detoured on to that bypass, otherwise NULL
 #' @param .pulse_movement_intercept Intercept for \code{\link{pulse_movement}}
 #' @param .pulse_movement_proportion_pulse Coefficient for \code{\link{pulse_movement}} \code{proportion_pulse} variable
 #' @param .pulse_movement_medium Size related intercept for \code{\link{pulse_movement}} medium sized fish
@@ -21,7 +20,7 @@
 #' @source IP-117068
 #' @export
 route <- function(year, month, juveniles, inchannel_habitat, floodplain_habitat,
-                  prop_pulse_flows, proportion_flow_bypass, detour = NULL,
+                  prop_pulse_flows,
                   .pulse_movement_intercept,
                   .pulse_movement_proportion_pulse,
                   .pulse_movement_medium,
@@ -67,23 +66,6 @@ route <- function(year, month, juveniles, inchannel_habitat, floodplain_habitat,
   # update migratory fish based on the pulse flow results
   natal_watersheds$migrants <- natal_watersheds$migrants + pulse_migrants
 
-  if (!is.null(detour)) {
-    bypass <- ifelse(detour == 'sutter', "Sutter Bypass", "Yolo Bypass")
-
-    detoured_fish <- if (stochastic) {
-      t(sapply(1:nrow(natal_watersheds$migrants), function(i) {
-
-        rbinom(n = 4,
-               size = round(natal_watersheds$migrants[i, ]),
-               prob = proportion_flow_bypass[month, year, bypass])
-      }))
-    } else {
-      round(natal_watersheds$migrants * proportion_flow_bypass[month, year, bypass])
-    }
-    natal_watersheds$migrants <- natal_watersheds$migrants - detoured_fish
-    natal_watersheds$detoured <- detoured_fish
-  }
-
   return(natal_watersheds)
 }
 
@@ -120,21 +102,42 @@ route_bypass <- function(bypass_fish, bypass_habitat, migration_survival_rate,
 #' @description Determines if juveniles stay in the region (Sections of Mainstem
 #' Sacramento River or San Joaquin River) or out migrate during a simulated month
 #' @param month The simulation month, 1-8
+#' @param year
 #' @param migrants An n by 4 matrix of juvenile fish by watershed and size class
 #' @param inchannel_habitat A vector of available habitat in square meters
 #' @param floodplain_habitat A vector of available floodplain habitat in square meters
 #' @param prop_pulse_flows The proportion of pulse flows
 #' @param migration_survival_rate The outmigration survival rate
+#' @param proportion_flow_bypass
+#' @param detour Values can be 'sutter' or 'yolo' if some juveniles are detoured on to that bypass, otherwise NULL
 #' @param territory_size Array of juvenile fish territory requirements for \code{\link{fill_regional}}
 #' @source IP-117068
 #' @export
-route_regional <- function(month, migrants,
+route_regional <- function(month, year, migrants,
                            inchannel_habitat, floodplain_habitat,
                            prop_pulse_flows, migration_survival_rate,
+                           proportion_flow_bypass, detour = NULL,
                            territory_size,
                            stochastic) {
-  # fill up upper mainstem, but in river fish can leave due to pulses
 
+  if (!is.null(detour)) {
+    bypass <- ifelse(detour == 'sutter', "Sutter Bypass", "Yolo Bypass")
+
+    detoured_fish <-
+      if (stochastic) {
+        t(sapply(1:nrow(migrants), function(i) {
+          rbinom(n = 4,
+                 size = round(migrants[i, ]),
+                 prob = proportion_flow_bypass[month, year, bypass])
+        }))
+      } else {
+        round(migrants * proportion_flow_bypass[month, year, bypass])
+      }
+
+    migrants <- pmax(migrants - detoured_fish, 0)
+  }
+
+  # fill up upper mainstem, but in river fish can leave due to pulses
   regional_fish <- fill_regional(juveniles = migrants,
                                  habitat = inchannel_habitat,
                                  floodplain_habitat = floodplain_habitat,
@@ -165,7 +168,9 @@ route_regional <- function(month, migrants,
       }
     }))
 
-
+  if (!is.null(detour)) {
+    regional_fish$detoured <- detoured_fish
+  }
   return(regional_fish)
 
 }

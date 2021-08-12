@@ -19,7 +19,7 @@ ocean_transition_month <- function(stochastic) {
     T.day <- v * round(rgamma(1, shape = 3.212851, scale= 6.225000)) + (1 - v) * round(rgamma(1, shape = 19.349501, scale = 3.549833))
     round(T.day / 30)
   } else {
-    2
+    return(2)
   }
 
 }
