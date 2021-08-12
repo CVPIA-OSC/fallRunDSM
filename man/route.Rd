@@ -14,8 +14,6 @@ route(
   inchannel_habitat,
   floodplain_habitat,
   prop_pulse_flows,
-  proportion_flow_bypass,
-  detour = NULL,
   .pulse_movement_intercept,
   .pulse_movement_proportion_pulse,
   .pulse_movement_medium,
@@ -38,8 +36,6 @@ route(
 \item{floodplain_habitat}{A vector of available floodplain habitat in square meters}
 
 \item{prop_pulse_flows}{The proportion of pulse flows}
-
-\item{detour}{Values can be 'sutter' or 'yolo' if some juveniles are detoured on to that bypass, otherwise NULL}
 
 \item{.pulse_movement_intercept}{Intercept for \code{\link{pulse_movement}}}
 

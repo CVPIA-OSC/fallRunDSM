@@ -494,6 +494,7 @@ surv_juv_outmigration_sac_delta <- function(delta_flow, avg_temp, perc_diversion
   vl <- l <- boot::inv.logit(base_score1 + .large) * model_weights[1] +
     boot::inv.logit(base_score2 + .large) * model_weights[2] +
     boot::inv.logit(base_score3 + .large) * model_weights[3]
+
   cbind(s = s, m = m, l = l, vl = vl)
 }
 
