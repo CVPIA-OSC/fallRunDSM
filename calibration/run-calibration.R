@@ -31,10 +31,9 @@ res <- ga(type = "real-valued",
           maxiter = 10000,
           run = 50,
           parallel = TRUE,
-          pmutation = .3,
-          suggestions = current_best_solution@solution)
+          pmutation = .3)
 
-readr::write_rds(res, "calibration/fits/result-1-2021-08-10.rds")
+readr::write_rds(res, "calibration/fits/result-1-2021-08-11.rds")
 
 # Evaluate Results ------------------------------------
 
