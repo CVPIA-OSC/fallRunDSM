@@ -26,7 +26,7 @@ returned value can be fed into the model again as the value for the seeds argume
 
 \item{..params}{Parameters for model and submodels. Defaults to \code{fallRunDSM::\code{\link{params}}}.}
 
-\item{stochastic}{TRUE FALSE value indicating if model should be run stochastically. Defaults to FALSE.}
+\item{stochastic}{\code{TRUE} \code{FALSE} value indicating if model should be run stochastically. Defaults to \code{FALSE}.}
 }
 \description{
 Fall Run Chinook life cycle model used for CVPIA's Structured
