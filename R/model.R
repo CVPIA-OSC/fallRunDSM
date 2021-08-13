@@ -6,7 +6,8 @@
 #' @param seeds The default value is NULL runs the model in seeding mode,
 #' returning a 31 by 25 matrix with the first four years of seeded adults. This
 #' returned value can be fed into the model again as the value for the seeds argument
-#' @param ..params Parameters for model and submodels
+#' @param ..params Parameters for model and submodels. Defaults to \code{fallRunDSM::\code{\link{params}}}.
+#' @param stochastic TRUE FALSE value indicating if model should be run stochastically. Defaults to FALSE.
 #' @source IP-117068
 #' @examples
 #' fall_run_seeds <- fallRunDSM::fall_run_model(mode = "seed")
