@@ -1,13 +1,14 @@
 #' @title Spawning Success
 #' @description Calculates the annual reproductive success.
 #' @param escapement The number of returning adults
-#' @param adult_prespawn_survival The adult prespawn surival rate
+#' @param adult_prespawn_survival The adult prespawn survival rate
 #' @param egg_to_fry_survival The egg to fry survival rate
 #' @param prob_scour The probability of nest scouring
 #' @param spawn_habitat The available spawning habitat in square meters
 #' @param sex_ratio The female to male spawning ratio
 #' @param redd_size The size of redds including defensible space
 #' @param fecundity The number of eggs per female
+#' @param stochastic \code{TRUE} \code{FALSE} value indicating if model is being run stochastically
 #' @source IP-117068
 #' @export
 
