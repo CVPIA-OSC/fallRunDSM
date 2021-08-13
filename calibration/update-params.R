@@ -32,7 +32,7 @@ update_params <- function(x, params) {
   butte_ocean_entry_surv = x[30]
   deer_ocean_entry_surv = x[31]
   mill_ocean_entry_surv = x[32]
-  midsactribs_ocean_entry_surv = x[33]
+  bear_feather_ocean_entry = x[33]
   yuba_ocean_entry_surv = x[34]
   american_ocean_entry_surv = x[35]
   deltatribs_ocean_entry_surv = x[36]
@@ -101,8 +101,8 @@ update_params <- function(x, params) {
     `Thomes Creek` = default_ocean_entry_surv,
     `Upper-mid Sacramento River` = default_ocean_entry_surv,
     `Sutter Bypass` = default_ocean_entry_surv,
-    `Bear River` = midsactribs_ocean_entry_surv,
-    `Feather River` = midsactribs_ocean_entry_surv,
+    `Bear River` = bear_feather_ocean_entry,
+    `Feather River` = bear_feather_ocean_entry,
     `Yuba River` = yuba_ocean_entry_surv,
     `Lower-mid Sacramento River` = default_ocean_entry_surv,
     `Yolo Bypass` = default_ocean_entry_surv,
