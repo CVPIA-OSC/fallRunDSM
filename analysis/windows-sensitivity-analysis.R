@@ -107,3 +107,6 @@ y <- param_sensitivity("hatchery_allocation")
 coefficients <- names(params)[grep('\\.', names(params))]
 model_inputs <- sort(names(params)[grep('\\.', names(params), invert = TRUE)])
 
+
+# close all cluster connections
+closeAllConnections()

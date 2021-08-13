@@ -31,9 +31,10 @@ res <- ga(type = "real-valued",
           maxiter = 10000,
           run = 50,
           parallel = TRUE,
-          pmutation = .3)
+          pmutation = .3,
+          suggestions = current_best_solution@solution)
 
-readr::write_rds(res, "calibration/fits/result-1-2021-08-11.rds")
+readr::write_rds(res, paste0("calibration/fits/result-", Sys.Date(), ".rds"))
 
 # Evaluate Results ------------------------------------
 
@@ -86,7 +87,10 @@ r1_eval_df %>%
   group_by(watershed) %>%
   summarise(
     r = cor(observed, simulated, use = "pairwise.complete.obs")
-  ) %>% arrange(desc(abs(r)))
+  )
+
+current_cor_watersheds %>% arrange(watershed)
+
 
 r1_eval_df %>%
   spread(type, spawners) %>%
