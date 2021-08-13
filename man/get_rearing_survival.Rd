@@ -63,6 +63,8 @@ get_rearing_survival(
 
 \item{month}{The simulation month, 1-8}
 
+\item{mode}{The mode that the model is being run in}
+
 \item{avg_temp}{More details at \code{\link[DSMtemperature]{stream_tempetature}}}
 
 \item{avg_temp_delta}{More details at \code{\link[DSMtempetature]{delta_temprature}}}
@@ -149,7 +151,7 @@ get_rearing_survival(
 
 \item{min_survival_rate}{estimated survival rate if temperature threshold is exceeded}
 
-\item{scenario}{The current scenario}
+\item{stochastic}{\code{TRUE} \code{FALSE} value indicating if model is being run stochastically}
 }
 \description{
 Calculates the juvenile inchannel, floodplain, bypasses, and
