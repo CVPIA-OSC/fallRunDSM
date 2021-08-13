@@ -30,9 +30,9 @@ surv_juv_bypass(
 
 \item{..surv_juv_bypass_int}{intercept, source: calibration}
 
-\item{.avg_temp_thresh}{coefficient for avg_temp_thresh variable}
+\item{.avg_temp_thresh}{coefficient for \code{avg_temp_thresh} variable}
 
-\item{.high_predation}{coefficient for high_predation variable}
+\item{.high_predation}{coefficient for \code{high_predation} variable}
 
 \item{.medium}{size related intercept for medium sized fish}
 
@@ -41,6 +41,8 @@ surv_juv_bypass(
 \item{.floodplain}{Additional intercept for floodplain rearing benefit}
 
 \item{min_survival_rate}{estimated survival rate if temperature threshold is exceeded}
+
+\item{stochastic}{\code{TRUE} \code{FALSE} value indicating if model is being run stochastically}
 }
 \description{
 Calculates the juvenile rearing survival in the bypasses

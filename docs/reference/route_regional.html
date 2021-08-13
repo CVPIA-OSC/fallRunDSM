@@ -118,11 +118,14 @@ Sacramento River or San Joaquin River) or out migrate during a simulated month</
 
     <pre class="usage"><span class='fu'>route_regional</span><span class='op'>(</span>
   <span class='va'>month</span>,
+  <span class='va'>year</span>,
   <span class='va'>migrants</span>,
   <span class='va'>inchannel_habitat</span>,
   <span class='va'>floodplain_habitat</span>,
   <span class='va'>prop_pulse_flows</span>,
   <span class='va'>migration_survival_rate</span>,
+  <span class='va'>proportion_flow_bypass</span>,
+  detour <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>territory_size</span>,
   <span class='va'>stochastic</span>
 <span class='op'>)</span></pre>
@@ -132,7 +135,11 @@ Sacramento River or San Joaquin River) or out migrate during a simulated month</
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>month</th>
-      <td><p>The simulation month, 1-8</p></td>
+      <td><p>The current simulation month, 1-8</p></td>
+    </tr>
+    <tr>
+      <th>year</th>
+      <td><p>The current simulation year, 1-20</p></td>
     </tr>
     <tr>
       <th>migrants</th>
@@ -155,8 +162,20 @@ Sacramento River or San Joaquin River) or out migrate during a simulated month</
       <td><p>The outmigration survival rate</p></td>
     </tr>
     <tr>
+      <th>proportion_flow_bypass</th>
+      <td><p>Variable describing the proportion of flows routed through the bypasses, more details at <code><a href='https://cvpia-osc.github.io/DSMflow//reference/proportion_flow_bypasses.html'>proportion_flow_bypasses</a></code></p></td>
+    </tr>
+    <tr>
+      <th>detour</th>
+      <td><p>Values can be 'sutter' or 'yolo' if some juveniles are detoured on to that bypass, otherwise NULL</p></td>
+    </tr>
+    <tr>
       <th>territory_size</th>
       <td><p>Array of juvenile fish territory requirements for <code><a href='fill.html'>fill_regional</a></code></p></td>
+    </tr>
+    <tr>
+      <th>stochastic</th>
+      <td><p><code>TRUE</code> <code>FALSE</code> value indicating if model is being run stochastically</p></td>
     </tr>
     </table>
 
