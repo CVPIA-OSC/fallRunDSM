@@ -24,7 +24,7 @@ fall_run_model(
 returning a 31 by 25 matrix with the first four years of seeded adults. This
 returned value can be fed into the model again as the value for the seeds argument}
 
-\item{..params}{Parameters for model and submodels. Defaults to \code{fallRunDSM::\code{\link{params}}}}
+\item{..params}{Parameters for model and submodels. Defaults to \code{fallRunDSM::\code{\link{params}}}.}
 
 \item{stochastic}{TRUE FALSE value indicating if model should be run stochastically. Defaults to FALSE.}
 }

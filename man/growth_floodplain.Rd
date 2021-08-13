@@ -2,7 +2,7 @@
 % Please edit documentation in R/growth.R
 \name{growth_floodplain}
 \alias{growth_floodplain}
-\title{Floodplain Growth Transistion Probability}
+\title{Floodplain Growth Transition Probability}
 \source{
 IP-117068
 }
