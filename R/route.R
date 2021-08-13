@@ -110,7 +110,7 @@ route_bypass <- function(bypass_fish, bypass_habitat, migration_survival_rate,
 #' @param floodplain_habitat A vector of available floodplain habitat in square meters
 #' @param prop_pulse_flows The proportion of pulse flows
 #' @param migration_survival_rate The outmigration survival rate
-#' @param proportion_flow_bypass
+#' @param proportion_flow_bypass Variable describing the proportion of flows routed through the bypasses, more details at \code{\link[DSMflow]{proportion_flow_bypasses}}
 #' @param detour Values can be 'sutter' or 'yolo' if some juveniles are detoured on to that bypass, otherwise NULL
 #' @param territory_size Array of juvenile fish territory requirements for \code{\link{fill_regional}}
 #' @param stochastic \code{TRUE} \code{FALSE} value indicating if model is being run stochastically

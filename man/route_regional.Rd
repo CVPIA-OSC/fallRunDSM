@@ -36,6 +36,8 @@ route_regional(
 
 \item{migration_survival_rate}{The outmigration survival rate}
 
+\item{proportion_flow_bypass}{Variable describing the proportion of flows routed through the bypasses, more details at \code{\link[DSMflow]{proportion_flow_bypasses}}}
+
 \item{detour}{Values can be 'sutter' or 'yolo' if some juveniles are detoured on to that bypass, otherwise NULL}
 
 \item{territory_size}{Array of juvenile fish territory requirements for \code{\link{fill_regional}}}
