@@ -143,7 +143,11 @@ returned value can be fed into the model again as the value for the seeds argume
     </tr>
     <tr>
       <th>..params</th>
-      <td><p>Parameters for model and submodels</p></td>
+      <td><p>Parameters for model and submodels. Defaults to <code>fallRunDSM::<code><a href='params.html'>params</a></code></code>.</p></td>
+    </tr>
+    <tr>
+      <th>stochastic</th>
+      <td><p><code>TRUE</code> <code>FALSE</code> value indicating if model should be run stochastically. Defaults to <code>FALSE</code>.</p></td>
     </tr>
     </table>
 
@@ -158,447 +162,447 @@ returned value can be fed into the model again as the value for the seeds argume
                            seeds <span class='op'>=</span> <span class='va'>fall_run_seeds</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $spawners
 #&gt;                                 1      2      3      4      5      6      7
-#&gt; Upper Sacramento River      25822  26400  21506  18851  20670  24978  25305
-#&gt; Antelope Creek                233    252    176    127    195    330    339
-#&gt; Battle Creek                37533  37558  37334  37184  37274  37517  37549
-#&gt; Bear Creek                    202    212    150    108    180    313    310
-#&gt; Big Chico Creek               207    218    160    121    181    306    312
-#&gt; Butte Creek                  1097   1127    771    455    585    960    893
-#&gt; Clear Creek                 10301  10820   6728   3984   4910   6830   5968
-#&gt; Cottonwood Creek             3516   3521   3011   2633   3531   5165   5167
-#&gt; Cow Creek                    2014   2026   1351   1004   1241   1729   1670
-#&gt; Deer Creek                    523    537    422    348    406    534    540
-#&gt; Elder Creek                   207    218    153    113    209    376    370
-#&gt; Mill Creek                    549    586    387    249    295    415    419
-#&gt; Paynes Creek                  243    251    170    125    209    362    348
-#&gt; Stony Creek                   203    213    152    112    191    336    336
-#&gt; Thomes Creek                  203    213    152    112    191    336    339
+#&gt; Upper Sacramento River      26342  25752  21872  19878  22492  27855  27616
+#&gt; Antelope Creek                205    217    171    108    157    267    298
+#&gt; Battle Creek                37681  37663  37627  37603  37646  37709  37692
+#&gt; Bear Creek                    193    206    161     99    150    264    291
+#&gt; Big Chico Creek               201    213    166    103    155    263    295
+#&gt; Butte Creek                   906    890    770    512    569    874    826
+#&gt; Clear Creek                  5508   4821   3800   3374   3714   4461   4171
+#&gt; Cottonwood Creek             2771   2740   2648   2447   2729   3246   3112
+#&gt; Cow Creek                    1010   1008    891    793    853    992   1016
+#&gt; Deer Creek                    502    501    430    360    417    538    559
+#&gt; Elder Creek                   197    208    163    105    170    292    314
+#&gt; Mill Creek                    585    634    464    295    326    449    473
+#&gt; Paynes Creek                  210    222    171    107    165    280    306
+#&gt; Stony Creek                   196    209    163    102    165    283    310
+#&gt; Thomes Creek                  196    208    161    100    161    279    307
 #&gt; Upper-mid Sacramento River      0      0      0      0      0      0      0
 #&gt; Sutter Bypass                   0      0      0      0      0      0      0
-#&gt; Bear River                    200    209    144    101    163    282    279
-#&gt; Feather River              135781 134262 130720 129237 132740 139991 139153
-#&gt; Yuba River                  25890  25181  23398  22326  26548  33828  33655
+#&gt; Bear River                    215    232    195    151    264    490    552
+#&gt; Feather River              166422 172182 152378 134551 141753 169798 177017
+#&gt; Yuba River                  31450  32916  30705  29081  33596  46572  48574
 #&gt; Lower-mid Sacramento River      0      0      0      0      0      0      0
 #&gt; Yolo Bypass                     0      0      0      0      0      0      0
-#&gt; American River              42515  45866  37263  32021  35148  46490  50445
+#&gt; American River              30929  32240  29424  27922  29301  32590  33789
 #&gt; Lower Sacramento River          0      0      0      0      0      0      0
-#&gt; Calaveras River               240    252    189    146    195    302    302
-#&gt; Cosumnes River                218    232    154     97    144    247    250
-#&gt; Mokelumne River              7503   7515   7481   7476   7537   7736   7752
-#&gt; Merced River                 3708   3731   3769   3810   3806   3838   3875
-#&gt; Stanislaus River             4593   4741   5045   4926   4655   4576   4703
-#&gt; Tuolumne River               1458   1493   1468   1427   1429   1512   1551
+#&gt; Calaveras River               378    408    925   1477   3587   9976  14135
+#&gt; Cosumnes River               1823   2034   1788   1776   2878   6091   7102
+#&gt; Mokelumne River              7958   8012   7908   7858   8113   8906   9065
+#&gt; Merced River                 3782   4030   4583   4798   4177   4023   4718
+#&gt; Stanislaus River             5577   6650   7774   6945   6292   6439   7495
+#&gt; Tuolumne River               1469   1591   1700   1620   1482   1541   1739
 #&gt; San Joaquin River               0      0      0      0      0      0      0
 #&gt;                                 8      9     10     11     12     13     14
-#&gt; Upper Sacramento River      21727  20348  19914  18956  18845  19055  17962
-#&gt; Antelope Creek                226    203    199    143    109    135    105
-#&gt; Battle Creek                37336  37234  37239  37184  37171  37205  37166
-#&gt; Bear Creek                    190    163    163    116     83    108     85
-#&gt; Big Chico Creek               208    190    188    128     98    125     98
-#&gt; Butte Creek                   619    548    515    367    290    331    277
-#&gt; Clear Creek                  4155   3957   3980   3406   3156   3308   3011
-#&gt; Cottonwood Creek             4139   3518   3201   2725   2659   2927   2544
-#&gt; Cow Creek                    1198   1049   1004    874    852    911    827
-#&gt; Deer Creek                    423    391    392    352    324    346    328
-#&gt; Elder Creek                   241    218    218    142     99    127     97
-#&gt; Mill Creek                    305    280    279    234    206    229    208
-#&gt; Paynes Creek                  215    190    185    128     99    122     98
-#&gt; Stony Creek                   227    200    190    128     93    117     91
-#&gt; Thomes Creek                  227    204    196    133    103    140    101
+#&gt; Upper Sacramento River      23811  22009  21070  20223  21127  22398  20004
+#&gt; Antelope Creek                185    135    122    101     96    108     85
+#&gt; Battle Creek                37640  37615  37603  37594  37607  37622  37603
+#&gt; Bear Creek                    176    125    111     91     86    100     77
+#&gt; Big Chico Creek               183    133    122     99     94    108     85
+#&gt; Butte Creek                   641    512    379    306    289    315    268
+#&gt; Clear Creek                  3543   3297   3101   2997   3125   3283   3025
+#&gt; Cottonwood Creek             2771   2500   2282   2223   2264   2338   2233
+#&gt; Cow Creek                     871    806    787    765    764    779    756
+#&gt; Deer Creek                    435    383    368    347    344    357    332
+#&gt; Elder Creek                   194    137    118     96     86    100     77
+#&gt; Mill Creek                    342    282    260    234    233    246    215
+#&gt; Paynes Creek                  185    134    120    101     94    108     85
+#&gt; Stony Creek                   196    138    115     93     88    100     77
+#&gt; Thomes Creek                  195    140    120     97     93    108     84
 #&gt; Upper-mid Sacramento River      0      0      0      0      0      0      0
 #&gt; Sutter Bypass                   0      0      0      0      0      0      0
-#&gt; Bear River                    177    154    153    109     82    105     87
-#&gt; Feather River              133697 131013 130180 128605 128877 130703 129889
-#&gt; Yuba River                  28424  26678  27112  23998  21803  22609  21973
+#&gt; Bear River                    375    298    306    212    170    208    146
+#&gt; Feather River              155581 137384 134205 132478 133154 134495 130900
+#&gt; Yuba River                  35979  29190  28841  26563  24854  24794  23126
 #&gt; Lower-mid Sacramento River      0      0      0      0      0      0      0
 #&gt; Yolo Bypass                     0      0      0      0      0      0      0
-#&gt; American River              38662  35283  39481  33481  29519  30808  29923
+#&gt; American River              30487  29264  30306  29578  29745  30188  29674
 #&gt; Lower Sacramento River          0      0      0      0      0      0      0
-#&gt; Calaveras River               198    183    194    148    112    134    118
-#&gt; Cosumnes River                156    137    143    102     73     95     79
-#&gt; Mokelumne River              7522   7444   7475   7389   7309   7322   7311
-#&gt; Merced River                 3855   3868   3867   3722   3600   3617   3655
-#&gt; Stanislaus River             4845   4827   4681   4351   4088   4098   4221
-#&gt; Tuolumne River               1487   1451   1435   1365   1308   1330   1324
+#&gt; Calaveras River             12365  17044  21367  15464  12059   8948  10930
+#&gt; Cosumnes River               4304   3050   3284   1886    801    615    381
+#&gt; Mokelumne River              8221   7611   7479   7442   7416   7421   7412
+#&gt; Merced River                 4829   4165   3755   3674   3605   3612   3619
+#&gt; Stanislaus River             7877   5734   4074   4000   3938   3938   3923
+#&gt; Tuolumne River               1714   1502   1366   1338   1321   1336   1315
 #&gt; San Joaquin River               0      0      0      0      0      0      0
 #&gt;                                15     16     17     18     19     20
-#&gt; Upper Sacramento River      16943  20096  23802  24631  25433  22516
-#&gt; Antelope Creek                 81    163    257    296    392    303
-#&gt; Battle Creek                37133  37291  37453  37459  37490  37350
-#&gt; Bear Creek                     70    139    218    248    336    262
-#&gt; Big Chico Creek                81    149    229    286    395    295
-#&gt; Butte Creek                   239    385    542    586    711    584
-#&gt; Clear Creek                  2744   3625   4607   4814   5207   4419
-#&gt; Cottonwood Creek             2190   3406   4648   4830   5626   4868
-#&gt; Cow Creek                     752   1135   1536   1597   1783   1454
-#&gt; Deer Creek                    316    389    474    499    573    496
-#&gt; Elder Creek                    73    167    270    310    424    335
-#&gt; Mill Creek                    195    260    334    369    458    382
-#&gt; Paynes Creek                   81    154    240    274    367    288
-#&gt; Stony Creek                    73    149    234    262    359    293
-#&gt; Thomes Creek                   77    156    246    270    362    295
+#&gt; Upper Sacramento River      17650  24355  32184  31390  31583  29062
+#&gt; Antelope Creek                 80    125    162    155    200    206
+#&gt; Battle Creek                37589  37621  37652  37648  37659  37643
+#&gt; Bear Creek                     72    114    148    144    191    197
+#&gt; Big Chico Creek                80    117    149    152    205    207
+#&gt; Butte Creek                   244    388    529    487    531    512
+#&gt; Clear Creek                  2791   3546   4348   4001   3797   3618
+#&gt; Cottonwood Creek             2154   2783   3406   3086   3006   2946
+#&gt; Cow Creek                     742    875   1001    944    947    927
+#&gt; Deer Creek                    324    390    448    436    480    474
+#&gt; Elder Creek                    72    128    176    167    212    216
+#&gt; Mill Creek                    202    266    326    333    398    378
+#&gt; Paynes Creek                   80    124    160    153    200    206
+#&gt; Stony Creek                    72    119    158    149    197    206
+#&gt; Thomes Creek                   72    120    158    148    194    205
 #&gt; Upper-mid Sacramento River      0      0      0      0      0      0
 #&gt; Sutter Bypass                   0      0      0      0      0      0
-#&gt; Bear River                     74    136    205    238    326    262
-#&gt; Feather River              128923 133886 138807 139929 142208 137530
-#&gt; Yuba River                  21621  31140  39537  41588  48043  41220
+#&gt; Bear River                     99    158    205    229    355    376
+#&gt; Feather River              129576 137708 143121 137478 143728 152793
+#&gt; Yuba River                  22012  25874  28950  31942  40238  39875
 #&gt; Lower-mid Sacramento River      0      0      0      0      0      0
 #&gt; Yolo Bypass                     0      0      0      0      0      0
-#&gt; American River              29351  30876  32223  34953  41212  40408
+#&gt; American River              29872  30135  29497  29952  31719  30937
 #&gt; Lower Sacramento River          0      0      0      0      0      0
-#&gt; Calaveras River               111    160    217    232    301    254
-#&gt; Cosumnes River                 72    120    177    193    262    213
-#&gt; Mokelumne River              7308   7337   7372   7391   7498   7548
-#&gt; Merced River                 3703   3717   3725   3741   3832   3838
-#&gt; Stanislaus River             4354   4363   4337   4356   4502   4489
-#&gt; Tuolumne River               1328   1373   1424   1438   1514   1485
+#&gt; Calaveras River             16223  11710   9863  14999  16626  16082
+#&gt; Cosumnes River                359    337    351    465    628    527
+#&gt; Mokelumne River              7418   7437   7452   7457   7494   7580
+#&gt; Merced River                 3639   3647   3647   3642   3699   4037
+#&gt; Stanislaus River             3924   3959   3982   3978   4032   4529
+#&gt; Tuolumne River               1312   1347   1372   1366   1416   1492
 #&gt; San Joaquin River               0      0      0      0      0      0
 #&gt; 
 #&gt; $juvenile_biomass
 #&gt;                                    1         2          3          4          5
-#&gt; Upper Sacramento River      283228.0  447638.4  1618387.4  2879223.0  3088472.6
-#&gt; Antelope Creek                5086.8    7881.4    21006.6    36078.6    39030.2
-#&gt; Battle Creek                 24115.2   37020.6   259112.8   496936.4   552828.4
-#&gt; Bear Creek                    3454.0    5118.2    19279.6    30081.2    32185.0
-#&gt; Big Chico Creek               4584.4    6311.4    15700.0    26721.4    29327.6
-#&gt; Butte Creek                  13313.6   20943.8   137626.2   183501.6   227273.2
-#&gt; Clear Creek                 122334.4  203943.0   994281.0  1310573.2  1423581.8
-#&gt; Cottonwood Creek             53568.4   88987.6   638550.4   944417.8  1223689.4
-#&gt; Cow Creek                    40035.0   57933.0   199704.0   310357.6   328381.2
-#&gt; Deer Creek                    3140.0    3893.6    19499.4    36800.8    37994.0
-#&gt; Elder Creek                   3611.0    6280.0    32970.0    48450.2    57713.2
-#&gt; Mill Creek                    4333.2    5809.0    15009.2    23644.2    25120.0
-#&gt; Paynes Creek                  4804.2    7127.8    29484.6    43112.2    45875.4
-#&gt; Stony Creek                   3893.6    5903.2    25088.6    36267.0    45247.4
-#&gt; Thomes Creek                  3862.2    5809.0    25088.6    36267.0    45655.6
+#&gt; Upper Sacramento River      318678.6  533925.6  2271256.2  3470861.8  4036689.8
+#&gt; Antelope Creek                1381.6    1915.4     4270.4     5809.0     6688.2
+#&gt; Battle Creek                  6499.8   12748.4    87888.6    96774.8   122303.0
+#&gt; Bear Creek                    1099.0    1444.4     5086.8     6342.8     7127.8
+#&gt; Big Chico Creek                659.4    1004.8     3045.8     4019.2     4835.6
+#&gt; Butte Creek                  15511.6   23550.0   161490.2   175745.8   257040.4
+#&gt; Clear Creek                  64652.6  105001.6   429803.2   526578.0   624765.8
+#&gt; Cottonwood Creek             20472.8   36643.8   247965.8   278486.6   391432.4
+#&gt; Cow Creek                     4898.4    5934.6    20661.2    28636.8    31462.8
+#&gt; Deer Creek                    5024.0    6311.4    25905.0    31337.2    34320.2
+#&gt; Elder Creek                   1978.2    3799.4    13847.4    15323.2    20190.2
+#&gt; Mill Creek                   10173.6   14224.2    31117.4    41228.2    46252.2
+#&gt; Paynes Creek                  1318.8    1821.2     7410.4     8949.0     9891.0
+#&gt; Stony Creek                   1475.8    2449.2    10581.8    12089.0    17521.2
+#&gt; Thomes Creek                  1287.4    2198.0     9608.4    10927.2    16076.8
 #&gt; Upper-mid Sacramento River       0.0       0.0        0.0        0.0        0.0
 #&gt; Sutter Bypass                    0.0       0.0        0.0        0.0        0.0
-#&gt; Bear River                    3077.2    5149.6    29830.0    38967.4    50522.6
-#&gt; Feather River              1847105.0 2666990.4 11606790.2 17034751.2 20745100.8
-#&gt; Yuba River                  291235.0  457560.8  3591971.6  5157104.6  6739696.0
+#&gt; Bear River                   20190.2   26250.4   108549.8   173516.4   225734.6
+#&gt; Feather River               833073.4 1500323.4 18138932.2 37788675.4 45474139.4
+#&gt; Yuba River                 1817180.8 2276971.0  7538826.0 12468343.4 14328573.6
 #&gt; Lower-mid Sacramento River       0.0       0.0        0.0        0.0        0.0
 #&gt; Yolo Bypass                      0.0       0.0        0.0        0.0        0.0
-#&gt; American River             5609829.8 6844948.8 20113427.0 38265798.4 42496257.6
+#&gt; American River             2711798.2 4632913.0 11397069.6 22478223.8 24721722.4
 #&gt; Lower Sacramento River           0.0       0.0        0.0        0.0        0.0
-#&gt; Calaveras River               8603.6    8603.6    16956.0    21634.6    21760.2
-#&gt; Cosumnes River                1884.0    1884.0     3925.0     5055.4     5620.6
-#&gt; Mokelumne River              52218.2   52218.2   136150.4   204790.8   230224.8
-#&gt; Merced River                109774.4  157816.4   212546.6   254591.2   371744.6
-#&gt; Stanislaus River            191131.8  319275.2   417463.0   496245.6   759346.2
-#&gt; Tuolumne River               46283.6   57838.8    72691.0    89678.4   151191.0
+#&gt; Calaveras River             319400.8  342479.8  1659647.0  3758988.2  4985880.4
+#&gt; Cosumnes River              359153.2  395357.4  1311923.4  2300897.8  2741125.8
+#&gt; Mokelumne River             217350.8  220585.0   713313.8  1188615.6  1348535.8
+#&gt; Merced River                381698.4  385968.8   407666.2   587619.6   952424.8
+#&gt; Stanislaus River            457906.2 1066155.6  1628498.2  2120913.0  3680927.8
+#&gt; Tuolumne River              114672.8  115834.6   121863.4   167676.0   329166.2
 #&gt; San Joaquin River                0.0       0.0        0.0        0.0        0.0
 #&gt;                                     6          7          8          9
-#&gt; Upper Sacramento River      3375625.6  3732989.0  3903051.4  3997377.0
-#&gt; Antelope Creek                45624.2    52186.8    55326.8    56771.2
-#&gt; Battle Creek                 576975.0   659996.6   673121.8   682887.2
-#&gt; Bear Creek                    36047.2    40254.8    41699.2    42327.2
-#&gt; Big Chico Creek               34791.2    41824.8    43520.4    44525.2
-#&gt; Butte Creek                  243412.8   287718.2   292177.0   295474.0
-#&gt; Clear Creek                 1518880.8  1741444.0  1782703.6  1806096.6
-#&gt; Cottonwood Creek            1301090.4  1492724.6  1528363.6  1555681.6
-#&gt; Cow Creek                    359090.4   385937.4   397555.4   402799.2
-#&gt; Deer Creek                    39752.4    42986.6    43646.0    44148.4
-#&gt; Elder Creek                   64213.0    79661.8    82111.0    83649.6
-#&gt; Mill Creek                    27537.8    30112.6    31243.0    31871.0
-#&gt; Paynes Creek                  52029.8    57556.2    59879.8    60853.2
-#&gt; Stony Creek                   51339.0    59283.2    62046.4    63396.6
-#&gt; Thomes Creek                  51558.8    62140.6    64621.2    65940.0
+#&gt; Upper Sacramento River      4385543.8  4763945.2  4980354.0  5129535.4
+#&gt; Antelope Creek                 7536.0     8164.0     8478.0     8697.8
+#&gt; Battle Creek                 128237.6   136464.4   140169.6   144628.4
+#&gt; Bear Creek                     7755.8     8289.6     8415.2     8446.6
+#&gt; Big Chico Creek                5557.8     6499.8     6625.4     6656.8
+#&gt; Butte Creek                  271421.6   295285.6   299147.8   302413.4
+#&gt; Clear Creek                  671803.0   709483.0   735953.2   756363.2
+#&gt; Cottonwood Creek             402516.6   422016.0   426914.4   433477.0
+#&gt; Cow Creek                     33001.4    34445.8    35042.4    35419.2
+#&gt; Deer Creek                    36738.0    39312.8    40129.2    40725.8
+#&gt; Elder Creek                   20943.8    23487.2    23738.4    23989.6
+#&gt; Mill Creek                    51558.8    54510.4    56708.4    57807.4
+#&gt; Paynes Creek                  10738.8    11366.8    11618.0    11712.2
+#&gt; Stony Creek                   18683.0    19687.8    20033.2    20410.0
+#&gt; Thomes Creek                  17458.4    19373.8    20127.4    20410.0
 #&gt; Upper-mid Sacramento River        0.0        0.0        0.0        0.0
 #&gt; Sutter Bypass                     0.0        0.0        0.0        0.0
-#&gt; Bear River                    53568.4    60131.0    61198.6    62486.0
-#&gt; Feather River              21664806.8 25099621.4 25751768.0 26490547.2
-#&gt; Yuba River                  6935412.2  8829271.8  8955970.8  9119125.2
+#&gt; Bear River                   239927.4   320091.6   326434.4   331678.2
+#&gt; Feather River              46149082.4 49940224.2 50434711.4 52096619.2
+#&gt; Yuba River                 15088767.6 16786188.8 17353367.0 17902019.2
 #&gt; Lower-mid Sacramento River        0.0        0.0        0.0        0.0
 #&gt; Yolo Bypass                       0.0        0.0        0.0        0.0
-#&gt; American River             43723809.2 58097724.4 59100483.4 60586048.8
+#&gt; American River             26794436.4 32802606.6 34530642.8 37280121.0
 #&gt; Lower Sacramento River            0.0        0.0        0.0        0.0
-#&gt; Calaveras River               21760.2    29955.6    29955.6    29955.6
-#&gt; Cosumnes River                 5620.6     7567.4     7567.4     7567.4
-#&gt; Mokelumne River              230224.8   275440.8   275440.8   275440.8
-#&gt; Merced River                 421419.4   543910.8   569282.0   576472.6
-#&gt; Stanislaus River             880895.6  1061665.4  1131844.4  1150496.0
-#&gt; Tuolumne River               162871.8   197474.6   203409.2   204916.4
+#&gt; Calaveras River             6289294.4 10511966.4 10908831.0 17672485.2
+#&gt; Cosumnes River              2892191.2  3567354.0  3597686.4  4005603.8
+#&gt; Mokelumne River             1352869.0  1383389.8  1384614.4  1402324.0
+#&gt; Merced River                 956475.4  1004988.4  1007469.0  1007845.8
+#&gt; Stanislaus River            3711825.4  3747558.6  3763164.4  3763666.8
+#&gt; Tuolumne River               330139.6   343453.2   344018.4   344081.2
 #&gt; San Joaquin River                 0.0        0.0        0.0        0.0
 #&gt;                                    10         11         12         13
-#&gt; Upper Sacramento River      4332697.6  4380519.8  4415656.4  4442566.2
-#&gt; Antelope Creek                63773.4    64370.0    64746.8    65092.2
-#&gt; Battle Creek                 752846.4   759032.2   768954.6   775705.6
-#&gt; Bear Creek                    46346.4    46691.8    46943.0    47131.4
-#&gt; Big Chico Creek               49580.6    50020.2    50302.8    50585.4
-#&gt; Butte Creek                  313277.8   314345.4   316103.8   317234.2
-#&gt; Clear Creek                 1924286.2  1937034.6  1948338.6  1957319.0
-#&gt; Cottonwood Creek            1729103.8  1742700.0  1752245.6  1762953.0
-#&gt; Cow Creek                    436554.2   439443.0   442237.6   444121.6
-#&gt; Deer Creek                    46911.6    47131.4    47351.2    47508.2
-#&gt; Elder Creek                   91562.4    92033.4    92410.2    92881.2
-#&gt; Mill Creek                    34885.4    35199.4    35482.0    35639.0
-#&gt; Paynes Creek                  65783.0    66254.0    66536.6    66787.8
-#&gt; Stony Creek                   68389.2    68860.2    69142.8    69394.0
-#&gt; Thomes Creek                  76616.0    77212.6    77872.0    78657.0
+#&gt; Upper Sacramento River      5886432.4  5984369.0  6055301.6  6121210.2
+#&gt; Antelope Creek                 9639.8     9671.2     9702.6     9734.0
+#&gt; Battle Creek                 176530.8   178980.0   184977.4   187018.4
+#&gt; Bear Creek                     9106.0     9106.0     9137.4     9168.8
+#&gt; Big Chico Creek                7347.6     7347.6     7379.0     7410.4
+#&gt; Butte Creek                  317171.4   317893.6   319620.6   321096.4
+#&gt; Clear Creek                  865227.0   877190.4   892105.4   900991.6
+#&gt; Cottonwood Creek             473041.0   475710.0   477468.4   480671.2
+#&gt; Cow Creek                     39030.2    39250.0    39564.0    39752.4
+#&gt; Deer Creek                    44996.2    45184.6    45467.2    45655.6
+#&gt; Elder Creek                   24931.6    24931.6    24963.0    25088.6
+#&gt; Mill Creek                    63993.2    64401.4    64872.4    65186.4
+#&gt; Paynes Creek                  12465.8    12497.2    12528.6    12560.0
+#&gt; Stony Creek                   21320.6    21383.4    21414.8    21446.2
+#&gt; Thomes Creek                  23550.0    23675.6    23832.6    24146.6
 #&gt; Upper-mid Sacramento River        0.0        0.0        0.0        0.0
 #&gt; Sutter Bypass                     0.0        0.0        0.0        0.0
-#&gt; Bear River                    69268.4    70022.0    70555.8    71811.8
-#&gt; Feather River              29369550.4 29920306.4 30653056.8 32176365.0
-#&gt; Yuba River                  9636032.0  9848892.6  9973990.2 10401187.2
+#&gt; Bear River                   372969.2   375387.0   377930.4   383990.6
+#&gt; Feather River              54983692.2 55587545.6 55860034.8 57781777.6
+#&gt; Yuba River                 18674993.0 19002243.8 19061558.4 19544270.6
 #&gt; Lower-mid Sacramento River        0.0        0.0        0.0        0.0
 #&gt; Yolo Bypass                       0.0        0.0        0.0        0.0
-#&gt; American River             64598529.2 65677527.4 67217603.2 68533326.0
+#&gt; American River             41669307.2 43445008.6 46904001.2 49837609.0
 #&gt; Lower Sacramento River            0.0        0.0        0.0        0.0
-#&gt; Calaveras River               29955.6    29955.6    29955.6    29955.6
-#&gt; Cosumnes River                 7598.8     7598.8     7598.8     7598.8
-#&gt; Mokelumne River              275440.8   275440.8   275440.8   275440.8
-#&gt; Merced River                 598546.8   608846.0   686466.8   701852.8
-#&gt; Stanislaus River            1208774.4  1231099.8  1388476.6  1420661.6
-#&gt; Tuolumne River               210285.8   212483.8   229125.8   232485.6
+#&gt; Calaveras River            18329969.8 18890679.6 22256696.8 22641535.2
+#&gt; Cosumnes River              4054242.4  4072705.6  4130356.0  4134563.6
+#&gt; Mokelumne River             1404741.8  1406249.0  1418024.0  1419280.0
+#&gt; Merced River                1009510.0  1009981.0  1027502.2  1028695.4
+#&gt; Stanislaus River            3765488.0  3765864.8  3772929.8  3774342.8
+#&gt; Tuolumne River               344489.4   344583.6   346059.4   346342.0
 #&gt; San Joaquin River                 0.0        0.0        0.0        0.0
 #&gt;                                    14         15         16         17
-#&gt; Upper Sacramento River      5900970.6  5987414.8  7672527.2  8148865.2
-#&gt; Antelope Creek                83555.4    84277.6   113982.0   121926.2
-#&gt; Battle Creek                1063141.2  1073440.4  1366779.2  1410174.0
-#&gt; Bear Creek                    58937.8    59157.6    79096.6    84434.6
-#&gt; Big Chico Creek               62486.0    62988.4    95173.4    99977.6
-#&gt; Butte Creek                  369452.4   370771.2   436522.8   458973.8
-#&gt; Clear Creek                 2382380.8  2404957.4  2897152.4  3056884.2
-#&gt; Cottonwood Creek            2354874.4  2368282.2  3040933.0  3346360.8
-#&gt; Cow Creek                    614655.0   618611.4   808958.2   855901.2
-#&gt; Deer Creek                    72848.0    73256.2   106885.6   111281.6
-#&gt; Elder Creek                  116808.0   117216.2   154017.0   168398.2
-#&gt; Mill Creek                    44713.6    45184.6    64275.8    68263.6
-#&gt; Paynes Creek                  81451.6    81954.0   106540.2   113165.6
-#&gt; Stony Creek                   84937.0    85439.4   108141.6   118880.4
-#&gt; Thomes Creek                  96806.2    97371.4   119979.4   131503.2
+#&gt; Upper Sacramento River      9180229.6  9331012.4 11708463.4 13144856.4
+#&gt; Antelope Creek                15009.2    15072.0    19719.2    21289.2
+#&gt; Battle Creek                 239990.2   241089.2   288440.4   296196.2
+#&gt; Bear Creek                    13345.0    13376.4    17301.4    18588.8
+#&gt; Big Chico Creek                9828.2     9859.6    15762.8    16516.4
+#&gt; Butte Creek                  393567.6   394698.0   443054.0   470403.4
+#&gt; Clear Creek                 1272893.2  1287368.6  1469959.6  1580864.4
+#&gt; Cottonwood Creek             779913.2   782645.0   925012.6  1023671.4
+#&gt; Cow Creek                     89364.4    89678.4   113008.6   119539.8
+#&gt; Deer Creek                    83429.8    83932.2   110904.8   118597.8
+#&gt; Elder Creek                   36047.2    36078.6    44336.8    48450.2
+#&gt; Mill Creek                    85565.0    86444.2   113008.6   120544.6
+#&gt; Paynes Creek                  17301.4    17332.8    21666.0    23141.8
+#&gt; Stony Creek                   27789.0    27851.8    32813.0    36047.2
+#&gt; Thomes Creek                  30489.4    30677.8    35105.2    38056.8
 #&gt; Upper-mid Sacramento River        0.0        0.0        0.0        0.0
 #&gt; Sutter Bypass                     0.0        0.0        0.0        0.0
-#&gt; Bear River                    93132.4    93697.6   137563.4   152509.8
-#&gt; Feather River              40472433.4 41029532.2 51391218.2 56183517.6
-#&gt; Yuba River                 15965549.8 16091212.6 23196907.0 25600451.4
+#&gt; Bear River                   415139.4   416489.6   474171.4   533266.2
+#&gt; Feather River              65091006.8 65420173.0 68882180.0 82792756.8
+#&gt; Yuba River                 21682359.4 21953843.8 26247888.0 29497128.6
 #&gt; Lower-mid Sacramento River        0.0        0.0        0.0        0.0
 #&gt; Yolo Bypass                       0.0        0.0        0.0        0.0
-#&gt; American River             74738562.6 75863310.6 87516855.4 97404118.8
+#&gt; American River             54049322.4 55725831.2 63309433.6 69318326.0
 #&gt; Lower Sacramento River            0.0        0.0        0.0        0.0
-#&gt; Calaveras River               30458.0    30458.0    31086.0    35105.2
-#&gt; Cosumnes River                 7850.0     7850.0     9137.4    10267.8
-#&gt; Mokelumne River              275440.8   275440.8   282600.0   325147.0
-#&gt; Merced River                 749863.4   759220.6   816557.0   870156.8
-#&gt; Stanislaus River            1531409.4  1554708.2  1678612.6  1747127.4
-#&gt; Tuolumne River               243381.4   245391.0   258233.6   272489.2
+#&gt; Calaveras River            24026620.6 25502797.4 28288574.0 29174839.0
+#&gt; Cosumnes River              4180187.8  4191115.0  4290213.4  4305222.6
+#&gt; Mokelumne River             1426596.2  1431337.6  1443615.0  1455515.6
+#&gt; Merced River                1032494.8  1032808.8  1037299.0  1054474.8
+#&gt; Stanislaus River            3779147.0  3779523.8  3787216.8  3790670.8
+#&gt; Tuolumne River               347315.4   347378.2   348477.2   353281.4
 #&gt; San Joaquin River                 0.0        0.0        0.0        0.0
-#&gt;                                    18          19          20
-#&gt; Upper Sacramento River      8249784.8   9698706.4   9963377.0
-#&gt; Antelope Creek               123810.2    161396.0    165697.8
-#&gt; Battle Creek                1420567.4   1586045.4   1604948.2
-#&gt; Bear Creek                    85502.2    110842.0    114986.8
-#&gt; Big Chico Creek              102018.6    137029.6    140326.6
-#&gt; Butte Creek                  462239.4    510438.4    541524.4
-#&gt; Clear Creek                 3070103.6   3490298.4   3620043.2
-#&gt; Cottonwood Creek            3376347.8   3724919.2   3879375.8
-#&gt; Cow Creek                    865101.4   1046091.0   1072058.8
-#&gt; Deer Creek                   112600.4    131691.6    134988.6
-#&gt; Elder Creek                  170659.0    208558.8    214210.8
-#&gt; Mill Creek                    69142.8     86852.4     88328.2
-#&gt; Paynes Creek                 114610.0    146198.4    151034.0
-#&gt; Stony Creek                  120324.8    153326.2    163405.6
-#&gt; Thomes Creek                 133041.8    167236.4    177378.6
-#&gt; Upper-mid Sacramento River        0.0         0.0         0.0
-#&gt; Sutter Bypass                     0.0         0.0         0.0
-#&gt; Bear River                   157471.0    181021.0    198793.4
-#&gt; Feather River              57029308.0  62212694.4  64942108.0
-#&gt; Yuba River                 26309118.0  29079885.4  31368034.8
-#&gt; Lower-mid Sacramento River        0.0         0.0         0.0
-#&gt; Yolo Bypass                       0.0         0.0         0.0
-#&gt; American River             99747877.6 112077495.8 122745017.8
-#&gt; Lower Sacramento River            0.0         0.0         0.0
-#&gt; Calaveras River               35230.8     46220.8     62360.4
-#&gt; Cosumnes River                10927.2     14004.4     17646.8
-#&gt; Mokelumne River              346593.2    417274.6    496873.6
-#&gt; Merced River                 941497.6   1024896.0   1183183.4
-#&gt; Stanislaus River            1863684.2   1987274.6   2385301.0
-#&gt; Tuolumne River               302727.4    319243.8    421105.4
-#&gt; San Joaquin River                 0.0         0.0         0.0
+#&gt;                                    18         19         20
+#&gt; Upper Sacramento River     13358690.4 15099475.0 15794388.4
+#&gt; Antelope Creek                21603.2    24492.0    25496.8
+#&gt; Battle Creek                 298802.4   317108.6   321441.8
+#&gt; Bear Creek                    18840.0    21352.0    22513.8
+#&gt; Big Chico Creek               17081.6    19154.0    19844.8
+#&gt; Butte Creek                  474391.2   496905.0   526421.0
+#&gt; Clear Creek                 1591760.2  1688849.0  1788010.2
+#&gt; Cottonwood Creek            1034567.2  1087225.0  1121796.4
+#&gt; Cow Creek                    120984.2   132665.0   136621.4
+#&gt; Deer Creek                   120293.4   131660.2   137689.0
+#&gt; Elder Creek                   49046.8    53725.4    55044.2
+#&gt; Mill Creek                   122083.2   137092.4   140797.6
+#&gt; Paynes Creek                  23455.8    26313.2    27632.0
+#&gt; Stony Creek                   36424.0    39721.0    42421.4
+#&gt; Thomes Creek                  38402.2    41165.4    43394.8
+#&gt; Upper-mid Sacramento River        0.0        0.0        0.0
+#&gt; Sutter Bypass                     0.0        0.0        0.0
+#&gt; Bear River                   545418.0   633118.2   734351.8
+#&gt; Feather River              84543934.8 86951247.2 95298780.2
+#&gt; Yuba River                 30569721.2 33428879.6 37444343.0
+#&gt; Lower-mid Sacramento River        0.0        0.0        0.0
+#&gt; Yolo Bypass                       0.0        0.0        0.0
+#&gt; American River             70517523.4 78773305.6 84787724.4
+#&gt; Lower Sacramento River            0.0        0.0        0.0
+#&gt; Calaveras River            32358296.6 40569428.0 45255469.8
+#&gt; Cosumnes River              4345760.0  4657059.6  4764290.6
+#&gt; Mokelumne River             1544785.8  1884533.8  2135388.4
+#&gt; Merced River                1295187.2  1446284.0  1500731.6
+#&gt; Stanislaus River            4260069.4  4287732.8  6025220.4
+#&gt; Tuolumne River               426631.8   431938.4   694505.2
+#&gt; San Joaquin River                 0.0        0.0        0.0
 #&gt; 
 #&gt; $proportion_natural
-#&gt;                                     1          2           3           4
-#&gt; Upper Sacramento River     0.36019673 0.37420455 0.231795778 0.123600870
-#&gt; Antelope Creek             0.80686695 0.82142857 0.744318182 0.645669291
-#&gt; Battle Creek               0.01135001 0.01200809 0.006080249 0.002070783
-#&gt; Bear Creek                 0.81683168 0.82547170 0.753333333 0.657407407
-#&gt; Big Chico Creek            0.78260870 0.79357798 0.718750000 0.628099174
-#&gt; Butte Creek                0.82224248 0.82697427 0.747081712 0.571428571
-#&gt; Clear Creek                0.74662654 0.75878004 0.612068966 0.344879518
-#&gt; Cottonwood Creek           0.41069397 0.41153082 0.311856526 0.213064945
-#&gt; Cow Creek                  0.65342602 0.65547878 0.483345670 0.304780876
-#&gt; Deer Creek                 0.45697897 0.47113594 0.327014218 0.183908046
-#&gt; Elder Creek                0.82125604 0.83027523 0.758169935 0.672566372
-#&gt; Mill Creek                 0.70491803 0.72354949 0.581395349 0.349397590
-#&gt; Paynes Creek               0.81481481 0.82071713 0.735294118 0.640000000
-#&gt; Stony Creek                0.81773399 0.82629108 0.756578947 0.669642857
-#&gt; Thomes Creek               0.81773399 0.82629108 0.756578947 0.669642857
-#&gt; Upper-mid Sacramento River         NA         NA          NA          NA
-#&gt; Sutter Bypass                      NA         NA          NA          NA
-#&gt; Bear River                 0.81500000 0.82296651 0.743055556 0.633663366
-#&gt; Feather River              0.08191131 0.07152433 0.046366279 0.035423292
-#&gt; Yuba River                 0.22618772 0.20440014 0.143772972 0.102660575
-#&gt; Lower-mid Sacramento River         NA         NA          NA          NA
-#&gt; Yolo Bypass                        NA         NA          NA          NA
-#&gt; American River             0.40999647 0.45310252 0.326838956 0.216639081
-#&gt; Lower Sacramento River             NA         NA          NA          NA
-#&gt; Calaveras River            0.67916667 0.69444444 0.592592593 0.472602740
-#&gt; Cosumnes River             0.82568807 0.83620690 0.753246753 0.608247423
-#&gt; Mokelumne River            0.02878848 0.03033932 0.025932362 0.025280899
-#&gt; Merced River               0.04989213 0.05574913 0.065269302 0.075328084
-#&gt; Stanislaus River           0.16655781 0.19257541 0.241228940 0.222898904
-#&gt; Tuolumne River             0.13443073 0.15472204 0.140326975 0.115627190
-#&gt; San Joaquin River                  NA         NA          NA          NA
-#&gt;                                      5          6          7          8
-#&gt; Upper Sacramento River     0.200725689 0.33857795 0.34712507 0.23960970
-#&gt; Antelope Creek             0.769230769 0.86363636 0.86725664 0.80088496
-#&gt; Battle Creek               0.004480335 0.01092838 0.01177129 0.00613349
-#&gt; Bear Creek                 0.794444444 0.88178914 0.88064516 0.80526316
-#&gt; Big Chico Creek            0.751381215 0.85294118 0.85576923 0.78365385
-#&gt; Butte Creek                0.666666667 0.79687500 0.78163494 0.68497577
-#&gt; Clear Creek                0.468431772 0.61786237 0.56266756 0.37184116
-#&gt; Cottonwood Creek           0.413197395 0.59883833 0.59899361 0.49939599
-#&gt; Cow Creek                  0.437550363 0.59629844 0.58203593 0.41736227
-#&gt; Deer Creek                 0.300492611 0.46816479 0.47407407 0.32860520
-#&gt; Elder Creek                0.822966507 0.90159574 0.90000000 0.84647303
-#&gt; Mill Creek                 0.450847458 0.60963855 0.61336516 0.46885246
-#&gt; Paynes Creek               0.784688995 0.87569061 0.87068966 0.79069767
-#&gt; Stony Creek                0.806282723 0.88988095 0.88988095 0.83700441
-#&gt; Thomes Creek               0.806282723 0.88988095 0.89085546 0.83700441
-#&gt; Upper-mid Sacramento River          NA         NA         NA         NA
-#&gt; Sutter Bypass                       NA         NA         NA         NA
-#&gt; Bear River                 0.773006135 0.86879433 0.86738351 0.79096045
-#&gt; Feather River              0.060878409 0.10952133 0.10415873 0.06760062
-#&gt; Yuba River                 0.245366883 0.40776871 0.40472441 0.29517309
-#&gt; Lower-mid Sacramento River          NA         NA         NA         NA
-#&gt; Yolo Bypass                         NA         NA         NA         NA
-#&gt; American River             0.286332081 0.46044311 0.50274556 0.35119756
-#&gt; Lower Sacramento River              NA         NA         NA         NA
-#&gt; Calaveras River            0.605128205 0.74503311 0.74503311 0.61111111
-#&gt; Cosumnes River             0.736111111 0.84615385 0.84800000 0.75641026
-#&gt; Mokelumne River            0.033169696 0.05804033 0.05998452 0.03124169
-#&gt; Merced River               0.074356280 0.08207400 0.09083871 0.08612192
-#&gt; Stanislaus River           0.177658432 0.16346154 0.18605146 0.20990712
-#&gt; Tuolumne River             0.116864941 0.16534392 0.18633140 0.15131137
-#&gt; San Joaquin River                   NA         NA         NA         NA
-#&gt;                                      9          10          11          12
-#&gt; Upper Sacramento River     0.188077452 0.170382645 0.128455370 0.123321836
-#&gt; Antelope Creek             0.778325123 0.773869347 0.685314685 0.587155963
-#&gt; Battle Creek               0.003410861 0.003544671 0.002070783 0.001721772
-#&gt; Bear Creek                 0.773006135 0.773006135 0.681034483 0.554216867
-#&gt; Big Chico Creek            0.763157895 0.760638298 0.648437500 0.540816327
-#&gt; Butte Creek                0.644160584 0.621359223 0.468664850 0.327586207
-#&gt; Clear Creek                0.340409401 0.344221106 0.233705226 0.173003802
-#&gt; Cottonwood Creek           0.411028994 0.352702281 0.239633028 0.220759684
-#&gt; Cow Creek                  0.334604385 0.304780876 0.201372998 0.180751174
-#&gt; Deer Creek                 0.273657289 0.275510204 0.193181818 0.123456790
-#&gt; Elder Creek                0.830275229 0.830275229 0.739436620 0.626262626
-#&gt; Mill Creek                 0.421428571 0.419354839 0.307692308 0.213592233
-#&gt; Paynes Creek               0.763157895 0.756756757 0.648437500 0.545454545
-#&gt; Stony Creek                0.815000000 0.805263158 0.710937500 0.602150538
-#&gt; Thomes Creek               0.818627451 0.811224490 0.721804511 0.640776699
-#&gt; Upper-mid Sacramento River          NA          NA          NA          NA
-#&gt; Sutter Bypass                       NA          NA          NA          NA
-#&gt; Bear River                 0.759740260 0.758169935 0.660550459 0.548780488
-#&gt; Feather River              0.048499004 0.042410509 0.030683099 0.032728881
-#&gt; Yuba River                 0.249044156 0.261065211 0.165180432 0.081135624
-#&gt; Lower-mid Sacramento River          NA          NA          NA          NA
-#&gt; Yolo Bypass                         NA          NA          NA          NA
-#&gt; American River             0.289062721 0.364656417 0.250798961 0.150242217
-#&gt; Lower Sacramento River              NA          NA          NA          NA
-#&gt; Calaveras River            0.579234973 0.603092784 0.479729730 0.312500000
-#&gt; Cosumnes River             0.722627737 0.734265734 0.627450980 0.479452055
-#&gt; Mokelumne River            0.021090811 0.025150502 0.013804304 0.003009988
-#&gt; Merced River               0.089193382 0.088957848 0.053465879 0.021388889
-#&gt; Stanislaus River           0.206960845 0.182226020 0.120202252 0.063600783
-#&gt; Tuolumne River             0.130254997 0.120557491 0.075457875 0.035168196
-#&gt; San Joaquin River                   NA          NA          NA          NA
-#&gt;                                     13          14           15          16
-#&gt; Upper Sacramento River     0.132983469 0.080224919 0.0249070413 0.177896099
-#&gt; Antelope Creek             0.666666667 0.571428571 0.4444444444 0.723926380
-#&gt; Battle Creek               0.002634055 0.001587472 0.0007001858 0.004934166
-#&gt; Bear Creek                 0.657407407 0.564705882 0.4714285714 0.733812950
-#&gt; Big Chico Creek            0.640000000 0.540816327 0.4444444444 0.697986577
-#&gt; Butte Creek                0.410876133 0.296028881 0.1841004184 0.493506494
-#&gt; Clear Creek                0.211003628 0.133178346 0.0488338192 0.280000000
-#&gt; Cottonwood Creek           0.292107960 0.185534591 0.0538812785 0.391661773
-#&gt; Cow Creek                  0.233809001 0.155985490 0.0718085106 0.385022026
-#&gt; Deer Creek                 0.179190751 0.134146341 0.1012658228 0.269922879
-#&gt; Elder Creek                0.708661417 0.618556701 0.4931506849 0.778443114
-#&gt; Mill Creek                 0.292576419 0.221153846 0.1692307692 0.376923077
-#&gt; Paynes Creek               0.631147541 0.540816327 0.4444444444 0.707792208
-#&gt; Stony Creek                0.683760684 0.593406593 0.4931506849 0.751677852
-#&gt; Thomes Creek               0.735714286 0.633663366 0.5194805195 0.762820513
-#&gt; Upper-mid Sacramento River          NA          NA           NA          NA
-#&gt; Sutter Bypass                       NA          NA           NA          NA
-#&gt; Bear River                 0.647619048 0.574712644 0.5000000000 0.727941176
-#&gt; Feather River              0.046242244 0.040265149 0.0330740054 0.068916840
-#&gt; Yuba River                 0.113892698 0.088244664 0.0734008603 0.356647399
-#&gt; Lower-mid Sacramento River          NA          NA           NA          NA
-#&gt; Yolo Bypass                         NA          NA           NA          NA
-#&gt; American River             0.185795897 0.161715069 0.1453783517 0.187589066
-#&gt; Lower Sacramento River              NA          NA           NA          NA
-#&gt; Calaveras River            0.425373134 0.347457627 0.3063063063 0.518750000
-#&gt; Cosumnes River             0.600000000 0.518987342 0.4722222222 0.683333333
-#&gt; Mokelumne River            0.004780115 0.003282725 0.0028735632 0.006814774
-#&gt; Merced River               0.025988388 0.036114911 0.0486092358 0.052192628
-#&gt; Stanislaus River           0.065885798 0.093105899 0.1208084520 0.122622049
-#&gt; Tuolumne River             0.051127820 0.046827795 0.0496987952 0.080844865
-#&gt; San Joaquin River                   NA          NA           NA          NA
-#&gt;                                     17          18         19          20
-#&gt; Upper Sacramento River     0.305898664 0.329259876 0.35041088 0.266255107
-#&gt; Antelope Creek             0.824902724 0.847972973 0.88520408 0.851485149
-#&gt; Battle Creek               0.009238245 0.009396941 0.01021606 0.006506024
-#&gt; Bear Creek                 0.830275229 0.850806452 0.88988095 0.858778626
-#&gt; Big Chico Creek            0.803493450 0.842657343 0.88607595 0.847457627
-#&gt; Butte Creek                0.640221402 0.667235495 0.72573840 0.666095890
-#&gt; Clear Creek                0.433470805 0.457831325 0.49875168 0.409368635
-#&gt; Cottonwood Creek           0.554216867 0.571014493 0.63170992 0.574363188
-#&gt; Cow Creek                  0.545572917 0.562930495 0.60852496 0.519944979
-#&gt; Deer Creek                 0.400843882 0.430861723 0.50436300 0.427419355
-#&gt; Elder Creek                0.862962963 0.880645161 0.91273585 0.889552239
-#&gt; Mill Creek                 0.514970060 0.560975610 0.64628821 0.575916230
-#&gt; Paynes Creek               0.812500000 0.835766423 0.87738420 0.843750000
-#&gt; Stony Creek                0.841880342 0.858778626 0.89693593 0.873720137
-#&gt; Thomes Creek               0.849593496 0.862962963 0.89779006 0.874576271
+#&gt;                                      1           2           3            4
+#&gt; Upper Sacramento River     0.364968491 0.350419385 0.235186540 0.1584666465
+#&gt; Antelope Creek             0.780487805 0.792626728 0.736842105 0.5833333333
+#&gt; Battle Creek               0.002919243 0.002442716 0.001488293 0.0008509959
+#&gt; Bear Creek                 0.808290155 0.820388350 0.770186335 0.6262626263
+#&gt; Big Chico Creek            0.776119403 0.788732394 0.728915663 0.5631067961
+#&gt; Butte Creek                0.781456954 0.777528090 0.742857143 0.6132812500
+#&gt; Clear Creek                0.520152505 0.451773491 0.304473684 0.2166567872
+#&gt; Cottonwood Creek           0.242872609 0.234306569 0.207703927 0.1426236208
+#&gt; Cow Creek                  0.300990099 0.299603175 0.207631874 0.1097099622
+#&gt; Deer Creek                 0.426294821 0.425149701 0.330232558 0.2000000000
+#&gt; Elder Creek                0.812182741 0.822115385 0.773006135 0.6476190476
+#&gt; Mill Creek                 0.721367521 0.742902208 0.648706897 0.4474576271
+#&gt; Paynes Creek               0.785714286 0.797297297 0.736842105 0.5794392523
+#&gt; Stony Creek                0.811224490 0.822966507 0.773006135 0.6372549020
+#&gt; Thomes Creek               0.811224490 0.822115385 0.770186335 0.6300000000
+#&gt; Upper-mid Sacramento River          NA          NA          NA           NA
+#&gt; Sutter Bypass                       NA          NA          NA           NA
+#&gt; Bear River                 0.827906977 0.840517241 0.810256410 0.7549668874
+#&gt; Feather River              0.242017281 0.267374058 0.172157398 0.0624744521
+#&gt; Yuba River                 0.355421304 0.384129299 0.339781794 0.3029125546
+#&gt; Lower-mid Sacramento River          NA          NA          NA           NA
+#&gt; Yolo Bypass                         NA          NA          NA           NA
+#&gt; American River             0.175919040 0.209429280 0.133768352 0.0871714061
+#&gt; Lower Sacramento River              NA          NA          NA           NA
+#&gt; Calaveras River            0.796296296 0.811274510 0.916756757 0.9478672986
+#&gt; Cosumnes River             0.978606692 0.980825959 0.978187919 0.9780405405
+#&gt; Mokelumne River            0.073636592 0.079880180 0.067779464 0.0618477984
+#&gt; Merced River               0.057641460 0.115632754 0.222343443 0.2571904960
+#&gt; Stanislaus River           0.305361305 0.417443609 0.501672241 0.4421886249
+#&gt; Tuolumne River             0.131381892 0.197988686 0.249411765 0.2123456790
+#&gt; San Joaquin River                   NA          NA          NA           NA
+#&gt;                                      5           6          7           8
+#&gt; Upper Sacramento River     0.256268896 0.399461497 0.39426419 0.297467557
+#&gt; Antelope Creek             0.713375796 0.831460674 0.84899329 0.756756757
+#&gt; Battle Creek               0.001992244 0.003659604 0.00321023 0.001833156
+#&gt; Bear Creek                 0.753333333 0.859848485 0.87285223 0.789772727
+#&gt; Big Chico Creek            0.709677419 0.828897338 0.84745763 0.754098361
+#&gt; Butte Creek                0.652021090 0.773455378 0.76029056 0.691107644
+#&gt; Clear Creek                0.288368336 0.407531944 0.36633901 0.254022015
+#&gt; Cottonwood Creek           0.231220227 0.353666051 0.32583548 0.242872609
+#&gt; Cow Creek                  0.172332943 0.288306452 0.30511811 0.189437428
+#&gt; Deer Creek                 0.309352518 0.464684015 0.48479428 0.337931034
+#&gt; Elder Creek                0.782352941 0.873287671 0.88216561 0.809278351
+#&gt; Mill Creek                 0.500000000 0.636971047 0.65539112 0.523391813
+#&gt; Paynes Creek               0.727272727 0.839285714 0.85294118 0.756756757
+#&gt; Stony Creek                0.775757576 0.869257951 0.88064516 0.811224490
+#&gt; Thomes Creek               0.770186335 0.867383513 0.87947883 0.810256410
 #&gt; Upper-mid Sacramento River          NA          NA         NA          NA
 #&gt; Sutter Bypass                       NA          NA         NA          NA
-#&gt; Bear River                 0.819512195 0.844537815 0.88650307 0.858778626
-#&gt; Feather River              0.101925695 0.109126771 0.12340375 0.093586854
-#&gt; Yuba River                 0.493284771 0.518274502 0.58299856 0.513973799
+#&gt; Bear River                 0.859848485 0.924489796 0.93297101 0.901333333
+#&gt; Feather River              0.110107017 0.257087834 0.28738483 0.189200481
+#&gt; Yuba River                 0.396594833 0.564716997 0.58265739 0.436560216
 #&gt; Lower-mid Sacramento River          NA          NA         NA          NA
 #&gt; Yolo Bypass                         NA          NA         NA          NA
-#&gt; American River             0.221549825 0.282350585 0.39134233 0.379231835
+#&gt; American River             0.130132077 0.217919607 0.24567167 0.163971529
 #&gt; Lower Sacramento River              NA          NA         NA          NA
-#&gt; Calaveras River            0.645161290 0.668103448 0.74418605 0.696850394
-#&gt; Cosumnes River             0.785310734 0.803108808 0.85496183 0.821596244
-#&gt; Mokelumne River            0.011530114 0.014071168 0.02814084 0.034578696
-#&gt; Merced River               0.054228188 0.058273189 0.08063674 0.082073997
-#&gt; Stanislaus River           0.117362232 0.121212121 0.14971124 0.147248830
-#&gt; Tuolumne River             0.113764045 0.122392211 0.16644650 0.150168350
+#&gt; Calaveras River            0.978533594 0.992281476 0.99455253 0.993772746
+#&gt; Cosumnes River             0.986448923 0.993597110 0.99450859 0.990938662
+#&gt; Mokelumne River            0.091334895 0.172243431 0.18676227 0.103272108
+#&gt; Merced River               0.146756045 0.114093960 0.24459517 0.261958998
+#&gt; Stanislaus River           0.384297521 0.398353782 0.48312208 0.508188397
+#&gt; Tuolumne River             0.139001350 0.171966256 0.26624497 0.255542590
 #&gt; San Joaquin River                   NA          NA         NA          NA
+#&gt;                                      9           10           11           12
+#&gt; Upper Sacramento River     0.239947294 0.2060749881 0.1728230233 0.2082169735
+#&gt; Antelope Creek             0.666666667 0.6311475410 0.5544554455 0.5312500000
+#&gt; Battle Creek               0.001169746 0.0008509959 0.0006117998 0.0009572686
+#&gt; Bear Creek                 0.704000000 0.6666666667 0.5934065934 0.5697674419
+#&gt; Big Chico Creek            0.661654135 0.6311475410 0.5454545455 0.5212765957
+#&gt; Butte Creek                0.613281250 0.4775725594 0.3529411765 0.3148788927
+#&gt; Clear Creek                0.198362147 0.1476942922 0.1181181181 0.1542400000
+#&gt; Cottonwood Creek           0.160800000 0.0806310254 0.0562303194 0.0733215548
+#&gt; Cow Creek                  0.124069479 0.1029224905 0.0771241830 0.0759162304
+#&gt; Deer Creek                 0.248041775 0.2173913043 0.1700288184 0.1627906977
+#&gt; Elder Creek                0.729927007 0.6864406780 0.6145833333 0.5697674419
+#&gt; Mill Creek                 0.421985816 0.3730769231 0.3034188034 0.3004291845
+#&gt; Paynes Creek               0.664179104 0.6250000000 0.5544554455 0.5212765957
+#&gt; Stony Creek                0.731884058 0.6782608696 0.6021505376 0.5795454545
+#&gt; Thomes Creek               0.735714286 0.6916666667 0.6185567010 0.6021505376
+#&gt; Upper-mid Sacramento River          NA           NA           NA           NA
+#&gt; Sutter Bypass                       NA           NA           NA           NA
+#&gt; Bear River                 0.875838926 0.8790849673 0.8254716981 0.7823529412
+#&gt; Feather River              0.081807197 0.0600573749 0.0478041637 0.0526382985
+#&gt; Yuba River                 0.305515588 0.2971117506 0.2368331890 0.1843566428
+#&gt; Lower-mid Sacramento River          NA           NA           NA           NA
+#&gt; Yolo Bypass                         NA           NA           NA           NA
+#&gt; American River             0.129032258 0.1589784201 0.1382784502 0.1431164902
+#&gt; Lower Sacramento River              NA           NA           NA           NA
+#&gt; Calaveras River            0.995482281 0.9963963121 0.9950206932 0.9936147276
+#&gt; Cosumnes River             0.987213115 0.9881242387 0.9793213150 0.9513108614
+#&gt; Mokelumne River            0.031401918 0.0143067255 0.0094060736 0.0059331176
+#&gt; Merced River               0.144297719 0.0508655126 0.0299401198 0.0113730929
+#&gt; Stanislaus River           0.324380886 0.0490918017 0.0315000000 0.0162519045
+#&gt; Tuolumne River             0.150466045 0.0658857980 0.0463378176 0.0340651022
+#&gt; San Joaquin River                   NA           NA           NA           NA
+#&gt;                                     13           14           15          16
+#&gt; Upper Sacramento River     0.253147602 0.1637672466 0.0522379603 0.313159515
+#&gt; Antelope Creek             0.583333333 0.4705882353 0.4375000000 0.640000000
+#&gt; Battle Creek               0.001355590 0.0008509959 0.0004788635 0.001329045
+#&gt; Bear Creek                 0.630000000 0.5194805195 0.4861111111 0.675438596
+#&gt; Big Chico Creek            0.583333333 0.4705882353 0.4375000000 0.615384615
+#&gt; Butte Creek                0.371428571 0.2611940299 0.1885245902 0.489690722
+#&gt; Clear Creek                0.194943649 0.1262809917 0.0530275887 0.254653130
+#&gt; Cottonwood Creek           0.102651839 0.0604567846 0.0259981430 0.246137262
+#&gt; Cow Creek                  0.093709884 0.0661375661 0.0485175202 0.193142857
+#&gt; Deer Creek                 0.193277311 0.1325301205 0.1111111111 0.261538462
+#&gt; Elder Creek                0.630000000 0.5194805195 0.4861111111 0.710937500
+#&gt; Mill Creek                 0.337398374 0.2418604651 0.1930693069 0.387218045
+#&gt; Paynes Creek               0.583333333 0.4705882353 0.4375000000 0.637096774
+#&gt; Stony Creek                0.630000000 0.5194805195 0.4861111111 0.689075630
+#&gt; Thomes Creek               0.657407407 0.5595238095 0.4861111111 0.691666667
+#&gt; Upper-mid Sacramento River          NA           NA           NA          NA
+#&gt; Sutter Bypass                       NA           NA           NA          NA
+#&gt; Bear River                 0.822115385 0.7465753425 0.6262626263 0.765822785
+#&gt; Feather River              0.062084092 0.0363254393 0.0264786689 0.083967525
+#&gt; Yuba River                 0.182382835 0.1234108795 0.0790477921 0.216510783
+#&gt; Lower-mid Sacramento River          NA           NA           NA          NA
+#&gt; Yolo Bypass                         NA           NA           NA          NA
+#&gt; American River             0.155691003 0.1410662533 0.1467595072 0.154206073
+#&gt; Lower Sacramento River              NA           NA           NA          NA
+#&gt; Calaveras River            0.991394725 0.9929551693 0.9952536522 0.993424424
+#&gt; Cosumnes River             0.936585366 0.8976377953 0.8913649025 0.884272997
+#&gt; Mokelumne River            0.006602884 0.0053966541 0.0062011324 0.008740083
+#&gt; Merced River               0.013289037 0.0151975684 0.0206100577 0.022758432
+#&gt; Stanislaus River           0.016251905 0.0124904410 0.0127420999 0.021470068
+#&gt; Tuolumne River             0.044910180 0.0296577947 0.0274390244 0.052709725
+#&gt; San Joaquin River                   NA           NA           NA          NA
+#&gt;                                    17          18          19          20
+#&gt; Upper Sacramento River     0.48023863 0.467091430 0.470347972 0.424403000
+#&gt; Antelope Creek             0.72222222 0.709677419 0.775000000 0.781553398
+#&gt; Battle Creek               0.00215128 0.002045261 0.002336759 0.001912706
+#&gt; Bear Creek                 0.75000000 0.743055556 0.806282723 0.812182741
+#&gt; Big Chico Creek            0.69798658 0.703947368 0.780487805 0.782608696
+#&gt; Butte Creek                0.62570888 0.593429158 0.627118644 0.613281250
+#&gt; Clear Creek                0.39213431 0.339415146 0.303924151 0.269485904
+#&gt; Cottonwood Creek           0.38402819 0.320155541 0.302062542 0.287847929
+#&gt; Cow Creek                  0.29470529 0.252118644 0.254487856 0.238403452
+#&gt; Deer Creek                 0.35714286 0.339449541 0.400000000 0.392405063
+#&gt; Elder Creek                0.78977273 0.778443114 0.825471698 0.828703704
+#&gt; Mill Creek                 0.50000000 0.510510511 0.590452261 0.568783069
+#&gt; Paynes Creek               0.71875000 0.705882353 0.775000000 0.781553398
+#&gt; Stony Creek                0.76582278 0.751677852 0.812182741 0.820388350
+#&gt; Thomes Creek               0.76582278 0.750000000 0.809278351 0.819512195
+#&gt; Upper-mid Sacramento River         NA          NA          NA          NA
+#&gt; Sutter Bypass                      NA          NA          NA          NA
+#&gt; Bear River                 0.81951220 0.838427948 0.895774648 0.901595745
+#&gt; Feather River              0.11861292 0.082435008 0.122335244 0.174405896
+#&gt; Yuba River                 0.29975820 0.365349696 0.496197624 0.491611285
+#&gt; Lower-mid Sacramento River         NA          NA          NA          NA
+#&gt; Yolo Bypass                        NA          NA          NA          NA
+#&gt; American River             0.13591213 0.149038462 0.196443772 0.176132140
+#&gt; Lower Sacramento River             NA          NA          NA          NA
+#&gt; Calaveras River            0.99219304 0.994866324 0.995368700 0.995212038
+#&gt; Cosumnes River             0.88888889 0.916129032 0.937898089 0.925996205
+#&gt; Mokelumne River            0.01073537 0.011398686 0.016279690 0.027440633
+#&gt; Merced River               0.02275843 0.021416804 0.036496350 0.117166213
+#&gt; Stanislaus River           0.02712205 0.026143791 0.039186508 0.144623537
+#&gt; Tuolumne River             0.06997085 0.065885798 0.098870056 0.144772118
+#&gt; San Joaquin River                  NA          NA          NA          NA
 #&gt; 
 #&gt; $viability_metrics
 #&gt;       [,1] [,2] [,3] [,4]
 #&gt;  [1,]    0    0    0    0
-#&gt;  [2,]    0    0    0    0
-#&gt;  [3,]    0    0    0    0
+#&gt;  [2,]    0    0    1    0
+#&gt;  [3,]    0    0    1    0
 #&gt;  [4,]    0    0    0    0
 #&gt;  [5,]    0    0    0    0
 #&gt;  [6,]    0    0    0    0
-#&gt;  [7,]    0    0    0    0
-#&gt;  [8,]    0    0    0    0
+#&gt;  [7,]    0    0    1    1
+#&gt;  [8,]    0    0    1    0
 #&gt;  [9,]    0    0    0    0
-#&gt; [10,]    0    0    0    0
-#&gt; [11,]    0    0    0    0
-#&gt; [12,]    0    0    0    0
+#&gt; [10,]    0    0    1    1
+#&gt; [11,]    0    0    0    1
+#&gt; [12,]    0    0    0    1
 #&gt; [13,]    0    0    0    0
 #&gt; [14,]    0    0    0    0
-#&gt; [15,]    0    0    0    0
-#&gt; [16,]    0    0    0    0
+#&gt; [15,]    0    0    0    1
+#&gt; [16,]    0    0    0    1
 #&gt; [17,]    0    0    0    0
 #&gt; [18,]    0    0    0    0
-#&gt; [19,]    0    0    0    0
+#&gt; [19,]    0    0    0    1
 #&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
