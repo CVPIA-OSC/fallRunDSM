@@ -43,6 +43,8 @@ get_spawning_adults(
 
 \item{hatch_adults}{total hatchery adults}
 
+\item{mode}{a value meant to be inherited to determine if model is in "seed", "calibrate", or "simulate" mode}
+
 \item{month_return_proportions}{The proportion of fish returning for each month}
 
 \item{prop_flow_natal}{More details at \code{\link[DSMflow]{proportion_flow_natal}}}
@@ -58,6 +60,12 @@ get_spawning_adults(
 \item{yolo_bypass_watershed}{More details at \code{\link[DSMhabitat]{yolo_bypass_watershed}}}
 
 \item{migratory_temperature_proportion_over_20}{More details at \code{\link[DSMtemperature]{migratory_temperature_proportion_over_20}}}
+
+\item{natural_adult_removal_rate}{More details at \code{\link{natural_adult_removal_rate}}}
+
+\item{cross_channel_stray_rate}{More details at \code{\link{cross_channel_stray_rate}}}
+
+\item{stray_rate}{More details at \code{\link{stray_rate}}}
 
 \item{..surv_adult_enroute_int}{Intercept for \code{\link{surv_adult_enroute}}}
 
@@ -79,8 +87,11 @@ get_spawning_adults(
 
 \item{.adult_en_route_adult_harvest_rate}{Adult harvest rate for \code{\link{surv_adult_enroute}}}
 
-\item{seeds}{a value meant to be inherited to determine if model is in seeding stage or not}
+\item{stochastic}{TRUE FALSE value indicating if model is being run stochastically}
 }
 \description{
 Get Spawning Adults
+}
+\details{
+See \code{\link{params}} for details on parameter sources
 }
