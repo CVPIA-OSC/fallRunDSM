@@ -28,7 +28,9 @@ ocean_entry_success(
 
 \item{..ocean_entry_success_int}{Intercept}
 
-\item{.ocean_entry_success_months}{Coefficient for month variable}
+\item{.ocean_entry_success_months}{Coefficient for \code{month} variable}
+
+\item{stochastic}{\code{TRUE} \code{FALSE} value indicating if model is being run stochastically}
 }
 \description{
 Calculates the number of juveniles that survive entering the ocean
