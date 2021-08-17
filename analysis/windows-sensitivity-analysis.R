@@ -46,7 +46,7 @@ run_scenarios_scaled_param <- function(param, scalar) {
                      "proportion_flow_bypass", "rear_decay_rate", "spawn_decay_rate",
                      "spawn_success_sex_ratio", "stray_rate")) {
       boot::inv.logit(log((sensi_params[param][[1]] + 1e-7) / ((1 - sensi_params[param][[1]]) + 1e-7)) * scalar)
-    } else if (param == "surv_juv_outmigration_sac_delta_model_weights") {
+    } else if (param %in% c("surv_juv_outmigration_sac_delta_model_weights", "weeks_flooded")) {
       scalar
     } else {
       sensi_params[param][[1]] * scalar
