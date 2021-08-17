@@ -53,23 +53,23 @@ surv_juv_rear(
 
 \item{..surv_juv_rear_int}{intercept, source: calibration (varies by tributary)}
 
-\item{.avg_temp_thresh}{coefficient for avg_temp_thresh variable}
+\item{.avg_temp_thresh}{coefficient for \code{avg_temp_thresh} variable}
 
-\item{.high_predation}{coefficient for high_predation variable}
+\item{.high_predation}{coefficient for \code{high_predation} variable}
 
-\item{.surv_juv_rear_contact_points}{coefficient for contact_points variable}
+\item{.surv_juv_rear_contact_points}{coefficient for \code{contact_points} variable}
 
-\item{..surv_juv_rear_contact_points}{calibrated coefficient for contact_points variable}
+\item{..surv_juv_rear_contact_points}{calibrated coefficient for \code{contact_points} variable}
 
-\item{.surv_juv_rear_prop_diversions}{coefficient for prop_diversions variable}
+\item{.surv_juv_rear_prop_diversions}{coefficient for \code{prop_diversions} variable}
 
-\item{..surv_juv_rear_prop_diversions}{calibrated coefficient for prop_diversions variable}
+\item{..surv_juv_rear_prop_diversions}{calibrated coefficient for \code{prop_diversions} variable}
 
-\item{.surv_juv_rear_total_diversions}{coefficient for total_diversions variable}
+\item{.surv_juv_rear_total_diversions}{coefficient for \code{total_diversions} variable}
 
-\item{..surv_juv_rear_total_diversions}{calibrated coefficient for total_diversions variable}
+\item{..surv_juv_rear_total_diversions}{calibrated coefficient for \code{total_diversions} variable}
 
-\item{.stranded}{coefficient for stranded variable}
+\item{.stranded}{coefficient for \code{stranded} variable}
 
 \item{.medium}{size related intercept for medium sized fish}
 
@@ -77,7 +77,9 @@ surv_juv_rear(
 
 \item{.floodplain}{Additional intercept for floodplain rearing benefit}
 
-\item{min_survival_rate}{estimated survival rate if temperature threshold is exceeded, source: expert opinion}
+\item{min_survival_rate}{estimated survival rate if temperature threshold is exceeded}
+
+\item{stochastic}{\code{TRUE} \code{FALSE} value indicating if model is being run stochastically}
 }
 \description{
 Calculates the juvenile rearing survival inchannel and on the floodplain

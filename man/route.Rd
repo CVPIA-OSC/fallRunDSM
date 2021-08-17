@@ -31,6 +31,8 @@ route(
 
 \item{month}{The current simulation month, 1-8}
 
+\item{juveniles}{An n by 4 matrix of juvenile fish by watershed and size class}
+
 \item{inchannel_habitat}{A vector of available habitat in square meters}
 
 \item{floodplain_habitat}{A vector of available floodplain habitat in square meters}
@@ -55,7 +57,7 @@ route(
 
 \item{territory_size}{Array of juvenile fish territory requirements for \code{\link{fill_natal}}}
 
-\item{juvenile}{An n by 4 matrix of juvenile fish by watershed and size class}
+\item{stochastic}{\code{TRUE} \code{FALSE} value indicating if model is being run stochastically}
 }
 \description{
 Determines if juveniles stay in their natal tributary, are detoured

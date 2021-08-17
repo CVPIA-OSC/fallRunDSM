@@ -33,9 +33,7 @@ get_habitat(
 
 \item{yolo_habitat}{2 dimensional array [months, years] representing yolo bypass habitat in square meters}
 
-\item{north_delta_habitat}{2 dimensional array [months, years] representing north delta habitat in square meters}
-
-\item{south_delta_habitat}{2 dimensional array [months, years] representing south delta habitat in square meters}
+\item{delta_habitat}{3 dimensional array [months, years, delta] representing north delta habitat [,, 1] and south delta habitat [,, 2] in square meters}
 }
 \description{
 Returns the appropriate habitat for spawning and rearing based on habitat inputs and a given simulation year and month

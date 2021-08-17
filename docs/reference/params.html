@@ -133,6 +133,8 @@ period in front are model or submodel coefficients. Parameters with double perio
 <li><p><code>sutter_habitat</code>: More details at <code><a href='https://CVPIA-OSC.github.io/DSMhabitat//reference/bypass.html'>sutter_habitat</a></code></p></li>
 <li><p><code>yolo_habitat</code>: More details at <code><a href='https://CVPIA-OSC.github.io/DSMhabitat//reference/bypass.html'>yolo_habitat</a></code></p></li>
 <li><p><code>delta_habitat</code>: More details at <code><a href='https://CVPIA-OSC.github.io/DSMhabitat//reference/delta_habitat.html'>delta_habitat</a></code></p></li>
+<li><p><code>spawn_decay_rate</code>: More details at <code><a href='https://rdrr.io/pkg/DSMscenario/man/decay_rate.html'>spawn_decay_rate</a></code></p></li>
+<li><p><code>rear_decay_rate</code>: More details at <code><a href='https://rdrr.io/pkg/DSMscenario/man/decay_rate.html'>rear_decay_rate</a></code></p></li>
 </ul>
 
     <h2 class="hasAnchor" id="spawning-adults"><a class="anchor" href="#spawning-adults"></a>Spawning Adults</h2>
@@ -143,6 +145,8 @@ period in front are model or submodel coefficients. Parameters with double perio
 <li><p><code>prop_flow_natal</code>: More details at <code><a href='https://cvpia-osc.github.io/DSMflow//reference/proportion_flow_natal.html'>proportion_flow_natal</a></code></p></li>
 <li><p><code>south_delta_routed_watersheds</code>: More details at <code><a href='https://CVPIA-OSC.github.io/DSMhabitat//reference/watershed_routing_indicators.html'>south_delta_routed_watersheds</a></code></p></li>
 <li><p><code>cc_gates_days_closed</code>: More details at <code><a href='https://cvpia-osc.github.io/DSMflow//reference/delta_cross_channel_closed.html'>delta_cross_channel_closed</a></code></p></li>
+<li><p><code>cross_channel_stray_rate</code>: More details at <code><a href='cross_channel_stray_rate.html'>cross_channel_stray_rate</a></code></p></li>
+<li><p><code>stray_rate</code>: More details at <code><a href='stray_rate.html'>stray_rate</a></code></p></li>
 <li><p><code>gates_overtopped</code>: More details at <code><a href='https://cvpia-osc.github.io/DSMflow//reference/gates_overtopped.html'>gates_overtopped</a></code></p></li>
 <li><p><code>tisdale_bypass_watershed</code>: More details at <code><a href='https://CVPIA-OSC.github.io/DSMhabitat//reference/watershed_routing_indicators.html'>tisdale_bypass_watershed</a></code></p></li>
 <li><p><code>yolo_bypass_watershed</code>: More details at <code><a href='https://CVPIA-OSC.github.io/DSMhabitat//reference/watershed_routing_indicators.html'>yolo_bypass_watershed</a></code></p></li>
@@ -165,6 +169,8 @@ period in front are model or submodel coefficients. Parameters with double perio
 <li><p><code>spawn_success_sex_ratio</code>: Variable describing the female to male spawning ratio, default 0.5 TODO (find source for default)</p></li>
 <li><p><code>spawn_success_redd_size</code>: Variable describing the size of redds including defensible space, default value 9.29 square meters TODO (find source for default)</p></li>
 <li><p><code>spawn_success_fecundity</code>: Variable describing the number of eggs per female, default value 5522 TODO (find source for default)</p></li>
+<li><p><code>hatchery_allocation</code>: More details at <code><a href='hatchery_allocation.html'>hatchery_allocation</a></code></p></li>
+<li><p><code>natural_adult_removal_rate</code>: More details at <code><a href='natural_adult_removal_rate.html'>natural_adult_removal_rate</a></code></p></li>
 </ul>
 
     <h2 class="hasAnchor" id="egg-to-fry-survival"><a class="anchor" href="#egg-to-fry-survival"></a>Egg to Fry Survival</h2>
@@ -330,6 +336,15 @@ period in front are model or submodel coefficients. Parameters with double perio
 <li><p><code>.ocean_entry_success_length</code>: Size related intercept representing the fork lengths for each size classes, source: <a href='https://dsm-docs.s3-us-west-2.amazonaws.com/Satterthwaite_et_al_2014.pdf'>Satterthwaite et al. (2014)</a></p></li>
 <li><p><code>..ocean_entry_success_int</code>: Intercept, source: Calibration (Varies by tributary)</p></li>
 <li><p><code>.ocean_entry_success_months</code>: Coefficient for <code>month</code> variable, source: <a href='https://dsm-docs.s3-us-west-2.amazonaws.com/Satterthwaite_et_al_2014.pdf'>Satterthwaite et al. (2014)</a></p></li>
+</ul>
+
+    <h2 class="hasAnchor" id="generating-model-outputs"><a class="anchor" href="#generating-model-outputs"></a>Generating model outputs</h2>
+
+    
+
+<ul>
+<li><p><code>mass_by_size_class</code>: More details at <code><a href='mass_by_size_class.html'>mass_by_size_class</a></code></p></li>
+<li><p><code>diversity_group</code>: More details at <code><a href='diversity_group.html'>diversity_group</a></code></p></li>
 </ul>
 
 

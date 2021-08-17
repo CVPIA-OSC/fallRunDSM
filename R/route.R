@@ -4,7 +4,7 @@
 #' @details See \code{\link{params}} for details on parameter sources
 #' @param year The current simulation year, 1-20
 #' @param month The current simulation month, 1-8
-#' @param juvenile An n by 4 matrix of juvenile fish by watershed and size class
+#' @param juveniles An n by 4 matrix of juvenile fish by watershed and size class
 #' @param inchannel_habitat A vector of available habitat in square meters
 #' @param floodplain_habitat A vector of available floodplain habitat in square meters
 #' @param prop_pulse_flows The proportion of pulse flows
@@ -17,6 +17,7 @@
 #' @param .pulse_movement_large_pulse Additional coefficient for \code{\link{pulse_movement}} \code{proportion_pulse} variable for large size fish
 #' @param .pulse_movement_very_large_pulse Additional coefficient for \code{\link{pulse_movement}} \code{proportion_pulse} variable for very large size fish
 #' @param territory_size Array of juvenile fish territory requirements for \code{\link{fill_natal}}
+#' @param stochastic \code{TRUE} \code{FALSE} value indicating if model is being run stochastically
 #' @source IP-117068
 #' @export
 route <- function(year, month, juveniles, inchannel_habitat, floodplain_habitat,
@@ -75,6 +76,7 @@ route <- function(year, month, juveniles, inchannel_habitat, floodplain_habitat,
 #' @param bypass_habitat A vector of available habitat in square meters
 #' @param migration_survival_rate The outmigration survival rate
 #' @param territory_size Array of juvenile fish territory requirements for \code{\link{fill_regional}}
+#' @param stochastic \code{TRUE} \code{FALSE} value indicating if model is being run stochastically
 #' @source IP-117068
 #' @export
 route_bypass <- function(bypass_fish, bypass_habitat, migration_survival_rate,
@@ -101,16 +103,17 @@ route_bypass <- function(bypass_fish, bypass_habitat, migration_survival_rate,
 #' @title Route Regions
 #' @description Determines if juveniles stay in the region (Sections of Mainstem
 #' Sacramento River or San Joaquin River) or out migrate during a simulated month
-#' @param month The simulation month, 1-8
-#' @param year
+#' @param month The current simulation month, 1-8
+#' @param year The current simulation year, 1-20
 #' @param migrants An n by 4 matrix of juvenile fish by watershed and size class
 #' @param inchannel_habitat A vector of available habitat in square meters
 #' @param floodplain_habitat A vector of available floodplain habitat in square meters
 #' @param prop_pulse_flows The proportion of pulse flows
 #' @param migration_survival_rate The outmigration survival rate
-#' @param proportion_flow_bypass
+#' @param proportion_flow_bypass Variable describing the proportion of flows routed through the bypasses, more details at \code{\link[DSMflow]{proportion_flow_bypasses}}
 #' @param detour Values can be 'sutter' or 'yolo' if some juveniles are detoured on to that bypass, otherwise NULL
 #' @param territory_size Array of juvenile fish territory requirements for \code{\link{fill_regional}}
+#' @param stochastic \code{TRUE} \code{FALSE} value indicating if model is being run stochastically
 #' @source IP-117068
 #' @export
 route_regional <- function(month, year, migrants,
@@ -183,12 +186,12 @@ route_regional <- function(month, year, migrants,
 #' @param mean_freeport_flow Mean of flow at freeport for standardizing discharge
 #' @param sd_freeport_flow Standard Deviation of flow at freeport for standardizing discharge
 #' @param .sss_int Intercept for Sutter and Steamboat Sloughs, source: \href{https://doi.org/10.1139/cjfas-2017-0310}{This submodel is adapted from Perry et al. (2018)}
-#' @param .sss_freeport_discharge Coefficient for freeport_flow for Sutter and Steamboat Sloughs, source: \href{https://doi.org/10.1139/cjfas-2017-0310}{This submodel is adapted from Perry et al. (2018)}
+#' @param .sss_freeport_discharge Coefficient for \code{freeport_flow} for Sutter and Steamboat Sloughs, source: \href{https://doi.org/10.1139/cjfas-2017-0310}{This submodel is adapted from Perry et al. (2018)}
 #' @param .sss_upper_asymptote Parameter representing the upper asymptote for Sutter and Steamboat Sloughs, source: \href{https://doi.org/10.1139/cjfas-2017-0310}{This submodel is adapted from Perry et al. (2018)}
 #' @param .dcc_intercept Intercept for Delta Cross Channel, source: \href{https://doi.org/10.1139/cjfas-2017-0310}{This submodel is adapted from Perry et al. (2018)}
-#' @param .dcc_freeport_discharge Coefficient for freeport_flow for Delta Cross Channel Gates, source: \href{https://doi.org/10.1139/cjfas-2017-0310}{This submodel is adapted from Perry et al. (2018)}
+#' @param .dcc_freeport_discharge Coefficient for \code{freeport_flow} for Delta Cross Channel Gates, source: \href{https://doi.org/10.1139/cjfas-2017-0310}{This submodel is adapted from Perry et al. (2018)}
 #' @param .gs_intercept Intercept for Georgiana Slough, source: \href{https://doi.org/10.1139/cjfas-2017-0310}{This submodel is adapted from Perry et al. (2018)}
-#' @param .gs_freeport_discharge Coefficient for freeport_flow for Georgiana Slough, source: \href{https://doi.org/10.1139/cjfas-2017-0310}{This submodel is adapted from Perry et al. (2018)}
+#' @param .gs_freeport_discharge Coefficient for \code{freeport_flow} for Georgiana Slough, source: \href{https://doi.org/10.1139/cjfas-2017-0310}{This submodel is adapted from Perry et al. (2018)}
 #' @param .gs_dcc_effect_on_routing Parameter representing the dcc effect on routing, source: \href{https://doi.org/10.1139/cjfas-2017-0310}{This submodel is adapted from Perry et al. (2018)}
 #' @param .gs_lower_asymptote Parameter representing the lower asymptote for Georgiana Slough, source: \href{https://doi.org/10.1139/cjfas-2017-0310}{This submodel is adapted from Perry et al. (2018)}
 #' @export
@@ -245,13 +248,15 @@ route_south_delta <- function(freeport_flow, dcc_closed, month,
 #' @description Determines if juveniles stay in the delta or out migrate to golden gate
 #' during a simulated month. Then the remaining juveniles in the delta rear
 #' (growth and survival rates applied) and survival rates are applied to out migrating juveniles
-#' @param year Simulation year, 1-20
-#' @param month Simulation month, 1-8
+#' @param year The current simulation year, 1-20
+#' @param month The current simulation month, 1-8
 #' @param migrants An n by 4 matrix of juvenile fish by watershed and size class
 #' @param north_delta_fish An n by 4 matrix of juvenile fish by watershed and size class
 #' @param south_delta_fish An n by 4 matrix of juvenile fish by watershed and size class
 #' @param north_delta_habitat A vector of available habitat in square meters
 #' @param south_delta_habitat A vector of available habitat in square meters
+#' @param freeport_flow Monthly mean flow at freeport in cubic feet per second
+#' @param cc_gates_closed Number of days the Cross Channel gates are closed during the month
 #' @param rearing_survival_delta The rearing survival rate for North and South Delta
 #' @param migratory_survival_delta The outmigration survival rate for North and South Delta
 #' @param migratory_survival_sac_delta The outmigration survival rate in the Sacramento Delta
@@ -261,6 +266,7 @@ route_south_delta <- function(freeport_flow, dcc_closed, month,
 #' @param location_index Migratory survival probability location index for fish coming from 4 areas (1-4) representing
 #' "northern_fish", "cosumnes_mokelumne_fish", "calaveras_fish", or "southern_fish" respectively
 #' @param territory_size Array of juvenile fish territory requirements for \code{\link{fill_natal}}
+#' @param stochastic \code{TRUE} \code{FALSE} value indicating if model is being run stochastically
 #' @source IP-117068
 #' @export
 route_and_rear_deltas <- function(year, month, migrants, north_delta_fish, south_delta_fish,

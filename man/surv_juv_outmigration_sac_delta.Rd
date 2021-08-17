@@ -37,11 +37,11 @@ surv_juv_outmigration_sac_delta(
 
 \item{.intercept_three}{Intercept for model three}
 
-\item{.delta_flow}{Coefficient for delta_flow variable}
+\item{.delta_flow}{Coefficient for \code{delta_flow} variable}
 
-\item{.avg_temp}{Coefficient for avg_temp variable}
+\item{.avg_temp}{Coefficient for \code{avg_temp} variable}
 
-\item{.perc_diversions}{Coefficient for perc_diversions variable}
+\item{.perc_diversions}{Coefficient for \code{perc_diversions} variable}
 
 \item{.medium}{Size related intercept for medium sized fish}
 
