@@ -132,7 +132,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
     output$proportion_natural[ , year] <- spawners$proportion_natural
 
     egg_to_fry_surv <- surv_egg_to_fry(
-      proportion_natural = 1 - ..params$proportion_hatchery,
+      proportion_natural = spawners$proportion_natural,
       scour = ..params$prob_nest_scoured,
       temperature_effect = ..params$mean_egg_temp_effect,
       .proportion_natural = ..params$.surv_egg_to_fry_proportion_natural,
