@@ -193,7 +193,7 @@ get_spawning_adults <- function(year, adults, hatch_adults, mode,
 
 
   list(init_adults = init_adults,
-       proportion_natural = replace(proportion_natural, is.nan(proportion_natural), NA_real_),
+       proportion_natural = replace(proportion_natural, is.nan(proportion_natural), 0),
        init_adults_by_month = init_adults_by_month)
 
 }
