@@ -65,17 +65,6 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
     proportion_natural = matrix(NA_real_, nrow = 31, ncol = 20, dimnames = list(fallRunDSM::watershed_labels, 1:20))
   )
 
-  # initialize 31 x 4 matrices for natal fish, migrants, and ocean fish
-  lower_mid_sac_fish <- matrix(0, nrow = 20, ncol = 4, dimnames = list(fallRunDSM::watershed_labels[1:20], fallRunDSM::size_class_labels))
-  lower_sac_fish <- matrix(0, nrow = 27, ncol = 4, dimnames = list(fallRunDSM::watershed_labels[1:27], fallRunDSM::size_class_labels))
-  upper_mid_sac_fish <- matrix(0, nrow = 15, ncol = 4, dimnames = list(fallRunDSM::watershed_labels[1:15], fallRunDSM::size_class_labels))
-  sutter_fish <- matrix(0, nrow = 15, ncol = 4, dimnames = list(fallRunDSM::watershed_labels[1:15], fallRunDSM::size_class_labels))
-  yolo_fish <- matrix(0, nrow = 20, ncol = 4, dimnames = list(fallRunDSM::watershed_labels[1:20], fallRunDSM::size_class_labels))
-  san_joaquin_fish <- matrix(0, nrow = 3, ncol = 4, dimnames = list(fallRunDSM::watershed_labels[28:30], fallRunDSM::size_class_labels))
-  north_delta_fish <- matrix(0, nrow = 23, ncol = 4, dimnames = list(fallRunDSM::watershed_labels[1:23], fallRunDSM::size_class_labels))
-  south_delta_fish <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
-  juveniles_at_chipps <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
-  # proportion_natural <- matrix(NA_real_, nrow = 31, ncol = 20, dimnames = list(fallRunDSM::watershed_labels, 1:20))
 
   if (mode == 'calibrate') {
     calculated_adults <- matrix(0, nrow = 31, ncol = 30)
@@ -94,7 +83,17 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
   for (year in 1:simulation_length) {
     adults_in_ocean <- numeric(31)
-    annual_migrants <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
+    # initialize 31 x 4 matrices for natal fish, migrants, and ocean fish
+    lower_mid_sac_fish <- matrix(0, nrow = 20, ncol = 4, dimnames = list(fallRunDSM::watershed_labels[1:20], fallRunDSM::size_class_labels))
+    lower_sac_fish <- matrix(0, nrow = 27, ncol = 4, dimnames = list(fallRunDSM::watershed_labels[1:27], fallRunDSM::size_class_labels))
+    upper_mid_sac_fish <- matrix(0, nrow = 15, ncol = 4, dimnames = list(fallRunDSM::watershed_labels[1:15], fallRunDSM::size_class_labels))
+    sutter_fish <- matrix(0, nrow = 15, ncol = 4, dimnames = list(fallRunDSM::watershed_labels[1:15], fallRunDSM::size_class_labels))
+    yolo_fish <- matrix(0, nrow = 20, ncol = 4, dimnames = list(fallRunDSM::watershed_labels[1:20], fallRunDSM::size_class_labels))
+    san_joaquin_fish <- matrix(0, nrow = 3, ncol = 4, dimnames = list(fallRunDSM::watershed_labels[28:30], fallRunDSM::size_class_labels))
+    north_delta_fish <- matrix(0, nrow = 23, ncol = 4, dimnames = list(fallRunDSM::watershed_labels[1:23], fallRunDSM::size_class_labels))
+    south_delta_fish <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
+    juveniles_at_chipps <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
+
     avg_ocean_transition_month <- ocean_transition_month(stochastic = stochastic) # 2
 
     hatch_adults <- if (stochastic) {
@@ -292,7 +291,6 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
         migrants_at_golden_gate <- delta_fish$migrants_at_golden_gate
 
-        annual_migrants <- annual_migrants + migrants_at_golden_gate
       } else {
         # if month < 8
         # route northern natal fish stay and rear or migrate downstream ------
@@ -340,13 +338,14 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                              territory_size = ..params$territory_size,
                                              stochastic = stochastic)
 
-        migrants[1:15, ] <- upper_mid_sac_fish$migrants
 
         sutter_fish <- route_bypass(bypass_fish = sutter_fish + upper_mid_sac_fish$detoured,
                                     bypass_habitat = habitat$sutter,
                                     migration_survival_rate = migratory_survival$sutter,
                                     territory_size = ..params$territory_size,
                                     stochastic = stochastic)
+
+        migrants[1:15, ] <- upper_mid_sac_fish$migrants + sutter_fish$migrants
 
         upper_mid_sac_fish <- rear(juveniles = upper_mid_sac_fish$inchannel,
                                    survival_rate = rearing_survival$inchannel[16, ],
@@ -600,7 +599,6 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
         migrants_at_golden_gate <- delta_fish$migrants_at_golden_gate
 
-        annual_migrants <- annual_migrants + migrants_at_golden_gate
 
         north_delta_fish <- delta_fish$north_delta_fish
         south_delta_fish <- delta_fish$south_delta_fish
