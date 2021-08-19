@@ -94,7 +94,6 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
     south_delta_fish <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
     juveniles_at_chipps <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
 
-    annual_migrants <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
     avg_ocean_transition_month <- ocean_transition_month(stochastic = stochastic) # 2
 
     hatch_adults <- if (stochastic) {
@@ -292,7 +291,6 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
         migrants_at_golden_gate <- delta_fish$migrants_at_golden_gate
 
-        annual_migrants <- annual_migrants + migrants_at_golden_gate
       } else {
         # if month < 8
         # route northern natal fish stay and rear or migrate downstream ------
@@ -601,7 +599,6 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
         migrants_at_golden_gate <- delta_fish$migrants_at_golden_gate
 
-        annual_migrants <- annual_migrants + migrants_at_golden_gate
 
         north_delta_fish <- delta_fish$north_delta_fish
         south_delta_fish <- delta_fish$south_delta_fish
