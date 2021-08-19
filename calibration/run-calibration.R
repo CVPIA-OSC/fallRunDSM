@@ -51,11 +51,11 @@ readr::write_rds(res, paste0("calibration/fits/result-", Sys.Date(), ".rds"))
 # Evaluate Results ------------------------------------
 
 keep <- c(1,6,7,10,12,19,20,23,26:30)
-r1_solution <- res@solution
+r1_solution <- res@solution[1, ]
 
 r1_params <- update_params(x = r1_solution, fallRunDSM::params)
 r1_params <- DSMCalibrationData::set_synth_years(r1_params)
-r1_sim <- fall_run_model(seeds = DSMCalibrationData::grandtab_imputed$fall, mode = "calibrate",
+r1_sim <- fall_run_model(seeds = calibration_seeds, mode = "calibrate",
                          ..params = r1_params,
                          stochastic = FALSE)
 
@@ -67,7 +67,7 @@ r1_nat_spawners <- as_tibble(r1_sim[keep, ,drop = F]) %>%
          year = readr::parse_number(year) + 5)
 
 
-r1_observed <- as_tibble((1 - fallRunDSM::params$proportion_hatchery[keep]) * DSMCalibrationData::grandtab_observed$fall[keep,, drop=F]) %>%
+r1_observed <- as_tibble((1 - fallRunDSM::params$proportion_hatchery[keep]) * known_adults[keep,, drop=F]) %>%
   mutate(watershed = DSMscenario::watershed_labels[keep]) %>%
   gather(year, spawners, -watershed) %>%
   mutate(type = "observed", year = as.numeric(year) - 1997) %>%
