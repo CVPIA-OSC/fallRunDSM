@@ -12,12 +12,24 @@ params <- DSMCalibrationData::set_synth_years(fallRunDSM::params)
 
 current_best_solution <- read_rds("calibration/calibration-result.rds")
 
+# proportion of fall run in feather/yuba for year 2010-2012
+fall_prop_feather_yuba <- 1 - mean(c(0.076777295, 0.056932196, 0.081441457))
+
+known_adults <- DSMCalibrationData::grandtab_observed$fall
+known_adults["Feather River", ] <- DSMCalibrationData::grandtab_observed$fall["Feather River", ] * fall_prop_feather_yuba
+known_adults["Yuba River", ] <- DSMCalibrationData::grandtab_observed$fall["Yuba River", ] * fall_prop_feather_yuba
+
+calibration_seeds <- DSMCalibrationData::grandtab_imputed$fall
+calibration_seeds["Feather River", ] <- DSMCalibrationData::grandtab_imputed$fall["Feather River", ] * fall_prop_feather_yuba
+calibration_seeds["Yuba River", ] <- DSMCalibrationData::grandtab_imputed$fall["Yuba River", ] * fall_prop_feather_yuba
+
+
 # Perform calibration --------------------
 res <- ga(type = "real-valued",
           fitness =
             function(x) -fall_run_fitness(
-              known_adults = DSMCalibrationData::grandtab_observed$fall,
-              seeds = DSMCalibrationData::grandtab_imputed$fall,
+              known_adults = known_adults,
+              seeds = calibration_seeds,
               params = params,
               x[1], x[2], x[3], x[4], x[5], x[6], x[7], x[8], x[9], x[10],
               x[11], x[12], x[13], x[14], x[15], x[16], x[17], x[18], x[19],
