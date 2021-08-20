@@ -238,14 +238,6 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                                    total_diverted = ..params$total_diverted,
                                                    proportion_diverted = ..params$proportion_diverted,
                                                    delta_proportion_diverted = ..params$delta_proportion_diverted,
-                                                   .surv_juv_outmigration_sac_delta_intercept_one = ..params$.surv_juv_outmigration_sac_delta_intercept_one,
-                                                   .surv_juv_outmigration_sac_delta_intercept_two = ..params$.surv_juv_outmigration_sac_delta_intercept_two,
-                                                   .surv_juv_outmigration_sac_delta_intercept_three = ..params$.surv_juv_outmigration_sac_delta_intercept_three,
-                                                   .surv_juv_outmigration_sac_delta_delta_flow = ..params$.surv_juv_outmigration_sac_delta_delta_flow,
-                                                   .surv_juv_outmigration_sac_delta_avg_temp = ..params$.surv_juv_outmigration_sac_delta_avg_temp,
-                                                   .surv_juv_outmigration_sac_delta_perc_diversions = ..params$.surv_juv_outmigration_sac_delta_perc_diversions,
-                                                   .surv_juv_outmigration_sac_delta_medium = ..params$.surv_juv_outmigration_sac_delta_medium,
-                                                   .surv_juv_outmigration_sac_delta_large = ..params$.surv_juv_outmigration_sac_delta_large,
                                                    ..surv_juv_outmigration_sj_int = ..params$..surv_juv_outmigration_sj_int,
                                                    ..surv_juv_outmigration_sac_int_one = ..params$..surv_juv_outmigration_sac_int_one,
                                                    ..surv_juv_outmigration_sac_prop_diversions = ..params$..surv_juv_outmigration_sac_prop_diversions,
@@ -254,7 +246,6 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                                    .surv_juv_outmigration_san_joaquin_medium = ..params$.surv_juv_outmigration_san_joaquin_medium,
                                                    .surv_juv_outmigration_san_joaquin_large = ..params$.surv_juv_outmigration_san_joaquin_large,
                                                    min_survival_rate = ..params$min_survival_rate,
-                                                   surv_juv_outmigration_sac_delta_model_weights = ..params$surv_juv_outmigration_sac_delta_model_weights,
                                                    stochastic = stochastic)
 
       migrants <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
@@ -286,7 +277,6 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                             cc_gates_days_closed = ..params$cc_gates_days_closed,
                                             rearing_survival_delta = rearing_survival$delta,
                                             migratory_survival_delta = migratory_survival$delta,
-                                            migratory_survival_sac_delta = migratory_survival$sac_delta,
                                             migratory_survival_bay_delta = migratory_survival$bay_delta,
                                             juveniles_at_chipps = juveniles_at_chipps,
                                             growth_rates = ..params$growth_rates,
@@ -608,7 +598,6 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                             cc_gates_days_closed = ..params$cc_gates_days_closed,
                                             rearing_survival_delta = rearing_survival$delta,
                                             migratory_survival_delta = migratory_survival$delta,
-                                            migratory_survival_sac_delta = migratory_survival$sac_delta,
                                             migratory_survival_bay_delta = migratory_survival$bay_delta,
                                             juveniles_at_chipps = juveniles_at_chipps,
                                             growth_rates = ..params$growth_rates,
@@ -616,8 +605,6 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                             stochastic = stochastic)
 
         migrants_at_golden_gate <- delta_fish$migrants_at_golden_gate
-
-        annual_migrants <- annual_migrants + migrants_at_golden_gate
 
         north_delta_fish <- delta_fish$north_delta_fish
         south_delta_fish <- delta_fish$south_delta_fish

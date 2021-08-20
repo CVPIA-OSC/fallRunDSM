@@ -471,53 +471,6 @@ surv_juv_outmigration_san_joaquin <- function(..surv_juv_outmigration_sj_int = f
 }
 
 #' @title Juvenile Delta Outmigration Survival
-#' @description Calculates the Sacramento Delta juvenile out migration survival
-#' @details See \code{\link{params}} for details on parameter sources
-#' @param delta_flow Variable describing delta inflow in cubic meters per second
-#' @param avg_temp Variable describing monthly mean temperature in celsius
-#' @param perc_diversions Variable describing monthly mean percent diverted
-#' @param .intercept_one Intercept for model one
-#' @param .intercept_two Intercept for model two
-#' @param .intercept_three Intercept for model three
-#' @param .delta_flow Coefficient for delta_flow variable
-#' @param .avg_temp Coefficient for avg_temp variable
-#' @param .perc_diversions Coefficient for perc_diversions variable
-#' @param .medium Size related intercept for medium sized fish
-#' @param .large Size related intercept for large sized fish
-#' @param model_weights weights for competing models
-#' @source IP-117068
-#' @export
-surv_juv_outmigration_sac_delta <- function(delta_flow, avg_temp, perc_diversions,
-                                            .intercept_one = fallRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_one,
-                                            .intercept_two = fallRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_two,
-                                            .intercept_three = fallRunDSM::params$.surv_juv_outmigration_sac_delta_intercept_three,
-                                            .delta_flow = fallRunDSM::params$.surv_juv_outmigration_sac_delta_delta_flow,
-                                            .avg_temp = fallRunDSM::params$.surv_juv_outmigration_sac_delta_avg_temp,
-                                            .perc_diversions = fallRunDSM::params$.surv_juv_outmigration_sac_delta_perc_diversions,
-                                            .medium = fallRunDSM::params$.surv_juv_outmigration_sac_delta_medium,
-                                            .large = fallRunDSM::params$.surv_juv_outmigration_sac_delta_large,
-                                            model_weights = fallRunDSM::params$surv_juv_outmigration_sac_delta_model_weights){
-
-  base_score1 <- .intercept_one + .delta_flow * delta_flow
-  base_score2 <- .intercept_two + .avg_temp * avg_temp
-  base_score3 <- .intercept_three + .perc_diversions * perc_diversions
-
-  s <- boot::inv.logit(base_score1) * model_weights[1] +
-    boot::inv.logit(base_score2) * model_weights[2] +
-    boot::inv.logit(base_score3) * model_weights[3]
-
-  m <- boot::inv.logit(base_score1 + .medium) * model_weights[1] +
-    boot::inv.logit(base_score2 + .medium) * model_weights[2] +
-    boot::inv.logit(base_score3 + .medium) * model_weights[3]
-
-  vl <- l <- boot::inv.logit(base_score1 + .large) * model_weights[1] +
-    boot::inv.logit(base_score2 + .large) * model_weights[2] +
-    boot::inv.logit(base_score3 + .large) * model_weights[3]
-
-  cbind(s = s, m = m, l = l, vl = vl)
-}
-
-#' @title Juvenile Delta Outmigration Survival
 #' @description Calculates the North and South Delta juvenile out migration survival
 #' @param prop_DCC_closed proportion of days the Delta Cross Channel Gates are closed
 #' @param horr_barr indicator if head of old river physical barrier in place
@@ -694,18 +647,9 @@ surv_juv_outmigration_delta <- function(prop_DCC_closed, hor_barr, freeport_flow
 #' @param CVP_exports More details at \code{\link[DSMflow]{cvp_exports}}
 #' @param SWP_exports More details at \code{\link[DSMflow]{swp_exports}}
 #' @param ..surv_juv_outmigration_sj_int Intercept for \code{\link{surv_juv_outmigration_san_joaquin}}
-#' @param .surv_juv_outmigration_sac_delta_intercept_one Intercept \code{\link{surv_juv_outmigration_sac_delta}} for model one
-#' @param .surv_juv_outmigration_sac_delta_intercept_two Intercept \code{\link{surv_juv_outmigration_sac_delta}} for model two
-#' @param .surv_juv_outmigration_sac_delta_intercept_three Intercept \code{\link{surv_juv_outmigration_sac_delta}} for model three
-#' @param .surv_juv_outmigration_sac_delta_delta_flow Coefficient \code{\link{surv_juv_outmigration_sac_delta}} for \code{delta_flow} variable
-#' @param .surv_juv_outmigration_sac_delta_avg_temp Coefficient \code{\link{surv_juv_outmigration_sac_delta}} for \code{avg_temp} variable
-#' @param .surv_juv_outmigration_sac_delta_perc_diversions Coefficient \code{\link{surv_juv_outmigration_sac_delta}} for \code{perc_diversions} variable
-#' @param .surv_juv_outmigration_sac_delta_medium Size related intercept for \code{\link{surv_juv_outmigration_sac_delta}} medium sized fish
-#' @param .surv_juv_outmigration_sac_delta_large Size related intercept for \code{\link{surv_juv_outmigration_sac_delta}} large sized fish
 #' @param .surv_juv_outmigration_san_joaquin_medium Size related intercept for \code{\link{surv_juv_outmigration_san_joaquin}} medium sized fish
 #' @param .surv_juv_outmigration_san_joaquin_large Size related intercept for \code{\link{surv_juv_outmigration_san_joaquin}} large sized fish
 #' @param min_survival_rate estimated survival rate if temperature threshold is exceeded
-#' @param surv_juv_outmigration_sac_delta_model_weights weights for competing models
 #' @source IP-117068
 #' @export
 get_migratory_survival <- function(year, month,
@@ -724,14 +668,6 @@ get_migratory_survival <- function(year, month,
                                    total_diverted,
                                    proportion_diverted,
                                    delta_proportion_diverted,
-                                   .surv_juv_outmigration_sac_delta_intercept_one,
-                                   .surv_juv_outmigration_sac_delta_intercept_two,
-                                   .surv_juv_outmigration_sac_delta_intercept_three,
-                                   .surv_juv_outmigration_sac_delta_delta_flow,
-                                   .surv_juv_outmigration_sac_delta_avg_temp,
-                                   .surv_juv_outmigration_sac_delta_perc_diversions,
-                                   .surv_juv_outmigration_sac_delta_medium,
-                                   .surv_juv_outmigration_sac_delta_large,
                                    ..surv_juv_outmigration_sj_int,
                                    ..surv_juv_outmigration_sac_int_one,
                                    ..surv_juv_outmigration_sac_prop_diversions,
@@ -740,7 +676,6 @@ get_migratory_survival <- function(year, month,
                                    .surv_juv_outmigration_san_joaquin_medium,
                                    .surv_juv_outmigration_san_joaquin_large,
                                    min_survival_rate,
-                                   surv_juv_outmigration_sac_delta_model_weights,
                                    stochastic) {
 
   aveT20 <- boot::inv.logit(-14.32252 + 0.72102 * avg_temp[ , month , year])
@@ -750,18 +685,6 @@ get_migratory_survival <- function(year, month,
     aveT20 <- rbinom(31, 1, aveT20)
     maxT25 <- rbinom(31, 1, maxT25)
   }
-
-  delta_survival <- surv_juv_outmigration_delta(
-    prop_DCC_closed = cc_gates_prop_days_closed[month],
-    hor_barr = 0,
-    freeport_flow = freeport_flows[month, year],
-    vernalis_flow = vernalis_flows[month, year],
-    stockton_flow = stockton_flows[month, year],
-    vernalis_temperature = vernalis_temps[month, year],
-    prisoners_point_temperature = prisoners_point_temps[month, year],
-    CVP_exp = CVP_exports[month, year],
-    SWP_exp = SWP_exports[month, year],
-    trap_trans = 0) # newDsurv
 
   u_sac_flow <- upper_sacramento_flows[month, year]
 
@@ -785,23 +708,35 @@ get_migratory_survival <- function(year, month,
                                                         total_diversions = total_diverted[24, month, year],
                                                         prop_diversions = proportion_diverted[24, month, year])^.5
 
-  bay_delta_migration_surv <- mean(c(0.43, 0.46, 0.26, 0.25, 0.39)) # Bay.S Chipps island to bay
-
   bp_surv <- sqrt(surv_juv_bypass(max_temp_thresh = maxT25[22],
                                   avg_temp_thresh = aveT20[22],
                                   high_predation = 0,
                                   min_survival_rate = min_survival_rate,
                                   stochastic = stochastic))
 
+  delta_survival <- surv_juv_outmigration_delta(prop_DCC_closed = cc_gates_prop_days_closed[month],
+                                                hor_barr = 0,
+                                                freeport_flow = freeport_flows[month, year],
+                                                vernalis_flow = vernalis_flows[month, year],
+                                                stockton_flow = stockton_flows[month, year],
+                                                vernalis_temperature = vernalis_temps[month, year],
+                                                prisoners_point_temperature = prisoners_point_temps[month, year],
+                                                CVP_exp = CVP_exports[month, year],
+                                                SWP_exp = SWP_exports[month, year],
+                                                trap_trans = 0)
+
+  bay_delta_migration_surv <- mean(c(0.43, 0.46, 0.26, 0.25, 0.39)) # Bay.S Chipps island to bay
+
+
   return(
     list(
-      delta = pmin(delta_survival, 1),
       san_joaquin = pmin(sj_migration_surv, 1),
       uppermid_sac = pmin(uppermid_sac_migration_surv, 1),
       lowermid_sac = pmin(lowermid_sac_migration_surv, 1),
       lower_sac = pmin(lower_sac_migration_surv, 1),
       sutter = pmin(bp_surv, 1),
       yolo = pmin(bp_surv, 1),
+      delta = pmin(delta_survival, 1),
       bay_delta = pmin(bay_delta_migration_surv, 1)
     ))
 }

@@ -177,8 +177,8 @@ route_regional <- function(month, year, migrants,
 
 }
 
-#' @title South Delta Routing
-#' @description Routes juveniles through the South Delta
+#' @title Route to South Delta
+#' @description Entrains northern juveniles to the South Delta
 #' @param freeport_flow Monthly mean flow at freeport in cubic feet per second
 #' @param dcc_closed Number of days the Delta Cross Channel gates are closed during the month
 #' @param month Current simulation month as an integer for calculating number of days the Delta Cross Channel gates are open
@@ -195,7 +195,7 @@ route_regional <- function(month, year, migrants,
 #' @param .gs_lower_asymptote Parameter representing the lower asymptote for Georgiana Slough, source: \href{https://doi.org/10.1139/cjfas-2017-0310}{This submodel is adapted from Perry et al. (2018)}
 #' @export
 #'
-route_south_delta <- function(freeport_flow, dcc_closed, month,
+route_to_south_delta <- function(freeport_flow, dcc_closed, month,
                               mean_freeport_flow = 21546.19,
                               sd_freeport_flow = 14375.9,
                               .sss_int = 1.8922350,
@@ -256,7 +256,6 @@ route_south_delta <- function(freeport_flow, dcc_closed, month,
 #' @param south_delta_habitat A vector of available habitat in square meters
 #' @param rearing_survival_delta The rearing survival rate for North and South Delta
 #' @param migratory_survival_delta The outmigration survival rate for North and South Delta
-#' @param migratory_survival_sac_delta The outmigration survival rate in the Sacramento Delta
 #' @param migratory_survival_bay_delta The outmigration survival rate in the Bay Delta
 #' @param juveniles_at_chipps The accumulated juveniles at Chipps Island for the current year
 #' @param growth_rates The delta growth rate
@@ -270,15 +269,15 @@ route_and_rear_deltas <- function(year, month, migrants, north_delta_fish, south
                                   freeport_flows,
                                   cc_gates_days_closed,
                                   rearing_survival_delta, migratory_survival_delta,
-                                  migratory_survival_sac_delta, migratory_survival_bay_delta,
+                                  migratory_survival_bay_delta,
                                   juveniles_at_chipps, growth_rates,
                                   location_index = c(rep(1, 24), 3, rep(2, 2), rep(4, 4)),
                                   territory_size,
                                   stochastic) {
 
-  prop_delta_fish_entrained <- route_south_delta(freeport_flow = freeport_flows[[month, year]] * 35.3147,
-                                                 dcc_closed = cc_gates_days_closed[month],
-                                                 month = month)
+  prop_delta_fish_entrained <- route_to_south_delta(freeport_flow = freeport_flows[[month, year]] * 35.3147,
+                                                    dcc_closed = cc_gates_days_closed[month],
+                                                    month = month)
 
   sac_not_entrained <- t(sapply(1:nrow(migrants[1:23, ]), function(i) {
     if (stochastic){
@@ -297,7 +296,7 @@ route_and_rear_deltas <- function(year, month, migrants, north_delta_fish, south
                                     territory_size = territory_size)
 
   south_delta_fish <- fill_regional(juveniles = migrants_and_salvaged + south_delta_fish,
-                                    habitat = north_delta_habitat,
+                                    habitat = south_delta_habitat,
                                     territory_size = territory_size)
 
   if (month == 8) {
@@ -313,7 +312,7 @@ route_and_rear_deltas <- function(year, month, migrants, north_delta_fish, south
     }
   }))
 
-  migrants_out_survived <- t(sapply(1:nrow(north_delta_fish$migrants), function(i) {
+  north_delta_out_survived <- t(sapply(1:nrow(north_delta_fish$migrants), function(i) {
     if (stochastic) {
       rbinom(n = 4, size = round(north_delta_fish$migrants[i, ]), prob = migratory_survival_bay_delta)
     } else {
@@ -321,7 +320,7 @@ route_and_rear_deltas <- function(year, month, migrants, north_delta_fish, south
     }
   }))
 
-  south_delta_survived <- t(sapply(1:nrow(south_delta_migrants), function(i) {
+  south_delta_out_survived <- t(sapply(1:nrow(south_delta_migrants), function(i) {
     if (stochastic) {
       rbinom(n = 4, size = round(south_delta_migrants[i, ]), prob = migratory_survival_bay_delta)
     } else {
@@ -329,9 +328,9 @@ route_and_rear_deltas <- function(year, month, migrants, north_delta_fish, south
     }
   }))
 
-  migrants_at_golden_gate <- rbind(migrants_out_survived, matrix(0, nrow = 8, ncol = 4)) + south_delta_survived
+  migrants_at_golden_gate <- rbind(north_delta_out_survived, matrix(0, nrow = 8, ncol = 4)) + south_delta_out_survived
 
-  juveniles_at_chipps <- juveniles_at_chipps + rbind(migrants_out, matrix(0, nrow = 8, ncol = 4)) + south_delta_migrants
+  juveniles_at_chipps <- juveniles_at_chipps + rbind(north_delta_out_survived, matrix(0, nrow = 8, ncol = 4)) + south_delta_migrants
 
   if (month != 8) {
     north_delta_fish <- rear(juveniles = north_delta_fish$inchannel,
