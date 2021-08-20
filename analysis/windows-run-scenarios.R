@@ -16,13 +16,14 @@ run_scenario <- function(scenario) {
   output <- fall_run_model(scenario = scenario, mode = 'simulate',
                            stochastic = TRUE, seed = s)
 
-  # TODO pick metrics
-  prop_nat <- colSums(output$spawners * output$proportion_natural, na.rm = TRUE)[20]
-  juv_biomass <- colSums(output$juvenile_biomass)[20]
+  prop_nat <- output$spawners * output$proportion_natural
+  juv_biomass <- output$juvenile_biomass
+  viability <- output$viability_metrics
 
   return(list(
     prop_nat = prop_nat,
-    juv_biomass = juv_biomass
+    juv_biomass = juv_biomass,
+    viability = viability
   ))
 }
 

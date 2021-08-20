@@ -2,7 +2,7 @@ library(tidyverse)
 library(fallRunDSM)
 library(DSMscenario)
 
-s <- fall_run_model()
+?DSMscenario::get_action_matrices
 
 scenario_df_lms <- tibble(
   watershed = "Lower-mid Sacramento River",
@@ -31,6 +31,8 @@ scenario_df_both <- tibble(
 low_mid_sac_scenario <- DSMscenario::get_action_matrices(scenario_df_lms)
 low_sac_scenario <- DSMscenario::get_action_matrices(scenario_df_ls)
 both_low_sac_scenario <- DSMscenario::get_action_matrices(scenario_df_both)
+
+s <- fall_run_model()
 
 low_mid_sac_results <- fall_run_model(scenario = low_mid_sac_scenario,
                                       mode = "simulate", seeds = s, stochastic =  FALSE)
