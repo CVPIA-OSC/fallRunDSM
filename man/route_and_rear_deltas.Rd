@@ -19,7 +19,6 @@ route_and_rear_deltas(
   cc_gates_days_closed,
   rearing_survival_delta,
   migratory_survival_delta,
-  migratory_survival_sac_delta,
   migratory_survival_bay_delta,
   juveniles_at_chipps,
   growth_rates,
@@ -46,8 +45,6 @@ route_and_rear_deltas(
 \item{rearing_survival_delta}{The rearing survival rate for North and South Delta}
 
 \item{migratory_survival_delta}{The outmigration survival rate for North and South Delta}
-
-\item{migratory_survival_sac_delta}{The outmigration survival rate in the Sacramento Delta}
 
 \item{migratory_survival_bay_delta}{The outmigration survival rate in the Bay Delta}
 
