@@ -785,19 +785,6 @@ get_migratory_survival <- function(year, month,
                                                         total_diversions = total_diverted[24, month, year],
                                                         prop_diversions = proportion_diverted[24, month, year])^.5
 
-  sac_delta_migration_surv <- surv_juv_outmigration_sac_delta(delta_flow = delta_inflow[month, year, ],
-                                                              avg_temp = avg_temp_delta[month, year, ],
-                                                              perc_diversions = delta_proportion_diverted[month, year, ] * 100,
-                                                              .intercept_one = .surv_juv_outmigration_sac_delta_intercept_one,
-                                                              .intercept_two = .surv_juv_outmigration_sac_delta_intercept_two,
-                                                              .intercept_three = .surv_juv_outmigration_sac_delta_intercept_three,
-                                                              .delta_flow = .surv_juv_outmigration_sac_delta_delta_flow,
-                                                              .avg_temp = .surv_juv_outmigration_sac_delta_avg_temp,
-                                                              .perc_diversions = .surv_juv_outmigration_sac_delta_perc_diversions,
-                                                              .medium = .surv_juv_outmigration_sac_delta_medium,
-                                                              .large = .surv_juv_outmigration_sac_delta_large,
-                                                              model_weights = surv_juv_outmigration_sac_delta_model_weights) #Sac.Delt.S
-
   bay_delta_migration_surv <- mean(c(0.43, 0.46, 0.26, 0.25, 0.39)) # Bay.S Chipps island to bay
 
   bp_surv <- sqrt(surv_juv_bypass(max_temp_thresh = maxT25[22],
@@ -815,7 +802,6 @@ get_migratory_survival <- function(year, month,
       lower_sac = pmin(lower_sac_migration_surv, 1),
       sutter = pmin(bp_surv, 1),
       yolo = pmin(bp_surv, 1),
-      sac_delta = pmin(sac_delta_migration_surv, 1),
       bay_delta = pmin(bay_delta_migration_surv, 1)
     ))
 }

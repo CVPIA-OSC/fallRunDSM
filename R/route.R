@@ -313,19 +313,11 @@ route_and_rear_deltas <- function(year, month, migrants, north_delta_fish, south
     }
   }))
 
-  migrants_out <- t(sapply(1:nrow(north_delta_fish$migrants), function(i) {
+  migrants_out_survived <- t(sapply(1:nrow(north_delta_fish$migrants), function(i) {
     if (stochastic) {
-      rbinom(n = 4, size = round(north_delta_fish$migrants[i, ]), prob = migratory_survival_sac_delta[1, ])
+      rbinom(n = 4, size = round(north_delta_fish$migrants[i, ]), prob = migratory_survival_bay_delta)
     } else {
-      round(north_delta_fish$migrants[i, ] * migratory_survival_sac_delta[1, ])
-    }
-  }))
-
-  migrants_out_survived <- t(sapply(1:nrow(migrants_out), function(i) {
-    if (stochastic) {
-      rbinom(n = 4, size = round(migrants_out[i, ]), prob = migratory_survival_bay_delta)
-    } else {
-      round(migrants_out[i, ] * migratory_survival_bay_delta)
+      round(north_delta_fish$migrants[i, ] * migratory_survival_bay_delta)
     }
   }))
 
