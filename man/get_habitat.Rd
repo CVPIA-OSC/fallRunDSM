@@ -15,6 +15,8 @@ get_habitat(
   floodplain_habitat,
   sutter_habitat,
   yolo_habitat,
+  sutter_floodplain_habitat,
+  yolo_floodplain_habitat,
   delta_habitat
 )
 }

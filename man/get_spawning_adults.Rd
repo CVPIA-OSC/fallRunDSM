@@ -20,6 +20,9 @@ get_spawning_adults(
   tisdale_bypass_watershed,
   yolo_bypass_watershed,
   migratory_temperature_proportion_over_20,
+  natural_adult_removal_rate,
+  cross_channel_stray_rate,
+  stray_rate,
   ..surv_adult_enroute_int,
   .adult_stray_intercept,
   .adult_stray_wild,
@@ -29,7 +32,8 @@ get_spawning_adults(
   .adult_stray_prop_delta_trans,
   .adult_en_route_migratory_temp,
   .adult_en_route_bypass_overtopped,
-  .adult_en_route_adult_harvest_rate
+  .adult_en_route_adult_harvest_rate,
+  stochastic
 )
 }
 \arguments{

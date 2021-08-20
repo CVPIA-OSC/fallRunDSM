@@ -16,7 +16,8 @@ surv_juv_delta(
   total_diverted,
   betas = c(intercept = 1.4, `avg temp thresh` = -0.717, predation = -0.122, contact =
     0.0358 * -0.189, `prop diversions` = -3.51, `total diversions` = 0.5 * -0.0021,
-    medium = 1.48, large = 2.223)
+    medium = 1.48, large = 2.223),
+  stochastic
 )
 }
 \arguments{
