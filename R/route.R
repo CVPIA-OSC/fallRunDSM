@@ -330,7 +330,7 @@ route_and_rear_deltas <- function(year, month, migrants, north_delta_fish, south
 
   migrants_at_golden_gate <- rbind(north_delta_out_survived, matrix(0, nrow = 8, ncol = 4)) + south_delta_out_survived
 
-  juveniles_at_chipps <- juveniles_at_chipps + rbind(north_delta_out_survived, matrix(0, nrow = 8, ncol = 4)) + south_delta_migrants
+  juveniles_at_chipps <- juveniles_at_chipps + rbind(north_delta_fish$migrants, matrix(0, nrow = 8, ncol = 4)) + south_delta_migrants
 
   if (month != 8) {
     north_delta_fish <- rear(juveniles = north_delta_fish$inchannel,
