@@ -43,15 +43,14 @@ res <- ga(type = "real-valued",
           maxiter = 10000,
           run = 50,
           parallel = TRUE,
-          pmutation = .3,
-          suggestions = current_best_solution@solution)
+          pmutation = .4)
 
 readr::write_rds(res, paste0("calibration/fits/result-", Sys.Date(), ".rds"))
 
 # Evaluate Results ------------------------------------
 
 keep <- c(1,6,7,10,12,19,20,23,26:30)
-r1_solution <- current_best_solution@solution[1, ]
+r1_solution <- res@solution[1, ]
 
 r1_params <- update_params(x = r1_solution, fallRunDSM::params)
 r1_params <- DSMCalibrationData::set_synth_years(r1_params)
