@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Route and Rear in the Deltas — route_and_rear_deltas • fallRunDSM</title>
+<title>Route To South Delta — route_to_south_delta • fallRunDSM</title>
 
 
 <!-- jquery -->
@@ -39,10 +39,8 @@
 
 
 
-<meta property="og:title" content="Route and Rear in the Deltas — route_and_rear_deltas" />
-<meta property="og:description" content="Determines if juveniles stay in the delta or out migrate to golden gate
-during a simulated month. Then the remaining juveniles in the delta rear
-(growth and survival rates applied) and survival rates are applied to out migrating juveniles" />
+<meta property="og:title" content="Route To South Delta — route_to_south_delta" />
+<meta property="og:description" content="Entrains northern juveniles into the South Delta" />
 
 
 
@@ -107,114 +105,93 @@ during a simulated month. Then the remaining juveniles in the delta rear
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Route and Rear in the Deltas</h1>
+    <h1>Route To South Delta</h1>
     
-    <div class="hidden name"><code>route_and_rear_deltas.Rd</code></div>
+    <div class="hidden name"><code>route_to_south_delta.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Determines if juveniles stay in the delta or out migrate to golden gate
-during a simulated month. Then the remaining juveniles in the delta rear
-(growth and survival rates applied) and survival rates are applied to out migrating juveniles</p>
+    <p>Entrains northern juveniles into the South Delta</p>
     </div>
 
-    <pre class="usage"><span class='fu'>route_and_rear_deltas</span><span class='op'>(</span>
-  <span class='va'>year</span>,
+    <pre class="usage"><span class='fu'>route_to_south_delta</span><span class='op'>(</span>
+  <span class='va'>freeport_flow</span>,
+  <span class='va'>dcc_closed</span>,
   <span class='va'>month</span>,
-  <span class='va'>migrants</span>,
-  <span class='va'>north_delta_fish</span>,
-  <span class='va'>south_delta_fish</span>,
-  <span class='va'>north_delta_habitat</span>,
-  <span class='va'>south_delta_habitat</span>,
-  <span class='va'>freeport_flows</span>,
-  <span class='va'>cc_gates_days_closed</span>,
-  <span class='va'>rearing_survival_delta</span>,
-  <span class='va'>migratory_survival_delta</span>,
-  <span class='va'>migratory_survival_bay_delta</span>,
-  <span class='va'>juveniles_at_chipps</span>,
-  <span class='va'>growth_rates</span>,
-  location_index <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>24</span><span class='op'>)</span>, <span class='fl'>3</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>2</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>4</span>, <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>,
-  <span class='va'>territory_size</span>,
-  <span class='va'>stochastic</span>
+  mean_freeport_flow <span class='op'>=</span> <span class='fl'>21546.19</span>,
+  sd_freeport_flow <span class='op'>=</span> <span class='fl'>14375.9</span>,
+  .sss_int <span class='op'>=</span> <span class='fl'>1.892235</span>,
+  .sss_freeport_discharge <span class='op'>=</span> <span class='fl'>2.170375</span>,
+  .sss_upper_asymptote <span class='op'>=</span> <span class='fl'>0.3512465</span>,
+  .dcc_intercept <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1.48962</span>,
+  .dcc_freeport_discharge <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1.248865</span>,
+  .gs_intercept <span class='op'>=</span> <span class='op'>-</span><span class='fl'>2.948145</span>,
+  .gs_freeport_discharge <span class='op'>=</span> <span class='op'>-</span><span class='fl'>2.911835</span>,
+  .gs_dcc_effect_on_routing <span class='op'>=</span> <span class='op'>-</span><span class='fl'>0.554843</span>,
+  .gs_lower_asymptote <span class='op'>=</span> <span class='fl'>0.2729845</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>year</th>
-      <td><p>The current simulation year, 1-20</p></td>
-    </tr>
-    <tr>
-      <th>month</th>
-      <td><p>The current simulation month, 1-8</p></td>
-    </tr>
-    <tr>
-      <th>migrants</th>
-      <td><p>An n by 4 matrix of juvenile fish by watershed and size class</p></td>
-    </tr>
-    <tr>
-      <th>north_delta_fish</th>
-      <td><p>An n by 4 matrix of juvenile fish by watershed and size class</p></td>
-    </tr>
-    <tr>
-      <th>south_delta_fish</th>
-      <td><p>An n by 4 matrix of juvenile fish by watershed and size class</p></td>
-    </tr>
-    <tr>
-      <th>north_delta_habitat</th>
-      <td><p>A vector of available habitat in square meters</p></td>
-    </tr>
-    <tr>
-      <th>south_delta_habitat</th>
-      <td><p>A vector of available habitat in square meters</p></td>
-    </tr>
-    <tr>
-      <th>rearing_survival_delta</th>
-      <td><p>The rearing survival rate for North and South Delta</p></td>
-    </tr>
-    <tr>
-      <th>migratory_survival_delta</th>
-      <td><p>The outmigration survival rate for North and South Delta</p></td>
-    </tr>
-    <tr>
-      <th>migratory_survival_bay_delta</th>
-      <td><p>The outmigration survival rate in the Bay Delta</p></td>
-    </tr>
-    <tr>
-      <th>juveniles_at_chipps</th>
-      <td><p>The accumulated juveniles at Chipps Island for the current year</p></td>
-    </tr>
-    <tr>
-      <th>growth_rates</th>
-      <td><p>The delta growth rate</p></td>
-    </tr>
-    <tr>
-      <th>location_index</th>
-      <td><p>Migratory survival probability location index for fish coming from 4 areas (1-4) representing
-"northern_fish", "cosumnes_mokelumne_fish", "calaveras_fish", or "southern_fish" respectively</p></td>
-    </tr>
-    <tr>
-      <th>territory_size</th>
-      <td><p>Array of juvenile fish territory requirements for <code><a href='fill.html'>fill_natal</a></code></p></td>
-    </tr>
-    <tr>
-      <th>stochastic</th>
-      <td><p><code>TRUE</code> <code>FALSE</code> value indicating if model is being run stochastically</p></td>
-    </tr>
-    <tr>
       <th>freeport_flow</th>
       <td><p>Monthly mean flow at freeport in cubic feet per second</p></td>
     </tr>
     <tr>
-      <th>cc_gates_closed</th>
-      <td><p>Number of days the Cross Channel gates are closed during the month</p></td>
+      <th>dcc_closed</th>
+      <td><p>Number of days the Delta Cross Channel gates are closed during the month</p></td>
+    </tr>
+    <tr>
+      <th>month</th>
+      <td><p>Current simulation month as an integer for calculating number of days the Delta Cross Channel gates are open</p></td>
+    </tr>
+    <tr>
+      <th>mean_freeport_flow</th>
+      <td><p>Mean of flow at freeport for standardizing discharge</p></td>
+    </tr>
+    <tr>
+      <th>sd_freeport_flow</th>
+      <td><p>Standard Deviation of flow at freeport for standardizing discharge</p></td>
+    </tr>
+    <tr>
+      <th>.sss_int</th>
+      <td><p>Intercept for Sutter and Steamboat Sloughs, source: <a href='https://doi.org/10.1139/cjfas-2017-0310'>This submodel is adapted from Perry et al. (2018)</a></p></td>
+    </tr>
+    <tr>
+      <th>.sss_freeport_discharge</th>
+      <td><p>Coefficient for <code>freeport_flow</code> for Sutter and Steamboat Sloughs, source: <a href='https://doi.org/10.1139/cjfas-2017-0310'>This submodel is adapted from Perry et al. (2018)</a></p></td>
+    </tr>
+    <tr>
+      <th>.sss_upper_asymptote</th>
+      <td><p>Parameter representing the upper asymptote for Sutter and Steamboat Sloughs, source: <a href='https://doi.org/10.1139/cjfas-2017-0310'>This submodel is adapted from Perry et al. (2018)</a></p></td>
+    </tr>
+    <tr>
+      <th>.dcc_intercept</th>
+      <td><p>Intercept for Delta Cross Channel, source: <a href='https://doi.org/10.1139/cjfas-2017-0310'>This submodel is adapted from Perry et al. (2018)</a></p></td>
+    </tr>
+    <tr>
+      <th>.dcc_freeport_discharge</th>
+      <td><p>Coefficient for <code>freeport_flow</code> for Delta Cross Channel Gates, source: <a href='https://doi.org/10.1139/cjfas-2017-0310'>This submodel is adapted from Perry et al. (2018)</a></p></td>
+    </tr>
+    <tr>
+      <th>.gs_intercept</th>
+      <td><p>Intercept for Georgiana Slough, source: <a href='https://doi.org/10.1139/cjfas-2017-0310'>This submodel is adapted from Perry et al. (2018)</a></p></td>
+    </tr>
+    <tr>
+      <th>.gs_freeport_discharge</th>
+      <td><p>Coefficient for <code>freeport_flow</code> for Georgiana Slough, source: <a href='https://doi.org/10.1139/cjfas-2017-0310'>This submodel is adapted from Perry et al. (2018)</a></p></td>
+    </tr>
+    <tr>
+      <th>.gs_dcc_effect_on_routing</th>
+      <td><p>Parameter representing the dcc effect on routing, source: <a href='https://doi.org/10.1139/cjfas-2017-0310'>This submodel is adapted from Perry et al. (2018)</a></p></td>
+    </tr>
+    <tr>
+      <th>.gs_lower_asymptote</th>
+      <td><p>Parameter representing the lower asymptote for Georgiana Slough, source: <a href='https://doi.org/10.1139/cjfas-2017-0310'>This submodel is adapted from Perry et al. (2018)</a></p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
-
-    <p>IP-117068</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
