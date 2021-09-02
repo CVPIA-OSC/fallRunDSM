@@ -30,7 +30,15 @@ pretty_num <- function(num, places = 2) {
   format(round(num, places), big.mark = ',', drop = FALSE)
 }
 
+append_new_chipps_juvs <- function(chipps_data_frame, chipps_matrix, year, month) {
+  new_chipps_data_frame <- as.data.frame(chipps_matrix)
+  new_chipps_data_frame$year <- year
+  new_chipps_data_frame$month <- month
+  new_chipps_data_frame$watershed <- watershed_labels
+  rownames(new_chipps_data_frame) <- NULL
 
+  rbind.data.frame(chipps_data_frame, new_chipps_data_frame)
+}
 
 
 

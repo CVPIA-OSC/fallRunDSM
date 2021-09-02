@@ -62,7 +62,8 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
     # SIT METRICS
     spawners = matrix(0, nrow = 31, ncol = 20, dimnames = list(fallRunDSM::watershed_labels, 1:20)),
     juvenile_biomass = matrix(0, nrow = 31, ncol = 20, dimnames = list(fallRunDSM::watershed_labels, 1:20)),
-    proportion_natural = matrix(NA_real_, nrow = 31, ncol = 20, dimnames = list(fallRunDSM::watershed_labels, 1:20))
+    proportion_natural = matrix(NA_real_, nrow = 31, ncol = 20, dimnames = list(fallRunDSM::watershed_labels, 1:20)),
+    juveniles_at_chipps = data.frame()
   )
 
 
@@ -274,8 +275,10 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                             territory_size = ..params$territory_size,
                                             stochastic = stochastic)
 
-
         migrants_at_golden_gate <- delta_fish$migrants_at_golden_gate
+        juveniles_at_chipps <- delta_fish$juveniles_at_chipps
+        output$juveniles_at_chipps <- append_new_chipps_juvs(output$juveniles_at_chipps,
+                                                             juveniles_at_chipps, year, month)
 
       } else {
         # if month < 8
@@ -588,6 +591,8 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
         north_delta_fish <- delta_fish$north_delta_fish
         south_delta_fish <- delta_fish$south_delta_fish
         juveniles_at_chipps <- delta_fish$juveniles_at_chipps
+        output$juveniles_at_chipps <- append_new_chipps_juvs(output$juveniles_at_chipps,
+                                                             juveniles_at_chipps, year, month)
       }
 
       adults_in_ocean <- adults_in_ocean + ocean_entry_success(migrants = migrants_at_golden_gate,
