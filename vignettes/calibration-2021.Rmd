@@ -1,10 +1,18 @@
 ---
-title: "Calibrating Fall Run DSM"
-output: html_notebook
+title: "Fall Run Calibration 2021"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Fall Run Calibration 2021}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
-# TODO change this to be a markdown 
-# look at the habitat to see how the yaml and vignettes work for the docs website
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
 
 ## Objective
 
@@ -24,13 +32,14 @@ We are using genetic algorithms, a type of stochastic optimization, to calibrate
 * `..surv_juv_outmigration_sj_int` used in submodel `surv_juv_outmigration_san_joaquin`
 * `..ocean_entry_success_int`  used in submodel `ocean_entry_success`
 
-# TODO add link to the documentaiton website
+A detailed description for each of these parameters can be found in the 
+[Fall Run Documentation Website](https://cvpia-osc.github.io/fallRunDSM/reference/params.html)
 
 We are restricting the calibration to watersheds with Grandtab data, these are:
 
 ```{r, echo=FALSE}
 keep <- c(1,6,7,10,12,19,20,23,26:30)
-fallRunDSM::watershed_labels[keep]
+knitr::kable(fallRunDSM::watershed_attributes[keep, "watershed", drop = FALSE])
 ```
 
 
@@ -62,14 +71,26 @@ For calibration, we have prepared the GrandTab data in two ways:
 
 2. `DSMCalibrationData::grandtab_imputed` - This data will be used to calculate the number of juveniles during the 20 year simulation. The GrandTab data is incomplete for many watersheds during the 20 year period of calibration. For watersheds with no GrandTab data, we used 40 as the default escapement value. For watersheds with incomplete data, we used the mean escapement value. 
 
-# TODO change these to plots instead of tables
+**Observed Values**
 
-```{r}
-grandtab_observed$fall
+```{r, echo=FALSE, warning=FALSE, fig.fullwidth=TRUE, fig.width=8, fig.height=4}
+as_tibble(grandtab_observed$fall[keep, ]) %>% 
+  mutate(watershed = fallRunDSM::watershed_labels[keep]) %>% 
+  gather(year, spawners, -watershed) %>% 
+  mutate(year = readr::parse_number(year)) %>% 
+  ggplot(aes(year, spawners, color = watershed)) + geom_line()
 ```
 
-```{r}
-grandtab_imputed$fall
+
+
+**Imputed Values**
+```{r, echo=FALSE, warning=FALSE, fig.fullwidth=TRUE, fig.width=8, fig.height=4}
+as_tibble(grandtab_imputed$fall[keep, ]) %>% 
+  mutate(watershed = fallRunDSM::watershed_labels[keep]) %>% 
+  gather(year, spawners, -watershed) %>% 
+  mutate(year = readr::parse_number(year)) %>% 
+  ggplot(aes(year, spawners, color = watershed)) + geom_line()
+
 ```
 
 ### Selected Proxy Years
@@ -104,8 +125,8 @@ adults scaled using simulated proportion natural, normalized by mean escapement.
 purpose of normalizing is to prevent watersheds with large escapement values from
 dominating the calibration. In addition to normalizing we are adding weights to 
 each error term corresponding to the amount data available at that watershed. Doing
-so will penalize watersheds with more data whose error term is large, but be more 
-lineant with watersheds with less data.
+so will penalize watersheds with more data whose error term is large, but be less
+aggressive with watersheds with less data.
 
 All intercepts and watersheds that need calibration are described in the Objective
 section of this document.
@@ -320,16 +341,73 @@ the solution space more aggresively once we had a starting position from a previ
 The algorithm is always run in parallel. 
 
 
+## Calibration Results 
 
-# Calibration Results 
+The results for calibration are below:
 
-add items from the run-calibration results 
+```{r, echo=FALSE, include=FALSE}
+calib_2021_results <- read_rds("../calibration/calibration-results.rds")@solution
+```
 
+**Spawning Adults**
 
+* `..surv_adult_enroute_int` = `r calib_2021_results[1]`
+* `..surv_adult_prespawn_int` = `r calib_2021_results[2]`
 
+**Egg to Fry**
 
+* `..surv_egg_to_fry_int` = `r calib_2021_results[3]`
 
+**Rearing Survival Intercepts**
 
+_Note: Deer Creek survival intercept was used for all Upper Sacramento Tributaries not listed below_
 
+Intercepts listed below are supplied into the model as a vector `..surv_juv_int`
 
+* Bypass (Yolo and Sutter) = `r calib_2021_results[4]`
+* Upper Sacramento River = `r calib_2021_results[5]`
+* Butte Creek = `r calib_2021_results[6]`
+* Clear Creek = `r calib_2021_results[7]`
+* Deer Creek = `r calib_2021_results[8]`
+* Mill Creek = `r calib_2021_results[9]`
+* Sacramento River = `r calib_2021_results[10]`
+* Feather and Bear River = `r calib_2021_results[11]`
+* Yuba River = `r calib_2021_results[12]`
+* American River = `r calib_2021_results[13]`
+* Calaveras and Cosumnes River = `r calib_2021_results[14]`
+* Mokelumne River = `r calib_2021_results[15]`
+* Merced River = `r calib_2021_results[16]`
+* Stanislaus River = `r calib_2021_results[17]`
+* Tuolumne River = `r calib_2021_results[18]`
+* San Joaquin River = `r calib_2021_results[19]`
+* `..surv_juv_rear_contact_points` = `r calib_2021_results[20]`
+* `..surv_juv_rear_prop_diversions` = `r calib_2021_results[21]`
+* `..surv_juv_rear_total_diversions` = `r calib_2021_results[22]`
 
+**Migration Intercepts**
+
+* `..surv_juv_bypass_int` = `r calib_2021_results[23]`
+* `..surv_juv_delta_int` = `r calib_2021_results[24]`
+* `..surv_juv_delta_contact_points` = `r calib_2021_results[25]`
+* `..surv_juv_delta_total_diverted` = `r calib_2021_results[26]`
+* `..surv_juv_outmigration_sj_int` = `r calib_2021_results[27]`
+
+**Ocean Entry Success**
+
+Intercepts listed below are supplied into the model as a vector `..ocean_entry_success_int`
+
+* Default Ocean Entry = `r calib_2021_results[28]`
+* Upper Sacramento River = `r calib_2021_results[29]`
+* Butte Creek = `r calib_2021_results[30]`
+* Deer Creek = `r calib_2021_results[31]`
+* Mill Creek = `r calib_2021_results[32]`
+* Bear and Feather River = `r calib_2021_results[33]`
+* Yuba River = `r calib_2021_results[34]`
+* American River = `r calib_2021_results[35]`
+* Calaveras and Cosumnes River = `r calib_2021_results[36]`
+* Mokelumne River = `r calib_2021_results[37]`
+* Merced River = `r calib_2021_results[38]`
+* Stanislaus River = `r calib_2021_results[39]`
+* Tuolumne River = `r calib_2021_results[40]`
+
+_Default Ocean Entry is used for all watersheds not listed above_

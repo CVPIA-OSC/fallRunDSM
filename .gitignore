@@ -5,3 +5,4 @@
 #man/
 calibration/fits/*.rds
 .~lock*
+inst/doc

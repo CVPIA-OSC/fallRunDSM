@@ -114,7 +114,8 @@ update_params <- function(x, params) {
     `Merced River` = merced_ocean_entry_surv,
     `Stanislaus River` = stan_ocean_entry_surv,
     `Tuolumne River` = tuol_ocean_entry_surv,
-    `San Joaquin River` = default_ocean_entry_surv)
+    `San Joaquin River` = default_ocean_entry_surv
+    )
 
   return(params)
 

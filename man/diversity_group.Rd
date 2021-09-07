@@ -11,6 +11,7 @@ An object of class \code{numeric} of length 31.
 diversity_group
 }
 \description{
-SIT defined diversity groups developed from the Central Valley Chinook Salmon and Steelhead Recovery Plan \href{https://archive.fisheries.noaa.gov/wcr/publications/recovery_planning/salmon_steelhead/domains/california_central_valley/cv_chin_stlhd_r_plan_fs_071614.pdf}{NOAA 2014}
+The diversity groups are sourced from the ["Framework for Assessing Viability of Threatened and Endangered Chinook Salmon and Steelhead in the Sacramento-San Joaquin Basin"](http://escholarship.org/uc/item/3653x9xc) with slight modification.
+The "Northern Sierra" diversity group covers a very large geographic area and was divided into two groups based on proximity.
 }
 \keyword{datasets}

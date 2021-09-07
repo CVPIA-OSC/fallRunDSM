@@ -79,12 +79,16 @@ reference:
 
 navbar:
   structure:
-    left:  [home, reference, news]
+    left:  [home, reference, articles, news]
     right: [github]
   type: default
   left:
   - text: 'Reference'
     href: reference/index.html
+  - text: 'Articles'
+    menu:
+      - text: 'Calibration (2021)'
+        href: 'articles/calibration-2021.html'
   - text: 'News'
     href: news/index.html
 
