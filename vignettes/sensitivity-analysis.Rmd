@@ -1,0 +1,33 @@
+---
+title: "Sensitivity Analysis"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Sensitivity Analysis}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(fallRunDSM)
+```
+
+## Objective
+
+outline what was goal, which parameters are of interest
+* describe the inputs vs coefficients
+
+## Helper Functions 
+Copy over entire script and give narrative for each of the functions
+- parallel processing
+- how long it takes to run 500 iterations
+
+# Results
+
+Overview of results,... tornado plot?
