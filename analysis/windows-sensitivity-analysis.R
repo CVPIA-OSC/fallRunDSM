@@ -41,13 +41,14 @@ run_scenarios_scaled_param <- function(param, scalar) {
                      "hatchery_allocation", "mean_egg_temp_effect",
                      "migratory_temperature_proportion_over_20", "min_survival_rate",
                      "month_return_proportions", "natural_adult_removal_rate",
-                     "prob_nest_scoured", "prob_strand_early", "prop_flow_natal",
+                     "prob_nest_scoured", "prob_strand_early", "prob_strand_late",
+                     "prop_flow_natal",
                      "prop_high_predation", "prop_pulse_flows", "proportion_diverted",
                      "proportion_flow_bypass", "proportion_hatchery", "rear_decay_rate",
                      "spawn_decay_rate",
                      "spawn_success_sex_ratio", "stray_rate")) {
       boot::inv.logit(log((sensi_params[param][[1]] + 1e-7) / ((1 - sensi_params[param][[1]]) + 1e-7)) * scalar)
-    } else if (param %in% c("weeks_flooded")) {
+    } else if (param %in% c("weeks_flooded", "cc_gates_days_closed")) {
       scalar
     } else {
       sensi_params[param][[1]] * scalar
@@ -94,11 +95,9 @@ y <- param_sensitivity("hatchery_allocation")
 toc()
 View(x)
 
-
 # how to separate coefficients from other model inputs within params
 coefficients <- names(params)[grep('\\.', names(params))]
 model_inputs <- sort(names(params)[grep('\\.', names(params), invert = TRUE)])
-
 
 # close all cluster connections
 closeAllConnections()

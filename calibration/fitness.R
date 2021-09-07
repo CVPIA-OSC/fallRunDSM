@@ -137,9 +137,6 @@ fall_run_fitness <- function(
     known_nats <- known_adults[keep, 6:20] * (1 - params_init$proportion_hatchery[keep])
     mean_escapent <-rowMeans(known_nats, na.rm = TRUE)
 
-    # watershed_cor <- sapply(1:length(keep), function(i) {
-    #   cor(preds[i,], known_nats[i,], use = "pairwise.complete.obs")
-    # })
     sse <- sum(((preds[keep,] - known_nats)^2 * weights)/mean_escapent, na.rm = TRUE)
 
     return(sse)
