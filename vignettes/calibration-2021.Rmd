@@ -8,6 +8,9 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
+library(tidyverse)
+library(plotly)
+
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -78,19 +81,30 @@ as_tibble(grandtab_observed$fall[keep, ]) %>%
   mutate(watershed = fallRunDSM::watershed_labels[keep]) %>% 
   gather(year, spawners, -watershed) %>% 
   mutate(year = readr::parse_number(year)) %>% 
-  ggplot(aes(year, spawners, color = watershed)) + geom_line()
+  plot_ly(x = ~year, y = ~spawners, type = "scatter", mode = "lines", 
+          color = ~watershed, 
+          hoverinfo = "text", 
+          text = ~paste("<b>Year</b>", year, "<br><b>Spawners</b>", 
+                        fallRunDSM::pretty_num(spawners))) %>% 
+  config(displayModeBar = FALSE)
+
 ```
 
 
 
 **Imputed Values**
 ```{r, echo=FALSE, warning=FALSE, fig.fullwidth=TRUE, fig.width=8, fig.height=4}
+
 as_tibble(grandtab_imputed$fall[keep, ]) %>% 
   mutate(watershed = fallRunDSM::watershed_labels[keep]) %>% 
   gather(year, spawners, -watershed) %>% 
   mutate(year = readr::parse_number(year)) %>% 
-  ggplot(aes(year, spawners, color = watershed)) + geom_line()
-
+  plot_ly(x = ~year, y = ~spawners, type = "scatter", mode = "lines", 
+          color = ~watershed, 
+          hoverinfo = "text", 
+          text = ~paste("<b>Year</b>", year, "<br><b>Spawners</b>", 
+                        fallRunDSM::pretty_num(spawners))) %>% 
+  config(displayModeBar = FALSE)
 ```
 
 ### Selected Proxy Years
