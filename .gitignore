@@ -6,3 +6,4 @@
 calibration/fits/*.rds
 .~lock*
 inst/doc
+.DS*
