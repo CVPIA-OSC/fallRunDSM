@@ -89,11 +89,11 @@ param_sensitivity <- function(param) {
   purrr::map_df(scalars, ~run_scenarios_scaled_param(param, .))
 }
 
-library(tictoc)
-tic("one param")
+# library(tictoc)
+# tic("one param")
 y <- param_sensitivity("hatchery_allocation")
-toc()
-View(x)
+# toc()
+# View(x)
 
 # how to separate coefficients from other model inputs within params
 coefficients <- names(params)[grep('\\.', names(params))]
