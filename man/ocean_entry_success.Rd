@@ -13,7 +13,8 @@ ocean_entry_success(
   avg_ocean_transition_month,
   .ocean_entry_success_length = fallRunDSM::params$.ocean_entry_success_length,
   ..ocean_entry_success_int = fallRunDSM::params$..ocean_entry_success_int,
-  .ocean_entry_success_months = fallRunDSM::params$.ocean_entry_success_months
+  .ocean_entry_success_months = fallRunDSM::params$.ocean_entry_success_months,
+  stochastic
 )
 }
 \arguments{
@@ -27,7 +28,9 @@ ocean_entry_success(
 
 \item{..ocean_entry_success_int}{Intercept}
 
-\item{.ocean_entry_success_months}{Coefficient for month variable}
+\item{.ocean_entry_success_months}{Coefficient for \code{month} variable}
+
+\item{stochastic}{\code{TRUE} \code{FALSE} value indicating if model is being run stochastically}
 }
 \description{
 Calculates the number of juveniles that survive entering the ocean

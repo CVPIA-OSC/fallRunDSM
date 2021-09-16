@@ -19,18 +19,18 @@ route_and_rear_deltas(
   cc_gates_days_closed,
   rearing_survival_delta,
   migratory_survival_delta,
-  migratory_survival_sac_delta,
   migratory_survival_bay_delta,
   juveniles_at_chipps,
   growth_rates,
   location_index = c(rep(1, 24), 3, rep(2, 2), rep(4, 4)),
-  territory_size
+  territory_size,
+  stochastic
 )
 }
 \arguments{
-\item{year}{Simulation year, 1-20}
+\item{year}{The current simulation year, 1-20}
 
-\item{month}{Simulation month, 1-8}
+\item{month}{The current simulation month, 1-8}
 
 \item{migrants}{An n by 4 matrix of juvenile fish by watershed and size class}
 
@@ -46,8 +46,6 @@ route_and_rear_deltas(
 
 \item{migratory_survival_delta}{The outmigration survival rate for North and South Delta}
 
-\item{migratory_survival_sac_delta}{The outmigration survival rate in the Sacramento Delta}
-
 \item{migratory_survival_bay_delta}{The outmigration survival rate in the Bay Delta}
 
 \item{juveniles_at_chipps}{The accumulated juveniles at Chipps Island for the current year}
@@ -58,6 +56,12 @@ route_and_rear_deltas(
 "northern_fish", "cosumnes_mokelumne_fish", "calaveras_fish", or "southern_fish" respectively}
 
 \item{territory_size}{Array of juvenile fish territory requirements for \code{\link{fill_natal}}}
+
+\item{stochastic}{\code{TRUE} \code{FALSE} value indicating if model is being run stochastically}
+
+\item{freeport_flow}{Monthly mean flow at freeport in cubic feet per second}
+
+\item{cc_gates_closed}{Number of days the Cross Channel gates are closed during the month}
 }
 \description{
 Determines if juveniles stay in the delta or out migrate to golden gate

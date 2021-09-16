@@ -54,7 +54,8 @@
 "stray_rate"
 
 #' @title Diversity Groups
-#' @description SIT defined diversity groups developed from the Central Valley Chinook Salmon and Steelhead Recovery Plan \href{https://archive.fisheries.noaa.gov/wcr/publications/recovery_planning/salmon_steelhead/domains/california_central_valley/cv_chin_stlhd_r_plan_fs_071614.pdf}{NOAA 2014}
+#' @description The diversity groups are sourced from the ["Framework for Assessing Viability of Threatened and Endangered Chinook Salmon and Steelhead in the Sacramento-San Joaquin Basin"](http://escholarship.org/uc/item/3653x9xc) with slight modification.
+#' The "Northern Sierra" diversity group covers a very large geographic area and was divided into two groups based on proximity.
 "diversity_group"
 
 #' @title Growth Rates
@@ -89,12 +90,16 @@ NULL
 #'   \item \code{sutter_habitat}: More details at \code{\link[DSMhabitat]{sutter_habitat}}
 #'   \item \code{yolo_habitat}: More details at \code{\link[DSMhabitat]{yolo_habitat}}
 #'   \item \code{delta_habitat}: More details at \code{\link[DSMhabitat]{delta_habitat}}
+#'   \item \code{spawn_decay_rate}: More details at \code{\link[DSMscenario]{spawn_decay_rate}}
+#'   \item \code{rear_decay_rate}: More details at \code{\link[DSMscenario]{rear_decay_rate}}
 #' }
 #' @section Spawning Adults:
 #' \itemize{
 #'   \item \code{prop_flow_natal}: More details at \code{\link[DSMflow]{proportion_flow_natal}}
 #'   \item \code{south_delta_routed_watersheds}: More details at \code{\link[DSMhabitat]{south_delta_routed_watersheds}}
 #'   \item \code{cc_gates_days_closed}: More details at \code{\link[DSMflow]{delta_cross_channel_closed}}
+#'   \item \code{cross_channel_stray_rate}: More details at \code{\link{cross_channel_stray_rate}}
+#'   \item \code{stray_rate}: More details at \code{\link{stray_rate}}
 #'   \item \code{gates_overtopped}: More details at \code{\link[DSMflow]{gates_overtopped}}
 #'   \item \code{tisdale_bypass_watershed}: More details at \code{\link[DSMhabitat]{tisdale_bypass_watershed}}
 #'   \item \code{yolo_bypass_watershed}: More details at \code{\link[DSMhabitat]{yolo_bypass_watershed}}
@@ -117,6 +122,9 @@ NULL
 #'   \item \code{spawn_success_sex_ratio}: Variable describing the female to male spawning ratio, default 0.5 TODO (find source for default)
 #'   \item \code{spawn_success_redd_size}: Variable describing the size of redds including defensible space, default value 9.29 square meters TODO (find source for default)
 #'   \item \code{spawn_success_fecundity}: Variable describing the number of eggs per female, default value 5522 TODO (find source for default)
+#'   \item \code{hatchery_allocation}: More details at \code{\link{hatchery_allocation}}
+#'   \item \code{natural_adult_removal_rate}: More details at \code{\link{natural_adult_removal_rate}}
+#'
 #' }
 #' @section Egg to Fry Survival:
 #' \itemize{
@@ -244,5 +252,22 @@ NULL
 #'   \item \code{..ocean_entry_success_int}: Intercept, source: Calibration (Varies by tributary)
 #'   \item \code{.ocean_entry_success_months}: Coefficient for \code{month} variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/Satterthwaite_et_al_2014.pdf}{Satterthwaite et al. (2014)}
 #' }
-#'
+#' @section Generating model outputs:
+#' \itemize{
+#'   \item \code{mass_by_size_class}: More details at \code{\link{mass_by_size_class}}
+#'   \item \code{diversity_group}: More details at \code{\link{diversity_group}}
+#' }
+#' @usage params
 "params"
+
+#' @rdname params
+#' @format NULL
+"params_2019"
+
+
+
+
+
+
+
+

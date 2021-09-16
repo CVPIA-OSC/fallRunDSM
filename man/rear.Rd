@@ -14,7 +14,8 @@ rear(
   floodplain_juveniles = NULL,
   floodplain_survival_rate = NULL,
   floodplain_growth = NULL,
-  weeks_flooded = NULL
+  weeks_flooded = NULL,
+  stochastic
 )
 }
 \arguments{
@@ -30,6 +31,8 @@ rear(
 \item{floodplain_survival_rate}{floodplain survival rate by size class (NULL for bypasses and delta)}
 
 \item{floodplain_growth}{growth transition matrix for juveniles rearing on the floodplain (NULL for bypasses and delta)}
+
+\item{stochastic}{\code{TRUE} \code{FALSE} value indicating if model is being run stochastically}
 
 \item{weeks_flood}{number of weeks floodplain is inundated (0 through 4)}
 }

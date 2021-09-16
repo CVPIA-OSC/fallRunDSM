@@ -3,7 +3,13 @@
 \docType{data}
 \name{params}
 \alias{params}
+\alias{params_2019}
 \title{Model Parameters}
+\usage{
+params
+
+params_2019
+}
 \description{
 A list containing all parameters needed for running the \code{\link{fall_run_model}}. Parameters with a single
 period in front are model or submodel coefficients. Parameters with double periods in front of them are calibrated model parameters.
@@ -18,6 +24,8 @@ period in front are model or submodel coefficients. Parameters with double perio
   \item \code{sutter_habitat}: More details at \code{\link[DSMhabitat]{sutter_habitat}}
   \item \code{yolo_habitat}: More details at \code{\link[DSMhabitat]{yolo_habitat}}
   \item \code{delta_habitat}: More details at \code{\link[DSMhabitat]{delta_habitat}}
+  \item \code{spawn_decay_rate}: More details at \code{\link[DSMscenario]{spawn_decay_rate}}
+  \item \code{rear_decay_rate}: More details at \code{\link[DSMscenario]{rear_decay_rate}}
 }
 }
 
@@ -27,6 +35,8 @@ period in front are model or submodel coefficients. Parameters with double perio
   \item \code{prop_flow_natal}: More details at \code{\link[DSMflow]{proportion_flow_natal}}
   \item \code{south_delta_routed_watersheds}: More details at \code{\link[DSMhabitat]{south_delta_routed_watersheds}}
   \item \code{cc_gates_days_closed}: More details at \code{\link[DSMflow]{delta_cross_channel_closed}}
+  \item \code{cross_channel_stray_rate}: More details at \code{\link{cross_channel_stray_rate}}
+  \item \code{stray_rate}: More details at \code{\link{stray_rate}}
   \item \code{gates_overtopped}: More details at \code{\link[DSMflow]{gates_overtopped}}
   \item \code{tisdale_bypass_watershed}: More details at \code{\link[DSMhabitat]{tisdale_bypass_watershed}}
   \item \code{yolo_bypass_watershed}: More details at \code{\link[DSMhabitat]{yolo_bypass_watershed}}
@@ -49,6 +59,9 @@ period in front are model or submodel coefficients. Parameters with double perio
   \item \code{spawn_success_sex_ratio}: Variable describing the female to male spawning ratio, default 0.5 TODO (find source for default)
   \item \code{spawn_success_redd_size}: Variable describing the size of redds including defensible space, default value 9.29 square meters TODO (find source for default)
   \item \code{spawn_success_fecundity}: Variable describing the number of eggs per female, default value 5522 TODO (find source for default)
+  \item \code{hatchery_allocation}: More details at \code{\link{hatchery_allocation}}
+  \item \code{natural_adult_removal_rate}: More details at \code{\link{natural_adult_removal_rate}}
+
 }
 }
 
@@ -205,6 +218,14 @@ period in front are model or submodel coefficients. Parameters with double perio
   \item \code{.ocean_entry_success_length}: Size related intercept representing the fork lengths for each size classes, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/Satterthwaite_et_al_2014.pdf}{Satterthwaite et al. (2014)}
   \item \code{..ocean_entry_success_int}: Intercept, source: Calibration (Varies by tributary)
   \item \code{.ocean_entry_success_months}: Coefficient for \code{month} variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/Satterthwaite_et_al_2014.pdf}{Satterthwaite et al. (2014)}
+}
+}
+
+\section{Generating model outputs}{
+
+\itemize{
+  \item \code{mass_by_size_class}: More details at \code{\link{mass_by_size_class}}
+  \item \code{diversity_group}: More details at \code{\link{diversity_group}}
 }
 }
 
