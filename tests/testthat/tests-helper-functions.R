@@ -15,9 +15,16 @@ test_that('Days in month funciton returns the correct number of days for that mo
   expect_equal(days_in_month(5), 31)
 })
 
-test_that('Ocean transition month returns the expected output', {
+# Test ocean transition month
+# Stochastic
+test_that('Ocean transition month returns the expected output, stochastic = TRUE', {
   set.seed(2021)
-  ocean_transition_month <- ocean_transition_month()
+  ocean_transition_month <- ocean_transition_month(stochastic = TRUE)
+  expect_equal(ocean_transition_month, 2)
+})
+# Deterministic
+test_that('Ocean transition month returns the expected output', {
+  ocean_transition_month <- ocean_transition_month(stochastic = FALSE)
   expect_equal(ocean_transition_month, 2)
 })
 
