@@ -14,7 +14,7 @@ TODO
 proportion_hatchery
 }
 \description{
-Proportion Hatchery
+Proportion of spawning fish that are from a hatchery.
 }
 \details{
 Proportion Hatchery

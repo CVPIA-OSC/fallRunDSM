@@ -36,7 +36,7 @@
 
 #' Proportion Hatchery
 #' @title Proportion Hatchery
-#' @description
+#' @description Proportion of spawning fish that are from a hatchery.
 #' @format 1 dimensional array [31 watersheds]
 #' @source TODO
 "proportion_hatchery"
