@@ -31,6 +31,8 @@ scenarios <- list(DSMscenario::scenarios$NO_ACTION, DSMscenario::scenarios$ONE,
 # register the functions for use in parallel mode
 clusterExport(cl, list('run_scenario', 'fall_run_model', 'scenarios'))
 
+# days in each month
+
 run_scenarios_scaled_param <- function(param, scalar) {
 
   sensi_params <- fallRunDSM::params
@@ -49,8 +51,10 @@ run_scenarios_scaled_param <- function(param, scalar) {
                      "spawn_success_sex_ratio", "stray_rate")) {
       boot::inv.logit(log((sensi_params[param][[1]] + 1e-7) / ((1 - sensi_params[param][[1]]) + 1e-7)) * scalar)
     } else if (param %in% c("cc_gates_days_closed")) {
-      prop_days_sclaed <- boot::inv.logit(log((sensi_params["cc_gates_prop_days_closed"][[1]] + 1e-7) / ((1 - sensi_params[param][[1]]) + 1e-7)) * scalar)
-      floor(sensi_params[param][[1]] * prop_days_scaled)
+      # scale prop days closed using the 0-1 restriction
+      prop_days_scaled <- boot::inv.logit(log((sensi_params["cc_gates_prop_days_closed"][[1]] + 1e-7) /
+                                                ((1 - sensi_params["cc_gates_prop_days_closed"][[1]]) + 1e-7)) * scalar)
+      floor(lubridate::days_in_month(1:12) * prop_days_scaled)
     } else if (param %in% c("weeks_flooded")) {
       pmin(pmax(sensi_params[param][[1]] + scalar, 0), 4)
     } else {
