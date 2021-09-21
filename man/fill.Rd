@@ -38,8 +38,11 @@ fill_regional(
 inchannel habitat (small = 1, medium = 2, large = 3, very large = 4)}
 }
 \description{
-Allocates juvenile fish onto the floodplain, in-channel, and once
-available habitat is full, assigns fish to out migrate.
+Allocates juvenile fish onto the floodplain and in-channel habitat. Once
+available habitat is full fish are assigned to out migrate.
 The \code{fill_natal} function is used to route fish within their natal tributary
 and the \code{fill_regional} function is used to route fish on the mainstem, bypasses, and deltas.
+}
+\details{
+See \code{\link{params}} for details on parameter sources
 }
