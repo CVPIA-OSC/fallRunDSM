@@ -1,6 +1,6 @@
 library(testthat)
 library(fallRunDSM)
-# tests for survival functions
+# tests for DSM survival functions
 # Defines inputs to use in testing
 year <- 1
 month <- 9
@@ -25,7 +25,7 @@ expected_surv_juv_rear <- list(inchannel = structure(c(0.72111184400087, 0.91908
                                                       .Dim = c(1L, 4L),
                                                       .Dimnames = list("Upper Sacramento River", c("s", "m", "l", "vl"))))
 
-test_that('The surv_juv_rear function returns the expected values for year 1 month 9 watershed 1', {
+test_that('The surv_juv_rear function returns the expected values for year 1 month 9 watershed 1, stochastic = TRUE', {
   set.seed(2021)
   surv <- surv_juv_rear(max_temp_thresh = maxT25[1],
                         avg_temp_thresh = aveT20[1],
@@ -118,7 +118,7 @@ expected_surv_juv_rear_det <- list(inchannel = structure(c(0.72111184400087, 0.0
                                                                 "Stanislaus River", "Tuolumne River", "San Joaquin River"
                                                               ), c("s", "m", "l", "vl"))))
 
-test_that('The surv_juv_rear function returns the expected values for year 1 month 9 watershed 1', {
+test_that('The surv_juv_rear function returns the expected values for year 1 month 9, stochastic = FALSE', {
   surv <- surv_juv_rear(max_temp_thresh = maxT25[1],
                         avg_temp_thresh = aveT20[1],
                         high_predation = high_predation[1],
@@ -142,7 +142,7 @@ expected_delta_juv_surv <- structure(c(0.0932457862245425, 1e-04, 0.093245786224
                                      .Dim = c(2L, 4L),
                                      .Dimnames = list(c("North Delta", "South Delta"), c("s", "m", "l", "vl")))
 
-test_that('The delta_juv_surv function returns the expected values for year 1 month 9', {
+test_that('The delta_juv_surv function returns the expected values for year 1 month 9, stochastic = TRUE', {
   set.seed(2012)
   surv <- surv_juv_delta(avg_temp = fallRunDSM::params$avg_temp_delta[month, year, "North Delta"],
                          max_temp_thresh = maxT25D,
@@ -161,7 +161,7 @@ expected_delta_juv_surv_det <- structure(c(0.0932457862245425, 1e-04, 0.09324578
                                      .Dim = c(2L, 4L),
                                      .Dimnames = list(c("North Delta", "South Delta"), c("s", "m", "l", "vl")))
 
-test_that('The delta_juv_surv function returns the expected values for year 1 month 9', {
+test_that('The delta_juv_surv function returns the expected values for year 1 month 9, stochastic = FALSE', {
   surv <- surv_juv_delta(avg_temp = fallRunDSM::params$avg_temp_delta[month, year, "North Delta"],
                          max_temp_thresh = maxT25D,
                          avg_temp_thresh = aveT20D,
@@ -179,7 +179,7 @@ test_that('The delta_juv_surv function returns the expected values for year 1 mo
 expected_bypass_juv_surv <- structure(c(1e-04, 1e-04, 1e-04, 1), .Dim = c(1L, 4L),
                                       .Dimnames = list( NULL, c("s", "m", "l", "vl")))
 
-test_that('The bypass_juv_surv function returns the expected values for year 1 month 9', {
+test_that('The bypass_juv_surv function returns the expected values for year 1 month 9, stochastic = TRUE', {
   set.seed(2021)
   expect_equal(surv_juv_bypass(max_temp_thresh = maxT25[22],
                                avg_temp_thresh = aveT20[22],
@@ -191,7 +191,7 @@ test_that('The bypass_juv_surv function returns the expected values for year 1 m
 # Deterministic
 expected_bypass_juv_surv_det <- structure(c(1e-04, 1e-04, 1e-04, 1), .Dim = c(1L, 4L),
                                       .Dimnames = list( NULL, c("s", "m", "l", "vl")))
-test_that('The bypass_juv_surv function returns the expected values for year 1 month 9', {
+test_that('The bypass_juv_surv function returns the expected values for year 1 month 9, stochastic = FALSE', {
   expect_equal(surv_juv_bypass(max_temp_thresh = maxT25[22],
                                avg_temp_thresh = aveT20[22],
                                high_predation = 0,
@@ -199,7 +199,8 @@ test_that('The bypass_juv_surv function returns the expected values for year 1 m
                                stochastic = FALSE),
                expected_bypass_juv_surv_det)
 })
-# Tests migratory survival for lower mid sac fish survival function ------------
+
+# Tests migratory survival for lower mid sac fish ------------------------------
 expected_lms_mig_surv <- c(s = 0.189, m = 0.189, l = 0.189, vl = 0.189)
 
 test_that('The migratory_juv_surv function for lower mid sac returns the expected values for year 1 month 9', {
@@ -207,7 +208,7 @@ test_that('The migratory_juv_surv function for lower mid sac returns the expecte
                expected_lms_mig_surv)
 })
 
-# Tests migratory survival for san joaquin fish survival function --------------
+# Tests migratory survival for san joaquin fish --------------------------------
 expected_san_joaquin_surv <- structure(c(0.393082390467511, 0.739934122927998, 0.856758760416419,
                                          0.856758760416419),
                                        .Dim = c(1L, 4L),
@@ -299,7 +300,7 @@ habitats <- list(
 scenario_data <- DSMscenario::load_scenario(scenario = DSMscenario::scenarios$ONE,
                                             habitat_inputs = habitats,
                                             species = DSMscenario::species$FALL_RUN)
-test_that("get_rearing_survival returns the expected result", {
+test_that("get_rearing_survival returns the expected result, stochastic = TRUE", {
   set.seed(2021)
   survival <- get_rearing_survival(year = year, month = month,
                                    survival_adjustment = scenario_data$survival_adjustment,
@@ -427,7 +428,7 @@ rearing_survival_det <- list(inchannel = structure(c(0.915837246366906, 0.974085
                                                  0.0932457862245425, 0.998900333916521, 1, 1),
                                                .Dim = c(2L, 4L),
                                                .Dimnames = list(c("North Delta", "South Delta"), c("s",  "m", "l", "vl"))))
-test_that("get_rearing_survival returns the expected result", {
+test_that("get_rearing_survival returns the expected result, stochastic = FALSE", {
   survival <- get_rearing_survival(year = year, month = month,
                                    survival_adjustment = scenario_data$survival_adjustment,
                                    mode = "simulate",
@@ -503,7 +504,7 @@ expected_migratory_survival <- list(uppermid_sac = c(s = 0.189, m = 0.189, l = 0
                                                                        c("s", "m", "l", "vl"))),
                                     bay_delta = 0.358)
 
-test_that("get_migratory_survival returns the expected result", {
+test_that("get_migratory_survival returns the expected result, stochastic = TRUE", {
   set.seed(2021)
   migratory_survival <- get_migratory_survival(year = year, month = month,
                                                cc_gates_prop_days_closed = fallRunDSM::params$cc_gates_prop_days_closed,
@@ -548,7 +549,7 @@ expected_migratory_survival_det <- list(uppermid_sac = c(s = 0.189, m = 0.189, l
                                                                            c("s", "m", "l", "vl"))),
                                         bay_delta = 0.358)
 
-test_that("get_migratory_survival returns the expected result", {
+test_that("get_migratory_survival returns the expected result, stochastic = FALSE", {
   migratory_survival <- get_migratory_survival(year = year, month = month,
                                                cc_gates_prop_days_closed = fallRunDSM::params$cc_gates_prop_days_closed,
                                                freeport_flows = fallRunDSM::params$freeport_flows,
@@ -567,7 +568,7 @@ test_that("get_migratory_survival returns the expected result", {
                                                .surv_juv_outmigration_san_joaquin_medium = fallRunDSM::params$.surv_juv_outmigration_san_joaquin_medium,
                                                .surv_juv_outmigration_san_joaquin_large = fallRunDSM::params$.surv_juv_outmigration_san_joaquin_large,
                                                min_survival_rate = fallRunDSM::params$min_survival_rate,
-                                               stochastic = FALSE) #migratory_survival$uppermid_sac)
+                                               stochastic = FALSE)
   expect_equal(migratory_survival, expected_migratory_survival_det)
 })
 
