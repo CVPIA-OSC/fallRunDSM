@@ -38,7 +38,7 @@ adult_stray <- function(wild, natal_flow, south_delta_watershed, cross_channel_g
 #' @title Adult En Route Survival
 #' @description Calculate adult survival en route to spawning grounds
 #' @details See \code{\link{params}} for details on parameter sources
-#' @param migratory_temp variable representing proportion of migratory corridor temperature above  20°C
+#' @param migratory_temp Variable representing proportion of migratory corridor temperature above  20°C
 #' @param bypass_overtopped Indicator for bypass overtopped
 #' @param adult_harvest Adult harvest rate
 #' @param ..surv_adult_enroute_int Intercept

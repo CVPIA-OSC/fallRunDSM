@@ -17,7 +17,7 @@ surv_adult_enroute(
 )
 }
 \arguments{
-\item{migratory_temp}{variable representing proportion of migratory corridor temperature above  20°C}
+\item{migratory_temp}{Variable representing proportion of migratory corridor temperature above  20°C}
 
 \item{bypass_overtopped}{Indicator for bypass overtopped}
 
