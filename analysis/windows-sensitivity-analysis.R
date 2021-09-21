@@ -48,8 +48,10 @@ run_scenarios_scaled_param <- function(param, scalar) {
                      "spawn_decay_rate",
                      "spawn_success_sex_ratio", "stray_rate")) {
       boot::inv.logit(log((sensi_params[param][[1]] + 1e-7) / ((1 - sensi_params[param][[1]]) + 1e-7)) * scalar)
-    } else if (param %in% c("weeks_flooded", "cc_gates_days_closed")) {
+    } else if (param %in% c("cc_gates_days_closed")) {
       scalar
+    } else if (param %in% c("weeks_flooded")) {
+      pmin(pmax(sensi_params[param][[1]] + scalar, 0), 4)
     } else {
       sensi_params[param][[1]] * scalar
     }
@@ -77,17 +79,22 @@ run_scenarios_scaled_param <- function(param, scalar) {
 
 param_sensitivity <- function(param) {
   scalars <- if (param == "weeks_flooded") {
-    seq(0, 4, by = 1)
+    c(-2, -1, 1, 2) # scale weeks flooded by this many weeks
   } else if (param == "cc_gates_days_closed") {
     # TODO is this correct ?
-    seq(1, 31, by = 1)
+    # TODO make the appropriate change in the props version of this
+    # TODO idea: use the prop as the center and vary the days closed
+    # based on this
+    # TODO apply the regular scale to the prop days closed and
+    purrr::map(1:30, ~rep(., each = 12))
   } else {
     # default steps
     seq(.5, 1.5, by = .1)
   }
-
+  o
   purrr::map_df(scalars, ~run_scenarios_scaled_param(param, .))
 }
+
 
 library(tictoc)
 tic("one param")
