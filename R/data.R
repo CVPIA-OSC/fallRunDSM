@@ -1,4 +1,5 @@
 #' Adult Harvest Rate
+#' @title Adult Harvest Rate
 #' @description Proportion of adults harvested from golden gate until they reach their natal shed
 #' @format 1 dimensional array [31 watersheds]
 #' @source
@@ -8,6 +9,7 @@
 "adult_harvest_rate"
 
 #' Natural Spawners Removal Rate
+#' @title Natural Spawners Removal Rate
 #' @description Spawners removed for hatcheries
 #' @format 1 dimensional array [31 watersheds]
 #' @source
@@ -16,7 +18,7 @@
 #' Compiled by: James T. Peterson \email{jt.peterson@@oregonstate.edu}
 "natural_adult_removal_rate"
 
-#' Hatchery Allocation
+#' @title Hatchery Allocation
 #' @description The proportion of hatchery fish spawning
 #' @format 1 dimensional array [31 watersheds]
 #' @source
@@ -25,41 +27,59 @@
 #' Compiled by: James T. Peterson \email{jt.peterson@@oregonstate.edu}
 "hatchery_allocation"
 
+#' Adult Seeds
 #' @title Adult Seeds
-#' @description adult fish for the initial 5 years of the simulations derived
-#' from average escapement estimates from 2013 to 2017 \href{https://dsm-docs.s3.us-west-2.amazonaws.com/Azat+2019.pdf}{Azat 2019}.
+#' @description Adult fish for the initial 5 years of the simulations.
 #' @format A matrix with dimension 31 x 30 (watershed x year)
+#' @source Derived from average escapement estimates from 2013 to 2017 \href{https://dsm-docs.s3.us-west-2.amazonaws.com/Azat+2019.pdf}{Azat 2019}.
 "adult_seeds"
 
+#' Proportion Hatchery
 #' @title Proportion Hatchery
-#' @description TODO
+#' @description
+#' @format 1 dimensional array [31 watersheds]
+#' @source TODO
 "proportion_hatchery"
 
+#' Month Return Proportions
 #' @title Month Return Proportions
-#' @description the proportion of spawning fish in Oct-Dec
+#' @description The proportion of spawning fish in Oct-Dec
+#' @format 1 dimensional array [31 watersheds]
+#' @source TODO
 "month_return_proportions"
 
+#' Mass by Size Class
 #' @title Mass by Size Class
 #' @description mass of fish by the size class
+#' @format 1 dimensional array [4 size classes]
+#' @source TODO
 "mass_by_size_class"
 
 #' @title Cross Channel Stray Rate
-#' @description Natural straying allocation across channels, source: expert opinion from SIT members.
+#' @description Natural straying allocation across channels.
+#' @format 1 dimensional array [31 watersheds]
+#' @source Expert opinion from SIT members.
 "cross_channel_stray_rate"
 
 #' @title Stray Rate
-#' @description Estimated with coded wire tag data 2010–2013 (\href{https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&usg= AOvVaw0VgMOwD7knFfSxRZy6k8RG}{Kormos et al. 2012},
+#' @description Natural straying allocation
+#' @format 1 dimensional array [31 watersheds]
+#' @source Estimated with coded wire tag data 2010–2013 (\href{https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&usg= AOvVaw0VgMOwD7knFfSxRZy6k8RG}{Kormos et al. 2012},
 #' \href{https://www.rmpc.org/files/mark-mtg-2014-docs/2011_CFM_CWT_Recovery_Report_FAR_2013(Melodie_Palmer-Zwahlen).pdf}{Palmer-Zwahlen & Kormos 2013-2015},
 #' \href{https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&usg=AOvVaw3wSbd-zJk1eQa085Xuxiyg}{Palmer-Zwahlen et al. 2018})
 "stray_rate"
 
 #' @title Diversity Groups
-#' @description The diversity groups are sourced from the ["Framework for Assessing Viability of Threatened and Endangered Chinook Salmon and Steelhead in the Sacramento-San Joaquin Basin"](http://escholarship.org/uc/item/3653x9xc) with slight modification.
+#' @description Watershed groups.
+#' @format 1 dimensional named array [31 watersheds]
+#' @source The diversity groups are sourced from the ["Framework for Assessing Viability of Threatened and Endangered Chinook Salmon and Steelhead in the Sacramento-San Joaquin Basin"](http://escholarship.org/uc/item/3653x9xc) with slight modification.
 #' The "Northern Sierra" diversity group covers a very large geographic area and was divided into two groups based on proximity.
 "diversity_group"
 
 #' @title Growth Rates
-#' @description Growth rates determined by expert SIT judgment based on the following:
+#' @description Chinook growth rates in floodplain and inchannel habitat.
+#' @format 1 dimensional array [4 size classes]
+#' @source Growth rates determined by expert SIT judgment based on the following:
 #' \itemize{
 #'   \item \href{https://link.springer.com/article/10.1007/s10641-009-9473-8}{Limm, M.P., Marchetti, M.P.  (2009)}
 #'   \item \href{https://www.tandfonline.com/doi/abs/10.1577/T08-112.1}{Rene E. Henery, Ted R. Sommer & Charles R. Goldman (2010)}

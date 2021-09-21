@@ -5,12 +5,18 @@
 \alias{proportion_hatchery}
 \title{Proportion Hatchery}
 \format{
-An object of class \code{numeric} of length 31.
+1 dimensional array [31 watersheds]
+}
+\source{
+TODO
 }
 \usage{
 proportion_hatchery
 }
 \description{
-TODO
+Proportion Hatchery
+}
+\details{
+Proportion Hatchery
 }
 \keyword{datasets}
