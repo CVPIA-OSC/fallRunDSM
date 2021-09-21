@@ -93,7 +93,6 @@ param_sensitivity <- function(param) {
   purrr::map_df(scalars, ~run_scenarios_scaled_param(param, .))
 }
 
-
 library(tictoc)
 tic("one param")
 y <- param_sensitivity("hatchery_allocation")
