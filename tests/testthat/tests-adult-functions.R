@@ -200,8 +200,7 @@ expected_spawners <- list(init_adults = c(22012, 72, 3171, 12, 12, 885, 8555, 12
                                                              5L, 281L, 5L, 5L, 3L, 0L, 0L, 3L, 8812L, 1557L, 0L, 0L, 4290L,
                                                              0L, 4L, 100L, 601L, 332L, 1129L, 241L, 0L),
                                                            .Dim = c(31L, 3L)))
-test_that("stochastic get spawning adults returns the expected values", {
-
+test_that("stochastic get spawning adults returns the expected values, stochastic = TRUE", {
   set.seed(2021)
   spawning_adults <- get_spawning_adults(year = year, adults = adults,
                                          hatch_adults = hatch_adults,
@@ -247,7 +246,8 @@ expected_spawners_det <- list(init_adults = c(22013, 72, 3212, 13, 13, 886, 8555
                                                                  3003, 547, 0, 4892, 16, 714, 3, 3, 197, 1901, 278, 366, 126,
                                                                  3, 296, 11, 3, 3, 0, 0, 3, 8801, 1596, 0, 0, 4275, 0, 3, 111,
                                                                  607, 346, 1201, 219, 0), .Dim = c(31L, 3L)))
-test_that("deterministic get spawning adults returns the expected values", {
+
+test_that("deterministic get spawning adults returns the expected values, stochastic = FALSE", {
   spawning_adults <- get_spawning_adults(year = year, adults = adults,
                                          hatch_adults = hatch_adults,
                                          month_return_proportions = params$month_return_proportions,
@@ -289,8 +289,8 @@ expected_juveniles <- structure(c(8095521, 41069, 749968, 8714, 4458, 376221, 38
                                 .Dim = c(31L, 4L),
                                 .Dimnames = list(NULL, c("fry", "", "", "")))
 
-test_that("stochastic spawn success function returns the expected value", {
-  set.seed(2021) # need to set seed since stocastic = TRUE
+test_that("stochastic spawn success function returns the expected value, stochastic = TRUE", {
+  set.seed(2021) # need to set seed since stochastic = TRUE
   juveniles <- spawn_success(escapement = init_adults,
                              adult_prespawn_survival = expected_prespawn_surv,
                              egg_to_fry_survival = expected_egg_surv,
@@ -320,7 +320,7 @@ expected_juveniles <- structure(c(8162468, 31937, 750352, 4364, 4434, 404418, 38
                                                    "Cosumnes River", "Mokelumne River", "Merced River", "Stanislaus River",
                                                    "Tuolumne River", "San Joaquin River"), c("fry", "", "", "")))
 
-test_that("deterministic - spawn success function returns the expected value", {
+test_that("deterministic - spawn success function returns the expected value, stochastic = FALSE", {
   juveniles <- spawn_success(escapement = init_adults,
                              adult_prespawn_survival = expected_prespawn_surv,
                              egg_to_fry_survival = expected_egg_surv,
