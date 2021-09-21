@@ -56,7 +56,7 @@ run_scenarios_scaled_param <- function(param, scalar) {
                                                 ((1 - sensi_params["cc_gates_prop_days_closed"][[1]]) + 1e-7)) * scalar)
       floor(lubridate::days_in_month(1:12) * prop_days_scaled)
     } else if (param %in% c("weeks_flooded")) {
-      pmin(pmax(sensi_params[param][[1]] + scalar, 0), 4)
+      scalar
     } else {
       sensi_params[param][[1]] * scalar
     }
@@ -84,7 +84,18 @@ run_scenarios_scaled_param <- function(param, scalar) {
 
 param_sensitivity <- function(param) {
   scalars <- if (param == "weeks_flooded") {
-    c(-2, -1, 1, 2) # scale weeks flooded by this many weeks
+
+    (function() {
+      original <- fallRunDSM::params$weeks_flooded
+      fp_filter <- fallRunDSM::params$floodplain_habitat > 0
+      weeks_flooded_scaled <- array(dim = c(4, 31, 12, 21))
+      weeks_flooded_scaled[1,,,] <- pmin(original + 2, 4) * fp_filter
+      weeks_flooded_scaled[2,,,] <- pmax(original - 2, 1) * fp_filter
+      weeks_flooded_scaled[3,,,] <- pmin(original + 1, 4) * fp_filter
+      weeks_flooded_scaled[4,,,] <- pmax(original - 1, 1) * fp_filter
+      return(weeks_flooded_scaled)
+    })()
+
   } else {
     # default steps
     seq(.5, 1.5, by = .1)
