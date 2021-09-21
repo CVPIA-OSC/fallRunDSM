@@ -65,7 +65,7 @@ expected_ocean_entry_success <- c(3204, 3275, 270, 828, 0, 1842, 136, 3, 13384, 
                                   727, 0, 1, 0, 0, 1677, 27126, 4530, 0, 0, 25426, 0, 0, 0, 0,
                                   0, 0, 0, 0)
 
-test_that('The ocean entry success function returns the expected values for year 1 month 3', {
+test_that('The ocean entry success function returns the expected values for year 1 month 3, stochastic = TRUE', {
   set.seed(2021)
   expect_equal(ocean_entry_success(migrants = migrants_at_golden_gate,
                                    month = month,
@@ -81,7 +81,7 @@ expected_ocean_entry_success_det <- c(3205, 3266, 272, 839, 0, 1897, 137, 3, 133
                                   728, 0, 1, 0, 0, 1631, 26957, 4469, 0, 0, 25612, 0, 0, 0, 0,
                                   0, 0, 0, 0)
 
-test_that('The ocean entry success function returns the expected values for year 1 month 3', {
+test_that('The ocean entry success function returns the expected values for year 1 month 3, stochastic = FALSE', {
   expect_equal(ocean_entry_success(migrants = migrants_at_golden_gate,
                                    month = month,
                                    avg_ocean_transition_month = avg_ocean_transition_month,
@@ -214,7 +214,7 @@ expected_route <- list(inchannel = structure(c(5706730, 95829.4873630614, 212275
                                                   "Stanislaus River", "Tuolumne River", "San Joaquin River"
                                                 ), c("fry", "", "", ""))))
 
-test_that('The route() function returns the expected values for year 1 month 3', {
+test_that('The route function returns the expected values for year 1 month 3, stochastic = TRUE', {
   set.seed(2021)
   route <- route(year = year, month = month,
                  juveniles = juveniles,
@@ -286,7 +286,7 @@ expected_route_det <- list(inchannel = structure(c(5706711, 95834.4873630614, 21
                                                                    "Cosumnes River", "Mokelumne River", "Merced River", "Stanislaus River",
                                                                    "Tuolumne River", "San Joaquin River"), c("fry", "", "", ""))))
 
-test_that('The route() function returns the expected values for year 1 month 3', {
+test_that('The route function returns the expected values for year 1 month 3, stochastic = FALSE', {
   route <- route(year = year, month = month,
                  juveniles = juveniles,
                  inchannel_habitat = expected_habitat$inchannel,
@@ -355,7 +355,7 @@ expected_route_sutter <- list(inchannel = structure(c(12298980, 0, 50880, 0, 10,
                                                      0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L), .Dim = c(15L, 4L), .Dimnames = list(
                                                        NULL, c("s", "m", "l", "vl"))))
 
-test_that('The route_bypass() function returns the expected values for year 1 month 3', {
+test_that('The route_bypass function returns the expected values for year 1 month 3, stochastic = TRUE', {
   set.seed(2021)
   route_sutter <- route_bypass(bypass_fish = sutter_fish,
                                bypass_habitat = expected_habitat$sutter,
@@ -383,7 +383,7 @@ expected_route_sutter_det <- list(inchannel = structure(c(12298980, 0, 50880, 0,
                                                        .Dim = c(15L, 4L),
                                                        .Dimnames = list(NULL, c("s", "m", "l", "vl"))))
 
-test_that('The route_bypass() function returns the expected values for year 1 month 3', {
+test_that('The route_bypass function returns the expected values for year 1 month 3, stochastic = FALSE', {
   route_sutter <- route_bypass(bypass_fish = sutter_fish,
                                bypass_habitat = expected_habitat$sutter,
                                migration_survival_rate = migratory_survival$sutter,
@@ -420,7 +420,7 @@ expected_route_regional <- list(inchannel = structure(c(2437809, 0, 10084, 0, 2,
                                                        0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L,
                                                        0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L), .Dim = c(15L,
                                                                                                                          4L)))
-test_that('The route_regional() function returns the expected values for year 1 month 3', {
+test_that('The route_regional function returns the expected values for year 1 month 3, stochastic = TRUE', {
   set.seed(2021)
   route <- route_regional(month = month,
                           migrants = sutter_fish,
@@ -462,7 +462,7 @@ expected_route_regional_det <- list(inchannel = structure(c(2437798, 0, 10085, 0
                                                            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
                                                          .Dim = c(15L, 4L),
                                                          .Dimnames = list(NULL, c("s", "m", "l", "vl"))))
-test_that('The route_regional(stochastic = FALSE) function returns the expected values for year 1 month 3', {
+test_that('The route_regional function returns the expected values for year 1 month 3, , stochastic = FALSE', {
   route <- route_regional(month = month,
                           migrants = sutter_fish,
                           inchannel_habitat = expected_habitat$inchannel[16],
@@ -648,7 +648,7 @@ delta_routing <- list(migrants_at_golden_gate = structure(c(0, 0, 0, 0, 0, 0,
                                                                          ))))
 
 
-test_that('The route_and_rear_deltas() function returns the expected values for year 1 month 3', {
+test_that('The route_and_rear_delta function returns the expected values for year 1 month 3, stochastic = TRUE', {
   set.seed(2021)
   expected_delta_routing <- route_and_rear_deltas(year = year, month = month, migrants = migrants,
                                                   north_delta_fish = north_delta_fish,
@@ -713,7 +713,7 @@ delta_routing_det <- list(migrants_at_golden_gate = structure(c(0, 0, 0, 0, 0, 0
                                                                              ))))
 
 
-test_that('The route_and_rear_deltas(stochastic = FALSE) function returns the expected values for year 1 month 3', {
+test_that('The route_and_rear_delta function returns the expected values for year 1 month 3, stochastic = FALSE', {
   expected_delta_routing <- route_and_rear_deltas(year = year, month = month, migrants = migrants,
                                                   north_delta_fish = north_delta_fish,
                                                   south_delta_fish = south_delta_fish,
@@ -771,7 +771,8 @@ expected_fill_natal <- list(inchannel = structure(c(5709299, 95877.4873630614, 2
                                                                     "Yolo Bypass", "American River", "Lower Sacramento River", "Calaveras River",
                                                                     "Cosumnes River", "Mokelumne River", "Merced River", "Stanislaus River",
                                                                     "Tuolumne River", "San Joaquin River"), c("fry", "", "", ""))))
-test_that('the fill_natal() function returns the expected output', {
+
+test_that('the fill_natal function returns the expected output, stochastic = TRUE', {
   expect_equal(fill_natal(juveniles = juveniles, inchannel_habitat = expected_habitat$inchannel,
                           floodplain_habitat = expected_habitat$floodplain,
                           territory_size = fallRunDSM::params$territory_size),
@@ -787,15 +788,16 @@ expected_fill_regional <- list(inchannel = structure(c(2254784, 9175, 38324, 140
                                                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                                                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-                                                     .Dim = c(31L, 4L), .Dimnames = list(c("Upper Sacramento River",
-                                                                                           "Antelope Creek", "Battle Creek", "Bear Creek", "Big Chico Creek",
-                                                                                           "Butte Creek", "Clear Creek", "Cottonwood Creek", "Cow Creek",
-                                                                                           "Deer Creek", "Elder Creek", "Mill Creek", "Paynes Creek", "Stony Creek",
-                                                                                           "Thomes Creek", "Upper-mid Sacramento River", "Sutter Bypass",
-                                                                                           "Bear River", "Feather River", "Yuba River", "Lower-mid Sacramento River",
-                                                                                           "Yolo Bypass", "American River", "Lower Sacramento River", "Calaveras River",
-                                                                                           "Cosumnes River", "Mokelumne River", "Merced River", "Stanislaus River",
-                                                                                           "Tuolumne River", "San Joaquin River"), c("fry", "", "", ""))),
+                                                     .Dim = c(31L, 4L),
+                                                     .Dimnames = list(c("Upper Sacramento River",
+                                                                        "Antelope Creek", "Battle Creek", "Bear Creek", "Big Chico Creek",
+                                                                        "Butte Creek", "Clear Creek", "Cottonwood Creek", "Cow Creek",
+                                                                        "Deer Creek", "Elder Creek", "Mill Creek", "Paynes Creek", "Stony Creek",
+                                                                        "Thomes Creek", "Upper-mid Sacramento River", "Sutter Bypass",
+                                                                        "Bear River", "Feather River", "Yuba River", "Lower-mid Sacramento River",
+                                                                        "Yolo Bypass", "American River", "Lower Sacramento River", "Calaveras River",
+                                                                        "Cosumnes River", "Mokelumne River", "Merced River", "Stanislaus River",
+                                                                        "Tuolumne River", "San Joaquin River"), c("fry", "", "", ""))),
                                floodplain = structure(c(19932367, 81106, 338784, 12432,
                                                         13084, 1041174, 9637131, 1273933, 1892442, 652171, 13122,
                                                         1405009, 53140, 12103, 12539, 0, 0, 12973, 22737111, 7669408,
@@ -861,7 +863,7 @@ expected_migrants <- structure(c(9L, 0L, 0L, 0L, 0L, 0L, 0L, 10L, 0L, 0L, 0L, 0L
                                  0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L,
                                  0L, 22L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L,
                                  0L, 0L, 0L, 0L, 0L, 0L), .Dim = c(31L, 4L))
-test_that('the migrate(stochastic = TRUE) funciton returns the expected output', {
+test_that('the migrate function returns the expected output, stochastic = TRUE', {
   set.seed(2021)
   current_migrants <- migrate(migrants = migrants,
                               migration_survival_rate = migratory_survival$uppermid_sac,
@@ -878,7 +880,7 @@ expected_migrants <- structure(c(9, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0,
                                  0, 0, 0, 0),
                                .Dim = c(31L, 4L),
                                .Dimnames = list(NULL, c("s", "m", "l", "vl")))
-test_that('the migrate(stochastic = FALSE) funciton returns the expected output', {
+test_that('the migrate function returns the expected output, stochastic = FALSE', {
   current_migrants <- migrate(migrants = migrants,
                               migration_survival_rate = migratory_survival$uppermid_sac,
                               stochastic = FALSE)
