@@ -204,6 +204,7 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
 #' deltas rearing survival rates for a month and year of the simulation
 #' @param year The simulation year, 1-20
 #' @param month The simulation month, 1-8
+#' @param survival_adjustment Survival adjustment applied to survival rates based on SIT strategies
 #' @param mode The mode that the model is being run in
 #' @param avg_temp More details at \code{\link[DSMtemperature]{stream_tempetature}}
 #' @param avg_temp_delta More details at \code{\link[DSMtempetature]{delta_temprature}}
@@ -635,6 +636,7 @@ surv_juv_outmigration_delta <- function(prop_DCC_closed, hor_barr, freeport_flow
 #' @param upper_sacramento_flows average monthly flows on the Upper Sacramento River in cubic meters per second, more details at \code{\link[DSMflow]{upper_sacramento_flows}}
 #' @param delta_inflow Variable describing delta inflow in cubic meters per second, more details at \code{\link[DSMflow]{delta_inflow}}
 #' @param avg_temp_delta Variable describing monthly mean temperature in celsius, more details at  \code{\link[DSMtempetature]{delta_temprature}}
+#' @param avg_temp Variable describing monthly mean temperature in celsius, more details at  \code{\link[DSMtempetature]{avg_temp}}
 #' @param delta_proportion_diverted Variable describing diversions from the delta in cubic meters per seccond, more details at \code{\link[DSMflow]{delta_proportion_diverted}}
 #' @param ..surv_juv_outmigration_sj_int Intercept for \code{\link{surv_juv_outmigration_san_joaquin}}
 #' @param .surv_juv_outmigration_san_joaquin_medium Size related intercept for \code{\link{surv_juv_outmigration_san_joaquin}} medium sized fish
