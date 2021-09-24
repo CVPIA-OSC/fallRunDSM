@@ -1,6 +1,7 @@
 #' @title Days in Month
 #' @description Number of days withing a month
 #' @param month Integer representation of month
+#' @param days_by_month The number of days in each month
 days_in_month <- function(month, days_by_month = c(Jan = 31L, Feb = 28L, Mar = 31L,
                                        Apr = 30L, May = 31L, Jun = 30L,
                                        Jul = 31L, Aug = 31L, Sep = 30L,
@@ -12,6 +13,7 @@ days_in_month <- function(month, days_by_month = c(Jan = 31L, Feb = 28L, Mar = 3
 
 #' @title Ocean Transition Month
 #' @description Calculates the month juveniles transition to the ocean
+#' @param stochastic \code{TRUE} \code{FALSE} value indicating if model is being run stochastically
 #' @source IP-117068
 ocean_transition_month <- function(stochastic) {
   if (stochastic) {
@@ -26,6 +28,8 @@ ocean_transition_month <- function(stochastic) {
 
 #' @title Pretty Number
 #' @description Formats numbers for ease of reading
+#' @param num A number to be reformatted
+#' @param places The number of places to round a number to, defaults to two
 #' @export
 pretty_num <- function(num, places = 2) {
   format(round(num, places), big.mark = ',', drop = FALSE)
