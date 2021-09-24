@@ -32,9 +32,9 @@ rear(
 
 \item{floodplain_growth}{growth transition matrix for juveniles rearing on the floodplain (NULL for bypasses and delta)}
 
-\item{stochastic}{\code{TRUE} \code{FALSE} value indicating if model is being run stochastically}
+\item{weeks_flooded}{number of weeks floodplain is inundated (0 through 4)}
 
-\item{weeks_flood}{number of weeks floodplain is inundated (0 through 4)}
+\item{stochastic}{\code{TRUE} \code{FALSE} value indicating if model is being run stochastically}
 }
 \description{
 Calculates the number of juveniles that survive and grow inchannel and on the floodplain
