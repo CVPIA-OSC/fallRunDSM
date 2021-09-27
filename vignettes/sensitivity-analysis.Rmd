@@ -28,7 +28,6 @@ to determine its impact.
 
 The model parameters varied for sensitivity analysis were:
 
-
 ```{r, echo = F, results='asis', max.height='10px'}
 #TODO figure out a way to print this out in a nicer format
 coefficients <- names(params)[grep('\\.', names(params))]
@@ -49,9 +48,9 @@ details of each of these parameters and inputs can be found in the
 
 Most of these model inputs were scaled by .5 to 1.5 in increments of .1, for 
 example, if an input had value x = 100 `r x <- 100` then for sensitivity analysis the model
-was run with the inputs scaled to values `r x * seq(.5, 1.5, by = .1)`. 
+was run with this input scaled to values `r x * seq(.5, 1.5, by = .1)`. 
 There are cases when the scaling needs to be restricted to a space between 0 and 1, these
-inputs typically represent proportions or survival rates. In such cases the input was
+inputs typically represent proportions or survival rates. In such cases the input were
 scaled as follows:
 
 $$Inv.Logit\left(log\left(\frac{x}{1-x}\right) \times scaler\right)$$
@@ -59,22 +58,58 @@ where $x$ is the model input we are scaling for sensitivity analysis, and $scale
 same scaling from .5 to 1.5 described above. For example if $x = .3$ then scaled
 inputs used in the sensitivity analysis would be `r x<-.3;boot::inv.logit(log(x/(1-x)) * seq(.5, 1.5, by = .1))`
 
-Lastly some model inputs are discrete and are varied across a space that makes
+Finally, some model inputs are discrete and are varied across a space that makes
 sense for the given model input. For example `cc_gates_days_closed` represents 
 the number of days the cross channel gates were closed for a given month, these were varied
-using a discrete value from 1 to 30/31.
+using a discrete value from 1 to 30/31. Similarly `weeks_flooded` were scaled by adding 
+$\pm 2$.
 
 ## Running Sensitivity Analysis
 
-A script was developed to automate as much as possible for sensitivity analysis. It
-captures the scaling above and allows model runs to be run in parallel
+A script was developed to automate as much of sensitivity analysis as possible. It
+captures the scaling described above and allows model runs to be run in parallel.
+
+### Parallel Mode Set Up
+
+In order to run models in parallel we need both `parallel` and `doParallel` to 
+be installed.
+
+```{eval = FALSE}
+install.packages("parallel")
+install.packages("doParallel")
+```
+
+Next we register our CPU cores so that they can be utilized for the process. We
+also need to specify any functions or data that will be used during the parallel
+process. Here we register 'run_scenario', 'fall_run_model', and 'scenarios'. These
+are created further down in this document.
 
 ```{r eval=FALSE}
-# set up for parallel processing ----------------------------------
-no_cores <- detectCores(logical = TRUE)
-cl <- makeCluster(no_cores-1)
-registerDoParallel(cl)
+no_cores <- detectCores(logical = TRUE) # total cores available
+cl <- makeCluster(no_cores-1) # create a cluster from cores
+registerDoParallel(cl) # register cluster with package
 
+
+# register the functions for use in parallel mode
+clusterExport(cl, list('run_scenario', 'fall_run_model', 'scenarios'))
+```
+
+### Sensitivility Analysis Process
+
+The sensitivity analysis process is made up of a series of functions each doing a
+specific job. Below we describe each one of these and explain how they work 
+together to create the sensitivity analysis. 
+
+#### Run Scenario
+
+The `run_scenarios` function simply takes a scenario object ([Details here](#)) and model parameters,
+and runs both the seeding and the full 20-year simulation. From the simulation 
+results we compute the valley-wide averages of total number of spawners for each 
+year in the simulation. This metric is flexible and can be made to be whatever we
+wish to use as our basis for sensitivity. The `run_scenarios` function is called within
+the `run_scenarios_scaled_param` function described in the next section.
+
+```{r eval=FALSE}
 run_scenario <- function(scenario, sensi_params) {
   seeds <- fall_run_model(mode = "seed", ..params = sensi_params, stochastic = FALSE)
   run <- fall_run_model(scenario = scenario,
@@ -83,6 +118,7 @@ run_scenario <- function(scenario, sensi_params) {
   return(mean(colSums(run$spawners * run$proportion_natural, na.rm = TRUE)))
 }
 
+# create a list of the scenario for convinience
 scenarios <- list(DSMscenario::scenarios$NO_ACTION, DSMscenario::scenarios$ONE,
                   DSMscenario::scenarios$TWO, DSMscenario::scenarios$THREE,
                   DSMscenario::scenarios$FOUR, DSMscenario::scenarios$FIVE,
@@ -90,32 +126,52 @@ scenarios <- list(DSMscenario::scenarios$NO_ACTION, DSMscenario::scenarios$ONE,
                   DSMscenario::scenarios$EIGHT, DSMscenario::scenarios$NINE,
                   DSMscenario::scenarios$TEN, DSMscenario::scenarios$ELEVEN,
                   DSMscenario::scenarios$TWELVE, DSMscenario::scenarios$THIRTEEN)
+```
 
-# register the functions for use in parallel mode
-clusterExport(cl, list('run_scenario', 'fall_run_model', 'scenarios'))
 
-run_scenarios_scaled_param <- function(param, scalar) {
+#### Run Sceanarios with Scaled Parameters
+
+The `run_scenarios_scaled_param` takes care of a number of things for sensitivity 
+analysis, most importantly it runs `run_scenarios` in parallel with a scaled version 
+of model parameters. The way scaling is handled is outlined in the section __Scaling Methodology__
+above. Based on the `param` argument supplied into the function the appropriate
+scaling will be calculated by looking up the name of the parameter or model input, 
+and subsequently used to run the scenarios. 
+
+```{r eval=FALSE}
+run_scenarios_scaled_param <- function(param, scalar, index = NULL) {
 
   sensi_params <- fallRunDSM::params
-  sensi_params[param][[1]] <-
-    if (param %in% c("cc_gates_prop_days_closed", "cross_channel_stray_rate",
-                     "delta_prop_high_predation", "delta_proportion_diverted",
-                     "growth_rates", "growth_rates_floodplain",
-                     "hatchery_allocation", "mean_egg_temp_effect",
-                     "migratory_temperature_proportion_over_20", "min_survival_rate",
-                     "month_return_proportions", "natural_adult_removal_rate",
-                     "prob_nest_scoured", "prob_strand_early", "prob_strand_late",
-                     "prop_flow_natal",
-                     "prop_high_predation", "prop_pulse_flows", "proportion_diverted",
-                     "proportion_flow_bypass", "proportion_hatchery", "rear_decay_rate",
-                     "spawn_decay_rate",
-                     "spawn_success_sex_ratio", "stray_rate")) {
-      boot::inv.logit(log((sensi_params[param][[1]] + 1e-7) / ((1 - sensi_params[param][[1]]) + 1e-7)) * scalar)
-    } else if (param %in% c("weeks_flooded", "cc_gates_days_closed")) {
-      scalar
-    } else {
-      sensi_params[param][[1]] * scalar
-    }
+
+  if (param %in% c("cc_gates_prop_days_closed", "cc_gates_days_closed")) {
+      # scale prop days closed using the 0-1 restriction
+    sensi_params["cc_gates_prop_days_closed"][[1]] <- boot::inv.logit(log((sensi_params["cc_gates_prop_days_closed"][[1]] + 1e-7) /
+                                                ((1 - sensi_params["cc_gates_prop_days_closed"][[1]]) + 1e-7)) * scalar)
+
+    sensi_params["cc_gates_days_closed"][[1]]  <- floor(lubridate::days_in_month(1:12) * sensi_params["cc_gates_prop_days_closed"][[1]])
+  } else {
+    sensi_params[param][[1]] <-
+      if (param %in% c("cross_channel_stray_rate",
+                       "delta_prop_high_predation", "delta_proportion_diverted",
+                       "growth_rates", "growth_rates_floodplain",
+                       "hatchery_allocation", "mean_egg_temp_effect",
+                       "migratory_temperature_proportion_over_20", "min_survival_rate",
+                       "month_return_proportions", "natural_adult_removal_rate",
+                       "prob_nest_scoured", "prob_strand_early", "prob_strand_late",
+                       "prop_flow_natal",
+                       "prop_high_predation", "prop_pulse_flows", "proportion_diverted",
+                       "proportion_flow_bypass", "proportion_hatchery", "rear_decay_rate",
+                       "spawn_decay_rate",
+                       "spawn_success_sex_ratio", "stray_rate")) {
+        boot::inv.logit(log((sensi_params[param][[1]] + 1e-7) / ((1 - sensi_params[param][[1]]) + 1e-7)) * scalar)
+      } else if (param %in% c("weeks_flooded")) {
+        scalar
+      } else {
+        sensi_params[param][[1]] * scalar
+      }
+  }
+
+
 
   scenario_results_list <- parLapply(cl, scenarios,
                                      fun = function(scenario) {
@@ -124,10 +180,12 @@ run_scenarios_scaled_param <- function(param, scalar) {
 
   scenario_results <- unlist(scenario_results_list)
 
-  if (is.vector(scalar)) {
+  if (param == "weeks_flooded") {
+    wf <- c("+2", "-2", "1", "-1")
+    scalar <- wf[index]
+  } else {
     scalar <- paste(round(scalar, 2), collapse = ",")
   }
-
   return(data.frame(param, scalar, base = scenario_results[1],
                     scenario_1 = scenario_results[2], scenario_2 = scenario_results[3],
                     scenario_3 = scenario_results[4], scenario_4 = scenario_results[5],
@@ -137,28 +195,41 @@ run_scenarios_scaled_param <- function(param, scalar) {
                     scenario_11 = scenario_results[12], scenario_12 = scenario_results[13],
                     scenario_13 = scenario_results[14]))
 }
+```
 
+#### Runnning Sensitivity
+
+
+
+```{r eval=FALSE}
 param_sensitivity <- function(param) {
   scalars <- if (param == "weeks_flooded") {
-    seq(0, 4, by = 1)
-  } else if (param == "cc_gates_days_closed") {
-    # TODO is this correct ?
-    seq(1, 31, by = 1)
+
+    (function() {
+      original <- fallRunDSM::params$weeks_flooded
+      fp_filter <- fallRunDSM::params$floodplain_habitat > 0
+
+      weeks_flooded_scaled <- list()
+      weeks_flooded_scaled[[1]] <- pmin(original + 2, 4) * fp_filter
+      weeks_flooded_scaled[[2]] <- pmax(original - 2, 1) * fp_filter
+      weeks_flooded_scaled[[3]] <- pmin(original + 1, 4) * fp_filter
+      weeks_flooded_scaled[[4]] <- pmax(original - 1, 1) * fp_filter
+      return(weeks_flooded_scaled)
+    })()
+
   } else {
     # default steps
     seq(.5, 1.5, by = .1)
   }
 
-  purrr::map_df(scalars, ~run_scenarios_scaled_param(param, .))
+  purrr::imap_dfr(scalars, ~run_scenarios_scaled_param(param, .x, .y))
 }
-
 ```
 
-Given a scenario, apply 
-
-Copy over entire script and give narrative for each of the functions
-- parallel processing
-- how long it takes to run 500 iterations
+```{r eval=FALSE}
+y <- param_sensitivity("hatchery_allocation")
+View(y)
+```
 
 # Results
 
