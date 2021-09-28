@@ -21,28 +21,13 @@ library(fallRunDSM)
 ## Objective
 
 The goal for sensitivity analysis is to identify which model parameters or model 
-inputs are most influential in results when varied across a known parameter 
+inputs are most influential in the results when they are varied across a known parameter 
 space. For this sensitivity analysis, a **One-way** sensitivity analysis was done,
 this means we vary a single model parameter or input while holding all others constant
 to determine its impact. 
 
-The model parameters varied for sensitivity analysis were:
-
-```{r, echo = F, results='asis', max.height='10px'}
-#TODO figure out a way to print this out in a nicer format
-coefficients <- names(params)[grep('\\.', names(params))]
-cat(paste('-', coefficients), sep = '\n')
-```
-
-The model inputs varied for sensitivity analysis were:
-
-```{r, echo = F, results='asis', max.height='10px'}
-model_inputs <- sort(names(params)[grep('\\.', names(params), invert = TRUE)])
-cat(paste('-', model_inputs), sep = '\n')
-```
-
-details of each of these parameters and inputs can be found in the 
-[Fall Run DSM Documentation Website](#)
+The model parameters varied for sensitivity analysis were all the parameters 
+documented in the [fallRunDSM::params](https://cvpia-osc.github.io/fallRunDSM/reference/params.html) 
 
 ## Scaling Methodology 
 
@@ -55,14 +40,15 @@ scaled as follows:
 
 $$Inv.Logit\left(log\left(\frac{x}{1-x}\right) \times scaler\right)$$
 where $x$ is the model input we are scaling for sensitivity analysis, and $scaler$ is the
-same scaling from .5 to 1.5 described above. For example if $x = .3$ then scaled
-inputs used in the sensitivity analysis would be `r x<-.3;boot::inv.logit(log(x/(1-x)) * seq(.5, 1.5, by = .1))`
+same scaling from .5 to 1.5 described above. In this example, if $x = .3$ then the scaled
+inputs used in the sensitivity analysis would be `r x<-.3;round(boot::inv.logit(log(x/(1-x)) * seq(.5, 1.5, by = .1)), 3)`
 
 Finally, some model inputs are discrete and are varied across a space that makes
-sense for the given model input. For example `cc_gates_days_closed` represents 
-the number of days the cross channel gates were closed for a given month, these were varied
-using a discrete value from 1 to 30/31. Similarly `weeks_flooded` were scaled by adding 
-$\pm 2$.
+sense for the given model input. The cases where this occurs are `weeks_flooded` and
+`cc_gates_days_closed`. For `cc_gates_days_closed` we use the scaled values of `cc_gates_prop_days_closed`
+(proportion days closed) to obtain the total days in a month gates are closed by simply
+multiplying this proportion by the number of days in the month. For `weeks_flooded` we scaled by adding 
+$\pm 2$ weeks.
 
 ## Running Sensitivity Analysis
 
@@ -74,7 +60,7 @@ captures the scaling described above and allows model runs to be run in parallel
 In order to run models in parallel we need both `parallel` and `doParallel` to 
 be installed.
 
-```{eval = FALSE}
+```{r, eval = FALSE}
 install.packages("parallel")
 install.packages("doParallel")
 ```
@@ -129,14 +115,14 @@ scenarios <- list(DSMscenario::scenarios$NO_ACTION, DSMscenario::scenarios$ONE,
 ```
 
 
-#### Run Sceanarios with Scaled Parameters
+#### Run Scenarios with Scaled Parameters
 
-The `run_scenarios_scaled_param` takes care of a number of things for sensitivity 
-analysis, most importantly it runs `run_scenarios` in parallel with a scaled version 
+The `run_scenarios_scaled_param` runs `run_scenarios` in parallel with a scaled version 
 of model parameters. The way scaling is handled is outlined in the section __Scaling Methodology__
 above. Based on the `param` argument supplied into the function the appropriate
 scaling will be calculated by looking up the name of the parameter or model input, 
-and subsequently used to run the scenarios. 
+and subsequently used to run the scenarios. This function returns a dataframe with 
+results for each of the 13 scenarios.
 
 ```{r eval=FALSE}
 run_scenarios_scaled_param <- function(param, scalar, index = NULL) {
@@ -199,7 +185,9 @@ run_scenarios_scaled_param <- function(param, scalar, index = NULL) {
 
 #### Runnning Sensitivity
 
-
+The `param_sensitivity` function brings everything together, it takes a param as 
+an argument and iterates through different scaling values each time running all 
+13 scenarios by calling `run_scenarios_scaled_param`. 
 
 ```{r eval=FALSE}
 param_sensitivity <- function(param) {
@@ -231,9 +219,7 @@ y <- param_sensitivity("hatchery_allocation")
 View(y)
 ```
 
-# Results
 
-Overview of results,... tornado plot?
 
 
 
