@@ -81,7 +81,7 @@ together to create the sensitivity analysis.
 
 #### Run Scenario
 
-The `run_scenarios` function calls the `fall_run_model` in both the seeding and the full 20-year simulation modes with the user provided scenario object ([Details here](#)) and modified model parameters. The function returns the valley-wide averages of total number of spawners for each year in the simulation. This metric can be modified to be whatever the user desires to compare between model runs to gauge model sensitivity. The `run_scenarios` function is called within
+The `run_scenarios` function calls the `fall_run_model` in both the seeding and the full 20-year simulation modes with the user provided scenario object and modified model parameters. The function returns the valley-wide averages of total number of spawners for each year in the simulation. This metric can be modified to be whatever the user desires to compare between model runs to gauge model sensitivity. The `run_scenarios` function is called within
 the `run_scenarios_scaled_param` function described in the next section.
 
 ```{r eval=FALSE}
