@@ -87,8 +87,10 @@ navbar:
     href: reference/index.html
   - text: 'Articles'
     menu:
-      - text: 'Calibration (2021)'
+      - text: 'Calibration'
         href: 'articles/calibration-2021.html'
+      - text: 'Sensitivity Analysis'
+        href: 'articles/sensitivity-analysis.html'
   - text: 'News'
     href: news/index.html
 
