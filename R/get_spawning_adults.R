@@ -50,8 +50,8 @@ get_spawning_adults <- function(year, adults, hatch_adults, mode,
                                 .adult_stray_prop_delta_trans,
                                 .adult_en_route_migratory_temp,
                                 .adult_en_route_bypass_overtopped,
-                                .adult_en_route_adult_harvest_rate
-                                 ) {
+                                .adult_en_route_adult_harvest_rate,
+                                stochastic ) {
 
   # during the seeding stage just reuse the seed adults as the input, and apply no
   # en-route survival
