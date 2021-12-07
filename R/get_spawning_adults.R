@@ -1,4 +1,5 @@
 #' @title Get Spawning Adults
+#' @description Calculates the number of initial adults, initial natural adults, and initial adults by month.
 #' @details See \code{\link{params}} for details on parameter sources
 #' @param year the year of simulation
 #' @param adults potential spawning adults for each watershed (length = 31) values must be integer
@@ -50,7 +51,7 @@ get_spawning_adults <- function(year, adults, hatch_adults, mode,
                                 .adult_en_route_migratory_temp,
                                 .adult_en_route_bypass_overtopped,
                                 .adult_en_route_adult_harvest_rate,
-                                stochastic) {
+                                stochastic ) {
 
   # during the seeding stage just reuse the seed adults as the input, and apply no
   # en-route survival

@@ -255,8 +255,8 @@ route_to_south_delta <- function(freeport_flow, dcc_closed, month,
 #' @param south_delta_fish An n by 4 matrix of juvenile fish by watershed and size class
 #' @param north_delta_habitat A vector of available habitat in square meters
 #' @param south_delta_habitat A vector of available habitat in square meters
-#' @param freeport_flow Monthly mean flow at freeport in cubic feet per second
-#' @param cc_gates_closed Number of days the Cross Channel gates are closed during the month
+#' @param freeport_flows Monthly mean flow at freeport in cubic feet per second
+#' @param cc_gates_days_closed Number of days the Cross Channel gates are closed during the month
 #' @param rearing_survival_delta The rearing survival rate for North and South Delta
 #' @param migratory_survival_delta The outmigration survival rate for North and South Delta
 #' @param migratory_survival_bay_delta The outmigration survival rate in the Bay Delta

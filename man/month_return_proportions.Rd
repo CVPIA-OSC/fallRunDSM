@@ -5,12 +5,18 @@
 \alias{month_return_proportions}
 \title{Month Return Proportions}
 \format{
-An object of class \code{numeric} of length 3.
+1 dimensional array [31 watersheds]
+}
+\source{
+TODO
 }
 \usage{
 month_return_proportions
 }
 \description{
-the proportion of spawning fish in Oct-Dec
+The proportion of spawning fish in Oct-Dec
+}
+\details{
+Month Return Proportions
 }
 \keyword{datasets}

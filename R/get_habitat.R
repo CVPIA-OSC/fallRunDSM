@@ -1,5 +1,4 @@
 #' @title Get habitat Values
-#' @source IP-117068
 #' @description Returns the appropriate habitat for spawning and rearing based on habitat inputs and a given simulation year and month
 #' @details See \code{\link{params}} for details on parameter sources
 #' @param year The current simulation year, 1-20
@@ -10,6 +9,7 @@
 #' @param sutter_habitat 2 dimensional array [months, years] representing sutter bypass habitat in square meters
 #' @param yolo_habitat 2 dimensional array [months, years] representing yolo bypass habitat in square meters
 #' @param delta_habitat 3 dimensional array [months, years, delta] representing north delta habitat [,, 1] and south delta habitat [,, 2] in square meters
+#' @source IP-117068
 #' @export
 get_habitat <- function(year, month,
                         inchannel_habitat_fry,

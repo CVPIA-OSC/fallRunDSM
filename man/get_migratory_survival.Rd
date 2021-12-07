@@ -57,6 +57,8 @@ get_migratory_survival(
 
 \item{avg_temp_delta}{Variable describing monthly mean temperature in celsius, more details at  \code{\link[DSMtempetature]{delta_temprature}}}
 
+\item{avg_temp}{Variable describing monthly mean temperature in celsius, more details at  \code{\link[DSMtempetature]{avg_temp}}}
+
 \item{delta_proportion_diverted}{Variable describing diversions from the delta in cubic meters per seccond, more details at \code{\link[DSMflow]{delta_proportion_diverted}}}
 
 \item{..surv_juv_outmigration_sj_int}{Intercept for \code{\link{surv_juv_outmigration_san_joaquin}}}

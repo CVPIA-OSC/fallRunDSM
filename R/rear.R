@@ -7,7 +7,7 @@
 #' @param floodplain_juveniles number of juveniles on the floodplain before growth or survival rates are applied (NULL for bypasses and delta)
 #' @param floodplain_survival_rate floodplain survival rate by size class (NULL for bypasses and delta)
 #' @param floodplain_growth growth transition matrix for juveniles rearing on the floodplain (NULL for bypasses and delta)
-#' @param weeks_flood number of weeks floodplain is inundated (0 through 4)
+#' @param weeks_flooded number of weeks floodplain is inundated (0 through 4)
 #' @param stochastic \code{TRUE} \code{FALSE} value indicating if model is being run stochastically
 #' @source IP-117068
 #' @export

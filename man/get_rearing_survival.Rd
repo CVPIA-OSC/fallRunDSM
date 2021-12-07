@@ -63,6 +63,8 @@ get_rearing_survival(
 
 \item{month}{The simulation month, 1-8}
 
+\item{survival_adjustment}{Survival adjustment applied to survival rates based on SIT strategies}
+
 \item{mode}{The mode that the model is being run in}
 
 \item{avg_temp}{More details at \code{\link[DSMtemperature]{stream_tempetature}}}

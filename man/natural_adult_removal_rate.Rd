@@ -18,4 +18,7 @@ natural_adult_removal_rate
 \description{
 Spawners removed for hatcheries
 }
+\details{
+Natural Spawners Removal Rate
+}
 \keyword{datasets}

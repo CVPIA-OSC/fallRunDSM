@@ -6,6 +6,11 @@
 \usage{
 pretty_num(num, places = 2)
 }
+\arguments{
+\item{num}{A number to be reformatted}
+
+\item{places}{The number of places to round a number to, defaults to two}
+}
 \description{
 Formats numbers for ease of reading
 }

@@ -1,11 +1,11 @@
-pandoc: 2.11.4
+pandoc: '2.12'
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   calibration-2021: calibration-2021.html
   scenario: scenario.html
   sensitivity-analysis: sensitivity-analysis.html
-last_built: 2021-09-30T21:15Z
+last_built: 2021-12-07T16:29Z
 urls:
   reference: https://CVPIA-OSC.github.io/fallRunDSM//reference
   article: https://CVPIA-OSC.github.io/fallRunDSM//articles

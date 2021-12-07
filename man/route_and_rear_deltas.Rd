@@ -42,6 +42,10 @@ route_and_rear_deltas(
 
 \item{south_delta_habitat}{A vector of available habitat in square meters}
 
+\item{freeport_flows}{Monthly mean flow at freeport in cubic feet per second}
+
+\item{cc_gates_days_closed}{Number of days the Cross Channel gates are closed during the month}
+
 \item{rearing_survival_delta}{The rearing survival rate for North and South Delta}
 
 \item{migratory_survival_delta}{The outmigration survival rate for North and South Delta}
@@ -58,10 +62,6 @@ route_and_rear_deltas(
 \item{territory_size}{Array of juvenile fish territory requirements for \code{\link{fill_natal}}}
 
 \item{stochastic}{\code{TRUE} \code{FALSE} value indicating if model is being run stochastically}
-
-\item{freeport_flow}{Monthly mean flow at freeport in cubic feet per second}
-
-\item{cc_gates_closed}{Number of days the Cross Channel gates are closed during the month}
 }
 \description{
 Determines if juveniles stay in the delta or out migrate to golden gate

@@ -1,8 +1,9 @@
 #' @title Filling Natal Tributary and Regional Habitat
-#' @description Allocates juvenile fish onto the floodplain, in-channel, and once
-#' available habitat is full, assigns fish to out migrate.
+#' @description Allocates juvenile fish onto the floodplain and in-channel habitat. Once
+#' available habitat is full fish are assigned to out migrate.
 #' The \code{fill_natal} function is used to route fish within their natal tributary
 #' and the \code{fill_regional} function is used to route fish on the mainstem, bypasses, and deltas.
+#' @details See \code{\link{params}} for details on parameter sources
 #' @param juveniles An n by 4 matrix of juvenile fish size s, m, l, vl
 #' @param inchannel_habitat The available tributary habitat in square meters
 #' @param floodplain_habitat The available floodplain habitat in square meters (NULL for bypasses and delta)
