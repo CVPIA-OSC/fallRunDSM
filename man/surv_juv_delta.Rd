@@ -25,7 +25,8 @@ surv_juv_delta(
   ..surv_juv_delta_total_diverted = fallRunDSM::params$..surv_juv_delta_total_diverted,
   .medium = fallRunDSM::params$.surv_juv_delta_medium,
   .large = fallRunDSM::params$.surv_juv_delta_large,
-  min_survival_rate = fallRunDSM::params$min_survival_rate
+  min_survival_rate = fallRunDSM::params$min_survival_rate,
+  stochastic
 )
 }
 \arguments{
@@ -45,25 +46,27 @@ surv_juv_delta(
 
 \item{..surv_juv_delta_int}{intercept, source: calibration}
 
-\item{.avg_temp_thresh}{Coefficient for avg_temp_thresh variable}
+\item{.avg_temp_thresh}{Coefficient for \code{avg_temp_thresh} variable}
 
-\item{.high_predation}{Coefficient for high_predation variable}
+\item{.high_predation}{Coefficient for \code{high_predation} variable}
 
-\item{.surv_juv_delta_contact_points}{Coefficient for contact_points variable}
+\item{.surv_juv_delta_contact_points}{Coefficient for \code{contact_points} variable}
 
-\item{..surv_juv_delta_contact_points}{Calibrated coefficient for contact_points variable}
+\item{..surv_juv_delta_contact_points}{Calibrated coefficient for \code{contact_points} variable}
 
-\item{.prop_diverted}{Coefficient for prop_diversions variable}
+\item{.prop_diverted}{Coefficient for \code{prop_diversions} variable}
 
-\item{.surv_juv_delta_total_diverted}{Coefficient for total_diversions variable}
+\item{.surv_juv_delta_total_diverted}{Coefficient for \code{total_diversions} variable}
 
-\item{..surv_juv_delta_total_diverted}{Calibrated coefficient for total_diversions variable}
+\item{..surv_juv_delta_total_diverted}{Calibrated coefficient for \code{total_diversions} variable}
 
 \item{.medium}{size related intercept for medium sized fish}
 
 \item{.large}{size related intercept for large sized fish}
 
 \item{min_survival_rate}{estimated survival rate if temperature threshold is exceeded}
+
+\item{stochastic}{\code{TRUE} \code{FALSE} value indicating if model is being run stochastically}
 }
 \description{
 Calculates the juvenile rearing survival in the deltas

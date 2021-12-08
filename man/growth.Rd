@@ -10,9 +10,9 @@ IP-117068
 growth(daily_growth_rate = 0.5, size_class_breaks = c(35, 42, 72, 110))
 }
 \arguments{
-\item{size_class_breaks}{The fork size class breaks}
+\item{daily_growth_rate}{The daily growth rate for inchannel (default value is 0.5 mm/day)}
 
-\item{daily_rates}{The daily growth rate for inchannel (default value is 0.5 mm/day)}
+\item{size_class_breaks}{The fork length size class breaks (default values are s = 35mm, m = 42mm, l = 72mm, vl = 110mm))}
 }
 \description{
 Generates transition probability matrices for growth inchannel

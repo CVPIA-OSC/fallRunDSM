@@ -12,6 +12,8 @@ days_in_month(
 }
 \arguments{
 \item{month}{Integer representation of month}
+
+\item{days_by_month}{The number of days in each month}
 }
 \description{
 Number of days withing a month

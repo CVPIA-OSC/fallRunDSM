@@ -54,13 +54,18 @@ get_rearing_survival(
   .surv_juv_delta_prop_diverted,
   .surv_juv_delta_medium,
   .surv_juv_delta_large,
-  min_survival_rate
+  min_survival_rate,
+  stochastic
 )
 }
 \arguments{
 \item{year}{The simulation year, 1-20}
 
 \item{month}{The simulation month, 1-8}
+
+\item{survival_adjustment}{Survival adjustment applied to survival rates based on SIT strategies}
+
+\item{mode}{The mode that the model is being run in}
 
 \item{avg_temp}{More details at \code{\link[DSMtemperature]{stream_tempetature}}}
 
@@ -148,7 +153,7 @@ get_rearing_survival(
 
 \item{min_survival_rate}{estimated survival rate if temperature threshold is exceeded}
 
-\item{scenario}{The current scenario}
+\item{stochastic}{\code{TRUE} \code{FALSE} value indicating if model is being run stochastically}
 }
 \description{
 Calculates the juvenile inchannel, floodplain, bypasses, and

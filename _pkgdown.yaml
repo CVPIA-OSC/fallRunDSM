@@ -28,7 +28,6 @@ reference:
   - surv_juv_delta
   - surv_juv_outmigration_delta
   - surv_juv_outmigration_sac
-  - surv_juv_outmigration_sac_delta
   - surv_juv_outmigration_san_joaquin
   - surv_juv_rear
   - spawn_success
@@ -44,7 +43,7 @@ reference:
   - route_and_rear_deltas
   - route_bypass
   - route_regional
-  - route_south_delta
+  - route_to_south_delta
   - growth
   - growth_floodplain
   - rear
@@ -87,8 +86,14 @@ navbar:
     href: reference/index.html
   - text: 'Articles'
     menu:
+      - text: 'Calibration'
+        href: 'articles/calibration-2021.html'
+      - text: 'Sensitivity Analysis'
+        href: 'articles/sensitivity-analysis.html'
       - text: 'Hatchery Analysis'
         href: articles/hatchery-analysis.html
+      - text: 'Straying Analysis'
+        href: articles/straying-model.html
       - text: 'Temperature Modeling'
         href: articles/temperature-model.html
   - text: 'News'

@@ -11,7 +11,8 @@ fall_run_model(
   scenario = NULL,
   mode = c("seed", "simulate", "calibrate"),
   seeds = NULL,
-  ..params = fallRunDSM::params
+  ..params = fallRunDSM::params,
+  stochastic = FALSE
 )
 }
 \arguments{
@@ -23,9 +24,17 @@ fall_run_model(
 returning a 31 by 25 matrix with the first four years of seeded adults. This
 returned value can be fed into the model again as the value for the seeds argument}
 
-\item{..params}{Parameters for model and submodels}
+\item{..params}{Parameters for model and submodels. Defaults to \code{fallRunDSM::\code{\link{params}}}.}
+
+\item{stochastic}{\code{TRUE} \code{FALSE} value indicating if model should be run stochastically. Defaults to \code{FALSE}.}
 }
 \description{
 Fall Run Chinook life cycle model used for CVPIA's Structured
 Decision Making Process
+}
+\examples{
+fall_run_seeds <- fallRunDSM::fall_run_model(mode = "seed")
+fallRunDSM::fall_run_model(scenario = DSMscenario::scenarios$ONE,
+                           mode = "simulate",
+                           seeds = fall_run_seeds)
 }

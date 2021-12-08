@@ -100,7 +100,7 @@
     <loc>https://CVPIA-OSC.github.io/fallRunDSM//reference/route_regional.html</loc>
   </url>
   <url>
-    <loc>https://CVPIA-OSC.github.io/fallRunDSM//reference/route_south_delta.html</loc>
+    <loc>https://CVPIA-OSC.github.io/fallRunDSM//reference/route_to_south_delta.html</loc>
   </url>
   <url>
     <loc>https://CVPIA-OSC.github.io/fallRunDSM//reference/spawn_success.html</loc>
@@ -130,9 +130,6 @@
     <loc>https://CVPIA-OSC.github.io/fallRunDSM//reference/surv_juv_outmigration_sac.html</loc>
   </url>
   <url>
-    <loc>https://CVPIA-OSC.github.io/fallRunDSM//reference/surv_juv_outmigration_sac_delta.html</loc>
-  </url>
-  <url>
     <loc>https://CVPIA-OSC.github.io/fallRunDSM//reference/surv_juv_outmigration_san_joaquin.html</loc>
   </url>
   <url>
@@ -142,7 +139,16 @@
     <loc>https://CVPIA-OSC.github.io/fallRunDSM//reference/territory_by_size.html</loc>
   </url>
   <url>
+    <loc>https://CVPIA-OSC.github.io/fallRunDSM//articles/calibration-2021.html</loc>
+  </url>
+  <url>
     <loc>https://CVPIA-OSC.github.io/fallRunDSM//articles/hatchery-analysis.html</loc>
+  </url>
+  <url>
+    <loc>https://CVPIA-OSC.github.io/fallRunDSM//articles/scenario.html</loc>
+  </url>
+  <url>
+    <loc>https://CVPIA-OSC.github.io/fallRunDSM//articles/sensitivity-analysis.html</loc>
   </url>
   <url>
     <loc>https://CVPIA-OSC.github.io/fallRunDSM//articles/straying-model.html</loc>

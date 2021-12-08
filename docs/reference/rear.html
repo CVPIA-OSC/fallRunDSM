@@ -89,7 +89,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/calibration-2021.html">Calibration</a>
+    </li>
+    <li>
+      <a href="../articles/sensitivity-analysis.html">Sensitivity Analysis</a>
+    </li>
+    <li>
       <a href="../articles/hatchery-analysis.html">Hatchery Analysis</a>
+    </li>
+    <li>
+      <a href="../articles/straying-model.html">Straying Analysis</a>
     </li>
     <li>
       <a href="../articles/temperature-model.html">Temperature Modeling</a>
@@ -136,7 +145,8 @@
   floodplain_juveniles <span class='op'>=</span> <span class='cn'>NULL</span>,
   floodplain_survival_rate <span class='op'>=</span> <span class='cn'>NULL</span>,
   floodplain_growth <span class='op'>=</span> <span class='cn'>NULL</span>,
-  weeks_flooded <span class='op'>=</span> <span class='cn'>NULL</span>
+  weeks_flooded <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>stochastic</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -168,8 +178,12 @@
       <td><p>growth transition matrix for juveniles rearing on the floodplain (NULL for bypasses and delta)</p></td>
     </tr>
     <tr>
-      <th>weeks_flood</th>
+      <th>weeks_flooded</th>
       <td><p>number of weeks floodplain is inundated (0 through 4)</p></td>
+    </tr>
+    <tr>
+      <th>stochastic</th>
+      <td><p><code>TRUE</code> <code>FALSE</code> value indicating if model is being run stochastically</p></td>
     </tr>
     </table>
 

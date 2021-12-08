@@ -90,7 +90,16 @@ to a bypass, or out migrate during a simulated month" />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/calibration-2021.html">Calibration</a>
+    </li>
+    <li>
+      <a href="../articles/sensitivity-analysis.html">Sensitivity Analysis</a>
+    </li>
+    <li>
       <a href="../articles/hatchery-analysis.html">Hatchery Analysis</a>
+    </li>
+    <li>
+      <a href="../articles/straying-model.html">Straying Analysis</a>
     </li>
     <li>
       <a href="../articles/temperature-model.html">Temperature Modeling</a>
@@ -138,8 +147,6 @@ to a bypass, or out migrate during a simulated month</p>
   <span class='va'>inchannel_habitat</span>,
   <span class='va'>floodplain_habitat</span>,
   <span class='va'>prop_pulse_flows</span>,
-  <span class='va'>proportion_flow_bypass</span>,
-  detour <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>.pulse_movement_intercept</span>,
   <span class='va'>.pulse_movement_proportion_pulse</span>,
   <span class='va'>.pulse_movement_medium</span>,
@@ -148,7 +155,8 @@ to a bypass, or out migrate during a simulated month</p>
   <span class='va'>.pulse_movement_medium_pulse</span>,
   <span class='va'>.pulse_movement_large_pulse</span>,
   <span class='va'>.pulse_movement_very_large_pulse</span>,
-  <span class='va'>territory_size</span>
+  <span class='va'>territory_size</span>,
+  <span class='va'>stochastic</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -163,6 +171,10 @@ to a bypass, or out migrate during a simulated month</p>
       <td><p>The current simulation month, 1-8</p></td>
     </tr>
     <tr>
+      <th>juveniles</th>
+      <td><p>An n by 4 matrix of juvenile fish by watershed and size class</p></td>
+    </tr>
+    <tr>
       <th>inchannel_habitat</th>
       <td><p>A vector of available habitat in square meters</p></td>
     </tr>
@@ -173,10 +185,6 @@ to a bypass, or out migrate during a simulated month</p>
     <tr>
       <th>prop_pulse_flows</th>
       <td><p>The proportion of pulse flows</p></td>
-    </tr>
-    <tr>
-      <th>detour</th>
-      <td><p>Values can be 'sutter' or 'yolo' if some juveniles are detoured on to that bypass, otherwise NULL</p></td>
     </tr>
     <tr>
       <th>.pulse_movement_intercept</th>
@@ -215,8 +223,8 @@ to a bypass, or out migrate during a simulated month</p>
       <td><p>Array of juvenile fish territory requirements for <code><a href='fill.html'>fill_natal</a></code></p></td>
     </tr>
     <tr>
-      <th>juvenile</th>
-      <td><p>An n by 4 matrix of juvenile fish by watershed and size class</p></td>
+      <th>stochastic</th>
+      <td><p><code>TRUE</code> <code>FALSE</code> value indicating if model is being run stochastically</p></td>
     </tr>
     </table>
 

@@ -90,7 +90,16 @@ regions for a month and year of the simulation" />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/calibration-2021.html">Calibration</a>
+    </li>
+    <li>
+      <a href="../articles/sensitivity-analysis.html">Sensitivity Analysis</a>
+    </li>
+    <li>
       <a href="../articles/hatchery-analysis.html">Hatchery Analysis</a>
+    </li>
+    <li>
+      <a href="../articles/straying-model.html">Straying Analysis</a>
     </li>
     <li>
       <a href="../articles/temperature-model.html">Temperature Modeling</a>
@@ -147,23 +156,11 @@ regions for a month and year of the simulation</p>
   <span class='va'>avg_temp_delta</span>,
   <span class='va'>avg_temp</span>,
   <span class='va'>delta_proportion_diverted</span>,
-  <span class='va'>.surv_juv_outmigration_sac_delta_intercept_one</span>,
-  <span class='va'>.surv_juv_outmigration_sac_delta_intercept_two</span>,
-  <span class='va'>.surv_juv_outmigration_sac_delta_intercept_three</span>,
-  <span class='va'>.surv_juv_outmigration_sac_delta_delta_flow</span>,
-  <span class='va'>.surv_juv_outmigration_sac_delta_avg_temp</span>,
-  <span class='va'>.surv_juv_outmigration_sac_delta_perc_diversions</span>,
-  <span class='va'>.surv_juv_outmigration_sac_delta_medium</span>,
-  <span class='va'>.surv_juv_outmigration_sac_delta_large</span>,
   <span class='va'>..surv_juv_outmigration_sj_int</span>,
-  <span class='va'>..surv_juv_outmigration_sac_int_one</span>,
-  <span class='va'>..surv_juv_outmigration_sac_prop_diversions</span>,
-  <span class='va'>..surv_juv_outmigration_sac_total_diversions</span>,
-  <span class='va'>..surv_juv_outmigration_sac_int_two</span>,
   <span class='va'>.surv_juv_outmigration_san_joaquin_medium</span>,
   <span class='va'>.surv_juv_outmigration_san_joaquin_large</span>,
   <span class='va'>min_survival_rate</span>,
-  <span class='va'>surv_juv_outmigration_sac_delta_model_weights</span>
+  <span class='va'>stochastic</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -210,36 +207,24 @@ regions for a month and year of the simulation</p>
       <td><p>More details at <code><a href='https://cvpia-osc.github.io/DSMflow//reference/swp_exports.html'>swp_exports</a></code></p></td>
     </tr>
     <tr>
-      <th>.surv_juv_outmigration_sac_delta_intercept_one</th>
-      <td><p>Intercept <code><a href='surv_juv_outmigration_sac_delta.html'>surv_juv_outmigration_sac_delta</a></code> for model one</p></td>
+      <th>upper_sacramento_flows</th>
+      <td><p>average monthly flows on the Upper Sacramento River in cubic meters per second, more details at <code><a href='https://cvpia-osc.github.io/DSMflow//reference/upper_sacramento_flows.html'>upper_sacramento_flows</a></code></p></td>
     </tr>
     <tr>
-      <th>.surv_juv_outmigration_sac_delta_intercept_two</th>
-      <td><p>Intercept <code><a href='surv_juv_outmigration_sac_delta.html'>surv_juv_outmigration_sac_delta</a></code> for model two</p></td>
+      <th>delta_inflow</th>
+      <td><p>Variable describing delta inflow in cubic meters per second, more details at <code><a href='https://cvpia-osc.github.io/DSMflow//reference/delta_inflow.html'>delta_inflow</a></code></p></td>
     </tr>
     <tr>
-      <th>.surv_juv_outmigration_sac_delta_intercept_three</th>
-      <td><p>Intercept <code><a href='surv_juv_outmigration_sac_delta.html'>surv_juv_outmigration_sac_delta</a></code> for model three</p></td>
+      <th>avg_temp_delta</th>
+      <td><p>Variable describing monthly mean temperature in celsius, more details at  <code>delta_temprature</code></p></td>
     </tr>
     <tr>
-      <th>.surv_juv_outmigration_sac_delta_delta_flow</th>
-      <td><p>Coefficient <code><a href='surv_juv_outmigration_sac_delta.html'>surv_juv_outmigration_sac_delta</a></code> for <code>delta_flow</code> variable</p></td>
+      <th>avg_temp</th>
+      <td><p>Variable describing monthly mean temperature in celsius, more details at  <code>avg_temp</code></p></td>
     </tr>
     <tr>
-      <th>.surv_juv_outmigration_sac_delta_avg_temp</th>
-      <td><p>Coefficient <code><a href='surv_juv_outmigration_sac_delta.html'>surv_juv_outmigration_sac_delta</a></code> for <code>avg_temp</code> variable</p></td>
-    </tr>
-    <tr>
-      <th>.surv_juv_outmigration_sac_delta_perc_diversions</th>
-      <td><p>Coefficient <code><a href='surv_juv_outmigration_sac_delta.html'>surv_juv_outmigration_sac_delta</a></code> for <code>perc_diversions</code> variable</p></td>
-    </tr>
-    <tr>
-      <th>.surv_juv_outmigration_sac_delta_medium</th>
-      <td><p>Size related intercept for <code><a href='surv_juv_outmigration_sac_delta.html'>surv_juv_outmigration_sac_delta</a></code> medium sized fish</p></td>
-    </tr>
-    <tr>
-      <th>.surv_juv_outmigration_sac_delta_large</th>
-      <td><p>Size related intercept for <code><a href='surv_juv_outmigration_sac_delta.html'>surv_juv_outmigration_sac_delta</a></code> large sized fish</p></td>
+      <th>delta_proportion_diverted</th>
+      <td><p>Variable describing diversions from the delta in cubic meters per seccond, more details at <code><a href='https://cvpia-osc.github.io/DSMflow//reference/delta_proportion_diverted.html'>delta_proportion_diverted</a></code></p></td>
     </tr>
     <tr>
       <th>..surv_juv_outmigration_sj_int</th>
@@ -258,8 +243,8 @@ regions for a month and year of the simulation</p>
       <td><p>estimated survival rate if temperature threshold is exceeded</p></td>
     </tr>
     <tr>
-      <th>surv_juv_outmigration_sac_delta_model_weights</th>
-      <td><p>weights for competing models</p></td>
+      <th>stochastic</th>
+      <td><p><code>TRUE</code> <code>FALSE</code> value indicating if model is being run stochastically</p></td>
     </tr>
     </table>
 

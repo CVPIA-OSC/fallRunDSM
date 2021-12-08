@@ -3,3 +3,7 @@
 .RData
 .Ruserdata
 #man/
+calibration/fits/*.rds
+.~lock*
+inst/doc
+.DS*

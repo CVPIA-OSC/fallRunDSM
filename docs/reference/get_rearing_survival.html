@@ -90,7 +90,16 @@ deltas rearing survival rates for a month and year of the simulation" />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/calibration-2021.html">Calibration</a>
+    </li>
+    <li>
+      <a href="../articles/sensitivity-analysis.html">Sensitivity Analysis</a>
+    </li>
+    <li>
       <a href="../articles/hatchery-analysis.html">Hatchery Analysis</a>
+    </li>
+    <li>
+      <a href="../articles/straying-model.html">Straying Analysis</a>
     </li>
     <li>
       <a href="../articles/temperature-model.html">Temperature Modeling</a>
@@ -178,7 +187,8 @@ deltas rearing survival rates for a month and year of the simulation</p>
   <span class='va'>.surv_juv_delta_prop_diverted</span>,
   <span class='va'>.surv_juv_delta_medium</span>,
   <span class='va'>.surv_juv_delta_large</span>,
-  <span class='va'>min_survival_rate</span>
+  <span class='va'>min_survival_rate</span>,
+  <span class='va'>stochastic</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -191,6 +201,14 @@ deltas rearing survival rates for a month and year of the simulation</p>
     <tr>
       <th>month</th>
       <td><p>The simulation month, 1-8</p></td>
+    </tr>
+    <tr>
+      <th>survival_adjustment</th>
+      <td><p>Survival adjustment applied to survival rates based on SIT strategies</p></td>
+    </tr>
+    <tr>
+      <th>mode</th>
+      <td><p>The mode that the model is being run in</p></td>
     </tr>
     <tr>
       <th>avg_temp</th>
@@ -365,8 +383,8 @@ deltas rearing survival rates for a month and year of the simulation</p>
       <td><p>estimated survival rate if temperature threshold is exceeded</p></td>
     </tr>
     <tr>
-      <th>scenario</th>
-      <td><p>The current scenario</p></td>
+      <th>stochastic</th>
+      <td><p><code>TRUE</code> <code>FALSE</code> value indicating if model is being run stochastically</p></td>
     </tr>
     </table>
 

@@ -24,7 +24,7 @@ proportion_hatchery <- c(0.37, 0.2, 0.9, 0.37968253968254, 0.2, 0.115, 0.2225, 0
                          0.37968253968254, 0.37968253968254, 0.37968253968254, 0, 0.855,
                          0.54, 0.37968253968254, 0.37968253968254, 0.571666666666667,
                          0.37968253968254, 0.0766666666666667, 0.02, 0.7575, 0.745, 0.705,
-                         0.465, 0.37968253968254) # differs based on run? TODO
+                         0.465, 0.37968253968254)
 
 names(proportion_hatchery) <- DSMhabitat::watershed_metadata$watershed[-32]
 
@@ -47,9 +47,6 @@ mass_by_size_class <- c(0.5, 1.8, 9.1, 31.4)
 names(mass_by_size_class) <- c("s", "m", "l", "vl")
 usethis::use_data(mass_by_size_class, overwrite = TRUE)
 
-
-
-# TODO come up with better names
 cross_channel_stray_rate <- c(rep(1, 15), 0, 0, 2, 2, 2, 0, 0, 3, 0, rep(0, 7)) / 24
 names(cross_channel_stray_rate) <- DSMhabitat::watershed_metadata$watershed[-32]
 usethis::use_data(cross_channel_stray_rate, overwrite = TRUE)
@@ -57,12 +54,6 @@ usethis::use_data(cross_channel_stray_rate, overwrite = TRUE)
 stray_rate <- c(rep(1, 15), 0, 0, 1, 1, 1, 0, 0, 1, 0, rep(1, 6), 0) / 25
 names(stray_rate) <- DSMhabitat::watershed_metadata$watershed[-32]
 usethis::use_data(stray_rate, overwrite = TRUE)
-
-
-# TODO confirm that these are not being used in the refactored model?
-# TODO better names and refactor
-cc.aloc <- c(rep(1,15),0,0,2,2,2,0,0,3,0,rep(0,7))/24
-oth.aloc <- c(rep(1,15),0,0,1,1,1,0,0,1,0,rep(1,6),0)/25
 
 
 # differs based on run ------
@@ -92,7 +83,7 @@ usethis::use_data(hatchery_allocation, overwrite = TRUE)
 
 original_groups <- read_csv("data-raw/misc/Grouping.csv")
 
-diversity_group <- original_groups$DiversityGroup
+diversity_group <- original_groups$diversity_group
 names(diversity_group) <- original_groups$watershed
 usethis::use_data(diversity_group, overwrite = TRUE)
 

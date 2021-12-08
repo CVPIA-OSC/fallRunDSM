@@ -18,4 +18,7 @@ adult_harvest_rate
 \description{
 Proportion of adults harvested from golden gate until they reach their natal shed
 }
+\details{
+Adult Harvest Rate
+}
 \keyword{datasets}

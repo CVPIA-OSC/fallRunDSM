@@ -89,7 +89,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/calibration-2021.html">Calibration</a>
+    </li>
+    <li>
+      <a href="../articles/sensitivity-analysis.html">Sensitivity Analysis</a>
+    </li>
+    <li>
       <a href="../articles/hatchery-analysis.html">Hatchery Analysis</a>
+    </li>
+    <li>
+      <a href="../articles/straying-model.html">Straying Analysis</a>
     </li>
     <li>
       <a href="../articles/temperature-model.html">Temperature Modeling</a>
@@ -137,7 +146,8 @@
   <span class='va'>spawn_habitat</span>,
   sex_ratio <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>spawn_success_sex_ratio</span>,
   redd_size <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>spawn_success_redd_size</span>,
-  fecundity <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>spawn_success_fecundity</span>
+  fecundity <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>spawn_success_fecundity</span>,
+  <span class='va'>stochastic</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -149,7 +159,7 @@
     </tr>
     <tr>
       <th>adult_prespawn_survival</th>
-      <td><p>The adult prespawn surival rate</p></td>
+      <td><p>The adult prespawn survival rate</p></td>
     </tr>
     <tr>
       <th>egg_to_fry_survival</th>
@@ -174,6 +184,10 @@
     <tr>
       <th>fecundity</th>
       <td><p>The number of eggs per female</p></td>
+    </tr>
+    <tr>
+      <th>stochastic</th>
+      <td><p><code>TRUE</code> <code>FALSE</code> value indicating if model is being run stochastically</p></td>
     </tr>
     </table>
 

@@ -89,7 +89,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/calibration-2021.html">Calibration</a>
+    </li>
+    <li>
+      <a href="../articles/sensitivity-analysis.html">Sensitivity Analysis</a>
+    </li>
+    <li>
       <a href="../articles/hatchery-analysis.html">Hatchery Analysis</a>
+    </li>
+    <li>
+      <a href="../articles/straying-model.html">Straying Analysis</a>
     </li>
     <li>
       <a href="../articles/temperature-model.html">Temperature Modeling</a>
@@ -147,7 +156,8 @@
   ..surv_juv_delta_total_diverted <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>..surv_juv_delta_total_diverted</span>,
   .medium <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>.surv_juv_delta_medium</span>,
   .large <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>.surv_juv_delta_large</span>,
-  min_survival_rate <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>min_survival_rate</span>
+  min_survival_rate <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>min_survival_rate</span>,
+  <span class='va'>stochastic</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -187,31 +197,31 @@
     </tr>
     <tr>
       <th>.avg_temp_thresh</th>
-      <td><p>Coefficient for avg_temp_thresh variable</p></td>
+      <td><p>Coefficient for <code>avg_temp_thresh</code> variable</p></td>
     </tr>
     <tr>
       <th>.high_predation</th>
-      <td><p>Coefficient for high_predation variable</p></td>
+      <td><p>Coefficient for <code>high_predation</code> variable</p></td>
     </tr>
     <tr>
       <th>.surv_juv_delta_contact_points</th>
-      <td><p>Coefficient for contact_points variable</p></td>
+      <td><p>Coefficient for <code>contact_points</code> variable</p></td>
     </tr>
     <tr>
       <th>..surv_juv_delta_contact_points</th>
-      <td><p>Calibrated coefficient for contact_points variable</p></td>
+      <td><p>Calibrated coefficient for <code>contact_points</code> variable</p></td>
     </tr>
     <tr>
       <th>.prop_diverted</th>
-      <td><p>Coefficient for prop_diversions variable</p></td>
+      <td><p>Coefficient for <code>prop_diversions</code> variable</p></td>
     </tr>
     <tr>
       <th>.surv_juv_delta_total_diverted</th>
-      <td><p>Coefficient for total_diversions variable</p></td>
+      <td><p>Coefficient for <code>total_diversions</code> variable</p></td>
     </tr>
     <tr>
       <th>..surv_juv_delta_total_diverted</th>
-      <td><p>Calibrated coefficient for total_diversions variable</p></td>
+      <td><p>Calibrated coefficient for <code>total_diversions</code> variable</p></td>
     </tr>
     <tr>
       <th>.medium</th>
@@ -224,6 +234,10 @@
     <tr>
       <th>min_survival_rate</th>
       <td><p>estimated survival rate if temperature threshold is exceeded</p></td>
+    </tr>
+    <tr>
+      <th>stochastic</th>
+      <td><p><code>TRUE</code> <code>FALSE</code> value indicating if model is being run stochastically</p></td>
     </tr>
     </table>
 

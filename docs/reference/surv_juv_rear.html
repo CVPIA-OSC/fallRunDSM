@@ -89,7 +89,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/calibration-2021.html">Calibration</a>
+    </li>
+    <li>
+      <a href="../articles/sensitivity-analysis.html">Sensitivity Analysis</a>
+    </li>
+    <li>
       <a href="../articles/hatchery-analysis.html">Hatchery Analysis</a>
+    </li>
+    <li>
+      <a href="../articles/straying-model.html">Straying Analysis</a>
     </li>
     <li>
       <a href="../articles/temperature-model.html">Temperature Modeling</a>
@@ -152,7 +161,8 @@
   .medium <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>.surv_juv_rear_medium</span>,
   .large <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>.surv_juv_rear_large</span>,
   .floodplain <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>.surv_juv_rear_floodplain</span>,
-  min_survival_rate <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>min_survival_rate</span>
+  min_survival_rate <span class='op'>=</span> <span class='fu'>fallRunDSM</span><span class='fu'>::</span><span class='va'><a href='params.html'>params</a></span><span class='op'>$</span><span class='va'>min_survival_rate</span>,
+  <span class='va'>stochastic</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -196,39 +206,39 @@
     </tr>
     <tr>
       <th>.avg_temp_thresh</th>
-      <td><p>coefficient for avg_temp_thresh variable</p></td>
+      <td><p>coefficient for <code>avg_temp_thresh</code> variable</p></td>
     </tr>
     <tr>
       <th>.high_predation</th>
-      <td><p>coefficient for high_predation variable</p></td>
+      <td><p>coefficient for <code>high_predation</code> variable</p></td>
     </tr>
     <tr>
       <th>.surv_juv_rear_contact_points</th>
-      <td><p>coefficient for contact_points variable</p></td>
+      <td><p>coefficient for <code>contact_points</code> variable</p></td>
     </tr>
     <tr>
       <th>..surv_juv_rear_contact_points</th>
-      <td><p>calibrated coefficient for contact_points variable</p></td>
+      <td><p>calibrated coefficient for <code>contact_points</code> variable</p></td>
     </tr>
     <tr>
       <th>.surv_juv_rear_prop_diversions</th>
-      <td><p>coefficient for prop_diversions variable</p></td>
+      <td><p>coefficient for <code>prop_diversions</code> variable</p></td>
     </tr>
     <tr>
       <th>..surv_juv_rear_prop_diversions</th>
-      <td><p>calibrated coefficient for prop_diversions variable</p></td>
+      <td><p>calibrated coefficient for <code>prop_diversions</code> variable</p></td>
     </tr>
     <tr>
       <th>.surv_juv_rear_total_diversions</th>
-      <td><p>coefficient for total_diversions variable</p></td>
+      <td><p>coefficient for <code>total_diversions</code> variable</p></td>
     </tr>
     <tr>
       <th>..surv_juv_rear_total_diversions</th>
-      <td><p>calibrated coefficient for total_diversions variable</p></td>
+      <td><p>calibrated coefficient for <code>total_diversions</code> variable</p></td>
     </tr>
     <tr>
       <th>.stranded</th>
-      <td><p>coefficient for stranded variable</p></td>
+      <td><p>coefficient for <code>stranded</code> variable</p></td>
     </tr>
     <tr>
       <th>.medium</th>
@@ -244,7 +254,11 @@
     </tr>
     <tr>
       <th>min_survival_rate</th>
-      <td><p>estimated survival rate if temperature threshold is exceeded, source: expert opinion</p></td>
+      <td><p>estimated survival rate if temperature threshold is exceeded</p></td>
+    </tr>
+    <tr>
+      <th>stochastic</th>
+      <td><p><code>TRUE</code> <code>FALSE</code> value indicating if model is being run stochastically</p></td>
     </tr>
     </table>
 

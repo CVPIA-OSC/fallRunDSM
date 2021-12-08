@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Get Spawning Adults — get_spawning_adults" />
-<meta property="og:description" content="Get Spawning Adults" />
+<meta property="og:description" content="Calculates the number of initial adults, initial natural adults, and initial adults by month." />
 
 
 
@@ -89,7 +89,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/calibration-2021.html">Calibration</a>
+    </li>
+    <li>
+      <a href="../articles/sensitivity-analysis.html">Sensitivity Analysis</a>
+    </li>
+    <li>
       <a href="../articles/hatchery-analysis.html">Hatchery Analysis</a>
+    </li>
+    <li>
+      <a href="../articles/straying-model.html">Straying Analysis</a>
     </li>
     <li>
       <a href="../articles/temperature-model.html">Temperature Modeling</a>
@@ -126,7 +135,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Get Spawning Adults</p>
+    <p>Calculates the number of initial adults, initial natural adults, and initial adults by month.</p>
     </div>
 
     <pre class="usage"><span class='fu'>get_spawning_adults</span><span class='op'>(</span>
@@ -142,6 +151,9 @@
   <span class='va'>tisdale_bypass_watershed</span>,
   <span class='va'>yolo_bypass_watershed</span>,
   <span class='va'>migratory_temperature_proportion_over_20</span>,
+  <span class='va'>natural_adult_removal_rate</span>,
+  <span class='va'>cross_channel_stray_rate</span>,
+  <span class='va'>stray_rate</span>,
   <span class='va'>..surv_adult_enroute_int</span>,
   <span class='va'>.adult_stray_intercept</span>,
   <span class='va'>.adult_stray_wild</span>,
@@ -168,6 +180,10 @@
     <tr>
       <th>hatch_adults</th>
       <td><p>total hatchery adults</p></td>
+    </tr>
+    <tr>
+      <th>mode</th>
+      <td><p>a value meant to be inherited to determine if model is in "seed", "calibrate", or "simulate" mode</p></td>
     </tr>
     <tr>
       <th>month_return_proportions</th>
@@ -200,6 +216,18 @@
     <tr>
       <th>migratory_temperature_proportion_over_20</th>
       <td><p>More details at <code><a href='https://CVPIA-OSC.github.io/DSMtemperature//reference/migratory_temperature_proportion_over_20.html'>migratory_temperature_proportion_over_20</a></code></p></td>
+    </tr>
+    <tr>
+      <th>natural_adult_removal_rate</th>
+      <td><p>More details at <code><a href='natural_adult_removal_rate.html'>natural_adult_removal_rate</a></code></p></td>
+    </tr>
+    <tr>
+      <th>cross_channel_stray_rate</th>
+      <td><p>More details at <code><a href='cross_channel_stray_rate.html'>cross_channel_stray_rate</a></code></p></td>
+    </tr>
+    <tr>
+      <th>stray_rate</th>
+      <td><p>More details at <code><a href='stray_rate.html'>stray_rate</a></code></p></td>
     </tr>
     <tr>
       <th>..surv_adult_enroute_int</th>
@@ -242,14 +270,17 @@
       <td><p>Adult harvest rate for <code><a href='surv_adult_enroute.html'>surv_adult_enroute</a></code></p></td>
     </tr>
     <tr>
-      <th>seeds</th>
-      <td><p>a value meant to be inherited to determine if model is in seeding stage or not</p></td>
+      <th>stochastic</th>
+      <td><p>TRUE FALSE value indicating if model is being run stochastically</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
     <p>IP-117068</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>See <code><a href='params.html'>params</a></code> for details on parameter sources</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

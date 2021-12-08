@@ -14,8 +14,6 @@ route(
   inchannel_habitat,
   floodplain_habitat,
   prop_pulse_flows,
-  proportion_flow_bypass,
-  detour = NULL,
   .pulse_movement_intercept,
   .pulse_movement_proportion_pulse,
   .pulse_movement_medium,
@@ -24,7 +22,8 @@ route(
   .pulse_movement_medium_pulse,
   .pulse_movement_large_pulse,
   .pulse_movement_very_large_pulse,
-  territory_size
+  territory_size,
+  stochastic
 )
 }
 \arguments{
@@ -32,13 +31,13 @@ route(
 
 \item{month}{The current simulation month, 1-8}
 
+\item{juveniles}{An n by 4 matrix of juvenile fish by watershed and size class}
+
 \item{inchannel_habitat}{A vector of available habitat in square meters}
 
 \item{floodplain_habitat}{A vector of available floodplain habitat in square meters}
 
 \item{prop_pulse_flows}{The proportion of pulse flows}
-
-\item{detour}{Values can be 'sutter' or 'yolo' if some juveniles are detoured on to that bypass, otherwise NULL}
 
 \item{.pulse_movement_intercept}{Intercept for \code{\link{pulse_movement}}}
 
@@ -58,7 +57,7 @@ route(
 
 \item{territory_size}{Array of juvenile fish territory requirements for \code{\link{fill_natal}}}
 
-\item{juvenile}{An n by 4 matrix of juvenile fish by watershed and size class}
+\item{stochastic}{\code{TRUE} \code{FALSE} value indicating if model is being run stochastically}
 }
 \description{
 Determines if juveniles stay in their natal tributary, are detoured

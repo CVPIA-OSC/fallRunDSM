@@ -23,6 +23,8 @@ surv_juv_outmigration_delta(
 \arguments{
 \item{prop_DCC_closed}{proportion of days the Delta Cross Channel Gates are closed}
 
+\item{hor_barr}{indicator if head of old river physical barrier in place}
+
 \item{freeport_flow}{average daily discharge at Freeport in cubic meters per second}
 
 \item{vernalis_flow}{average daily discharge at Vernalis in cubic meters per second}
@@ -37,9 +39,7 @@ surv_juv_outmigration_delta(
 
 \item{SWP_exp}{average daily exports State Water Project in cubic meters per second}
 
-\item{horr_barr}{indicator if head of old river physical barrier in place}
-
-\item{Trap_trans}{proportion of smolts trapped at Vernalis and transported to Chips island}
+\item{trap_trans}{proportion of smolts trapped at Vernalis and transported to Chips island}
 }
 \description{
 Calculates the North and South Delta juvenile out migration survival

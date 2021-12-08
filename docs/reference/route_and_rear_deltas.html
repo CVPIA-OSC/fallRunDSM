@@ -91,7 +91,16 @@ during a simulated month. Then the remaining juveniles in the delta rear
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/calibration-2021.html">Calibration</a>
+    </li>
+    <li>
+      <a href="../articles/sensitivity-analysis.html">Sensitivity Analysis</a>
+    </li>
+    <li>
       <a href="../articles/hatchery-analysis.html">Hatchery Analysis</a>
+    </li>
+    <li>
+      <a href="../articles/straying-model.html">Straying Analysis</a>
     </li>
     <li>
       <a href="../articles/temperature-model.html">Temperature Modeling</a>
@@ -145,12 +154,12 @@ during a simulated month. Then the remaining juveniles in the delta rear
   <span class='va'>cc_gates_days_closed</span>,
   <span class='va'>rearing_survival_delta</span>,
   <span class='va'>migratory_survival_delta</span>,
-  <span class='va'>migratory_survival_sac_delta</span>,
   <span class='va'>migratory_survival_bay_delta</span>,
   <span class='va'>juveniles_at_chipps</span>,
   <span class='va'>growth_rates</span>,
   location_index <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>24</span><span class='op'>)</span>, <span class='fl'>3</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>2</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>4</span>, <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>,
-  <span class='va'>territory_size</span>
+  <span class='va'>territory_size</span>,
+  <span class='va'>stochastic</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -158,11 +167,11 @@ during a simulated month. Then the remaining juveniles in the delta rear
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>year</th>
-      <td><p>Simulation year, 1-20</p></td>
+      <td><p>The current simulation year, 1-20</p></td>
     </tr>
     <tr>
       <th>month</th>
-      <td><p>Simulation month, 1-8</p></td>
+      <td><p>The current simulation month, 1-8</p></td>
     </tr>
     <tr>
       <th>migrants</th>
@@ -185,16 +194,20 @@ during a simulated month. Then the remaining juveniles in the delta rear
       <td><p>A vector of available habitat in square meters</p></td>
     </tr>
     <tr>
+      <th>freeport_flows</th>
+      <td><p>Monthly mean flow at freeport in cubic feet per second</p></td>
+    </tr>
+    <tr>
+      <th>cc_gates_days_closed</th>
+      <td><p>Number of days the Cross Channel gates are closed during the month</p></td>
+    </tr>
+    <tr>
       <th>rearing_survival_delta</th>
       <td><p>The rearing survival rate for North and South Delta</p></td>
     </tr>
     <tr>
       <th>migratory_survival_delta</th>
       <td><p>The outmigration survival rate for North and South Delta</p></td>
-    </tr>
-    <tr>
-      <th>migratory_survival_sac_delta</th>
-      <td><p>The outmigration survival rate in the Sacramento Delta</p></td>
     </tr>
     <tr>
       <th>migratory_survival_bay_delta</th>
@@ -216,6 +229,10 @@ during a simulated month. Then the remaining juveniles in the delta rear
     <tr>
       <th>territory_size</th>
       <td><p>Array of juvenile fish territory requirements for <code><a href='fill.html'>fill_natal</a></code></p></td>
+    </tr>
+    <tr>
+      <th>stochastic</th>
+      <td><p><code>TRUE</code> <code>FALSE</code> value indicating if model is being run stochastically</p></td>
     </tr>
     </table>
 

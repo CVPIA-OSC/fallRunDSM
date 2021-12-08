@@ -5,12 +5,15 @@
 \alias{cross_channel_stray_rate}
 \title{Cross Channel Stray Rate}
 \format{
-An object of class \code{numeric} of length 31.
+1 dimensional array [31 watersheds]
+}
+\source{
+Expert opinion from SIT members.
 }
 \usage{
 cross_channel_stray_rate
 }
 \description{
-Natural straying allocation across channels, source: expert opinion from SIT members.
+Natural straying allocation across channels.
 }
 \keyword{datasets}
