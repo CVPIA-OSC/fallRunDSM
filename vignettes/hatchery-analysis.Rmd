@@ -19,7 +19,7 @@ library(fallRunDSM)
 ```
 
 ## Description 
-This analysis provides the `hatchery_allocation` and `natural_adult_removal_rate` inputs to the FallRunDSM. 
+This analysis provides the `proportion_hatchery`, `hatchery_allocation` and `natural_adult_removal_rate` inputs to the FallRunDSM. 
 
 ### Datasource
 Temporal Range: 2010 - 2012 
@@ -73,6 +73,28 @@ datatable(cwt_data %>% filter(Run == "Fall") %>% select(-Run),
                     lengthMenu = c(5, 10, 15, 20)
 ))
 ```
+### Proportion Hatchery 
+
+The `proportion_hatchery` for each tributary is calculated below. To find the `proportion_hatchery` we grouped our data by tributary and summarized to find the mean percentage of hatchery fish for each tributary. 
+
+TODO figure out why most tribs match but some do not. Must be missing a piece of the analysis here
+
+```{r}
+proportion_hatchery <- cwt_data %>% 
+  filter(Run == "Fall") %>% 
+  select(-Run) %>% 
+  group_by(Trib) %>% 
+  summarise(prop_hatchery = mean(Hatchery, na.rm = T))
+
+datatable(proportion_hatchery, 
+          options = list(
+                    searching = FALSE,
+                    pageLength = 5,
+                    lengthMenu = c(5, 10, 15, 20)
+))
+```
+
+
 
 ### Hatchery Allocation
 The number of `hatch_adults` is determined in the `model.R` script through a multinominal distribution with the probability equal to the `hatchery_allocation` calculated below. 
