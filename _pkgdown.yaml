@@ -7,7 +7,7 @@ template:
 home:
   links:
   - text: Fish and Wildlife Service's CVPIA website
-    href: https://www.fws.gov/lodi/anadromous_fish_restoration/afrp_index.htm
+    href: https://www.fws.gov/cno/fisheries/CAMP/CVPIA/
   - text: Bureau of Reclamation's CVPIA website
     href: https://www.usbr.gov/mp/cvpia/
 
