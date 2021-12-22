@@ -24,7 +24,7 @@ This analysis provides the `proportion_hatchery`, `hatchery_allocation` and `nat
 ### Datasource
 Temporal Range: 2010 - 2012 
 
-Most data from CWT (coded wire tag) analyses with limited data in 2010 from CVPIA ChinookProd database 
+Most data was obtained from CWT (coded wire tag) analyses with limited data in 2010 from CVPIA ChinookProd database 
 version 2 September 22, 2017. Data from these sources was compiled in a csv called [hatchery_fish_fate2010_2012.csv](https://dsm-docs.s3-us-west-2.amazonaws.com/adult_hatchery_documentation/hatchery_fish_fate2010_2012.csv).
 
 **Adjustment to Feather and Yuba Rivers:**
@@ -37,14 +37,14 @@ The datatable below shows the data that has been prepped for analysis. (`No_hatc
 
 ```{r}
 cwt_data <- read_csv(system.file("extdata", "hatchery-data", "hatchery_fish_fate2010_2012.csv", 
-                       package = "fallRunDSM", mustWork = TRUE)) %>%
+                                 package = "fallRunDSM", mustWork = TRUE)) %>%
   rename("Hatch_flag" = Hatch.flag)
 
 proportion_spring_run <- dplyr::tibble(prp = c(0.076777295, 0.056932196, 0.081441457), 
                                        Year = c(2010, 2011, 2012))
 
 # Apply fall proportions * (1- spring proportion) to feather and yuba 
-spring_run_feather_yuba <- cwt_data %>%
+fall_run_feather_yuba <- cwt_data %>%
   filter(Run == "Fall/Spr") %>%
   left_join(proportion_spring_run, by = "Year") %>%
   mutate(No_hatch_ret = No_hatch_ret * (1 - prp),
@@ -53,7 +53,7 @@ spring_run_feather_yuba <- cwt_data %>%
   select(-prp)
 
 # Apply fall proportions * (spring proportion) to feather and yuba 
-fall_run_feather_yuba <- cwt_data %>%
+spring_run_feather_yuba <- cwt_data %>%
   filter(Run == "Fall/Spr") %>%
   left_join(proportion_spring_run, by = "Year") %>%
   mutate(No_hatch_ret = No_hatch_ret * prp,
