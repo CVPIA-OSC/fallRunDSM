@@ -6,8 +6,10 @@ output:
     code_folding: hide
 vignette: >
   %\VignetteIndexEntry{temperature-model}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
@@ -27,25 +29,69 @@ library(gridExtra)
 
 ### Logistic models to estimate temperature metrics 
 
-Within the `get_rearing_survival()` submodel of `fallRunDSM` `aveT20`, `aveT20D`, `maxT25`, and `maxT25` are calculated using logistic regression. The script bellow defines the numeric input to these regression models. 
+Within the `get_rearing_survival()` submodel of the DSM, `aveT20`, `aveT20D`, `maxT25`, and `maxT25D` are defined as
+inverse logit models whose inputs are monthly stream temperatures. The purpose for these models are to provide a sub monthly metric derived from monthly data, these metrics are needed to calcualte survival probabilities. The script bellow outlines the parameterization process of these models. 
 
 #### Data Sources
 
 Central Valley River Temps: 
 This analysis is done using data from the [Full temperature data.csv](https://dsm-docs.s3-us-west-2.amazonaws.com/temperature_modeling/Full+temperature+data.csv). 
+The Central Valley River Temps include the following stations from USGS: 
+
+```{r}
+d <- structure(list(agency_cd = c("USGS", "USGS", "USGS", "USGS", 
+"USGS", "USGS", "USGS", "USGS", "USGS", "USGS", "USGS", "USGS", 
+"USGS", "USGS", "USGS", "USGS"), site_no = c("11273400", "11274550", 
+"11289650", "11290000", "11303000", "11303500", "11335000", "11370500", 
+"11376000", "11383500", "11389500", "11390000", "11421000", "11425500", 
+"11446500", "11447650"), station_nm = c("SAN JOAQUIN R AB MERCED R NR NEWMAN CA", 
+"SAN JOAQUIN R NR CROWS LANDING CA", "TUOLUMNE R BL LAGRANGE DAM NR LAGRANGE CA", 
+"TUOLUMNE R A MODESTO CA", "STANISLAUS R A RIPON CA", "SAN JOAQUIN R NR VERNALIS CA", 
+"COSUMNES R A MICHIGAN BAR CA", "SACRAMENTO R A KESWICK CA", 
+"COTTONWOOD C NR COTTONWOOD CA", "DEER C NR VINA CA", "SACRAMENTO R A COLUSA CA", 
+"BUTTE C NR CHICO CA", "YUBA R NR MARYSVILLE CA", "SACRAMENTO R A VERONA CA", 
+"AMERICAN R A FAIR OAKS CA", "SACRAMENTO R A FREEPORT CA")), class = "data.frame", row.names = c(NA, 
+-16L))
+
+datatable(d, options = list(dom = 't', pageLength = 20))
+```
+
+and the following from CDEC: 
+
+
+```{r}
+d <- structure(list(station_id = c("bic", "igo", "dvd", "grl", "crs", 
+                                   "mst", "mch", "mlm", "ccr", "yrs", "bbq"), name = c("big chico creek near chico", 
+                                                                                       "clear creek near igo", "deer creek below stanford vina dam", 
+                                                                                       "feather river near gridley", "merced river at cressy", "merced river near stevinson", 
+                                                                                       "mill creek below hwy 99", "mill creek nr los molinos", "sacramento river above clear ck", 
+                                                                                       "yuba river near smartville", "stoney ck blw black butte dam"
+                                   )), row.names = c(NA, -11L), class = c("tbl_df", "tbl", "data.frame"
+                                   ))
+
+datatable(d, options = list(dom = 't', pageLength = 20))
+```
 
 Delta Temps:
 This analysis is done using the following data:
 
-* [DUTCH SLOUGH.csv](https://dsm-docs.s3-us-west-2.amazonaws.com/temperature_modeling/DUTCH+SLOUGH.csv)
-* [GEORGIANA SLOUGH.csv](https://dsm-docs.s3-us-west-2.amazonaws.com/temperature_modeling/GEORGIANA+SLOUGH.csv)
-* [JERSEY POINT.csv](https://dsm-docs.s3-us-west-2.amazonaws.com/temperature_modeling/JERSEY+POINT.csv)
-* [LPotatoSLough.csv](https://dsm-docs.s3-us-west-2.amazonaws.com/temperature_modeling/LPotatoSlough.csv)
+* [DUTCH SLOUGH.csv (USGS: 11313433 )](https://dsm-docs.s3-us-west-2.amazonaws.com/temperature_modeling/DUTCH+SLOUGH.csv)
+* [GEORGIANA SLOUGH.csv (USGS: 11447903 )](https://dsm-docs.s3-us-west-2.amazonaws.com/temperature_modeling/GEORGIANA+SLOUGH.csv)
+* [JERSEY POINT.csv (USGS: 11337190)](https://dsm-docs.s3-us-west-2.amazonaws.com/temperature_modeling/JERSEY+POINT.csv)
+* [LPotatoSLough.csv (USGS: 11336790 )](https://dsm-docs.s3-us-west-2.amazonaws.com/temperature_modeling/LPotatoSlough.csv)
 
-TODO source for these CSVs?
+The Delta temperature datasets can be obtained using USGS' `dataRetrieval` R package using the corresponding
+site number listed above. For example to download the data for Jersey Point,
+
+```r
+jersey_point <- dataRetrieval::readNWISuv(siteNumbers = "11337190", parameterCd = "00010", startDate = "2009-12-11")
+```
+
 
 #### Temperature Data 
-The table below shows the Central Valley and delta temperature grouped by month and year and summarized to give monthly mean temperature, proportion of days over 20 degrees, and the count of days per month over 25 degrees. 
+
+The table below shows the Central Valley and delta temperatures grouped by month and year and summarized to give monthly mean temperature, proportion of days over 20 degrees, and the count of days per month over 25 degrees. 
+
 ```{r}
 full_temp_data <- read_csv(system.file("extdata", "temperature-data", "Full temperature data.csv", 
                            package = "fallRunDSM", mustWork = TRUE)) %>% 
@@ -69,7 +115,6 @@ potato_slough <-read_csv(system.file("extdata", "temperature-data", "LPotatoSlou
                            package = "fallRunDSM", mustWork = TRUE))
 
 delta_full_temp_data <- rbind(jersey_point, dutch_slough, georgiana_slough, potato_slough) %>%
-  # na.omit() %>% #TODO check why they do not filter na out of delta but do out of full temp (gives totally different model results)
   mutate(gt20 = ifelse(TempC > 20, 1, 0),
          gt25 = ifelse(TempC > 25, 1, 0))
 
