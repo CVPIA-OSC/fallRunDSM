@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fallRunDSM</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0</span>
       </span>
     </div>
 
@@ -67,7 +69,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/CVPIA-OSC/fallRunDSM">
+  <a href="https://github.com/CVPIA-OSC/fallRunDSM" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -82,7 +84,7 @@
 
       
 
-      </header><script src="sensitivity-analysis_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Sensitivity Analysis</h1>
@@ -95,58 +97,58 @@
 
     
     
-<div id="objective" class="section level2">
-<h2 class="hasAnchor">
-<a href="#objective" class="anchor"></a>Objective</h2>
+<div class="section level2">
+<h2 id="objective">Objective<a class="anchor" aria-label="anchor" href="#objective"></a>
+</h2>
 <p>Sensitivity analysis is performed to understand how changes in model parameters or inputs affect the model output. A <strong>One-way</strong> sensitivity analysis varies each model parameter or input individually across a known parameter space while holding all other inputs and parameters constant.</p>
-<p>The model parameters varied for sensitivity analysis were all the parameters documented in the <a href="https://cvpia-osc.github.io/fallRunDSM/reference/params.html">fallRunDSM::params</a></p>
+<p>The model parameters varied for sensitivity analysis were all the parameters documented in the <a href="https://cvpia-osc.github.io/fallRunDSM/reference/params.html" class="external-link">fallRunDSM::params</a></p>
 </div>
-<div id="scaling-methodology" class="section level2">
-<h2 class="hasAnchor">
-<a href="#scaling-methodology" class="anchor"></a>Scaling Methodology</h2>
+<div class="section level2">
+<h2 id="scaling-methodology">Scaling Methodology<a class="anchor" aria-label="anchor" href="#scaling-methodology"></a>
+</h2>
 <ol style="list-style-type: decimal">
 <li><p>Most of the model inputs are scaled by 0.5 to 1.5 in increments of 0.1. For example, if an input has an original value of 100, then for sensitivity analysis the model is run eleven times with the input set to the values: 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, and 150.</p></li>
 <li><p>When the scaled input value need to be between 0 and 1 <em>(ex: proportions or survival rates)</em>, the input is scaled as follows: <span class="math display">\[Inv.Logit\left(log\left(\frac{x}{1-x}\right) \times scaler\right)\]</span> where <span class="math inline">\(x\)</span> is the model input being varied for sensitivity analysis, and <span class="math inline">\(scaler\)</span> is the same scaling from .5 to 1.5 described above. In this example, if <span class="math inline">\(x = .3\)</span> then the scaled inputs used in the sensitivity analysis would be 0.396, 0.376, 0.356, 0.337, 0.318, 0.3, 0.283, 0.266, 0.249, 0.234, and 0.219</p></li>
 <li><p>The following model inputs are discrete values and handled as special cases. For <code>cc_gates_days_closed</code>, first the values of <code>cc_gates_prop_days_closed</code> <em>(proportion of days within a month the cross channel gates are closed)</em> are scaled using the inverse logit method described above and then multiplying this proportion by the number of days in the month to produce the number of days closed within a month. For <code>weeks_flooded</code>, the original input is modified by adding <span class="math inline">\(\pm 2\)</span> weeks or <span class="math inline">\(\pm 1\)</span> week, with a minimum of 1 week and a maximum of 4 weeks.</p></li>
 </ol>
 </div>
-<div id="running-sensitivity-analysis" class="section level2">
-<h2 class="hasAnchor">
-<a href="#running-sensitivity-analysis" class="anchor"></a>Running Sensitivity Analysis</h2>
+<div class="section level2">
+<h2 id="running-sensitivity-analysis">Running Sensitivity Analysis<a class="anchor" aria-label="anchor" href="#running-sensitivity-analysis"></a>
+</h2>
 <p>The functions developed below automate as much of the sensitivity analysis as possible. It captures the scaling described above and allows the analysis to be run in parallel.</p>
-<div id="package-dependencies-and-parallel-mode-set-up" class="section level3">
-<h3 class="hasAnchor">
-<a href="#package-dependencies-and-parallel-mode-set-up" class="anchor"></a>Package Dependencies and Parallel Mode Set Up</h3>
+<div class="section level3">
+<h3 id="package-dependencies-and-parallel-mode-set-up">Package Dependencies and Parallel Mode Set Up<a class="anchor" aria-label="anchor" href="#package-dependencies-and-parallel-mode-set-up"></a>
+</h3>
 <p>In order to run models in parallel, both <code>parallel</code> and <code>doParallel</code> packages need to be installed.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://CVPIA-OSC.github.io/fallRunDSM/">fallRunDSM</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://CVPIA-OSC.github.io/fallRunDSM/">fallRunDSM</a></span><span class="op">)</span>
 <span class="co"># remotes::install_github("cvpia-osc/DSMscenario")</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://cvpia-osc.github.io/DSMscenario/">DSMscenario</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://cvpia-osc.github.io/DSMscenario/" class="external-link">DSMscenario</a></span><span class="op">)</span>
 
 <span class="co"># install.packages("parallel")</span>
 <span class="co"># install.packages("doParallel")</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">parallel</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">doParallel</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">parallel</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">doParallel</span><span class="op">)</span>
 
 <span class="co"># install.packages("purrr")</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org">purrr</a></span><span class="op">)</span> <span class="co"># functional programming library</span></code></pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org" class="external-link">purrr</a></span><span class="op">)</span> <span class="co"># functional programming library</span></code></pre></div>
 <p>Next, register the CPU cores that will be utilized for the parallel process. Also specify any functions or data that will be used during the parallel process. Here the <code>run_scenario</code>, <code>fall_run_model</code>, and <code>scenarios</code> elements are registered. These elements are defined further down in this document.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">no_cores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html">detectCores</a></span><span class="op">(</span>logical <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># total cores available</span>
-<span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html">makeCluster</a></span><span class="op">(</span><span class="va">no_cores</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="co"># create a cluster from cores</span>
-<span class="fu">registerDoParallel</span><span class="op">(</span><span class="va">cl</span><span class="op">)</span> <span class="co"># register cluster with package</span>
+<code class="sourceCode R"><span class="va">no_cores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">detectCores</a></span><span class="op">(</span>logical <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># total cores available</span>
+<span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">makeCluster</a></span><span class="op">(</span><span class="va">no_cores</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="co"># create a cluster from cores</span>
+<span class="fu"><a href="https://rdrr.io/pkg/doParallel/man/registerDoParallel.html" class="external-link">registerDoParallel</a></span><span class="op">(</span><span class="va">cl</span><span class="op">)</span> <span class="co"># register cluster with package</span>
 
 
 <span class="co"># register the functions for use in parallel mode</span>
-<span class="fu"><a href="https://rdrr.io/r/parallel/clusterApply.html">clusterExport</a></span><span class="op">(</span><span class="va">cl</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">'run_scenario'</span>, <span class="st">'fall_run_model'</span>, <span class="st">'scenarios'</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/parallel/clusterApply.html" class="external-link">clusterExport</a></span><span class="op">(</span><span class="va">cl</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">'run_scenario'</span>, <span class="st">'fall_run_model'</span>, <span class="st">'scenarios'</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="sensitivility-analysis-process" class="section level3">
-<h3 class="hasAnchor">
-<a href="#sensitivility-analysis-process" class="anchor"></a>Sensitivility Analysis Process</h3>
+<div class="section level3">
+<h3 id="sensitivility-analysis-process">Sensitivility Analysis Process<a class="anchor" aria-label="anchor" href="#sensitivility-analysis-process"></a>
+</h3>
 <p>The sensitivity analysis process is made up of a series of functions each doing a specific job. Below we describe each one of these and explain how they work together to create the sensitivity analysis.</p>
-<div id="run-scenario" class="section level4">
-<h4 class="hasAnchor">
-<a href="#run-scenario" class="anchor"></a>Run Scenario</h4>
+<div class="section level4">
+<h4 id="run-scenario">Run Scenario<a class="anchor" aria-label="anchor" href="#run-scenario"></a>
+</h4>
 <p>The <code>run_scenarios</code> function calls the <code>fall_run_model</code> in both the seeding and the full 20-year simulation modes with the user provided scenario object and modified model parameters. The function returns the valley-wide averages of total number of spawners for each year in the simulation. This metric can be modified to be whatever the user desires to compare between model runs to gauge model sensitivity. The <code>run_scenarios</code> function is called within the <code>run_scenarios_scaled_param</code> function described in the next section.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">run_scenario</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">scenario</span>, <span class="va">sensi_params</span><span class="op">)</span> <span class="op">{</span>
@@ -154,36 +156,36 @@
   <span class="va">run</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fall_run_model.html">fall_run_model</a></span><span class="op">(</span>scenario <span class="op">=</span> <span class="va">scenario</span>,
                         mode <span class="op">=</span> <span class="st">"simulate"</span>, seeds <span class="op">=</span> <span class="va">seeds</span>,
                         ..params <span class="op">=</span> <span class="va">sensi_params</span>, stochastic <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colSums</a></span><span class="op">(</span><span class="va">run</span><span class="op">$</span><span class="va">spawners</span> <span class="op">*</span> <span class="va">run</span><span class="op">$</span><span class="va">proportion_natural</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">colSums</a></span><span class="op">(</span><span class="va">run</span><span class="op">$</span><span class="va">spawners</span> <span class="op">*</span> <span class="va">run</span><span class="op">$</span><span class="va">proportion_natural</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 </div>
-<div id="run-scenarios-with-scaled-parameters" class="section level4">
-<h4 class="hasAnchor">
-<a href="#run-scenarios-with-scaled-parameters" class="anchor"></a>Run Scenarios with Scaled Parameters</h4>
+<div class="section level4">
+<h4 id="run-scenarios-with-scaled-parameters">Run Scenarios with Scaled Parameters<a class="anchor" aria-label="anchor" href="#run-scenarios-with-scaled-parameters"></a>
+</h4>
 <p>The <code>run_scenarios_scaled_param</code> runs <code>run_scenarios</code> in parallel with a scaled version of model parameters <em>(see section Scaling Methodology above for details)</em>. The function selects the appropriate scaling methodology based on the <code>param</code> name. This function returns a data frame with results for each of the 13 SIT Candidate Restoration Strategies.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># create a list of the scenario for convenience</span>
-<span class="va">scenarios</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu">DSMscenario</span><span class="fu">::</span><span class="va"><a href="https://CVPIA-OSC.github.io/DSMscenario//reference/scenarios.html">scenarios</a></span><span class="op">$</span><span class="va">NO_ACTION</span>, <span class="fu">DSMscenario</span><span class="fu">::</span><span class="va"><a href="https://CVPIA-OSC.github.io/DSMscenario//reference/scenarios.html">scenarios</a></span><span class="op">$</span><span class="va">ONE</span>,
-                  <span class="fu">DSMscenario</span><span class="fu">::</span><span class="va"><a href="https://CVPIA-OSC.github.io/DSMscenario//reference/scenarios.html">scenarios</a></span><span class="op">$</span><span class="va">TWO</span>, <span class="fu">DSMscenario</span><span class="fu">::</span><span class="va"><a href="https://CVPIA-OSC.github.io/DSMscenario//reference/scenarios.html">scenarios</a></span><span class="op">$</span><span class="va">THREE</span>,
-                  <span class="fu">DSMscenario</span><span class="fu">::</span><span class="va"><a href="https://CVPIA-OSC.github.io/DSMscenario//reference/scenarios.html">scenarios</a></span><span class="op">$</span><span class="va">FOUR</span>, <span class="fu">DSMscenario</span><span class="fu">::</span><span class="va"><a href="https://CVPIA-OSC.github.io/DSMscenario//reference/scenarios.html">scenarios</a></span><span class="op">$</span><span class="va">FIVE</span>,
-                  <span class="fu">DSMscenario</span><span class="fu">::</span><span class="va"><a href="https://CVPIA-OSC.github.io/DSMscenario//reference/scenarios.html">scenarios</a></span><span class="op">$</span><span class="va">SIX</span>, <span class="fu">DSMscenario</span><span class="fu">::</span><span class="va"><a href="https://CVPIA-OSC.github.io/DSMscenario//reference/scenarios.html">scenarios</a></span><span class="op">$</span><span class="va">SEVEN</span>,
-                  <span class="fu">DSMscenario</span><span class="fu">::</span><span class="va"><a href="https://CVPIA-OSC.github.io/DSMscenario//reference/scenarios.html">scenarios</a></span><span class="op">$</span><span class="va">EIGHT</span>, <span class="fu">DSMscenario</span><span class="fu">::</span><span class="va"><a href="https://CVPIA-OSC.github.io/DSMscenario//reference/scenarios.html">scenarios</a></span><span class="op">$</span><span class="va">NINE</span>,
-                  <span class="fu">DSMscenario</span><span class="fu">::</span><span class="va"><a href="https://CVPIA-OSC.github.io/DSMscenario//reference/scenarios.html">scenarios</a></span><span class="op">$</span><span class="va">TEN</span>, <span class="fu">DSMscenario</span><span class="fu">::</span><span class="va"><a href="https://CVPIA-OSC.github.io/DSMscenario//reference/scenarios.html">scenarios</a></span><span class="op">$</span><span class="va">ELEVEN</span>,
-                  <span class="fu">DSMscenario</span><span class="fu">::</span><span class="va"><a href="https://CVPIA-OSC.github.io/DSMscenario//reference/scenarios.html">scenarios</a></span><span class="op">$</span><span class="va">TWELVE</span>, <span class="fu">DSMscenario</span><span class="fu">::</span><span class="va"><a href="https://CVPIA-OSC.github.io/DSMscenario//reference/scenarios.html">scenarios</a></span><span class="op">$</span><span class="va">THIRTEEN</span><span class="op">)</span>
+<span class="va">scenarios</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu">DSMscenario</span><span class="fu">::</span><span class="va"><a href="https://CVPIA-OSC.github.io/DSMscenario//reference/scenarios.html" class="external-link">scenarios</a></span><span class="op">$</span><span class="va">NO_ACTION</span>, <span class="fu">DSMscenario</span><span class="fu">::</span><span class="va"><a href="https://CVPIA-OSC.github.io/DSMscenario//reference/scenarios.html" class="external-link">scenarios</a></span><span class="op">$</span><span class="va">ONE</span>,
+                  <span class="fu">DSMscenario</span><span class="fu">::</span><span class="va"><a href="https://CVPIA-OSC.github.io/DSMscenario//reference/scenarios.html" class="external-link">scenarios</a></span><span class="op">$</span><span class="va">TWO</span>, <span class="fu">DSMscenario</span><span class="fu">::</span><span class="va"><a href="https://CVPIA-OSC.github.io/DSMscenario//reference/scenarios.html" class="external-link">scenarios</a></span><span class="op">$</span><span class="va">THREE</span>,
+                  <span class="fu">DSMscenario</span><span class="fu">::</span><span class="va"><a href="https://CVPIA-OSC.github.io/DSMscenario//reference/scenarios.html" class="external-link">scenarios</a></span><span class="op">$</span><span class="va">FOUR</span>, <span class="fu">DSMscenario</span><span class="fu">::</span><span class="va"><a href="https://CVPIA-OSC.github.io/DSMscenario//reference/scenarios.html" class="external-link">scenarios</a></span><span class="op">$</span><span class="va">FIVE</span>,
+                  <span class="fu">DSMscenario</span><span class="fu">::</span><span class="va"><a href="https://CVPIA-OSC.github.io/DSMscenario//reference/scenarios.html" class="external-link">scenarios</a></span><span class="op">$</span><span class="va">SIX</span>, <span class="fu">DSMscenario</span><span class="fu">::</span><span class="va"><a href="https://CVPIA-OSC.github.io/DSMscenario//reference/scenarios.html" class="external-link">scenarios</a></span><span class="op">$</span><span class="va">SEVEN</span>,
+                  <span class="fu">DSMscenario</span><span class="fu">::</span><span class="va"><a href="https://CVPIA-OSC.github.io/DSMscenario//reference/scenarios.html" class="external-link">scenarios</a></span><span class="op">$</span><span class="va">EIGHT</span>, <span class="fu">DSMscenario</span><span class="fu">::</span><span class="va"><a href="https://CVPIA-OSC.github.io/DSMscenario//reference/scenarios.html" class="external-link">scenarios</a></span><span class="op">$</span><span class="va">NINE</span>,
+                  <span class="fu">DSMscenario</span><span class="fu">::</span><span class="va"><a href="https://CVPIA-OSC.github.io/DSMscenario//reference/scenarios.html" class="external-link">scenarios</a></span><span class="op">$</span><span class="va">TEN</span>, <span class="fu">DSMscenario</span><span class="fu">::</span><span class="va"><a href="https://CVPIA-OSC.github.io/DSMscenario//reference/scenarios.html" class="external-link">scenarios</a></span><span class="op">$</span><span class="va">ELEVEN</span>,
+                  <span class="fu">DSMscenario</span><span class="fu">::</span><span class="va"><a href="https://CVPIA-OSC.github.io/DSMscenario//reference/scenarios.html" class="external-link">scenarios</a></span><span class="op">$</span><span class="va">TWELVE</span>, <span class="fu">DSMscenario</span><span class="fu">::</span><span class="va"><a href="https://CVPIA-OSC.github.io/DSMscenario//reference/scenarios.html" class="external-link">scenarios</a></span><span class="op">$</span><span class="va">THIRTEEN</span><span class="op">)</span>
 
 <span class="va">run_scenarios_scaled_param</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">param</span>, <span class="va">scalar</span>, <span class="va">index</span> <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">{</span>
 
   <span class="va">sensi_params</span> <span class="op">&lt;-</span> <span class="fu">fallRunDSM</span><span class="fu">::</span><span class="va"><a href="../reference/params.html">params</a></span>
 
-  <span class="kw">if</span> <span class="op">(</span><span class="va">param</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"cc_gates_prop_days_closed"</span>, <span class="st">"cc_gates_days_closed"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="kw">if</span> <span class="op">(</span><span class="va">param</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cc_gates_prop_days_closed"</span>, <span class="st">"cc_gates_days_closed"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
       <span class="co"># scale prop days closed using the 0-1 restriction</span>
-    <span class="va">sensi_params</span><span class="op">[</span><span class="st">"cc_gates_prop_days_closed"</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">boot</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/boot/man/inv.logit.html">inv.logit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="op">(</span><span class="va">sensi_params</span><span class="op">[</span><span class="st">"cc_gates_prop_days_closed"</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">+</span> <span class="fl">1e-7</span><span class="op">)</span> <span class="op">/</span>
+    <span class="va">sensi_params</span><span class="op">[</span><span class="st">"cc_gates_prop_days_closed"</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">boot</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/boot/man/inv.logit.html" class="external-link">inv.logit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="op">(</span><span class="va">sensi_params</span><span class="op">[</span><span class="st">"cc_gates_prop_days_closed"</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">+</span> <span class="fl">1e-7</span><span class="op">)</span> <span class="op">/</span>
                                                 <span class="op">(</span><span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">sensi_params</span><span class="op">[</span><span class="st">"cc_gates_prop_days_closed"</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1e-7</span><span class="op">)</span><span class="op">)</span> <span class="op">*</span> <span class="va">scalar</span><span class="op">)</span>
 
-    <span class="va">sensi_params</span><span class="op">[</span><span class="st">"cc_gates_days_closed"</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">floor</a></span><span class="op">(</span><span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/days_in_month.html">days_in_month</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">12</span><span class="op">)</span> <span class="op">*</span> <span class="va">sensi_params</span><span class="op">[</span><span class="st">"cc_gates_prop_days_closed"</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
+    <span class="va">sensi_params</span><span class="op">[</span><span class="st">"cc_gates_days_closed"</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">floor</a></span><span class="op">(</span><span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/days_in_month.html" class="external-link">days_in_month</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">12</span><span class="op">)</span> <span class="op">*</span> <span class="va">sensi_params</span><span class="op">[</span><span class="st">"cc_gates_prop_days_closed"</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
   <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
     <span class="va">sensi_params</span><span class="op">[</span><span class="va">param</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span>
-      <span class="kw">if</span> <span class="op">(</span><span class="va">param</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"cross_channel_stray_rate"</span>,
+      <span class="kw">if</span> <span class="op">(</span><span class="va">param</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cross_channel_stray_rate"</span>,
                        <span class="st">"delta_prop_high_predation"</span>, <span class="st">"delta_proportion_diverted"</span>,
                        <span class="st">"growth_rates"</span>, <span class="st">"growth_rates_floodplain"</span>,
                        <span class="st">"hatchery_allocation"</span>, <span class="st">"mean_egg_temp_effect"</span>,
@@ -195,29 +197,29 @@
                        <span class="st">"proportion_flow_bypass"</span>, <span class="st">"proportion_hatchery"</span>, <span class="st">"rear_decay_rate"</span>,
                        <span class="st">"spawn_decay_rate"</span>,
                        <span class="st">"spawn_success_sex_ratio"</span>, <span class="st">"stray_rate"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-        <span class="fu">boot</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/boot/man/inv.logit.html">inv.logit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="op">(</span><span class="va">sensi_params</span><span class="op">[</span><span class="va">param</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">+</span> <span class="fl">1e-7</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">sensi_params</span><span class="op">[</span><span class="va">param</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1e-7</span><span class="op">)</span><span class="op">)</span> <span class="op">*</span> <span class="va">scalar</span><span class="op">)</span>
-      <span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="va">param</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"weeks_flooded"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+        <span class="fu">boot</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/boot/man/inv.logit.html" class="external-link">inv.logit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="op">(</span><span class="va">sensi_params</span><span class="op">[</span><span class="va">param</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">+</span> <span class="fl">1e-7</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">sensi_params</span><span class="op">[</span><span class="va">param</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1e-7</span><span class="op">)</span><span class="op">)</span> <span class="op">*</span> <span class="va">scalar</span><span class="op">)</span>
+      <span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="va">param</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"weeks_flooded"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
         <span class="va">scalar</span>
       <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
         <span class="va">sensi_params</span><span class="op">[</span><span class="va">param</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">*</span> <span class="va">scalar</span>
       <span class="op">}</span>
   <span class="op">}</span>
 
-  <span class="va">scenario_results_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/parallel/clusterApply.html">parLapply</a></span><span class="op">(</span><span class="va">cl</span>, <span class="va">scenarios</span>,
+  <span class="va">scenario_results_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/parallel/clusterApply.html" class="external-link">parLapply</a></span><span class="op">(</span><span class="va">cl</span>, <span class="va">scenarios</span>,
                                      fun <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">scenario</span><span class="op">)</span> <span class="op">{</span>
                                        <span class="fu">run_scenario</span><span class="op">(</span><span class="va">scenario</span>, <span class="va">sensi_params</span><span class="op">)</span>
                                      <span class="op">}</span><span class="op">)</span>
 
-  <span class="va">scenario_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="va">scenario_results_list</span><span class="op">)</span>
+  <span class="va">scenario_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">scenario_results_list</span><span class="op">)</span>
 
   <span class="kw">if</span> <span class="op">(</span><span class="va">param</span> <span class="op">==</span> <span class="st">"weeks_flooded"</span><span class="op">)</span> <span class="op">{</span>
-    <span class="va">wf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"+2"</span>, <span class="st">"-2"</span>, <span class="st">"1"</span>, <span class="st">"-1"</span><span class="op">)</span>
+    <span class="va">wf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"+2"</span>, <span class="st">"-2"</span>, <span class="st">"1"</span>, <span class="st">"-1"</span><span class="op">)</span>
     <span class="va">scalar</span> <span class="op">&lt;-</span> <span class="va">wf</span><span class="op">[</span><span class="va">index</span><span class="op">]</span>
   <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
-    <span class="va">scalar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">scalar</span>, <span class="fl">2</span><span class="op">)</span>, collapse <span class="op">=</span> <span class="st">","</span><span class="op">)</span>
+    <span class="va">scalar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">scalar</span>, <span class="fl">2</span><span class="op">)</span>, collapse <span class="op">=</span> <span class="st">","</span><span class="op">)</span>
   <span class="op">}</span>
   
-  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">param</span>, <span class="va">scalar</span>, base <span class="op">=</span> <span class="va">scenario_results</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,
+  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">param</span>, <span class="va">scalar</span>, base <span class="op">=</span> <span class="va">scenario_results</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,
                     scenario_1 <span class="op">=</span> <span class="va">scenario_results</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, scenario_2 <span class="op">=</span> <span class="va">scenario_results</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>,
                     scenario_3 <span class="op">=</span> <span class="va">scenario_results</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span>, scenario_4 <span class="op">=</span> <span class="va">scenario_results</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span>,
                     scenario_5 <span class="op">=</span> <span class="va">scenario_results</span><span class="op">[</span><span class="fl">6</span><span class="op">]</span>, scenario_6 <span class="op">=</span> <span class="va">scenario_results</span><span class="op">[</span><span class="fl">7</span><span class="op">]</span>,
@@ -227,9 +229,9 @@
                     scenario_13 <span class="op">=</span> <span class="va">scenario_results</span><span class="op">[</span><span class="fl">14</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 </div>
-<div id="runnning-sensitivity" class="section level4">
-<h4 class="hasAnchor">
-<a href="#runnning-sensitivity" class="anchor"></a>Runnning Sensitivity</h4>
+<div class="section level4">
+<h4 id="runnning-sensitivity">Runnning Sensitivity<a class="anchor" aria-label="anchor" href="#runnning-sensitivity"></a>
+</h4>
 <p>The <code>param_sensitivity</code> function brings everything together, it takes a model parameter or input as an argument and iterates through different scaling values each time running all 13 SIT Candidate Restoration Strategies by calling <code>run_scenarios_scaled_param</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">param_sensitivity</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">param</span><span class="op">)</span> <span class="op">{</span>
@@ -239,25 +241,25 @@
       <span class="va">original</span> <span class="op">&lt;-</span> <span class="fu">fallRunDSM</span><span class="fu">::</span><span class="va"><a href="../reference/params.html">params</a></span><span class="op">$</span><span class="va">weeks_flooded</span>
       <span class="va">fp_filter</span> <span class="op">&lt;-</span> <span class="fu">fallRunDSM</span><span class="fu">::</span><span class="va"><a href="../reference/params.html">params</a></span><span class="op">$</span><span class="va">floodplain_habitat</span> <span class="op">&gt;</span> <span class="fl">0</span>
 
-      <span class="va">weeks_flooded_scaled</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>
-      <span class="va">weeks_flooded_scaled</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">pmin</a></span><span class="op">(</span><span class="va">original</span> <span class="op">+</span> <span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span> <span class="op">*</span> <span class="va">fp_filter</span>
-      <span class="va">weeks_flooded_scaled</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">pmax</a></span><span class="op">(</span><span class="va">original</span> <span class="op">-</span> <span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">*</span> <span class="va">fp_filter</span>
-      <span class="va">weeks_flooded_scaled</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">pmin</a></span><span class="op">(</span><span class="va">original</span> <span class="op">+</span> <span class="fl">1</span>, <span class="fl">4</span><span class="op">)</span> <span class="op">*</span> <span class="va">fp_filter</span>
-      <span class="va">weeks_flooded_scaled</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">pmax</a></span><span class="op">(</span><span class="va">original</span> <span class="op">-</span> <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">*</span> <span class="va">fp_filter</span>
-      <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">weeks_flooded_scaled</span><span class="op">)</span>
+      <span class="va">weeks_flooded_scaled</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>
+      <span class="va">weeks_flooded_scaled</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">pmin</a></span><span class="op">(</span><span class="va">original</span> <span class="op">+</span> <span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span> <span class="op">*</span> <span class="va">fp_filter</span>
+      <span class="va">weeks_flooded_scaled</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">pmax</a></span><span class="op">(</span><span class="va">original</span> <span class="op">-</span> <span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">*</span> <span class="va">fp_filter</span>
+      <span class="va">weeks_flooded_scaled</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">pmin</a></span><span class="op">(</span><span class="va">original</span> <span class="op">+</span> <span class="fl">1</span>, <span class="fl">4</span><span class="op">)</span> <span class="op">*</span> <span class="va">fp_filter</span>
+      <span class="va">weeks_flooded_scaled</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">pmax</a></span><span class="op">(</span><span class="va">original</span> <span class="op">-</span> <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">*</span> <span class="va">fp_filter</span>
+      <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">weeks_flooded_scaled</span><span class="op">)</span>
     <span class="op">}</span><span class="op">)</span><span class="op">(</span><span class="op">)</span>
 
   <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
     <span class="co"># default steps</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">.5</span>, <span class="fl">1.5</span>, by <span class="op">=</span> <span class="fl">.1</span><span class="op">)</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">.5</span>, <span class="fl">1.5</span>, by <span class="op">=</span> <span class="fl">.1</span><span class="op">)</span>
   <span class="op">}</span>
 
-  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/imap.html">imap_dfr</a></span><span class="op">(</span><span class="va">scalars</span>, <span class="op">~</span><span class="fu">run_scenarios_scaled_param</span><span class="op">(</span><span class="va">param</span>, <span class="va">.x</span>, <span class="va">.y</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/imap.html" class="external-link">imap_dfr</a></span><span class="op">(</span><span class="va">scalars</span>, <span class="op">~</span><span class="fu">run_scenarios_scaled_param</span><span class="op">(</span><span class="va">param</span>, <span class="va">.x</span>, <span class="va">.y</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 <p>Below is an example of running sensitivity for one model input.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">hatchery_allocation_results</span> <span class="op">&lt;-</span> <span class="fu">param_sensitivity</span><span class="op">(</span><span class="st">"hatchery_allocation"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/View.html">View</a></span><span class="op">(</span><span class="va">hatchery_allocation_results</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/utils/View.html" class="external-link">View</a></span><span class="op">(</span><span class="va">hatchery_allocation_results</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
 </div>
@@ -274,11 +276,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by James Petterson, Adam Duarte, Sadie Gill, Emanuel Rodriguez.</p>
+  <p></p>
+<p>Developed by James Petterson, Adam Duarte, Sadie Gill, Emanuel Rodriguez.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
 </div>
 
       </footer>
@@ -286,6 +290,8 @@
 
   
 
+
+  
 
   </body>
 </html>
