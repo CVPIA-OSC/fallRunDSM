@@ -77,8 +77,6 @@ datatable(cwt_data %>% filter(Run == "Fall") %>% select(-Run),
 
 The `proportion_hatchery` for each tributary is calculated below. To find the `proportion_hatchery`, we grouped our data by tributary and summarized to find the mean percentage of hatchery fish for each tributary. 
 
-TODO figure out why most tribs match but some do not. Must be missing a piece of the analysis here
-
 ```{r}
 proportion_hatchery <- cwt_data %>% 
   filter(Run == "Fall") %>% 
