@@ -29,8 +29,8 @@ library(gridExtra)
 
 ## Objective 
 
-Within the `get_rearing_survival()` submodel of the DSM, `aveT20`, `aveT20D`, `maxT25`, and `maxT25D` are defined as
-inverse logit models whose inputs are monthly stream temperatures. The purpose for these models are to provide a sub monthly metric derived from monthly data, these metrics are needed to calcualte survival probabilities. The script below outlines the parameterization process of these models. 
+Within the `get_rearing_survival()` DSM submodel, `aveT20`, `aveT20D`, `maxT25`, and `maxT25D` are defined as
+inverse logit models whose inputs are monthly stream temperatures. The purpose of these models is to provide a sub monthly metric derived from monthly data, and these metrics are needed to calculate survival probabilities. The script below outlines the parameterization process of these models. 
 
 ## Data Sources
 
@@ -56,7 +56,7 @@ d <- structure(list(agency_cd = c("USGS", "USGS", "USGS", "USGS",
 datatable(rename(d[2:3], `Site Number` = "site_no", `Station Name` = "station_nm"), options = list(dom = 't', pageLength = 20))
 ```
 
-and the following from CDEC: 
+And the following stations from CDEC: 
 
 
 ```{r}
@@ -80,7 +80,7 @@ This analysis is done using the following data:
 * [JERSEY POINT.csv (USGS: 11337190)](https://dsm-docs.s3-us-west-2.amazonaws.com/temperature_modeling/JERSEY+POINT.csv)
 * [LPotatoSLough.csv (USGS: 11336790 )](https://dsm-docs.s3-us-west-2.amazonaws.com/temperature_modeling/LPotatoSlough.csv)
 
-The Delta temperature datasets can be obtained using USGS' `dataRetrieval` R package using the corresponding
+The Delta temperature datasets can be obtained using USGS `dataRetrieval` R package using the corresponding
 site number listed above. For example to download the data for Jersey Point,
 
 ```r
@@ -90,7 +90,7 @@ jersey_point <- dataRetrieval::readNWISuv(siteNumbers = "11337190", parameterCd 
 
 ## Temperature Data 
 
-The table below shows the Central Valley and delta temperatures grouped by month and year and summarized to give monthly mean temperature, proportion of days over 20 degrees, and the count of days per month over 25 degrees. 
+The table below shows the Central Valley and delta temperatures grouped by month and year. It is summarized to give monthly mean temperature, the proportion of days over 20°C, and the count of days per month over 25°C. 
 
 ```{r}
 full_temp_data <- read_csv(system.file("extdata", "temperature-data", "Full temperature data.csv", 
@@ -147,15 +147,15 @@ datatable(combined_temp_measures %>% rename("Year" = year,
 
 ## Logistic Regression models 
 
-This data was prepped to model the proportion of days in a month with temps > 20 °C and if temperature will go above 25 °C, logistic regression was used to model this phenomenon. 
+This data was prepped to model the proportion of days in a month with temperature over 20 °C. If the temperature goes above 25 °C, logistic regression was used to model this phenomenon. 
 
-To allow for logistic regression model use we made the following edits: 
+To allow for logistic regression model use, we made the following edits: 
 
 * We adjusted zeros to .001 of and 1's to .999. 
 
-* We appended an additional column to our data containing the odds ratio by taking takes `log(Proportion Exceeding 20/(1 - Proportion Exceeding 20))`. 
+* We appended an additional column to our data containing the odds ratio by taking `log(Proportion Exceeding 20/(1 - Proportion Exceeding 20))`. 
 
-* We edited our `Number of Measures Exceeding 25 degrees` to create a binary column describing when temperature exceeds 25 in a month (1) and when temperature does not exceed 25 in a month (0).
+* We edited our `Number of Measures Exceeding 25 degrees` to create a binary column describing when the temperature exceeds 25 in a month (1) and when the temperature does not exceed 25 in a month (0).
 
 ```{r}
 grouped_temp_measures_for_logistic <- grouped_temp_measures %>%
@@ -189,8 +189,8 @@ delta_monthly_predictions <- data.frame(month_means, delta_prediction)
 
 ### Results: proportion of days where temperature exceedes 20°C in a month
 
-The model for proportion of days where temperature exceeds 20°C in a month is parameterized by fitting a linear
-regression model between the log odds of proportion of days in a month greater than 20°C and the monthly mean 
+We parameterized the model for the proportion of days where the temperature exceeds 20°C in a month by fitting a linear
+regression model between the log odds of the proportion of days in a month greater than 20°C, and the monthly mean 
 temperature. The logit values resulting from this are converted back into proportions using the `boot::inv.logit`.
 The resulting models are, 
 
@@ -202,7 +202,7 @@ $$ prop = inv.logit(-18.18765 + 0.9560903 \times temperature)$$
 
 $$ prop = inv.logit(-14.36524 + 0.7178891 \times temperature)$$
 
-The scatterplots below show the mean monthly temperature and the proportion of measures greater than 20 degrees for the Delta and Central Valley Rivers. The red line is our logistic model prediction where monthly temperature
+The scatter plots below show the mean monthly temperature and the proportion of measures greater than 20°C for the Delta and Central Valley Rivers. The red line is our logistic model prediction where the monthly temperature
 ranges between 5°C and 25°C.
 
 ```{r}
@@ -255,7 +255,7 @@ delta_monthly_predictions <- data.frame(month_means, delta_prediction)
 
 ### Results: temperatures exceeding 25°C during a month
 
-The model for predicting when temperature exceeds 25°C during a month is fit using a logistic regression where we regress the binary variable representing an occurance of temperature greater than 25°C onto corresponding mean monthly temperature.
+The model for predicting when the temperature exceeds 25°C during a month is fit using a logistic regression where we regress the binary variable representing an occurrence of temperature greater than 25°C onto corresponding mean monthly temperature.
 
 The resulting models are:
 
@@ -267,7 +267,7 @@ $$P_{> 25} = inv.logit(-18.66548 + 1.147803 \times temperature)$$
 
 $$P_{> 25} = inv.logit(-155.563 + 6.910016 \times temperature)$$
 
-The scatterplots below show if temp exceeds 25 for a given mean monthly temperature in the Delta and Central Valley Rivers. The red line is our logistic model prediction based on the numeric input defined above (`boot::inv.logit(Numeric Input)`):
+The scatter plots below show if temp exceeds 25°C for a given mean monthly temperature in the Delta and Central Valley Rivers. The red line is our logistic model prediction based on the numeric input defined above (`boot::inv.logit(Numeric Input)`):
 ```{r}
 cv_plot <- monthly_predictions %>%
   ggplot() +
