@@ -158,20 +158,23 @@ pairs <- matrix(c("Coleman National Fish Hatchery", "Battle Creek",
                 byrow=T)
 
 fall_fish_removal = NULL
-for(i in 1:5){
+
+fall_fish_removal <- map_df(1:nrow(pairs), function(i){
   keep_in_hatchery <- fall_hatchery_fish %>%
     filter(Trib == pairs[i, 1]) %>%
     arrange(Year)
+  if (nrow(keep_in_hatchery) == 0) return()
   
   remove_from_trib <- cwt_data %>%
     filter(Run == "Fall" & Trib == pairs[i, 2]) %>%
     arrange(Year) %>%
     mutate(natural_removed = Natural * Total_escape) 
-  
-  fall_proportion_removed <- keep_in_hatchery$remove/(keep_in_hatchery$remove + remove_from_trib$natural_removed)
-  fall_fish_removal <- rbind(fall_fish_removal, data.frame(Trib = rep(pairs[i, 2], 3), fall_proportion_removed, 3))
-}
+    fall_proportion_removed <- keep_in_hatchery$remove/(keep_in_hatchery$remove + remove_from_trib$natural_removed)
+    fall_fish_removal <- rbind(fall_fish_removal, data.frame(Trib = rep(pairs[i, 2], 3), fall_proportion_removed, 3))
 
+
+})
+  
 # Combine run removal rates 
 natural_adult_removal_rate <- fall_fish_removal %>%
   group_by(Trib) %>%
