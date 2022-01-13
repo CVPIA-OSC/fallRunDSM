@@ -151,7 +151,7 @@ This data was prepped to model the proportion of days in a month with temperatur
 
 To allow for logistic regression model use, we made the following edits: 
 
-* We adjusted zeros to .001 of and 1's to .999. 
+* We adjusted 0's to .001 and 1's to .999. 
 
 * We appended an additional column to our data containing the odds ratio by taking `log(Proportion Exceeding 20/(1 - Proportion Exceeding 20))`. 
 
