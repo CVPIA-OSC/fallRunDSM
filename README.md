@@ -106,5 +106,5 @@ We prepared additional datasets in the `DSMCalibration` package for model calibr
 
 2. Proxy years are used to select Habitat, Flow, and Temperature data for 1998-2017 to correspond with the years of GrandTab escapement data. The data inputs to the DSM are for years 1980-1999. We selected proxy years for 1998-2017 from the 1980-1999 model inputs by [comparing the DWR water year indices](https://cdec.water.ca.gov/reportapp/javareports?name=WSIHIST).
 
-For a detailed overview of the calibration process see the [calibration markdown.](calibration.Rmd)
+For a detailed overview of the calibration process see the [calibration markdown.](https://cvpia-osc.github.io/fallRunDSM/articles/calibration-2021.html)
 

@@ -74,11 +74,11 @@ FAhatch<-subset(fall, Hatch.flag == 1)
 FAhatch$remove<-FAhatch$Natural*FAhatch$Total_escape
 
 
-pairs<-matrix(c("Coleman National Fish Hatchery ","Battle Creek",
+pairs<-matrix(c("Coleman National Fish Hatchery","Battle Creek",
 "Feather River Hatchery","Feather River",
-"Merced River Fish Facility ","Merced River",
-"Nimbus Fish Hatchery ","American River",
-"Mokelumne Hatchery ","Mokelumne River"), ncol=2, byrow=T)
+"Merced River Fish Facility","Merced River",
+"Nimbus Fish Hatchery","American River",
+"Mokelumne Hatchery","Mokelumne River"), ncol=2, byrow=T)
 tada<-NULL
 for(i in 1:5){
   #i=1

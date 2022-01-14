@@ -7,7 +7,7 @@ template:
 home:
   links:
   - text: Fish and Wildlife Service's CVPIA website
-    href: https://www.fws.gov/lodi/anadromous_fish_restoration/afrp_index.htm
+    href: https://www.fws.gov/cno/fisheries/CAMP/CVPIA/
   - text: Bureau of Reclamation's CVPIA website
     href: https://www.usbr.gov/mp/cvpia/
 
@@ -90,6 +90,10 @@ navbar:
         href: 'articles/calibration-2021.html'
       - text: 'Sensitivity Analysis'
         href: 'articles/sensitivity-analysis.html'
+      - text: 'Hatchery Analysis'
+        href: 'articles/hatchery-analysis.html'
+      - text: 'Temperature Modeling'
+        href: 'articles/temperature-model.html'
   - text: 'News'
     href: news/index.html
 

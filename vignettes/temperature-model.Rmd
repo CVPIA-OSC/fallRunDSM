@@ -1,0 +1,297 @@
+---
+title: "DSM Logistic Temperature Model Documenation"
+output: 
+  html_document:
+    theme: flatly
+    code_folding: hide
+vignette: >
+  %\VignetteIndexEntry{temperature-model}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      message = FALSE,
+                      warning = FALSE,
+                      echo = FALSE,
+                      fig.width=15, fig.height=8)
+library(readr)
+library(tidyverse)
+library(boot) # Used for logit/inv.logit calculation
+library(DT)
+library(gridExtra)
+```
+
+# Chinook supplementary analysis for Chinook DSM models
+
+## Objective 
+
+Within the `get_rearing_survival()` DSM submodel, `aveT20`, `aveT20D`, `maxT25`, and `maxT25D` are defined as
+inverse logit models whose inputs are monthly stream temperatures. The purpose of these models is to provide a sub monthly metric derived from monthly data, and these metrics are needed to calculate survival probabilities. The script below outlines the parameterization process of these models. 
+
+## Data Sources
+
+Central Valley River Temps: 
+This analysis is done using data from the [Full temperature data.csv](https://dsm-docs.s3-us-west-2.amazonaws.com/temperature_modeling/Full+temperature+data.csv). 
+The Central Valley River Temps include the following stations from USGS: 
+
+```{r}
+d <- structure(list(agency_cd = c("USGS", "USGS", "USGS", "USGS", 
+"USGS", "USGS", "USGS", "USGS", "USGS", "USGS", "USGS", "USGS", 
+"USGS", "USGS", "USGS", "USGS"), site_no = c("11273400", "11274550", 
+"11289650", "11290000", "11303000", "11303500", "11335000", "11370500", 
+"11376000", "11383500", "11389500", "11390000", "11421000", "11425500", 
+"11446500", "11447650"), station_nm = c("SAN JOAQUIN R AB MERCED R NR NEWMAN CA", 
+"SAN JOAQUIN R NR CROWS LANDING CA", "TUOLUMNE R BL LAGRANGE DAM NR LAGRANGE CA", 
+"TUOLUMNE R A MODESTO CA", "STANISLAUS R A RIPON CA", "SAN JOAQUIN R NR VERNALIS CA", 
+"COSUMNES R A MICHIGAN BAR CA", "SACRAMENTO R A KESWICK CA", 
+"COTTONWOOD C NR COTTONWOOD CA", "DEER C NR VINA CA", "SACRAMENTO R A COLUSA CA", 
+"BUTTE C NR CHICO CA", "YUBA R NR MARYSVILLE CA", "SACRAMENTO R A VERONA CA", 
+"AMERICAN R A FAIR OAKS CA", "SACRAMENTO R A FREEPORT CA")), class = "data.frame", row.names = c(NA, 
+-16L))
+
+datatable(rename(d[2:3], `Site Number` = "site_no", `Station Name` = "station_nm"), options = list(dom = 't', pageLength = 20))
+```
+
+And the following stations from CDEC: 
+
+
+```{r}
+d <- structure(list(station_id = c("bic", "igo", "dvd", "grl", "crs", 
+                                   "mst", "mch", "mlm", "ccr", "yrs", "bbq"), name = c("big chico creek near chico", 
+                                                                                       "clear creek near igo", "deer creek below stanford vina dam", 
+                                                                                       "feather river near gridley", "merced river at cressy", "merced river near stevinson", 
+                                                                                       "mill creek below hwy 99", "mill creek nr los molinos", "sacramento river above clear ck", 
+                                                                                       "yuba river near smartville", "stoney ck blw black butte dam"
+                                   )), row.names = c(NA, -11L), class = c("tbl_df", "tbl", "data.frame"
+                                   ))
+
+datatable(rename(d, `Station ID` = station_id,  Name = name), options = list(dom = 't', pageLength = 20))
+```
+
+Delta Temps:
+This analysis is done using the following data:
+
+* [DUTCH SLOUGH.csv (USGS: 11313433 )](https://dsm-docs.s3-us-west-2.amazonaws.com/temperature_modeling/DUTCH+SLOUGH.csv)
+* [GEORGIANA SLOUGH.csv (USGS: 11447903 )](https://dsm-docs.s3-us-west-2.amazonaws.com/temperature_modeling/GEORGIANA+SLOUGH.csv)
+* [JERSEY POINT.csv (USGS: 11337190)](https://dsm-docs.s3-us-west-2.amazonaws.com/temperature_modeling/JERSEY+POINT.csv)
+* [LPotatoSLough.csv (USGS: 11336790 )](https://dsm-docs.s3-us-west-2.amazonaws.com/temperature_modeling/LPotatoSlough.csv)
+
+The Delta temperature datasets can be obtained using USGS `dataRetrieval` R package using the corresponding
+site number listed above. For example to download the data for Jersey Point,
+
+```r
+jersey_point <- dataRetrieval::readNWISuv(siteNumbers = "11337190", parameterCd = "00010", startDate = "2009-12-11")
+```
+
+
+## Temperature Data 
+
+The table below shows the Central Valley and delta temperatures grouped by month and year. It is summarized to give monthly mean temperature, the proportion of days over 20°C, and the count of days per month over 25°C. 
+
+```{r}
+full_temp_data <- read_csv(system.file("extdata", "temperature-data", "Full temperature data.csv", 
+                           package = "fallRunDSM", mustWork = TRUE)) %>% 
+  na.omit() %>%
+  mutate(gt20 = ifelse(medC > 20, 1, 0),
+         gt25 = ifelse(maxC > 25, 1, 0))
+
+grouped_temp_measures <- full_temp_data %>%
+  group_by(year, month) %>%
+  summarise(prop_gt_20 = round(mean(gt20), 2),
+            count_measures_gt_25 = sum(gt25),
+            month_mean_temp = round(mean(medC), 2)) %>% 
+  ungroup()
+
+jersey_point <- read_csv(system.file("extdata", "temperature-data", "JERSEY POINT.csv", 
+                           package = "fallRunDSM", mustWork = TRUE))
+dutch_slough <- read_csv(system.file("extdata", "temperature-data", "DUTCH SLOUGH.csv", 
+                           package = "fallRunDSM", mustWork = TRUE))
+georgiana_slough <- read_csv(system.file("extdata", "temperature-data", "GEORGIANA SLOUGH.csv", 
+                           package = "fallRunDSM", mustWork = TRUE))
+potato_slough <-read_csv(system.file("extdata", "temperature-data", "LPotatoSlough.csv", 
+                           package = "fallRunDSM", mustWork = TRUE))
+
+delta_full_temp_data <- rbind(jersey_point, dutch_slough, georgiana_slough, potato_slough) %>%
+  mutate(gt20 = ifelse(TempC > 20, 1, 0),
+         gt25 = ifelse(TempC > 25, 1, 0))
+
+grouped_temp_measures_delta <- delta_full_temp_data %>%
+  group_by(year, month) %>%
+  summarise(delta_prop_gt_20 = round(mean(gt20), 2),
+            delta_count_gt_25 = sum(gt25),
+            delta_month_mean_temp = round(mean(TempC), 2)) %>% 
+  ungroup()
+
+combined_temp_measures <- grouped_temp_measures_delta %>% 
+  full_join(grouped_temp_measures, by = c("month", "year"))
+
+datatable(combined_temp_measures %>% rename("Year" = year, 
+                                           "Month" = month,
+                                           "CV Number of Measures Exceeding 25°C" = count_measures_gt_25,
+                                           "CV Proportion Exceeding 20°C" = prop_gt_20,
+                                           "CV Monthly Mean Temp" = month_mean_temp,
+                                           "Delta Number of Measures Exceeding 25°C" = delta_count_gt_25,
+                                           "Delta Proportion Exceeding 20°C" = delta_prop_gt_20,
+                                           "Delta Monthly Mean Temp" = delta_month_mean_temp),
+          options = list(
+                    searching = FALSE,
+                    pageLength = 20,
+                    lengthMenu = c(5, 10, 15, 20), 
+                    dom = "tp"
+))
+```
+
+## Logistic Regression models 
+
+This data was prepped to model the proportion of days in a month with temperature over 20 °C. If the temperature goes above 25 °C, logistic regression was used to model this phenomenon. 
+
+To allow for logistic regression model use, we made the following edits: 
+
+* We adjusted 0's to .001 and 1's to .999. 
+
+* We appended an additional column to our data containing the odds ratio by taking `log(Proportion Exceeding 20/(1 - Proportion Exceeding 20))`. 
+
+* We edited our `Number of Measures Exceeding 25 degrees` to create a binary column describing when the temperature exceeds 25 in a month (1) and when the temperature does not exceed 25 in a month (0).
+
+```{r}
+grouped_temp_measures_for_logistic <- grouped_temp_measures %>%
+  mutate(prop_gt_20 = case_when(prop_gt_20 == 0 ~ 0.001, 
+                                 prop_gt_20 == 1 ~ 0.999,
+                                 prop_gt_20 != 0 & prop_gt_20 != 1 ~ prop_gt_20),
+         odds_ratio = log(prop_gt_20 / (1 - prop_gt_20)))
+
+#summary(grouped_temp_measures_for_logistic)
+lm_summary <- summary(lm(odds_ratio ~ month_mean_temp, data = grouped_temp_measures_for_logistic))
+
+month_means <- c(5:25)
+prediction <- boot::inv.logit(lm_summary$coefficients[1, 1] + lm_summary$coefficients[2, 1] * month_means)
+monthly_predictions <- data.frame(month_means, prediction)
+
+# Repeat for delta 
+delta_grouped_temp_measures_for_logit <- grouped_temp_measures_delta %>%
+  ungroup() %>% 
+  mutate(prop_gt_20 = case_when(delta_prop_gt_20 == 0 ~ 0.001, 
+                                 delta_prop_gt_20 == 1 ~ 0.999,
+                                 TRUE ~ delta_prop_gt_20),
+         odds_ratio = log(prop_gt_20 / (1 - prop_gt_20)))
+
+# summary(grouped_temp_measures_for_logit)
+delta_lm_summary <- summary(lm(odds_ratio ~ delta_month_mean_temp, data = delta_grouped_temp_measures_for_logit))
+
+month_means <- c(5:25)
+delta_prediction <- boot::inv.logit(delta_lm_summary$coefficients[1, 1] + delta_lm_summary$coefficients[2, 1] * month_means)
+delta_monthly_predictions <- data.frame(month_means, delta_prediction)
+```
+
+### Results: proportion of days where temperature exceedes 20°C in a month
+
+We parameterized the model for the proportion of days where the temperature exceeds 20°C in a month by fitting a linear
+regression model between the log odds of the proportion of days in a month greater than 20°C, and the monthly mean 
+temperature. The logit values resulting from this are converted back into proportions using the `boot::inv.logit`.
+The resulting models are, 
+
+**Delta**
+
+$$ prop = inv.logit(-18.18765 + 0.9560903 \times temperature)$$
+
+**Central Valley**
+
+$$ prop = inv.logit(-14.36524 + 0.7178891 \times temperature)$$
+
+The scatter plots below show the mean monthly temperature and the proportion of measures greater than 20°C for the Delta and Central Valley Rivers. The red line is our logistic model prediction where the monthly temperature
+ranges between 5°C and 25°C.
+
+```{r}
+cv_plot <- monthly_predictions %>%
+  ggplot() +
+  geom_line(aes(month_means, prediction), color = "Red") +
+  geom_point(data = grouped_temp_measures_for_logistic, aes(x = month_mean_temp, y = prop_gt_20)) +
+  xlab("Monthly mean temperature") +
+  ylab("Proportion days temp exceeds 20°C in a month") + 
+  ggtitle("Central Valley Temperature Model") +
+  theme(text = element_text(size = 18))
+
+delta_plot <- delta_monthly_predictions %>%
+  ggplot() +
+  geom_line(aes(month_means, prediction), color = "Red") +
+  geom_point(data = delta_grouped_temp_measures_for_logit, aes(x = delta_month_mean_temp, y = delta_prop_gt_20)) +
+  xlab("Monthly median temperature Delta") +
+  ylab("Proportion days temp exceeds 20°C in a month") + 
+  ggtitle("Delta Temperature Model") +
+  theme(text = element_text(size = 18))
+
+
+grid.arrange(cv_plot, delta_plot, ncol = 2)
+```
+
+
+
+```{r}
+grouped_temp_measures_for_logistic <- grouped_temp_measures %>%
+  mutate(count_measures_gt_25 = ifelse(count_measures_gt_25 > 1, 1, count_measures_gt_25))
+
+glm_summary <- summary(glm(count_measures_gt_25 ~ month_mean_temp, data=grouped_temp_measures_for_logistic, family='binomial'))
+
+month_means <- c(5:25)
+prediction <- boot::inv.logit(glm_summary$coefficients[1, 1] + glm_summary$coefficients[2, 1] * month_means)
+monthly_predictions <- data.frame(month_means, prediction)
+
+# Delta model
+delta_grouped_temp_measures_for_logit <- grouped_temp_measures_delta %>%
+  mutate(delta_count_gt_25 = ifelse(delta_count_gt_25 > 1, 1, delta_count_gt_25))
+
+delta_glm_summary <- summary(glm(delta_count_gt_25 ~ delta_month_mean_temp, data = delta_grouped_temp_measures_for_logit, family='binomial'))
+
+month_means <- c(5:25) # ? where does this come from?
+delta_prediction <- boot::inv.logit(glm_summary$coefficients[1, 1] + glm_summary$coefficients[2, 1] * month_means)
+delta_monthly_predictions <- data.frame(month_means, delta_prediction)
+```
+
+
+
+### Results: temperatures exceeding 25°C during a month
+
+The model for predicting when the temperature exceeds 25°C during a month is fit using a logistic regression where we regress the binary variable representing an occurrence of temperature greater than 25°C onto corresponding mean monthly temperature.
+
+The resulting models are:
+
+**Central Valley**
+
+$$P_{> 25} = inv.logit(-18.66548 + 1.147803 \times temperature)$$
+
+**Delta**
+
+$$P_{> 25} = inv.logit(-155.563 + 6.910016 \times temperature)$$
+
+The scatter plots below show if temp exceeds 25°C for a given mean monthly temperature in the Delta and Central Valley Rivers. The red line is our logistic model prediction based on the numeric input defined above (`boot::inv.logit(Numeric Input)`):
+```{r}
+cv_plot <- monthly_predictions %>%
+  ggplot() +
+  geom_line(aes(month_means, prediction), color = "Red") +
+  geom_point(data = grouped_temp_measures_for_logistic, aes(x = month_mean_temp, y = count_measures_gt_25)) +
+  xlab("Monthly mean temperature") +
+  ylab("Temp goes above 25°C during month") +
+  ggtitle("Central Valley Temperature Model") +
+  theme(text = element_text(size = 18))
+
+delta_plot <- delta_monthly_predictions %>%
+  ggplot() +
+  geom_line(aes(month_means, prediction), color = "Red") +
+  geom_point(data = delta_grouped_temp_measures_for_logit, aes(x = delta_month_mean_temp, y = delta_count_gt_25)) +
+  xlab("Monthly median temperature") +
+  ylab("Temp goes above 25°C during month") +
+  ggtitle("Delta Temperature Model") +
+  theme(text = element_text(size = 18))
+
+grid.arrange(cv_plot, delta_plot, ncol = 2) 
+
+```
+
+
+
+
+

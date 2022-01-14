@@ -221,7 +221,7 @@ period in front are model or submodel coefficients. Parameters with double perio
 }
 }
 
-\section{Generating model outputs}{
+\section{Generating Model Outputs}{
 
 \itemize{
   \item \code{mass_by_size_class}: More details at \code{\link{mass_by_size_class}}

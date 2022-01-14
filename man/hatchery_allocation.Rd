@@ -10,6 +10,8 @@
 \source{
 Various \href{https://s3-us-west-2.amazonaws.com/cvpia-reference-docs/AWP+Attachment+1.pdf}{CVPIA Science Integration Team: FY18 Decision Support Model activities and FY17 priorities Memorandum}
 
+More details \href{https://cvpia-osc.github.io/fallRunDSM/articles/hatchery-analysis.html}{here}
+
 Compiled by: James T. Peterson \email{jt.peterson@oregonstate.edu}
 }
 \usage{
