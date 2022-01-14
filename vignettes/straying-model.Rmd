@@ -53,6 +53,7 @@ cross_channel_data <- read_csv(system.file("extdata", "straying-data", "crxchan.
 ```
 
 The datatable below shows the stray data that has been prepped for analysis. (`no_stray` corresponds to the number of straying fish, `prop_stray` corresponds to the proportion of straying fish, `wild` describes if fish is wild(1) or hatchery(0)
+
 ```{r}
 release_data <- release_data[-2,]
 combined_stray_data <- merge(cwt_stray_data, release_data, all = T)
@@ -79,6 +80,7 @@ datatable(fall,
 #### Fitting a Generalized Linear Model 
 
 A generalized linear model is fit using the datatable above to predict the stray rate. 
+
 ** TODO:This is what they did but the results don't match up with the coefficents given in the straying submodel...there must be another straying analysis somewhere
 
 ```{r}
