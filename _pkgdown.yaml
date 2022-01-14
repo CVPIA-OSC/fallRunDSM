@@ -91,9 +91,9 @@ navbar:
       - text: 'Sensitivity Analysis'
         href: 'articles/sensitivity-analysis.html'
       - text: 'Hatchery Analysis'
-        href: articles/hatchery-analysis.html
+        href: 'articles/hatchery-analysis.html'
       - text: 'Temperature Modeling'
-        href: articles/temperature-model.html
+        href: 'articles/temperature-model.html'
   - text: 'News'
     href: news/index.html
 
