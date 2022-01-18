@@ -237,12 +237,12 @@ NULL
 #'   \item \code{delta_inflow}: More details at \code{\link[DSMflow]{delta_inflow}}
 #'   \item \code{avg_temp_delta}: More details at \code{\link[DSMtemperature]{delta_temperature}}
 #'   \item \code{delta_proportion_diverted}: More details at \code{\link[DSMflow]{delta_proportion_diverted}}
-#'   \item \code{.surv_juv_outmigration_sac_delta_intercept_one} Intercept for model one, source: TODO
-#'   \item \code{.surv_juv_outmigration_sac_delta_intercept_two} Intercept for model two, source: TODO
-#'   \item \code{.surv_juv_outmigration_sac_delta_intercept_three} Intercept for model three, source: TODO
-#'   \item \code{.surv_juv_outmigration_sac_delta_delta_flow} Coefficient for \code{delta_flow} variable, source: TODO
-#'   \item \code{.surv_juv_outmigration_sac_delta_avg_temp} Coefficient for \code{avg_temp} variable, source: TODO
-#'   \item \code{.surv_juv_outmigration_sac_delta_perc_diversions} Coefficient for \code{perc_diversions} variable, source: TODO
+#'   \item \code{.surv_juv_outmigration_sac_delta_intercept_one} Intercept for model one, source: This parameter and function have been deprecated and its documentation is for archival purposes.
+#'   \item \code{.surv_juv_outmigration_sac_delta_intercept_two} Intercept for model two, source: This parameter and function have been deprecated and its documentation is for archival purposes.
+#'   \item \code{.surv_juv_outmigration_sac_delta_intercept_three} Intercept for model three, source: This parameter and function have been deprecated and its documentation is for archival purposes.
+#'   \item \code{.surv_juv_outmigration_sac_delta_delta_flow} Coefficient for \code{delta_flow} variable, source: This parameter and function have been deprecated and its documentation is for archival purposes.
+#'   \item \code{.surv_juv_outmigration_sac_delta_avg_temp} Coefficient for \code{avg_temp} variable, source: This parameter and function have been deprecated and its documentation is for archival purposes.
+#'   \item \code{.surv_juv_outmigration_sac_delta_perc_diversions} Coefficient for \code{perc_diversions} variable, source: This parameter and function have been deprecated and its documentation is for archival purposes.
 #'   \item \code{.surv_juv_outmigration_sac_delta_medium} Size related intercept for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
 #'   \item \code{.surv_juv_outmigration_sac_delta_large} Size related intercept for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
 #' }
