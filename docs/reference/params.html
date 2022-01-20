@@ -122,7 +122,7 @@ period in front are model or submodel coefficients. Parameters with double perio
 <li><p><code>.adult_prespawn_deg_day</code>: Coefficient for <code>deg_day</code> variable, source: <a href="https://onlinelibrary.wiley.com/doi/epdf/10.1002/rra.3348" class="external-link">Colvin et al. (2018)</a></p></li>
 <li><p><code>prob_nest_scoured</code>: More details at <code><a href="https://CVPIA-OSC.github.io/DSMhabitat//reference/estimated_probs.html" class="external-link">prob_nest_scoured</a></code></p></li>
 <li><p><code>spawn_success_sex_ratio</code>: Variable describing the female to male spawning ratio, default 0.5, source: expert opinion from SIT members.</p></li>
-<li><p><code>spawn_success_redd_size</code>: Variable describing the size of redds including defensible space, default value 9.29 square meters TODO (find source for default)</p></li>
+<li><p><code>spawn_success_redd_size</code>: Variable describing the size of redds including defensible space, default value 9.29 square meters, source: expert opinion from SIT members.</p></li>
 <li><p><code>spawn_success_fecundity</code>: Variable describing the number of eggs per female, default value 5522, source: <a href="https://www.ucpress.edu/book/9780520227545/inland-fishes-of-california" class="external-link">Moyle, P. B. 2002. Inland Fishes of California. University of California Press, Berkeley CA</a></p></li>
 <li><p><code>hatchery_allocation</code>: More details at <code><a href="hatchery_allocation.html">hatchery_allocation</a></code></p></li>
 <li><p><code>natural_adult_removal_rate</code>: More details at <code><a href="natural_adult_removal_rate.html">natural_adult_removal_rate</a></code></p></li>
@@ -151,11 +151,11 @@ period in front are model or submodel coefficients. Parameters with double perio
 <li><p><code>prop_high_predation</code>: More details at <code><a href="https://CVPIA-OSC.github.io/DSMhabitat//reference/estimated_probs.html" class="external-link">prop_high_predation</a></code></p></li>
 <li><p><code>contact_points</code>: More details at <code><a href="https://CVPIA-OSC.github.io/DSMhabitat//reference/pad_structures.html" class="external-link">contact_points</a></code></p></li>
 <li><p><code>..surv_juv_rear_int</code>: Intercept, Source: calibration (varies by tributary)</p></li>
-<li><p><code>.surv_juv_rear_contact_points</code>: Coefficient for <code>contact_points</code> variable, Source: TODO - literature</p></li>
+<li><p><code>.surv_juv_rear_contact_points</code>: Coefficient for <code>contact_points</code> variable, Source: inherited from previous calibration</p></li>
 <li><p><code>..surv_juv_rear_contact_points</code>: Coefficient for <code>contact_points</code> variable, Source: calibration</p></li>
 <li><p><code>.surv_juv_rear_prop_diversions</code>: Coefficient for <code>prop_diversions</code> variable, Source: source: <a href="https://dsm-docs.s3-us-west-2.amazonaws.com/Hierarchical_Modeling_of_Juvenile_Chinook_Salmon_S+(1).pdf" class="external-link">Newman and Brandes (2010)</a></p></li>
 <li><p><code>..surv_juv_rear_prop_diversions</code>: Coefficient for <code>prop_diversions</code> variable, Source: calibration</p></li>
-<li><p><code>.surv_juv_rear_total_diversions</code>: Coefficient for <code>total_diversions</code> variable, Source: TODO - Literature</p></li>
+<li><p><code>.surv_juv_rear_total_diversions</code>: Coefficient for <code>total_diversions</code> variable, Source: inherited from previous calibration</p></li>
 <li><p><code>..surv_juv_rear_total_diversions</code>: Coefficient for <code>total_diversions</code> variable, Source: calibration</p></li>
 <li><p><code>.surv_juv_rear_avg_temp_thresh</code>:  Coefficient for <code>avg_temp_thresh</code> variable, Source: <a href="https://www.tandfonline.com/doi/full/10.1577/M07-130.1?scroll=top&amp;needAccess=true" class="external-link">Runge et al (2008)</a></p></li>
 <li><p><code>.surv_juv_rear_high_predation</code>: Coefficient for <code>high_predation</code> variable, source: <a href="https://pubag.nal.usda.gov/catalog/512123" class="external-link">Cavallo et al. (2012)</a></p></li>
@@ -187,9 +187,9 @@ period in front are model or submodel coefficients. Parameters with double perio
 <li><p><code>delta_contact_points</code>: More details at <code><a href="https://CVPIA-OSC.github.io/DSMhabitat//reference/pad_structures.html" class="external-link">delta_contact_points</a></code></p></li>
 <li><p><code>delta_prop_high_predation</code>: More details at <code><a href="https://CVPIA-OSC.github.io/DSMhabitat//reference/delta_prop_high_predation.html" class="external-link">delta_prop_high_predation</a></code></p></li>
 <li><p><code>..surv_juv_delta_int</code>: Intercept, Source: calibration</p></li>
-<li><p><code>.surv_juv_delta_contact_points</code>: Coefficient for <code>contact_points</code> variable, Source: TODO - literature</p></li>
+<li><p><code>.surv_juv_delta_contact_points</code>: Coefficient for <code>contact_points</code> variable, Source: inherited from previous calibration</p></li>
 <li><p><code>..surv_juv_delta_contact_points</code>: Coefficient for <code>contact_points</code> variable, Source: calibration</p></li>
-<li><p><code>.surv_juv_delta_total_diverted</code>: Coefficient for <code>total_diversions</code> variable, Source: TODO - literature</p></li>
+<li><p><code>.surv_juv_delta_total_diverted</code>: Coefficient for <code>total_diversions</code> variable, Source: inherited from previous calibration</p></li>
 <li><p><code>..surv_juv_delta_total_diverted</code>: Coefficient for <code>total_diversions</code> variable, Source: calibration</p></li>
 <li><p><code>.surv_juv_delta_avg_temp_thresh</code>: Coefficient for <code>avg_temp_thresh</code> variable, source: <a href="https://dsm-docs.s3-us-west-2.amazonaws.com/marine_cech_water_temp_effects.pdf" class="external-link">Marine and Chech (2004)</a></p></li>
 <li><p><code>.surv_juv_delta_high_predation</code>: Coefficient for <code>high_predation</code> variable, source: <a href="https://pubag.nal.usda.gov/catalog/512123" class="external-link">Cavallo et al. (2012)</a></p></li>
