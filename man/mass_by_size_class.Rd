@@ -5,7 +5,7 @@
 \alias{mass_by_size_class}
 \title{Mass by Size Class}
 \format{
-1 dimensional array [4 size classes]
+Vector of length 4 (4 size classes)
 }
 \source{
 TODO
@@ -15,8 +15,5 @@ mass_by_size_class
 }
 \description{
 mass of fish by the size class
-}
-\details{
-Mass by Size Class
 }
 \keyword{datasets}

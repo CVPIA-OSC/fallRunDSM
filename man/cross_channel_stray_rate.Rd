@@ -5,7 +5,7 @@
 \alias{cross_channel_stray_rate}
 \title{Cross Channel Stray Rate}
 \format{
-1 dimensional array [31 watersheds]
+Vector of length 31 [31 watersheds]
 }
 \source{
 Expert opinion from SIT members.

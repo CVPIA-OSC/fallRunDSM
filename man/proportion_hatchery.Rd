@@ -18,7 +18,4 @@ proportion_hatchery
 \description{
 Proportion of spawning fish that are from a hatchery.
 }
-\details{
-Proportion Hatchery
-}
 \keyword{datasets}

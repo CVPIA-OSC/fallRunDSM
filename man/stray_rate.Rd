@@ -5,7 +5,7 @@
 \alias{stray_rate}
 \title{Stray Rate}
 \format{
-1 dimensional array [31 watersheds]
+Vector of length 31 [31 watersheds]
 }
 \source{
 Estimated with coded wire tag data 2010–2013 (\href{https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&usg= AOvVaw0VgMOwD7knFfSxRZy6k8RG}{Kormos et al. 2012},

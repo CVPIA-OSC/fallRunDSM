@@ -56,9 +56,9 @@ period in front are model or submodel coefficients. Parameters with double perio
   \item \code{..surv_adult_prespawn_int}:  Intercept, Source: Calibration Estimate
   \item \code{.adult_prespawn_deg_day}: Coefficient for \code{deg_day} variable, source: \href{https://onlinelibrary.wiley.com/doi/epdf/10.1002/rra.3348}{Colvin et al. (2018)}
   \item \code{prob_nest_scoured}: More details at \code{\link[DSMhabitat]{prob_nest_scoured}}
-  \item \code{spawn_success_sex_ratio}: Variable describing the female to male spawning ratio, default 0.5 TODO (find source for default)
+  \item \code{spawn_success_sex_ratio}: Variable describing the female to male spawning ratio, default 0.5, source: expert opinion from SIT members.
   \item \code{spawn_success_redd_size}: Variable describing the size of redds including defensible space, default value 9.29 square meters TODO (find source for default)
-  \item \code{spawn_success_fecundity}: Variable describing the number of eggs per female, default value 5522 TODO (find source for default)
+  \item \code{spawn_success_fecundity}: Variable describing the number of eggs per female, default value 5522, source: \href{https://www.ucpress.edu/book/9780520227545/inland-fishes-of-california}{Moyle, P. B. 2002. Inland Fishes of California. University of California Press, Berkeley CA}
   \item \code{hatchery_allocation}: More details at \code{\link{hatchery_allocation}}
   \item \code{natural_adult_removal_rate}: More details at \code{\link{natural_adult_removal_rate}}
 
@@ -165,12 +165,12 @@ period in front are model or submodel coefficients. Parameters with double perio
   \item \code{delta_inflow}: More details at \code{\link[DSMflow]{delta_inflow}}
   \item \code{avg_temp_delta}: More details at \code{\link[DSMtemperature]{delta_temperature}}
   \item \code{delta_proportion_diverted}: More details at \code{\link[DSMflow]{delta_proportion_diverted}}
-  \item \code{.surv_juv_outmigration_sac_delta_intercept_one} Intercept for model one, source: TODO
-  \item \code{.surv_juv_outmigration_sac_delta_intercept_two} Intercept for model two, source: TODO
-  \item \code{.surv_juv_outmigration_sac_delta_intercept_three} Intercept for model three, source: TODO
-  \item \code{.surv_juv_outmigration_sac_delta_delta_flow} Coefficient for \code{delta_flow} variable, source: TODO
-  \item \code{.surv_juv_outmigration_sac_delta_avg_temp} Coefficient for \code{avg_temp} variable, source: TODO
-  \item \code{.surv_juv_outmigration_sac_delta_perc_diversions} Coefficient for \code{perc_diversions} variable, source: TODO
+  \item \code{.surv_juv_outmigration_sac_delta_intercept_one} Intercept for model one, source: this parameter and function have been deprecated and its documentation is for archival purposes.
+  \item \code{.surv_juv_outmigration_sac_delta_intercept_two} Intercept for model two, source: this parameter and function have been deprecated and its documentation is for archival purposes.
+  \item \code{.surv_juv_outmigration_sac_delta_intercept_three} Intercept for model three, source: this parameter and function have been deprecated and its documentation is for archival purposes.
+  \item \code{.surv_juv_outmigration_sac_delta_delta_flow} Coefficient for \code{delta_flow} variable, source: this parameter and function have been deprecated and its documentation is for archival purposes.
+  \item \code{.surv_juv_outmigration_sac_delta_avg_temp} Coefficient for \code{avg_temp} variable, source: this parameter and function have been deprecated and its documentation is for archival purposes.
+  \item \code{.surv_juv_outmigration_sac_delta_perc_diversions} Coefficient for \code{perc_diversions} variable, source: this parameter and function have been deprecated and its documentation is for archival purposes.
   \item \code{.surv_juv_outmigration_sac_delta_medium} Size related intercept for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
   \item \code{.surv_juv_outmigration_sac_delta_large} Size related intercept for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
 }

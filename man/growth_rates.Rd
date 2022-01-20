@@ -7,7 +7,7 @@
 \alias{growth_rates_floodplain}
 \title{Growth Rates}
 \format{
-1 dimensional array [4 size classes]
+4 x 4 x 4 array [4 size classes x 4 size classes x 4 weeks]
 }
 \source{
 Growth rates determined by expert SIT judgment based on the following:
