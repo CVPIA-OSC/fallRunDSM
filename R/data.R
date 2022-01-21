@@ -55,7 +55,7 @@
 #' @title Mass by Size Class
 #' @description mass of fish by the size class
 #' @format Vector of length 4 (4 size classes)
-#' @source TODO
+#' @source size classes were derived from Analysis of Stanislaus data.
 "mass_by_size_class"
 
 #' @title Cross Channel Stray Rate

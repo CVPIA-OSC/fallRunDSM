@@ -8,7 +8,7 @@
 Vector of length 4 (4 size classes)
 }
 \source{
-TODO
+size classes were derived from Analysis of Stanislaus data.
 }
 \usage{
 mass_by_size_class
