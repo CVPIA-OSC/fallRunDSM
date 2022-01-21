@@ -38,39 +38,35 @@
 #' @source Derived from average escapement estimates from 2013 to 2017 \href{https://dsm-docs.s3.us-west-2.amazonaws.com/Azat+2019.pdf}{Azat 2019}.
 "adult_seeds"
 
-#' Proportion Hatchery
 #' @title Proportion Hatchery
 #' @description Proportion of spawning fish that are from a hatchery.
 #' @format 1 dimensional array [31 watersheds]
 #' @source Coded Wire Tag Analysis and data from chinookprod database
 #'
 #' More details \href{https://cvpia-osc.github.io/fallRunDSM/articles/hatchery-analysis.html}{here}
-#'
 "proportion_hatchery"
 
-#' Month Return Proportions
 #' @title Month Return Proportions
 #' @description The proportion of spawning fish in Oct-Dec
-#' @format 1 dimensional array [31 watersheds]
-#' @source TODO
+#' @format Vector of length 3
+#' @source Expert opinion from SIT members.
 "month_return_proportions"
 
-#' Mass by Size Class
 #' @title Mass by Size Class
 #' @description mass of fish by the size class
-#' @format 1 dimensional array [4 size classes]
-#' @source TODO
+#' @format Vector of length 4 (4 size classes)
+#' @source size classes were derived from Analysis of Stanislaus data.
 "mass_by_size_class"
 
 #' @title Cross Channel Stray Rate
 #' @description Natural straying allocation across channels.
-#' @format 1 dimensional array [31 watersheds]
+#' @format Vector of length 31 [31 watersheds]
 #' @source Expert opinion from SIT members.
 "cross_channel_stray_rate"
 
 #' @title Stray Rate
 #' @description Natural straying allocation
-#' @format 1 dimensional array [31 watersheds]
+#' @format Vector of length 31 [31 watersheds]
 #' @source Estimated with coded wire tag data 2010–2013 (\href{https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&usg= AOvVaw0VgMOwD7knFfSxRZy6k8RG}{Kormos et al. 2012},
 #' \href{https://www.rmpc.org/files/mark-mtg-2014-docs/2011_CFM_CWT_Recovery_Report_FAR_2013(Melodie_Palmer-Zwahlen).pdf}{Palmer-Zwahlen & Kormos 2013-2015},
 #' \href{https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&usg=AOvVaw3wSbd-zJk1eQa085Xuxiyg}{Palmer-Zwahlen et al. 2018})
@@ -78,14 +74,14 @@
 
 #' @title Diversity Groups
 #' @description Watershed groups.
-#' @format 1 dimensional named array [31 watersheds]
+#' @format Vector of length 31 [31 watersheds]
 #' @source The diversity groups are sourced from the ["Framework for Assessing Viability of Threatened and Endangered Chinook Salmon and Steelhead in the Sacramento-San Joaquin Basin"](http://escholarship.org/uc/item/3653x9xc) with slight modification.
 #' The "Northern Sierra" diversity group covers a very large geographic area and was divided into two groups based on proximity.
 "diversity_group"
 
 #' @title Growth Rates
 #' @description Chinook growth rates in floodplain and inchannel habitat.
-#' @format 1 dimensional array [4 size classes]
+#' @format 4 x 4 x 4 array [4 size classes x 4 size classes x 4 weeks]
 #' @source Growth rates determined by expert SIT judgment based on the following:
 #' \itemize{
 #'   \item \href{https://link.springer.com/article/10.1007/s10641-009-9473-8}{Limm, M.P., Marchetti, M.P.  (2009)}
@@ -146,9 +142,9 @@ NULL
 #'   \item \code{..surv_adult_prespawn_int}:  Intercept, Source: Calibration Estimate
 #'   \item \code{.adult_prespawn_deg_day}: Coefficient for \code{deg_day} variable, source: \href{https://onlinelibrary.wiley.com/doi/epdf/10.1002/rra.3348}{Colvin et al. (2018)}
 #'   \item \code{prob_nest_scoured}: More details at \code{\link[DSMhabitat]{prob_nest_scoured}}
-#'   \item \code{spawn_success_sex_ratio}: Variable describing the female to male spawning ratio, default 0.5 TODO (find source for default)
-#'   \item \code{spawn_success_redd_size}: Variable describing the size of redds including defensible space, default value 9.29 square meters TODO (find source for default)
-#'   \item \code{spawn_success_fecundity}: Variable describing the number of eggs per female, default value 5522 TODO (find source for default)
+#'   \item \code{spawn_success_sex_ratio}: Variable describing the female to male spawning ratio, default 0.5, source: expert opinion from SIT members.
+#'   \item \code{spawn_success_redd_size}: Variable describing the size of redds including defensible space, default value 9.29 square meters, source: expert opinion from SIT members.
+#'   \item \code{spawn_success_fecundity}: Variable describing the number of eggs per female, default value 5522, source: \href{https://www.ucpress.edu/book/9780520227545/inland-fishes-of-california}{Moyle, P. B. 2002. Inland Fishes of California. University of California Press, Berkeley CA}
 #'   \item \code{hatchery_allocation}: More details at \code{\link{hatchery_allocation}}
 #'   \item \code{natural_adult_removal_rate}: More details at \code{\link{natural_adult_removal_rate}}
 #'
@@ -173,11 +169,11 @@ NULL
 #'   \item \code{prop_high_predation}: More details at \code{\link[DSMhabitat]{prop_high_predation}}
 #'   \item \code{contact_points}: More details at \code{\link[DSMhabitat]{contact_points}}
 #'   \item \code{..surv_juv_rear_int}: Intercept, Source: calibration (varies by tributary)
-#'   \item \code{.surv_juv_rear_contact_points}: Coefficient for \code{contact_points} variable, Source: TODO - literature
+#'   \item \code{.surv_juv_rear_contact_points}: Coefficient for \code{contact_points} variable, Source: inherited from previous calibration
 #'   \item \code{..surv_juv_rear_contact_points}: Coefficient for \code{contact_points} variable, Source: calibration
 #'   \item \code{.surv_juv_rear_prop_diversions}: Coefficient for \code{prop_diversions} variable, Source: source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/Hierarchical_Modeling_of_Juvenile_Chinook_Salmon_S+(1).pdf}{Newman and Brandes (2010)}
 #'   \item \code{..surv_juv_rear_prop_diversions}: Coefficient for \code{prop_diversions} variable, Source: calibration
-#'   \item \code{.surv_juv_rear_total_diversions}: Coefficient for \code{total_diversions} variable, Source: TODO - Literature
+#'   \item \code{.surv_juv_rear_total_diversions}: Coefficient for \code{total_diversions} variable, Source: inherited from previous calibration
 #'   \item \code{..surv_juv_rear_total_diversions}: Coefficient for \code{total_diversions} variable, Source: calibration
 #'   \item \code{.surv_juv_rear_avg_temp_thresh}:  Coefficient for \code{avg_temp_thresh} variable, Source: \href{https://www.tandfonline.com/doi/full/10.1577/M07-130.1?scroll=top&needAccess=true}{Runge et al (2008)}
 #'   \item \code{.surv_juv_rear_high_predation}: Coefficient for \code{high_predation} variable, source: \href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}
@@ -205,9 +201,9 @@ NULL
 #'   \item \code{delta_contact_points}: More details at \code{\link[DSMhabitat]{delta_contact_points}}
 #'   \item \code{delta_prop_high_predation}: More details at \code{\link[DSMhabitat]{delta_prop_high_predation}}
 #'   \item \code{..surv_juv_delta_int}: Intercept, Source: calibration
-#'   \item \code{.surv_juv_delta_contact_points}: Coefficient for \code{contact_points} variable, Source: TODO - literature
+#'   \item \code{.surv_juv_delta_contact_points}: Coefficient for \code{contact_points} variable, Source: inherited from previous calibration
 #'   \item \code{..surv_juv_delta_contact_points}: Coefficient for \code{contact_points} variable, Source: calibration
-#'   \item \code{.surv_juv_delta_total_diverted}: Coefficient for \code{total_diversions} variable, Source: TODO - literature
+#'   \item \code{.surv_juv_delta_total_diverted}: Coefficient for \code{total_diversions} variable, Source: inherited from previous calibration
 #'   \item \code{..surv_juv_delta_total_diverted}: Coefficient for \code{total_diversions} variable, Source: calibration
 #'   \item \code{.surv_juv_delta_avg_temp_thresh}: Coefficient for \code{avg_temp_thresh} variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/marine_cech_water_temp_effects.pdf}{Marine and Chech (2004)}
 #'   \item \code{.surv_juv_delta_high_predation}: Coefficient for \code{high_predation} variable, source: \href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}
@@ -237,12 +233,12 @@ NULL
 #'   \item \code{delta_inflow}: More details at \code{\link[DSMflow]{delta_inflow}}
 #'   \item \code{avg_temp_delta}: More details at \code{\link[DSMtemperature]{delta_temperature}}
 #'   \item \code{delta_proportion_diverted}: More details at \code{\link[DSMflow]{delta_proportion_diverted}}
-#'   \item \code{.surv_juv_outmigration_sac_delta_intercept_one} Intercept for model one, source: TODO
-#'   \item \code{.surv_juv_outmigration_sac_delta_intercept_two} Intercept for model two, source: TODO
-#'   \item \code{.surv_juv_outmigration_sac_delta_intercept_three} Intercept for model three, source: TODO
-#'   \item \code{.surv_juv_outmigration_sac_delta_delta_flow} Coefficient for \code{delta_flow} variable, source: TODO
-#'   \item \code{.surv_juv_outmigration_sac_delta_avg_temp} Coefficient for \code{avg_temp} variable, source: TODO
-#'   \item \code{.surv_juv_outmigration_sac_delta_perc_diversions} Coefficient for \code{perc_diversions} variable, source: TODO
+#'   \item \code{.surv_juv_outmigration_sac_delta_intercept_one} Intercept for model one, source: this parameter and function have been deprecated and its documentation is for archival purposes.
+#'   \item \code{.surv_juv_outmigration_sac_delta_intercept_two} Intercept for model two, source: this parameter and function have been deprecated and its documentation is for archival purposes.
+#'   \item \code{.surv_juv_outmigration_sac_delta_intercept_three} Intercept for model three, source: this parameter and function have been deprecated and its documentation is for archival purposes.
+#'   \item \code{.surv_juv_outmigration_sac_delta_delta_flow} Coefficient for \code{delta_flow} variable, source: this parameter and function have been deprecated and its documentation is for archival purposes.
+#'   \item \code{.surv_juv_outmigration_sac_delta_avg_temp} Coefficient for \code{avg_temp} variable, source: this parameter and function have been deprecated and its documentation is for archival purposes.
+#'   \item \code{.surv_juv_outmigration_sac_delta_perc_diversions} Coefficient for \code{perc_diversions} variable, source: this parameter and function have been deprecated and its documentation is for archival purposes.
 #'   \item \code{.surv_juv_outmigration_sac_delta_medium} Size related intercept for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
 #'   \item \code{.surv_juv_outmigration_sac_delta_large} Size related intercept for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
 #' }
@@ -290,11 +286,3 @@ NULL
 #' @rdname params
 #' @format NULL
 "params_2019"
-
-
-
-
-
-
-
-

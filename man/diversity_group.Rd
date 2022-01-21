@@ -5,7 +5,7 @@
 \alias{diversity_group}
 \title{Diversity Groups}
 \format{
-1 dimensional named array [31 watersheds]
+Vector of length 31 [31 watersheds]
 }
 \source{
 The diversity groups are sourced from the ["Framework for Assessing Viability of Threatened and Endangered Chinook Salmon and Steelhead in the Sacramento-San Joaquin Basin"](http://escholarship.org/uc/item/3653x9xc) with slight modification.

@@ -82,7 +82,7 @@ proportion_hatchery <- cwt_data %>%
   filter(Run == "Fall") %>% 
   select(-Run) %>% 
   group_by(Trib) %>% 
-  summarise(prop_hatchery = mean(Hatchery, na.rm = T))
+  summarise(prop_hatchery = round(mean(Hatchery, na.rm = T), 3))
 
 datatable(proportion_hatchery, 
           options = list(
