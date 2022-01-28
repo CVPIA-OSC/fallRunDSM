@@ -51,9 +51,9 @@ surv_juv_rear <- function(max_temp_thresh, avg_temp_thresh, high_predation,
   base_score_inchannel <- ..surv_juv_rear_int +
     (.avg_temp_thresh * avg_temp_thresh) +
     (.high_predation * high_predation) +
-    (.surv_juv_rear_contact_points * ..surv_juv_rear_contact_points * contact_points * high_predation) +
-    (.surv_juv_rear_prop_diversions * ..surv_juv_rear_prop_diversions * prop_diversions) +
-    (.surv_juv_rear_total_diversions * ..surv_juv_rear_total_diversions * total_diversions) +
+    (..surv_juv_rear_contact_points * contact_points * high_predation) +
+    (..surv_juv_rear_prop_diversions * prop_diversions) +
+    (..surv_juv_rear_total_diversions * total_diversions) +
     (.stranded * stranded)
 
   base_score_floodplain <- ..surv_juv_rear_int + .floodplain +
