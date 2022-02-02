@@ -9,7 +9,7 @@ aveT20 <- c(0L, 0L, 0L, 1L, 1L, 0L, 0L, 0L, 1L, 0L, 0L, 1L, 0L, 1L, 0L,
 names(aveT20) <- fallRunDSM::watershed_labels
 maxT25 <- c(0L, 0L, 1L, 1L, 1L, 1L, 0L, 1L, 1L, 1L, 0L, 1L, 0L, 1L, 1L,
             1L, 1L, 0L, 0L, 1L, 1L, 1L, 1L, 1L, 0L, 1L, 1L, 1L, 0L, 1L, 1L)
-names(aveT20) <- fallRunDSM::watershed_labels
+names(maxT25) <- fallRunDSM::watershed_labels
 aveT20D <- c(1L, 1L)
 names(aveT20D) <- c("North Delta", "South Delta")
 maxT25D <- 0:1
