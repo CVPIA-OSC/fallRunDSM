@@ -171,6 +171,12 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                              yolo_habitat = ..params$yolo_habitat,
                              delta_habitat = ..params$delta_habitat)
 
+      # temperature threshold metrics for sub-month calculations required for survival probabilities
+      aveT20 <- boot::inv.logit(-14.32252 + 0.72102 * ..params$avg_temp[ , month , year])
+      maxT25 <- boot::inv.logit(-23.1766 + 1.4566 * ..params$avg_temp[ , month, year])
+      aveT20D <- boot::inv.logit(-18.30017 + 0.96991 * ..params$avg_temp_delta[month, year, ])
+      maxT25D <- boot::inv.logit(-157.537 + 6.998 * ..params$avg_temp_delta[month, year, ])
+
       rearing_survival <- get_rearing_survival(year, month,
                                                survival_adjustment = scenario_data$survival_adjustment,
                                                mode = mode,
@@ -187,6 +193,10 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                                contact_points = ..params$contact_points,
                                                delta_contact_points = ..params$delta_contact_points,
                                                delta_prop_high_predation = ..params$delta_prop_high_predation,
+                                               avg_temp_thresh = aveT20,
+                                               avg_temp_thresh_delta = aveT20D,
+                                               max_temp_thresh = maxT25,
+                                               max_temp_thresh_delta = maxT25D,
                                                ..surv_juv_rear_int= ..params$..surv_juv_rear_int,
                                                .surv_juv_rear_contact_points = ..params$.surv_juv_rear_contact_points,
                                                ..surv_juv_rear_contact_points = ..params$..surv_juv_rear_contact_points,
@@ -232,6 +242,8 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                                    delta_inflow = ..params$delta_inflow,
                                                    avg_temp_delta = ..params$avg_temp_delta,
                                                    avg_temp = ..params$avg_temp,
+                                                   max_temp_thresh = maxT25,
+                                                   avg_temp_thresh = aveT20,
                                                    delta_proportion_diverted = ..params$delta_proportion_diverted,
                                                    ..surv_juv_outmigration_sj_int = ..params$..surv_juv_outmigration_sj_int,
                                                    .surv_juv_outmigration_san_joaquin_medium = ..params$.surv_juv_outmigration_san_joaquin_medium,

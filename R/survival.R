@@ -199,6 +199,54 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
 }
 
 
+surv_juv_delta_north <- function(avg_temp) {
+  c(rep((avg_temp <= 16.5)*.42 + (avg_temp > 16.5 & avg_temp < 19.5) * 0.42 /
+          (1.55^(avg_temp-15.5)) + (avg_temp > 19.5 & avg_temp < 25)*0.035,3), 1)
+}
+
+surv_juv_delta_south <- function(max_temp_thresh, avg_temp_thresh, high_predation, contact_points,
+                                 prop_diverted, total_diverted,
+                                 ..surv_juv_delta_int = fallRunDSM::params$..surv_juv_delta_int,
+                                 .avg_temp_thresh = fallRunDSM::params$.surv_juv_delta_avg_temp_thresh,
+                                 .high_predation = fallRunDSM::params$.surv_juv_delta_high_predation,
+                                 .surv_juv_delta_contact_points = fallRunDSM::params$.surv_juv_delta_contact_points,
+                                 ..surv_juv_delta_contact_points = fallRunDSM::params$..surv_juv_delta_contact_points,
+                                 .prop_diverted = fallRunDSM::params$.surv_juv_delta_prop_diverted,
+                                 .surv_juv_delta_total_diverted = fallRunDSM::params$.surv_juv_delta_total_diverted,
+                                 ..surv_juv_delta_total_diverted = fallRunDSM::params$..surv_juv_delta_total_diverted,
+                                 .medium = fallRunDSM::params$.surv_juv_delta_medium,
+                                 .large =  fallRunDSM::params$.surv_juv_delta_large,
+                                 min_survival_rate = fallRunDSM::params$min_survival_rate,
+                                 stochastic) {
+  # south delta
+  base_score <- ..surv_juv_delta_int +
+    .avg_temp_thresh * avg_temp_thresh +
+    .high_predation * high_predation +
+    .surv_juv_delta_contact_points * ..surv_juv_delta_contact_points * contact_points * high_predation[2] +
+    .prop_diverted * prop_diverted[2] +
+    .surv_juv_delta_total_diverted * ..surv_juv_delta_total_diverted * total_diverted[2]
+
+  if (stochastic) {
+    s <- ifelse(max_temp_thresh[2], min_survival_rate, boot::inv.logit(base_score))
+    m <- ifelse(max_temp_thresh[2], min_survival_rate, boot::inv.logit(base_score + .medium))
+    l <- ifelse(max_temp_thresh[2], min_survival_rate, boot::inv.logit(base_score + .large))
+  } else {
+    s <- (boot::inv.logit(base_score) * (1 - max_temp_thresh[2])) + (min_survival_rate * max_temp_thresh[2])
+    m <- (boot::inv.logit(base_score + .medium) * (1 - max_temp_thresh[2])) + (min_survival_rate * max_temp_thresh[2])
+    l <- (boot::inv.logit(base_score + .large) * (1 - max_temp_thresh[2])) + (min_survival_rate * max_temp_thresh[2])
+  }
+
+
+  south_delta_surv <- cbind(s = s, m = m, l = l, vl = 1)
+  result <- rbind("north_delta" = north_delta_surv, "south_delta" = south_delta_surv)
+  row.names(result) <- c("North Delta", "South Delta")
+
+  result
+}
+
+
+
+
 #' @title Get Rearing Survival Rates
 #' @description Calculates the juvenile inchannel, floodplain, bypasses, and
 #' deltas rearing survival rates for a month and year of the simulation
@@ -268,6 +316,10 @@ get_rearing_survival <- function(year, month,
                                  contact_points,
                                  delta_contact_points,
                                  delta_prop_high_predation,
+                                 avg_temp_thresh,
+                                 avg_temp_thresh_delta,
+                                 max_temp_thresh,
+                                 max_temp_thresh_delta,
                                  ..surv_juv_rear_int,
                                  .surv_juv_rear_contact_points,
                                  ..surv_juv_rear_contact_points,
@@ -300,17 +352,13 @@ get_rearing_survival <- function(year, month,
                                  min_survival_rate,
                                  stochastic) {
 
-  aveT20 <- boot::inv.logit(-14.32252 + 0.72102 * avg_temp[ , month , year])
-  maxT25 <- boot::inv.logit(-23.1766 + 1.4566 * avg_temp[ , month, year])
-  aveT20D <- boot::inv.logit(-18.30017 + 0.96991 * avg_temp_delta[month, year, ])
-  maxT25D <- boot::inv.logit(-157.537 + 6.998 * avg_temp_delta[month, year, ])
-
   if (stochastic) {
-    aveT20 <- rbinom(31, 1, aveT20)
-    maxT25 <- rbinom(31, 1, maxT25)
-    aveT20D <- rbinom(2, 1, aveT20D)
-    maxT25D <- rbinom(2, 1, maxT25D)
+    avg_temp_thresh <- rbinom(31, 1, avg_temp_thresh)
+    max_temp_thresh <- rbinom(31, 1, max_temp_thresh)
+    avg_temp_thresh_delta <- rbinom(2, 1, avg_temp_thresh_delta)
+    max_temp_thresh_delta <- rbinom(2, 1, max_temp_thresh_delta)
   }
+
   # set proportion fish stranding
   prob_ws_strand <- if(month < 4) prob_strand_early else prob_strand_late
 
@@ -345,8 +393,8 @@ get_rearing_survival <- function(year, month,
   if (length(..surv_juv_rear_int) == 1) ..surv_juv_rear_int <- rep(..surv_juv_rear_int, 31)
 
   rear_surv <- t(sapply(1:31, function(x) {
-    surv_juv_rear(max_temp_thresh = maxT25[x],
-                  avg_temp_thresh = aveT20[x],
+    surv_juv_rear(max_temp_thresh = max_temp_thresh[x],
+                  avg_temp_thresh = avg_temp_thresh[x],
                   high_predation = high_predation[x],
                   contact_points = num_contact_points[x],
                   prop_diversions = proportion_diverted[x],
@@ -379,8 +427,8 @@ get_rearing_survival <- function(year, month,
     flood_surv <- pmin(flood_surv * survival_adjustment[, year], 1)
   }
 
-  bp_surv <- surv_juv_bypass(max_temp_thresh = maxT25[22],
-                             avg_temp_thresh = aveT20[22],
+  bp_surv <- surv_juv_bypass(max_temp_thresh = max_temp_thresh[22],
+                             avg_temp_thresh = avg_temp_thresh[22],
                              high_predation = 0,
                              ..surv_juv_bypass_int = ..surv_juv_bypass_int,
                              .avg_temp_thresh = .surv_juv_bypass_avg_temp_thresh,
@@ -395,8 +443,8 @@ get_rearing_survival <- function(year, month,
   yolo_surv <- bp_surv
 
   delta_juv_surv <- surv_juv_delta(avg_temp = avg_temp_delta[month, year, "North Delta"],
-                                   max_temp_thresh = maxT25D,
-                                   avg_temp_thresh = aveT20D,
+                                   max_temp_thresh = max_temp_thresh_delta,
+                                   avg_temp_thresh = avg_temp_thresh_delta,
                                    high_predation = delta_high_predation,
                                    contact_points = delta_num_contact_points,
                                    prop_diverted = delta_proportion_diverted,
@@ -659,18 +707,17 @@ get_migratory_survival <- function(year, month,
                                    avg_temp_delta,
                                    avg_temp,
                                    delta_proportion_diverted,
+                                   avg_temp_thresh,
+                                   max_temp_thresh,
                                    ..surv_juv_outmigration_sj_int,
                                    .surv_juv_outmigration_san_joaquin_medium,
                                    .surv_juv_outmigration_san_joaquin_large,
                                    min_survival_rate,
                                    stochastic) {
 
-  aveT20 <- boot::inv.logit(-14.32252 + 0.72102 * avg_temp[ , month , year])
-  maxT25 <- boot::inv.logit(-23.1766 + 1.4566 * avg_temp[ , month, year])
-
   if (stochastic) {
-    aveT20 <- rbinom(31, 1, aveT20)
-    maxT25 <- rbinom(31, 1, maxT25)
+    avg_temp_thresh <- rbinom(31, 1, avg_temp_thresh)
+    max_temp_thresh <- rbinom(31, 1, max_temp_thresh)
   }
 
   u_sac_flow <- upper_sacramento_flows[month, year]
@@ -681,8 +728,8 @@ get_migratory_survival <- function(year, month,
 
   lower_sac_migration_surv <- surv_juv_outmigration_sac(flow_cms = u_sac_flow)
 
-  bp_surv <- sqrt(surv_juv_bypass(max_temp_thresh = maxT25[22],
-                                  avg_temp_thresh = aveT20[22],
+  bp_surv <- sqrt(surv_juv_bypass(max_temp_thresh = max_temp_thresh[22],
+                                  avg_temp_thresh = avg_temp_thresh[22],
                                   high_predation = 0,
                                   min_survival_rate = min_survival_rate,
                                   stochastic = stochastic))
