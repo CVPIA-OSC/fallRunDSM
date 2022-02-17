@@ -8,9 +8,7 @@
 1 dimensional array [31 watersheds]
 }
 \source{
-Coded Wire Tag Analysis and data from chinookprod database
-
-More details \href{https://cvpia-osc.github.io/fallRunDSM/articles/hatchery-analysis.html}{here}
+Proportion hatchery was derived using coded wire tag analysis. Details and methodology are available \href{https://cvpia-osc.github.io/fallRunDSM/articles/hatchery-analysis.html}{here}.
 }
 \usage{
 proportion_hatchery
