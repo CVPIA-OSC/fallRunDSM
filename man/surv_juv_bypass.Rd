@@ -28,19 +28,19 @@ surv_juv_bypass(
 
 \item{high_predation}{Variable representing an indicator for high predation in watershed}
 
-\item{..surv_juv_bypass_int}{intercept, source: calibration}
+\item{..surv_juv_bypass_int}{Intercept, source: calibration}
 
-\item{.avg_temp_thresh}{coefficient for \code{avg_temp_thresh} variable}
+\item{.avg_temp_thresh}{Coefficient for \code{avg_temp_thresh} variable}
 
-\item{.high_predation}{coefficient for \code{high_predation} variable}
+\item{.high_predation}{Coefficient for \code{high_predation} variable}
 
-\item{.medium}{size related intercept for medium sized fish}
+\item{.medium}{Size related intercept for medium sized fish}
 
-\item{.large}{size related intercept for large sized fish}
+\item{.large}{Size related intercept for large sized fish}
 
 \item{.floodplain}{Additional intercept for floodplain rearing benefit}
 
-\item{min_survival_rate}{estimated survival rate if temperature threshold is exceeded}
+\item{min_survival_rate}{Estimated survival rate if temperature threshold is exceeded}
 
 \item{stochastic}{\code{TRUE} \code{FALSE} value indicating if model is being run stochastically}
 }

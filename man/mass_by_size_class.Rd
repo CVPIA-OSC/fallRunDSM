@@ -8,12 +8,12 @@
 Vector of length 4 (4 size classes)
 }
 \source{
-size classes were derived from Analysis of Stanislaus data.
+Size classes were derived from Analysis of Stanislaus data.
 }
 \usage{
 mass_by_size_class
 }
 \description{
-mass of fish by the size class
+Mass of fish by the size class
 }
 \keyword{datasets}

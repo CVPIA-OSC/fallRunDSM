@@ -8,7 +8,7 @@
 Vector of length 31 [31 watersheds]
 }
 \source{
-The diversity groups are sourced from the ["Framework for Assessing Viability of Threatened and Endangered Chinook Salmon and Steelhead in the Sacramento-San Joaquin Basin"](http://escholarship.org/uc/item/3653x9xc) with slight modification.
+The diversity groups are sourced from the \href{http://escholarship.org/uc/item/3653x9xc}{"Framework for Assessing Viability of Threatened and Endangered Chinook Salmon and Steelhead in the Sacramento-San Joaquin Basin"} with slight modification.
 The "Northern Sierra" diversity group covers a very large geographic area and was divided into two groups based on proximity.
 }
 \usage{

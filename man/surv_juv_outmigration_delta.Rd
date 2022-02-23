@@ -21,31 +21,31 @@ surv_juv_outmigration_delta(
 )
 }
 \arguments{
-\item{prop_DCC_closed}{proportion of days the Delta Cross Channel Gates are closed}
+\item{prop_DCC_closed}{Proportion of days the Delta Cross Channel Gates are closed}
 
-\item{hor_barr}{indicator if head of old river physical barrier in place}
+\item{hor_barr}{Indicator if head of old river physical barrier in place}
 
-\item{freeport_flow}{average daily discharge at Freeport in cubic meters per second}
+\item{freeport_flow}{Average daily discharge at Freeport in cubic meters per second}
 
-\item{vernalis_flow}{average daily discharge at Vernalis in cubic meters per second}
+\item{vernalis_flow}{Average daily discharge at Vernalis in cubic meters per second}
 
-\item{stockton_flow}{average daily discharge at Stockton in cubic meters per second}
+\item{stockton_flow}{Average daily discharge at Stockton in cubic meters per second}
 
-\item{vernalis_temperature}{average daily temperature at Vernalis in °C}
+\item{vernalis_temperature}{Average daily temperature at Vernalis in °C}
 
-\item{prisoners_point_temperature}{average daily temperature of the San Joaquin River at Prisoners Point °C}
+\item{prisoners_point_temperature}{Average daily temperature of the San Joaquin River at Prisoners Point °C}
 
-\item{CVP_exp}{average daily exports Central Valley Project in cubic meters per second}
+\item{CVP_exp}{Average daily exports Central Valley Project in cubic meters per second}
 
-\item{SWP_exp}{average daily exports State Water Project in cubic meters per second}
+\item{SWP_exp}{Average daily exports State Water Project in cubic meters per second}
 
-\item{trap_trans}{proportion of smolts trapped at Vernalis and transported to Chips island}
+\item{trap_trans}{Proportion of smolts trapped at Vernalis and transported to Chips island}
 }
 \description{
 Calculates the North and South Delta juvenile out migration survival
 }
 \details{
-function returns proportion of fish from the Sacramento at Feeeport (northern_fish)
+Function returns proportion of fish from the Sacramento at Feeeport (northern_fish)
 Mokelumne and Cosumnes (cosumnes_mokelumne_fish), Calaveras (calaveras_fish) and
 San Joaquin tributaries from Vernalis (southern_fish) arriving alive at Chipps
 Island in four size groups (35-42mm, 42-72mm, 72-110mm, >110mm).

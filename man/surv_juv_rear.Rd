@@ -35,49 +35,49 @@ surv_juv_rear(
 )
 }
 \arguments{
-\item{max_temp_thresh}{variable representing probability of exceeding the max temperature threshold}
+\item{max_temp_thresh}{Variable representing probability of exceeding the max temperature threshold}
 
-\item{avg_temp_thresh}{variable representing probability of exceeding the avg temperature threshold}
+\item{avg_temp_thresh}{Variable representing probability of exceeding the avg temperature threshold}
 
-\item{high_predation}{variable representing indicator of high predation for a watershed}
+\item{high_predation}{Variable representing indicator of high predation for a watershed}
 
-\item{contact_points}{variable representing total number of contact points per watershed}
+\item{contact_points}{Variable representing total number of contact points per watershed}
 
-\item{prop_diversions}{variable representing proportion of water diverted}
+\item{prop_diversions}{Variable representing proportion of water diverted}
 
-\item{total_diversions}{variable representing total amount of water diverted}
+\item{total_diversions}{Variable representing total amount of water diverted}
 
-\item{stranded}{variable representing stranding rate per watershed}
+\item{stranded}{Variable representing stranding rate per watershed}
 
-\item{weeks_flooded}{variable representing total weeks flooded per watershed}
+\item{weeks_flooded}{Variable representing total weeks flooded per watershed}
 
-\item{..surv_juv_rear_int}{intercept, source: calibration (varies by tributary)}
+\item{..surv_juv_rear_int}{Intercept, source: calibration (varies by tributary)}
 
-\item{.avg_temp_thresh}{coefficient for \code{avg_temp_thresh} variable}
+\item{.avg_temp_thresh}{Coefficient for \code{avg_temp_thresh} variable}
 
-\item{.high_predation}{coefficient for \code{high_predation} variable}
+\item{.high_predation}{Coefficient for \code{high_predation} variable}
 
-\item{.surv_juv_rear_contact_points}{coefficient for \code{contact_points} variable}
+\item{.surv_juv_rear_contact_points}{Coefficient for \code{contact_points} variable}
 
-\item{..surv_juv_rear_contact_points}{calibrated coefficient for \code{contact_points} variable}
+\item{..surv_juv_rear_contact_points}{Calibrated coefficient for \code{contact_points} variable}
 
-\item{.surv_juv_rear_prop_diversions}{coefficient for \code{prop_diversions} variable}
+\item{.surv_juv_rear_prop_diversions}{Coefficient for \code{prop_diversions} variable}
 
-\item{..surv_juv_rear_prop_diversions}{calibrated coefficient for \code{prop_diversions} variable}
+\item{..surv_juv_rear_prop_diversions}{Calibrated coefficient for \code{prop_diversions} variable}
 
-\item{.surv_juv_rear_total_diversions}{coefficient for \code{total_diversions} variable}
+\item{.surv_juv_rear_total_diversions}{Coefficient for \code{total_diversions} variable}
 
-\item{..surv_juv_rear_total_diversions}{calibrated coefficient for \code{total_diversions} variable}
+\item{..surv_juv_rear_total_diversions}{Calibrated coefficient for \code{total_diversions} variable}
 
-\item{.stranded}{coefficient for \code{stranded} variable}
+\item{.stranded}{Coefficient for \code{stranded} variable}
 
-\item{.medium}{size related intercept for medium sized fish}
+\item{.medium}{Size related intercept for medium sized fish}
 
-\item{.large}{size related intercept for large sized fish}
+\item{.large}{Size related intercept for large sized fish}
 
 \item{.floodplain}{Additional intercept for floodplain rearing benefit}
 
-\item{min_survival_rate}{estimated survival rate if temperature threshold is exceeded}
+\item{min_survival_rate}{Estimated survival rate if temperature threshold is exceeded}
 
 \item{stochastic}{\code{TRUE} \code{FALSE} value indicating if model is being run stochastically}
 }

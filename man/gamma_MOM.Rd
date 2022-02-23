@@ -7,9 +7,9 @@
 gamma_MOM(mu, sigma)
 }
 \arguments{
-\item{mu}{mean}
+\item{mu}{Mean}
 
-\item{sigma}{standard deviation}
+\item{sigma}{Standard deviation}
 }
 \description{
 Estimate parameters for gamma distribution using the method of moments

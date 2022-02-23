@@ -60,11 +60,11 @@ surv_juv_delta(
 
 \item{..surv_juv_delta_total_diverted}{Calibrated coefficient for \code{total_diversions} variable}
 
-\item{.medium}{size related intercept for medium sized fish}
+\item{.medium}{Size related intercept for medium sized fish}
 
-\item{.large}{size related intercept for large sized fish}
+\item{.large}{Size related intercept for large sized fish}
 
-\item{min_survival_rate}{estimated survival rate if temperature threshold is exceeded}
+\item{min_survival_rate}{Estimated survival rate if temperature threshold is exceeded}
 
 \item{stochastic}{\code{TRUE} \code{FALSE} value indicating if model is being run stochastically}
 }
