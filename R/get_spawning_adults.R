@@ -1,10 +1,10 @@
 #' @title Get Spawning Adults
 #' @description Calculates the number of initial adults, initial natural adults, and initial adults by month.
 #' @details See \code{\link{params}} for details on parameter sources
-#' @param year the year of simulation
-#' @param adults potential spawning adults for each watershed (length = 31) values must be integer
-#' @param hatch_adults total hatchery adults
-#' @param mode a value meant to be inherited to determine if model is in "seed", "calibrate", or "simulate" mode
+#' @param year The year of simulation
+#' @param adults Potential spawning adults for each watershed (length = 31) values must be integer
+#' @param hatch_adults Total hatchery adults
+#' @param mode A value meant to be inherited to determine if model is in "seed", "calibrate", or "simulate" mode
 #' @param month_return_proportions The proportion of fish returning for each month
 #' @param prop_flow_natal More details at \code{\link[DSMflow]{proportion_flow_natal}}
 #' @param south_delta_routed_watersheds More details at \code{\link[DSMhabitat]{south_delta_routed_watersheds}}

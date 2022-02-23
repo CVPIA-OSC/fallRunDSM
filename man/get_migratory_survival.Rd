@@ -51,7 +51,7 @@ get_migratory_survival(
 
 \item{SWP_exports}{More details at \code{\link[DSMflow]{swp_exports}}}
 
-\item{upper_sacramento_flows}{average monthly flows on the Upper Sacramento River in cubic meters per second, more details at \code{\link[DSMflow]{upper_sacramento_flows}}}
+\item{upper_sacramento_flows}{Average monthly flows on the Upper Sacramento River in cubic meters per second, more details at \code{\link[DSMflow]{upper_sacramento_flows}}}
 
 \item{delta_inflow}{Variable describing delta inflow in cubic meters per second, more details at \code{\link[DSMflow]{delta_inflow}}}
 
@@ -67,7 +67,7 @@ get_migratory_survival(
 
 \item{.surv_juv_outmigration_san_joaquin_large}{Size related intercept for \code{\link{surv_juv_outmigration_san_joaquin}} large sized fish}
 
-\item{min_survival_rate}{estimated survival rate if temperature threshold is exceeded}
+\item{min_survival_rate}{Estimated survival rate if temperature threshold is exceeded}
 
 \item{stochastic}{\code{TRUE} \code{FALSE} value indicating if model is being run stochastically}
 }

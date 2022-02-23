@@ -37,13 +37,13 @@ get_spawning_adults(
 )
 }
 \arguments{
-\item{year}{the year of simulation}
+\item{year}{The year of simulation}
 
-\item{adults}{potential spawning adults for each watershed (length = 31) values must be integer}
+\item{adults}{Potential spawning adults for each watershed (length = 31) values must be integer}
 
-\item{hatch_adults}{total hatchery adults}
+\item{hatch_adults}{Total hatchery adults}
 
-\item{mode}{a value meant to be inherited to determine if model is in "seed", "calibrate", or "simulate" mode}
+\item{mode}{A value meant to be inherited to determine if model is in "seed", "calibrate", or "simulate" mode}
 
 \item{month_return_proportions}{The proportion of fish returning for each month}
 

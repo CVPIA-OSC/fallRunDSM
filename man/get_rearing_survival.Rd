@@ -71,9 +71,9 @@ get_rearing_survival(
 
 \item{avg_temp_delta}{More details at \code{\link[DSMtempetature]{delta_temperature}}}
 
-\item{prob_strand_early}{More details at \code{\link[DSMhabitat]{prop_strand_early}}}
+\item{prob_strand_early}{More details at \code{\link[DSMhabitat]{prob_strand_early}}}
 
-\item{prob_strand_late}{More details at \code{\link[DSMhabitat]{prop_strand_late}}}
+\item{prob_strand_late}{More details at \code{\link[DSMhabitat]{prob_strand_late}}}
 
 \item{proportion_diverted}{More details at \code{\link[DSMflow]{proportion_diverted}}}
 
@@ -83,7 +83,7 @@ get_rearing_survival(
 
 \item{delta_total_diverted}{More details at \code{\link[DSMflow]{delta_total_diverted}}}
 
-\item{weeks_flooded}{More details at \code{\link[DSMflow]{weeks_flooded}}}
+\item{weeks_flooded}{More details at \code{\link[DSMhabitat]{weeks_flooded}}}
 
 \item{prop_high_predation}{More details at \code{\link[DSMhabitat]{prop_high_predation}}}
 
@@ -151,7 +151,7 @@ get_rearing_survival(
 
 \item{.surv_juv_delta_large}{Size related intercept for \code{\link{surv_juv_delta}} large sized fish}
 
-\item{min_survival_rate}{estimated survival rate if temperature threshold is exceeded}
+\item{min_survival_rate}{Estimated survival rate if temperature threshold is exceeded}
 
 \item{stochastic}{\code{TRUE} \code{FALSE} value indicating if model is being run stochastically}
 }

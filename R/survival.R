@@ -214,7 +214,7 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
 #' @param total_diverted More details at \code{\link[DSMflow]{total_diverted}}
 #' @param delta_proportion_diverted More details at \code{\link[DSMflow]{delta_proportion_diverted}}
 #' @param delta_total_diverted More details at \code{\link[DSMflow]{delta_total_diverted}}
-#' @param weeks_flooded More details at \code{\link[DSMflow]{weeks_flooded}}
+#' @param weeks_flooded More details at \code{\link[DSMhabitat]{weeks_flooded}}
 #' @param prop_high_predation More details at \code{\link[DSMhabitat]{prop_high_predation}}
 #' @param contact_points More details at \code{\link[DSMhabitat]{contact_points}}
 #' @param delta_contact_points More details at \code{\link[DSMhabitat]{delta_contact_points}}
