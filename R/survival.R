@@ -206,10 +206,10 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
 #' @param month The simulation month, 1-8
 #' @param survival_adjustment Survival adjustment applied to survival rates based on SIT strategies
 #' @param mode The mode that the model is being run in
-#' @param avg_temp More details at \code{\link[DSMtemperature]{stream_tempetature}}
-#' @param avg_temp_delta More details at \code{\link[DSMtempetature]{delta_temprature}}
-#' @param prob_strand_early More details at \code{\link[DSMhabitat]{prop_strand_early}}
-#' @param prob_strand_late More details at \code{\link[DSMhabitat]{prop_strand_late}}
+#' @param avg_temp More details at \code{\link[DSMtemperature]{stream_temperature}}
+#' @param avg_temp_delta More details at \code{\link[DSMtempetature]{delta_temperature}}
+#' @param prob_strand_early More details at \code{\link[DSMhabitat]{prob_strand_early}}
+#' @param prob_strand_late More details at \code{\link[DSMhabitat]{prob_strand_late}}
 #' @param proportion_diverted More details at \code{\link[DSMflow]{proportion_diverted}}
 #' @param total_diverted More details at \code{\link[DSMflow]{total_diverted}}
 #' @param delta_proportion_diverted More details at \code{\link[DSMflow]{delta_proportion_diverted}}
@@ -248,7 +248,7 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
 #' @param .surv_juv_delta_prop_diverted Coefficient for \code{\link{surv_juv_delta}} \code{prop_diversions} variable
 #' @param .surv_juv_delta_medium Size related intercept for \code{\link{surv_juv_delta}} medium sized fish
 #' @param .surv_juv_delta_large Size related intercept for \code{\link{surv_juv_delta}} large sized fish
-#' @param min_survival_rate estimated survival rate if temperature threshold is exceeded
+#' @param min_survival_rate Estimated survival rate if temperature threshold is exceeded
 #' @param stochastic \code{TRUE} \code{FALSE} value indicating if model is being run stochastically
 #' @source IP-117068
 #' @export
@@ -633,15 +633,15 @@ surv_juv_outmigration_delta <- function(prop_DCC_closed, hor_barr, freeport_flow
 #' @param prisoners_point_temps More details at \code{\link[DSMtemperature]{prisoners_point_temperature}}
 #' @param CVP_exports More details at \code{\link[DSMflow]{cvp_exports}}
 #' @param SWP_exports More details at \code{\link[DSMflow]{swp_exports}}
-#' @param upper_sacramento_flows average monthly flows on the Upper Sacramento River in cubic meters per second, more details at \code{\link[DSMflow]{upper_sacramento_flows}}
+#' @param upper_sacramento_flows Average monthly flows on the Upper Sacramento River in cubic meters per second, more details at \code{\link[DSMflow]{upper_sacramento_flows}}
 #' @param delta_inflow Variable describing delta inflow in cubic meters per second, more details at \code{\link[DSMflow]{delta_inflow}}
-#' @param avg_temp_delta Variable describing monthly mean temperature in celsius, more details at  \code{\link[DSMtempetature]{delta_temprature}}
-#' @param avg_temp Variable describing monthly mean temperature in celsius, more details at  \code{\link[DSMtempetature]{avg_temp}}
-#' @param delta_proportion_diverted Variable describing diversions from the delta in cubic meters per seccond, more details at \code{\link[DSMflow]{delta_proportion_diverted}}
+#' @param avg_temp_delta Variable describing monthly mean temperature in celsius, more details at  \code{\link[DSMtemperature]{delta_temperature}}
+#' @param avg_temp Variable describing monthly mean temperature in celsius, more details at  \code{\link[DSMtemperature]{avg_temp}}
+#' @param delta_proportion_diverted Variable describing diversions from the delta in cubic meters per second, more details at \code{\link[DSMflow]{delta_proportion_diverted}}
 #' @param ..surv_juv_outmigration_sj_int Intercept for \code{\link{surv_juv_outmigration_san_joaquin}}
 #' @param .surv_juv_outmigration_san_joaquin_medium Size related intercept for \code{\link{surv_juv_outmigration_san_joaquin}} medium sized fish
 #' @param .surv_juv_outmigration_san_joaquin_large Size related intercept for \code{\link{surv_juv_outmigration_san_joaquin}} large sized fish
-#' @param min_survival_rate estimated survival rate if temperature threshold is exceeded
+#' @param min_survival_rate Estimated survival rate if temperature threshold is exceeded
 #' @param stochastic \code{TRUE} \code{FALSE} value indicating if model is being run stochastically
 #' @source IP-117068
 #' @export

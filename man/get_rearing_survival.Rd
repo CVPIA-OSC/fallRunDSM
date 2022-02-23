@@ -67,9 +67,9 @@ get_rearing_survival(
 
 \item{mode}{The mode that the model is being run in}
 
-\item{avg_temp}{More details at \code{\link[DSMtemperature]{stream_tempetature}}}
+\item{avg_temp}{More details at \code{\link[DSMtemperature]{stream_temperature}}}
 
-\item{avg_temp_delta}{More details at \code{\link[DSMtempetature]{delta_temprature}}}
+\item{avg_temp_delta}{More details at \code{\link[DSMtempetature]{delta_temperature}}}
 
 \item{prob_strand_early}{More details at \code{\link[DSMhabitat]{prop_strand_early}}}
 
