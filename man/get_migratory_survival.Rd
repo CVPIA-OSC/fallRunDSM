@@ -35,17 +35,17 @@ get_migratory_survival(
 
 \item{month}{The simulation month, 1-8}
 
-\item{cc_gates_prop_days_closed}{More details at \code{\link[DSMflow]{delta_cross_channel_closed}}}
+\item{cc_gates_prop_days_closed}{The number of days and proportion of days the Delta Cross Channel gates are typically closed for each month. More details at \code{\link[DSMflow]{delta_cross_channel_closed}}}
 
-\item{freeport_flows}{More details at \code{\link[DSMflow]{freeport_flow}}}
+\item{freeport_flows}{Flow in cms at Freeport (CALSIM node C400). More details at \code{\link[DSMflow]{freeport_flow}}}
 
-\item{vernalis_flows}{More details at \code{\link[DSMflow]{vernalis_flow}}}
+\item{vernalis_flows}{Flow in cms at Vernalis (CALSIM node C639). More details at \code{\link[DSMflow]{vernalis_flow}}}
 
-\item{stockton_flows}{More details at \code{\link[DSMflow]{stockton_flow}}}
+\item{stockton_flows}{Flow in cms at Stockton (CALSIM node C417A). More details at \code{\link[DSMflow]{stockton_flow}}}
 
-\item{vernalis_temps}{More details at \code{\link[DSMtemperature]{vernalis_temperature}}}
+\item{vernalis_temps}{Monthly water temperature (°C) at Vernalis from 1980-2000. More details at \code{\link[DSMtemperature]{vernalis_temperature}}}
 
-\item{prisoners_point_temps}{More details at \code{\link[DSMtemperature]{prisoners_point_temperature}}}
+\item{prisoners_point_temps}{Monthly water temperature (°C) at Prisoner's Point from 1980-2000. More details at \code{\link[DSMtemperature]{prisoners_point_temperature}}}
 
 \item{CVP_exports}{More details at \code{\link[DSMflow]{cvp_exports}}}
 
