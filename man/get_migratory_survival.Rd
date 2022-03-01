@@ -47,9 +47,9 @@ get_migratory_survival(
 
 \item{prisoners_point_temps}{Monthly water temperature (°C) at Prisoner's Point from 1980-2000. More details at \code{\link[DSMtemperature]{prisoners_point_temperature}}}
 
-\item{CVP_exports}{More details at \code{\link[DSMflow]{cvp_exports}}}
+\item{CVP_exports}{Total exports for CVP in cms. Value is obtained using CALSIM variable DEL_CVP_EXP. More details at \code{\link[DSMflow]{cvp_exports}}}
 
-\item{SWP_exports}{More details at \code{\link[DSMflow]{swp_exports}}}
+\item{SWP_exports}{Total exports for SWP in cms. Value is obtained using CALSIM variable DEL_SWP_EXP. More details at \code{\link[DSMflow]{swp_exports}}}
 
 \item{upper_sacramento_flows}{Average monthly flows on the Upper Sacramento River in cubic meters per second, more details at \code{\link[DSMflow]{upper_sacramento_flows}}}
 
@@ -57,7 +57,7 @@ get_migratory_survival(
 
 \item{avg_temp_delta}{Variable describing monthly mean temperature in celsius, more details at  \code{\link[DSMtemperature]{delta_temperature}}}
 
-\item{avg_temp}{Variable describing monthly mean temperature in celsius, more details at  \code{\link[DSMtemperature]{avg_temp}}}
+\item{avg_temp}{Variable describing monthly mean temperature in celsius, more details at  \code{\link[DSMtemperature]{stream_temperature}}}
 
 \item{delta_proportion_diverted}{Variable describing diversions from the delta in cubic meters per second, more details at \code{\link[DSMflow]{delta_proportion_diverted}}}
 

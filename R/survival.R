@@ -206,19 +206,19 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
 #' @param month The simulation month, 1-8
 #' @param survival_adjustment Survival adjustment applied to survival rates based on SIT strategies
 #' @param mode The mode that the model is being run in
-#' @param avg_temp More details at \code{\link[DSMtemperature]{stream_temperature}}
-#' @param avg_temp_delta More details at \code{\link[DSMtempetature]{delta_temperature}}
-#' @param prob_strand_early More details at \code{\link[DSMhabitat]{prob_strand_early}}
-#' @param prob_strand_late More details at \code{\link[DSMhabitat]{prob_strand_late}}
-#' @param proportion_diverted More details at \code{\link[DSMflow]{proportion_diverted}}
-#' @param total_diverted More details at \code{\link[DSMflow]{total_diverted}}
-#' @param delta_proportion_diverted More details at \code{\link[DSMflow]{delta_proportion_diverted}}
-#' @param delta_total_diverted More details at \code{\link[DSMflow]{delta_total_diverted}}
-#' @param weeks_flooded More details at \code{\link[DSMhabitat]{weeks_flooded}}
-#' @param prop_high_predation More details at \code{\link[DSMhabitat]{prop_high_predation}}
-#' @param contact_points More details at \code{\link[DSMhabitat]{contact_points}}
-#' @param delta_contact_points More details at \code{\link[DSMhabitat]{delta_contact_points}}
-#' @param delta_prop_high_predation More details at \code{\link[DSMhabitat]{delta_prop_high_predation}}
+#' @param avg_temp The 1980-2000 the monthly mean water temperature in °C. More details at \code{\link[DSMtemperature]{stream_temperature}}
+#' @param avg_temp_delta The 1980-2000 rearing temperature in the North and South Delta in °C. More details at \code{\link[DSMtemperature]{delta_temperature}}
+#' @param prob_strand_early Experts estimated probabilities for predation, stranding, and nest scouring. More details at \code{\link[DSMhabitat]{prob_strand_early}}
+#' @param prob_strand_late Experts estimated probabilities for predation, stranding, and nest scouring. More details at \code{\link[DSMhabitat]{prob_strand_late}}
+#' @param proportion_diverted A dataset containing the proportion of flow diverted within watersheds for use with the CVPIA SIT Salmon Population Model. More details at \code{\link[DSMflow]{proportion_diverted}}
+#' @param total_diverted A dataset containing the diverted flow in cms within watersheds for use with the CVPIA SIT Salmon Population Model. More details at \code{\link[DSMflow]{total_diverted}}
+#' @param delta_proportion_diverted The proportion of delta inflow diverted from 1980-2000. More details at \code{\link[DSMflow]{delta_proportion_diverted}}
+#' @param delta_total_diverted The total diverted of delta inflow in cubic meters per second from 1980-2000.. More details at \code{\link[DSMflow]{delta_total_diverted}}
+#' @param weeks_flooded The 1980-2000 floodplain rearing habitat event duration in number of weeks. More details at \code{\link[DSMhabitat]{weeks_flooded}}
+#' @param prop_high_predation Experts estimated probabilities for predation, stranding, and nest scouring. More details at \code{\link[DSMhabitat]{prop_high_predation}}
+#' @param contact_points Number of contact points, estimated using PAD Contact points were derived from the Passage Assessment Database (PAD) maintained by California Department of Fish and Wildlife. Each location considered in the model (e.g., tributary, Sacramento reach, and delta subdivisions) was assessed for all structures identified in the PAD. More details at \code{\link[DSMhabitat]{contact_points}}
+#' @param delta_contact_points Number of contact points, estimated using PAD Contact points were derived from the Passage Assessment Database (PAD) maintained by California Department of Fish and Wildlife. Each location considered in the model (e.g., tributary, Sacramento reach, and delta subdivisions) was assessed for all structures identified in the PAD. More details at \code{\link[DSMhabitat]{delta_contact_points}}
+#' @param delta_prop_high_predation Expert estimated high predation probabilities. More details at \code{\link[DSMhabitat]{delta_prop_high_predation}}
 #' @param ..surv_juv_rear_int Intercept for \code{\link{surv_juv_rear}}
 #' @param .surv_juv_rear_contact_points Coefficient for \code{\link{surv_juv_rear}} \code{contact_points} variable
 #' @param ..surv_juv_rear_contact_points Calibrated coefficient for \code{\link{surv_juv_rear}} \code{contact_points} variable
@@ -631,12 +631,12 @@ surv_juv_outmigration_delta <- function(prop_DCC_closed, hor_barr, freeport_flow
 #' @param stockton_flows Flow in cms at Stockton (CALSIM node C417A). More details at \code{\link[DSMflow]{stockton_flow}}
 #' @param vernalis_temps Monthly water temperature (°C) at Vernalis from 1980-2000. More details at \code{\link[DSMtemperature]{vernalis_temperature}}
 #' @param prisoners_point_temps Monthly water temperature (°C) at Prisoner's Point from 1980-2000. More details at \code{\link[DSMtemperature]{prisoners_point_temperature}}
-#' @param CVP_exports More details at \code{\link[DSMflow]{cvp_exports}}
-#' @param SWP_exports More details at \code{\link[DSMflow]{swp_exports}}
+#' @param CVP_exports Total exports for CVP in cms. Value is obtained using CALSIM variable DEL_CVP_EXP. More details at \code{\link[DSMflow]{cvp_exports}}
+#' @param SWP_exports Total exports for SWP in cms. Value is obtained using CALSIM variable DEL_SWP_EXP. More details at \code{\link[DSMflow]{swp_exports}}
 #' @param upper_sacramento_flows Average monthly flows on the Upper Sacramento River in cubic meters per second, more details at \code{\link[DSMflow]{upper_sacramento_flows}}
 #' @param delta_inflow Variable describing delta inflow in cubic meters per second, more details at \code{\link[DSMflow]{delta_inflow}}
 #' @param avg_temp_delta Variable describing monthly mean temperature in celsius, more details at  \code{\link[DSMtemperature]{delta_temperature}}
-#' @param avg_temp Variable describing monthly mean temperature in celsius, more details at  \code{\link[DSMtemperature]{avg_temp}}
+#' @param avg_temp Variable describing monthly mean temperature in celsius, more details at  \code{\link[DSMtemperature]{stream_temperature}}
 #' @param delta_proportion_diverted Variable describing diversions from the delta in cubic meters per second, more details at \code{\link[DSMflow]{delta_proportion_diverted}}
 #' @param ..surv_juv_outmigration_sj_int Intercept for \code{\link{surv_juv_outmigration_san_joaquin}}
 #' @param .surv_juv_outmigration_san_joaquin_medium Size related intercept for \code{\link{surv_juv_outmigration_san_joaquin}} medium sized fish
