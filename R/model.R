@@ -62,7 +62,8 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
     # SIT METRICS
     spawners = matrix(0, nrow = 31, ncol = 20, dimnames = list(fallRunDSM::watershed_labels, 1:20)),
     juvenile_biomass = matrix(0, nrow = 31, ncol = 20, dimnames = list(fallRunDSM::watershed_labels, 1:20)),
-    proportion_natural = matrix(NA_real_, nrow = 31, ncol = 20, dimnames = list(fallRunDSM::watershed_labels, 1:20))
+    proportion_natural = matrix(NA_real_, nrow = 31, ncol = 20, dimnames = list(fallRunDSM::watershed_labels, 1:20)),
+    juveniles_at_chipps = data.frame()
   )
 
 
@@ -161,6 +162,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                redd_size = ..params$spawn_success_redd_size,
                                fecundity = ..params$spawn_success_fecundity,
                                stochastic = stochastic)
+
 
     for (month in 1:8) {
       habitat <- get_habitat(year, month,
@@ -597,8 +599,24 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                                                ..ocean_entry_success_int = ..params$..ocean_entry_success_int,
                                                                .ocean_entry_success_months = ..params$.ocean_entry_success_months,
                                                                stochastic = stochastic)
+      fish_1_df <- data.frame(delta_fish$juveniles_at_chipps)
+      fish_1_df$watershed = fallRunDSM::watershed_labels
+      fish_1_df$month = month
+      fish_1_df$year = year
+      fish_1_df$hypothesis = "one"
+      rownames(fish_1_df) <- NULL
+
+
+      output$juveniles_at_chipps <- dplyr::bind_rows(
+        output$juveniles_at_chipps,
+        fish_1_df
+      )
 
     } # end month loop
+    # juveniles_at_chipps <- ..params$juveniles_at_chipps_model_weights[1] * fish_1$juveniles_at_chipps +
+    #   ..params$juveniles_at_chipps_model_weights[2] * fish_2$juveniles_at_chipps +
+    #   ..params$juveniles_at_chipps_model_weights[3] * fish_3$juveniles_at_chipps
+
 
     output$juvenile_biomass[ , year] <- juveniles_at_chipps %*% fallRunDSM::params$mass_by_size_class
 
