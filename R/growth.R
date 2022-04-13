@@ -1,7 +1,7 @@
 #' @title Method of Moments Gamma Parameter Estimation
 #' @description Estimate parameters for gamma distribution using the method of moments
-#' @param mu mean
-#' @param sigma standard deviation
+#' @param mu Mean
+#' @param sigma Standard deviation
 gamma_MOM <- function(mu, sigma){
   alpha <-(mu / sigma)^2
   beta <- (sigma^2) / mu

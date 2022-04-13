@@ -1,21 +1,21 @@
 #' @title Get Spawning Adults
 #' @description Calculates the number of initial adults, initial natural adults, and initial adults by month.
 #' @details See \code{\link{params}} for details on parameter sources
-#' @param year the year of simulation
-#' @param adults potential spawning adults for each watershed (length = 31) values must be integer
-#' @param hatch_adults total hatchery adults
-#' @param mode a value meant to be inherited to determine if model is in "seed", "calibrate", or "simulate" mode
+#' @param year The year of simulation
+#' @param adults Potential spawning adults for each watershed (length = 31) values must be integer
+#' @param hatch_adults Total hatchery adults
+#' @param mode A value meant to be inherited to determine if model is in "seed", "calibrate", or "simulate" mode
 #' @param month_return_proportions The proportion of fish returning for each month
-#' @param prop_flow_natal More details at \code{\link[DSMflow]{proportion_flow_natal}}
-#' @param south_delta_routed_watersheds More details at \code{\link[DSMhabitat]{south_delta_routed_watersheds}}
-#' @param cc_gates_days_closed More details at \code{\link[DSMflow]{delta_cross_channel_closed}}
-#' @param gates_overtopped More details at \code{\link[DSMflow]{gates_overtopped}}
-#' @param tisdale_bypass_watershed More details at \code{\link[DSMhabitat]{tisdale_bypass_watershed}}
-#' @param yolo_bypass_watershed More details at \code{\link[DSMhabitat]{yolo_bypass_watershed}}
-#' @param migratory_temperature_proportion_over_20 More details at \code{\link[DSMtemperature]{migratory_temperature_proportion_over_20}}
-#' @param natural_adult_removal_rate More details at \code{\link{natural_adult_removal_rate}}
-#' @param cross_channel_stray_rate More details at \code{\link{cross_channel_stray_rate}}
-#' @param stray_rate More details at \code{\link{stray_rate}}
+#' @param prop_flow_natal A dataset containing the proportion flows at tributary junction coming from natal watershed using October CALSIM II flows. These proportions are used to estimate straying in the CVPIA SIT Salmon Population Model. More details at \code{\link[DSMflow]{proportion_flow_natal}}
+#' @param south_delta_routed_watersheds Indicator of whether fish have access to a region. More details at \code{\link[DSMhabitat]{south_delta_routed_watersheds}}
+#' @param cc_gates_days_closed The number of days and proportion of days the Delta Cross Channel gates are typically closed for each month. More details at \code{\link[DSMflow]{delta_cross_channel_closed}}
+#' @param gates_overtopped A monthly TRUE or FALSE value to describe if the gates are overtopped to the bypasses (years 1980-2000) for use with the CVPIA SIT Salmon Population Model to apportion fish onto the bypasses. More details at \code{\link[DSMflow]{gates_overtopped}}
+#' @param tisdale_bypass_watershed Indicator of whether fish have access to a region. More details at \code{\link[DSMhabitat]{tisdale_bypass_watershed}}
+#' @param yolo_bypass_watershed Indicator of whether fish have access to a region, More details at \code{\link[DSMhabitat]{yolo_bypass_watershed}}
+#' @param migratory_temperature_proportion_over_20 The median proportion of days over 20°C per month. More details at \code{\link[DSMtemperature]{migratory_temperature_proportion_over_20}}
+#' @param natural_adult_removal_rate Spawners removed for hatcheries. More details at \code{\link{natural_adult_removal_rate}}
+#' @param cross_channel_stray_rate Natural straying allocation across channels. More details at \code{\link{cross_channel_stray_rate}}
+#' @param stray_rate Natural straying allocation. More details at \code{\link{stray_rate}}
 #' @param ..surv_adult_enroute_int Intercept for \code{\link{surv_adult_enroute}}
 #' @param .adult_stray_intercept Intercept for \code{\link{adult_stray}}
 #' @param .adult_stray_wild Coefficient for \code{\link{adult_stray}} \code{wild} variable

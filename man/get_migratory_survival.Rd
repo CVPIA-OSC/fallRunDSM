@@ -35,31 +35,31 @@ get_migratory_survival(
 
 \item{month}{The simulation month, 1-8}
 
-\item{cc_gates_prop_days_closed}{More details at \code{\link[DSMflow]{delta_cross_channel_closed}}}
+\item{cc_gates_prop_days_closed}{The number of days and proportion of days the Delta Cross Channel gates are typically closed for each month. More details at \code{\link[DSMflow]{delta_cross_channel_closed}}}
 
-\item{freeport_flows}{More details at \code{\link[DSMflow]{freeport_flow}}}
+\item{freeport_flows}{Flow in cms at Freeport (CALSIM node C400). More details at \code{\link[DSMflow]{freeport_flow}}}
 
-\item{vernalis_flows}{More details at \code{\link[DSMflow]{vernalis_flow}}}
+\item{vernalis_flows}{Flow in cms at Vernalis (CALSIM node C639). More details at \code{\link[DSMflow]{vernalis_flow}}}
 
-\item{stockton_flows}{More details at \code{\link[DSMflow]{stockton_flow}}}
+\item{stockton_flows}{Flow in cms at Stockton (CALSIM node C417A). More details at \code{\link[DSMflow]{stockton_flow}}}
 
-\item{vernalis_temps}{More details at \code{\link[DSMtemperature]{vernalis_temperature}}}
+\item{vernalis_temps}{Monthly water temperature (°C) at Vernalis from 1980-2000. More details at \code{\link[DSMtemperature]{vernalis_temperature}}}
 
-\item{prisoners_point_temps}{More details at \code{\link[DSMtemperature]{prisoners_point_temperature}}}
+\item{prisoners_point_temps}{Monthly water temperature (°C) at Prisoner's Point from 1980-2000. More details at \code{\link[DSMtemperature]{prisoners_point_temperature}}}
 
-\item{CVP_exports}{More details at \code{\link[DSMflow]{cvp_exports}}}
+\item{CVP_exports}{Total exports for CVP in cms. Value is obtained using CALSIM variable DEL_CVP_EXP. More details at \code{\link[DSMflow]{cvp_exports}}}
 
-\item{SWP_exports}{More details at \code{\link[DSMflow]{swp_exports}}}
+\item{SWP_exports}{Total exports for SWP in cms. Value is obtained using CALSIM variable DEL_SWP_EXP. More details at \code{\link[DSMflow]{swp_exports}}}
 
-\item{upper_sacramento_flows}{average monthly flows on the Upper Sacramento River in cubic meters per second, more details at \code{\link[DSMflow]{upper_sacramento_flows}}}
+\item{upper_sacramento_flows}{Average monthly flows on the Upper Sacramento River in cubic meters per second, more details at \code{\link[DSMflow]{upper_sacramento_flows}}}
 
 \item{delta_inflow}{Variable describing delta inflow in cubic meters per second, more details at \code{\link[DSMflow]{delta_inflow}}}
 
-\item{avg_temp_delta}{Variable describing monthly mean temperature in celsius, more details at  \code{\link[DSMtempetature]{delta_temprature}}}
+\item{avg_temp_delta}{Variable describing monthly mean temperature in celsius, more details at  \code{\link[DSMtemperature]{delta_temperature}}}
 
-\item{avg_temp}{Variable describing monthly mean temperature in celsius, more details at  \code{\link[DSMtempetature]{avg_temp}}}
+\item{avg_temp}{Variable describing monthly mean temperature in celsius, more details at  \code{\link[DSMtemperature]{stream_temperature}}}
 
-\item{delta_proportion_diverted}{Variable describing diversions from the delta in cubic meters per seccond, more details at \code{\link[DSMflow]{delta_proportion_diverted}}}
+\item{delta_proportion_diverted}{Variable describing diversions from the delta in cubic meters per second, more details at \code{\link[DSMflow]{delta_proportion_diverted}}}
 
 \item{..surv_juv_outmigration_sj_int}{Intercept for \code{\link{surv_juv_outmigration_san_joaquin}}}
 
@@ -67,7 +67,7 @@ get_migratory_survival(
 
 \item{.surv_juv_outmigration_san_joaquin_large}{Size related intercept for \code{\link{surv_juv_outmigration_san_joaquin}} large sized fish}
 
-\item{min_survival_rate}{estimated survival rate if temperature threshold is exceeded}
+\item{min_survival_rate}{Estimated survival rate if temperature threshold is exceeded}
 
 \item{stochastic}{\code{TRUE} \code{FALSE} value indicating if model is being run stochastically}
 }

@@ -15,7 +15,7 @@
 #' @source
 #' Various \href{https://s3-us-west-2.amazonaws.com/cvpia-reference-docs/AWP+Attachment+1.pdf}{CVPIA Science Integration Team: FY18 Decision Support Model activities and FY17 priorities Memorandum}
 #'
-#' More details \href{https://cvpia-osc.github.io/fallRunDSM/articles/hatchery-analysis.html}{here}
+#' Natural adult removal rate was derived using coded wire tag analysis. Details and methodology are available \href{https://cvpia-osc.github.io/fallRunDSM/articles/hatchery-analysis.html}{here}.
 #'
 #' Compiled by: James T. Peterson \email{jt.peterson@@oregonstate.edu}
 "natural_adult_removal_rate"
@@ -26,7 +26,7 @@
 #' @source
 #' Various \href{https://s3-us-west-2.amazonaws.com/cvpia-reference-docs/AWP+Attachment+1.pdf}{CVPIA Science Integration Team: FY18 Decision Support Model activities and FY17 priorities Memorandum}
 #'
-#' More details \href{https://cvpia-osc.github.io/fallRunDSM/articles/hatchery-analysis.html}{here}
+#' Hatchery allocation was derived using coded wire tag analysis. Details and methodology are available \href{https://cvpia-osc.github.io/fallRunDSM/articles/hatchery-analysis.html}{here}.
 #'
 #' Compiled by: James T. Peterson \email{jt.peterson@@oregonstate.edu}
 "hatchery_allocation"
@@ -41,9 +41,7 @@
 #' @title Proportion Hatchery
 #' @description Proportion of spawning fish that are from a hatchery.
 #' @format 1 dimensional array [31 watersheds]
-#' @source Coded Wire Tag Analysis and data from chinookprod database
-#'
-#' More details \href{https://cvpia-osc.github.io/fallRunDSM/articles/hatchery-analysis.html}{here}
+#' @source Proportion hatchery was derived using coded wire tag analysis. Details and methodology are available \href{https://cvpia-osc.github.io/fallRunDSM/articles/hatchery-analysis.html}{here}.
 "proportion_hatchery"
 
 #' @title Month Return Proportions
@@ -53,9 +51,9 @@
 "month_return_proportions"
 
 #' @title Mass by Size Class
-#' @description mass of fish by the size class
+#' @description Mass of fish by the size class
 #' @format Vector of length 4 (4 size classes)
-#' @source size classes were derived from Analysis of Stanislaus data.
+#' @source Size classes were derived from Analysis of Stanislaus data.
 "mass_by_size_class"
 
 #' @title Cross Channel Stray Rate
@@ -75,7 +73,7 @@
 #' @title Diversity Groups
 #' @description Watershed groups.
 #' @format Vector of length 31 [31 watersheds]
-#' @source The diversity groups are sourced from the ["Framework for Assessing Viability of Threatened and Endangered Chinook Salmon and Steelhead in the Sacramento-San Joaquin Basin"](http://escholarship.org/uc/item/3653x9xc) with slight modification.
+#' @source The diversity groups are sourced from the \href{http://escholarship.org/uc/item/3653x9xc}{"Framework for Assessing Viability of Threatened and Endangered Chinook Salmon and Steelhead in the Sacramento-San Joaquin Basin"} with slight modification.
 #' The "Northern Sierra" diversity group covers a very large geographic area and was divided into two groups based on proximity.
 "diversity_group"
 
@@ -127,11 +125,11 @@ NULL
 #'   \item \code{tisdale_bypass_watershed}: More details at \code{\link[DSMhabitat]{tisdale_bypass_watershed}}
 #'   \item \code{yolo_bypass_watershed}: More details at \code{\link[DSMhabitat]{yolo_bypass_watershed}}
 #'   \item \code{migratory_temperature_proportion_over_20}: More details at \code{\link[DSMtemperature]{migratory_temperature_proportion_over_20}}
-#'   \item \code{..surv_adult_enroute_int}:  Intercept, Source: calibration
+#'   \item \code{..surv_adult_enroute_int}:  Intercept, source: calibration
 #'   \item \code{.adult_stray_intercept}: Empirical model fit using 2008–2011 tagging data provided by East Bay Municipal Utility District
 #'   \item \code{.adult_stray_wild}: Coefficient for \code{wild} variable, source: Estimated with coded wire tag data 2010–2013 \href{https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&usg= AOvVaw0VgMOwD7knFfSxRZy6k8RG}{(Kormos et al. 2012, Palmer-Zwahlen & Kormos 2013-2015, Palmer-Zwahlen et al. 2018)}
 #'   \item \code{.adult_stray_natal_flow}: Coefficient for \code{natal_flow} variable, source: Empirical model fit using 2008–2011 tagging data provided by East Bay Municipal Utility District
-#'   \item \code{.adult_stray_cross_channel_gates_closed}: Coefficient for \code{cross_channel_gates_closed} variable, Source: Empirical model fit using  2008–2011 tagging data provided by East Bay Municipal Utility District.
+#'   \item \code{.adult_stray_cross_channel_gates_closed}: Coefficient for \code{cross_channel_gates_closed} variable, source: Empirical model fit using  2008–2011 tagging data provided by East Bay Municipal Utility District.
 #'   \item \code{.adult_stray_prop_bay_trans}: Coefficient for \code{prop_bay_trans} variable, source: Estimated with coded wire tag data 2010–2013 \href{https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&usg= AOvVaw0VgMOwD7knFfSxRZy6k8RG}{(Kormos et al. 2012, Palmer-Zwahlen & Kormos 2013-2015, Palmer-Zwahlen et al. 2018)}
 #'   \item \code{.adult_stray_prop_delta_trans}: Coefficient for \code{prop_delta_trans} variable, source: Estimated with coded wire tag data 2010–2013 \href{https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&usg= AOvVaw0VgMOwD7knFfSxRZy6k8RG}{(Kormos et al. 2012, Palmer-Zwahlen & Kormos 2013-2015, Palmer-Zwahlen et al. 2018)}
 #'   \item \code{.adult_en_route_migratory_temp}: Coefficient for \code{migratory_temp} variable, source: \href{https://dsm-docs.s3.us-west-2.amazonaws.com/schrek_cb_1994.pdf}{Schreck et al. (1994)}
@@ -139,7 +137,7 @@ NULL
 #'   \item \code{.adult_en_route_adult_harvest_rate}:  Adult harvest rate, source:  \href{https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=162355&usg= AOvVaw0VgMOwD7knFfSxRZy6k8RG}{(Palmer-Zwahlen & Kormos 2013-2015, Palmer-Zwahlen et al. 2018)}
 #'   \item \code{degree_days}: More details at \code{\link[DSMtemperature]{degree_days}}
 #'   \item \code{month_return_proportions}: More details at \code{\link[fallRunDSM]{month_return_proportions}}
-#'   \item \code{..surv_adult_prespawn_int}:  Intercept, Source: Calibration Estimate
+#'   \item \code{..surv_adult_prespawn_int}:  Intercept, source: Calibration Estimate
 #'   \item \code{.adult_prespawn_deg_day}: Coefficient for \code{deg_day} variable, source: \href{https://onlinelibrary.wiley.com/doi/epdf/10.1002/rra.3348}{Colvin et al. (2018)}
 #'   \item \code{prob_nest_scoured}: More details at \code{\link[DSMhabitat]{prob_nest_scoured}}
 #'   \item \code{spawn_success_sex_ratio}: Variable describing the female to male spawning ratio, default 0.5, source: expert opinion from SIT members.
@@ -154,9 +152,9 @@ NULL
 #'   \item \code{proportion_hatchery}: More details at \code{\link[fallRunDSM]{proportion_hatchery}}
 #'   \item \code{prob_nest_scoured}: More details at \code{\link[DSMhabitat]{prob_nest_scoured}}
 #'   \item \code{mean_egg_temp_effect}: More details at \code{\link[DSMtemperature]{egg_temperature_effect}}
-#'   \item \code{.surv_egg_to_fry_proportion_natural}: Coefficient for \code{proportion_natural} variable, Source: \href{https://cdnsciencepub.com/doi/abs/10.1139/F10-168}{Chilcote et al. (2011)}
-#'   \item \code{.surv_egg_to_fry_scour}: Coefficient for \code{scour} variable, Source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/montogemery_1996.pdf}{Montgomery et al. (1996)}
-#'   \item \code{..surv_egg_to_fry_int}:  Intercept, Source: Calibration
+#'   \item \code{.surv_egg_to_fry_proportion_natural}: Coefficient for \code{proportion_natural} variable, source: \href{https://cdnsciencepub.com/doi/abs/10.1139/F10-168}{Chilcote et al. (2011)}
+#'   \item \code{.surv_egg_to_fry_scour}: Coefficient for \code{scour} variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/montogemery_1996.pdf}{Montgomery et al. (1996)}
+#'   \item \code{..surv_egg_to_fry_int}:  Intercept, source: Calibration
 #' }
 #' @section Tributary Rearing Survival:
 #' \itemize{
@@ -168,14 +166,14 @@ NULL
 #'   \item \code{weeks_flooded}: More details at \code{\link[DSMhabitat]{weeks_flooded}}
 #'   \item \code{prop_high_predation}: More details at \code{\link[DSMhabitat]{prop_high_predation}}
 #'   \item \code{contact_points}: More details at \code{\link[DSMhabitat]{contact_points}}
-#'   \item \code{..surv_juv_rear_int}: Intercept, Source: calibration (varies by tributary)
-#'   \item \code{.surv_juv_rear_contact_points}: Coefficient for \code{contact_points} variable, Source: inherited from previous calibration
-#'   \item \code{..surv_juv_rear_contact_points}: Coefficient for \code{contact_points} variable, Source: calibration
-#'   \item \code{.surv_juv_rear_prop_diversions}: Coefficient for \code{prop_diversions} variable, Source: source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/Hierarchical_Modeling_of_Juvenile_Chinook_Salmon_S+(1).pdf}{Newman and Brandes (2010)}
-#'   \item \code{..surv_juv_rear_prop_diversions}: Coefficient for \code{prop_diversions} variable, Source: calibration
-#'   \item \code{.surv_juv_rear_total_diversions}: Coefficient for \code{total_diversions} variable, Source: inherited from previous calibration
-#'   \item \code{..surv_juv_rear_total_diversions}: Coefficient for \code{total_diversions} variable, Source: calibration
-#'   \item \code{.surv_juv_rear_avg_temp_thresh}:  Coefficient for \code{avg_temp_thresh} variable, Source: \href{https://www.tandfonline.com/doi/full/10.1577/M07-130.1?scroll=top&needAccess=true}{Runge et al (2008)}
+#'   \item \code{..surv_juv_rear_int}: Intercept, source: calibration (varies by tributary)
+#'   \item \code{.surv_juv_rear_contact_points}: Coefficient for \code{contact_points} variable, source: inherited from previous calibration
+#'   \item \code{..surv_juv_rear_contact_points}: Coefficient for \code{contact_points} variable, source: calibration
+#'   \item \code{.surv_juv_rear_prop_diversions}: Coefficient for \code{prop_diversions} variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/Hierarchical_Modeling_of_Juvenile_Chinook_Salmon_S+(1).pdf}{Newman and Brandes (2010)}
+#'   \item \code{..surv_juv_rear_prop_diversions}: Coefficient for \code{prop_diversions} variable, source: calibration
+#'   \item \code{.surv_juv_rear_total_diversions}: Coefficient for \code{total_diversions} variable, source: inherited from previous calibration
+#'   \item \code{..surv_juv_rear_total_diversions}: Coefficient for \code{total_diversions} variable, source: calibration
+#'   \item \code{.surv_juv_rear_avg_temp_thresh}:  Coefficient for \code{avg_temp_thresh} variable, source: \href{https://www.tandfonline.com/doi/full/10.1577/M07-130.1?scroll=top&needAccess=true}{Runge et al (2008)}
 #'   \item \code{.surv_juv_rear_high_predation}: Coefficient for \code{high_predation} variable, source: \href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}
 #'   \item \code{.surv_juv_rear_stranded}: Coefficient for \code{stranded} variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/DWR-1140+USFWS+2006.pdf}{USFWS (2006) and CDWR (2006)}
 #'   \item \code{.surv_juv_rear_medium}: Size related intercept for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
@@ -186,7 +184,7 @@ NULL
 #' \itemize{
 #'   \item \code{avg_temp}: See Tributary Rearing Survival \code{avg_temp} above
 #'   \item \code{prop_high_predation}: See Tributary Rearing Survival \code{prop_high_predation} above
-#'   \item \code{..surv_juv_bypass_int}: Intercept, Source: calibration
+#'   \item \code{..surv_juv_bypass_int}: Intercept, source: calibration
 #'   \item \code{.surv_juv_bypass_avg_temp_thresh}: Coefficient for \code{avg_temp_thresh} variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/marine_cech_water_temp_effects.pdf}{Marine and Chech (2004)}
 #'   \item \code{.surv_juv_bypass_high_predation}: Coefficient for \code{high_predation} variable, source: \href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}
 #'   \item \code{.surv_juv_bypass_medium}: Size related intercept for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
@@ -200,11 +198,11 @@ NULL
 #'   \item \code{delta_total_diverted}: More details at \code{\link[DSMflow]{delta_total_diverted}}
 #'   \item \code{delta_contact_points}: More details at \code{\link[DSMhabitat]{delta_contact_points}}
 #'   \item \code{delta_prop_high_predation}: More details at \code{\link[DSMhabitat]{delta_prop_high_predation}}
-#'   \item \code{..surv_juv_delta_int}: Intercept, Source: calibration
-#'   \item \code{.surv_juv_delta_contact_points}: Coefficient for \code{contact_points} variable, Source: inherited from previous calibration
-#'   \item \code{..surv_juv_delta_contact_points}: Coefficient for \code{contact_points} variable, Source: calibration
-#'   \item \code{.surv_juv_delta_total_diverted}: Coefficient for \code{total_diversions} variable, Source: inherited from previous calibration
-#'   \item \code{..surv_juv_delta_total_diverted}: Coefficient for \code{total_diversions} variable, Source: calibration
+#'   \item \code{..surv_juv_delta_int}: Intercept, source: calibration
+#'   \item \code{.surv_juv_delta_contact_points}: Coefficient for \code{contact_points} variable, source: inherited from previous calibration
+#'   \item \code{..surv_juv_delta_contact_points}: Coefficient for \code{contact_points} variable, source: calibration
+#'   \item \code{.surv_juv_delta_total_diverted}: Coefficient for \code{total_diversions} variable, source: inherited from previous calibration
+#'   \item \code{..surv_juv_delta_total_diverted}: Coefficient for \code{total_diversions} variable, source: calibration
 #'   \item \code{.surv_juv_delta_avg_temp_thresh}: Coefficient for \code{avg_temp_thresh} variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/marine_cech_water_temp_effects.pdf}{Marine and Chech (2004)}
 #'   \item \code{.surv_juv_delta_high_predation}: Coefficient for \code{high_predation} variable, source: \href{https://pubag.nal.usda.gov/catalog/512123}{Cavallo et al. (2012)}
 #'   \item \code{.surv_juv_delta_prop_diverted}: Coefficient for \code{prop_diversions} variable, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/Hierarchical_Modeling_of_Juvenile_Chinook_Salmon_S+(1).pdf}{Newman and Brandes (2010)}

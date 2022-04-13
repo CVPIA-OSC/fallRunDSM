@@ -1,28 +1,28 @@
 #' @title Juvenile Rearing Survival
 #' @description Calculates the juvenile rearing survival inchannel and on the floodplain
 #' @details See \code{\link{params}} for details on parameter sources
-#' @param max_temp_thresh variable representing probability of exceeding the max temperature threshold
-#' @param avg_temp_thresh variable representing probability of exceeding the avg temperature threshold
-#' @param high_predation variable representing indicator of high predation for a watershed
-#' @param contact_points variable representing total number of contact points per watershed
-#' @param prop_diversions variable representing proportion of water diverted
-#' @param total_diversions variable representing total amount of water diverted
-#' @param stranded variable representing stranding rate per watershed
-#' @param weeks_flooded variable representing total weeks flooded per watershed
-#' @param ..surv_juv_rear_int  intercept, source: calibration (varies by tributary)
-#' @param .avg_temp_thresh coefficient for \code{avg_temp_thresh} variable
-#' @param .high_predation coefficient for \code{high_predation} variable
-#' @param .surv_juv_rear_contact_points coefficient for \code{contact_points} variable
-#' @param ..surv_juv_rear_contact_points calibrated coefficient for \code{contact_points} variable
-#' @param .surv_juv_rear_prop_diversions coefficient for \code{prop_diversions} variable
-#' @param ..surv_juv_rear_prop_diversions calibrated coefficient for \code{prop_diversions} variable
-#' @param .surv_juv_rear_total_diversions coefficient for \code{total_diversions} variable
-#' @param ..surv_juv_rear_total_diversions calibrated coefficient for \code{total_diversions} variable
-#' @param .stranded coefficient for \code{stranded} variable
-#' @param .medium size related intercept for medium sized fish
-#' @param .large size related intercept for large sized fish
+#' @param max_temp_thresh Variable representing probability of exceeding the max temperature threshold
+#' @param avg_temp_thresh Variable representing probability of exceeding the avg temperature threshold
+#' @param high_predation Variable representing indicator of high predation for a watershed
+#' @param contact_points Variable representing total number of contact points per watershed
+#' @param prop_diversions Variable representing proportion of water diverted
+#' @param total_diversions Variable representing total amount of water diverted
+#' @param stranded Variable representing stranding rate per watershed
+#' @param weeks_flooded Variable representing total weeks flooded per watershed
+#' @param ..surv_juv_rear_int  Intercept, source: calibration (varies by tributary)
+#' @param .avg_temp_thresh Coefficient for \code{avg_temp_thresh} variable
+#' @param .high_predation Coefficient for \code{high_predation} variable
+#' @param .surv_juv_rear_contact_points Coefficient for \code{contact_points} variable
+#' @param ..surv_juv_rear_contact_points Calibrated coefficient for \code{contact_points} variable
+#' @param .surv_juv_rear_prop_diversions Coefficient for \code{prop_diversions} variable
+#' @param ..surv_juv_rear_prop_diversions Calibrated coefficient for \code{prop_diversions} variable
+#' @param .surv_juv_rear_total_diversions Coefficient for \code{total_diversions} variable
+#' @param ..surv_juv_rear_total_diversions Calibrated coefficient for \code{total_diversions} variable
+#' @param .stranded Coefficient for \code{stranded} variable
+#' @param .medium Size related intercept for medium sized fish
+#' @param .large Size related intercept for large sized fish
 #' @param .floodplain Additional intercept for floodplain rearing benefit
-#' @param min_survival_rate estimated survival rate if temperature threshold is exceeded
+#' @param min_survival_rate Estimated survival rate if temperature threshold is exceeded
 #' @param stochastic \code{TRUE} \code{FALSE} value indicating if model is being run stochastically
 #' @source IP-117068
 #' @export
@@ -93,13 +93,13 @@ surv_juv_rear <- function(max_temp_thresh, avg_temp_thresh, high_predation,
 #' @param max_temp_thresh Variable representing the probability of exceeding the max temp threshold
 #' @param avg_temp_thresh Variable representing the probability of exceeding the average temperature
 #' @param high_predation Variable representing an indicator for high predation in watershed
-#' @param ..surv_juv_bypass_int intercept, source: calibration
-#' @param .avg_temp_thresh coefficient for \code{avg_temp_thresh} variable
-#' @param .high_predation coefficient for \code{high_predation} variable
-#' @param .medium size related intercept for medium sized fish
-#' @param .large size related intercept for large sized fish
+#' @param ..surv_juv_bypass_int Intercept, source: calibration
+#' @param .avg_temp_thresh Coefficient for \code{avg_temp_thresh} variable
+#' @param .high_predation Coefficient for \code{high_predation} variable
+#' @param .medium Size related intercept for medium sized fish
+#' @param .large Size related intercept for large sized fish
 #' @param .floodplain Additional intercept for floodplain rearing benefit
-#' @param min_survival_rate estimated survival rate if temperature threshold is exceeded
+#' @param min_survival_rate Estimated survival rate if temperature threshold is exceeded
 #' @param stochastic \code{TRUE} \code{FALSE} value indicating if model is being run stochastically
 #' @source IP-117068
 #' @export
@@ -148,9 +148,9 @@ surv_juv_bypass <- function(max_temp_thresh, avg_temp_thresh, high_predation,
 #' @param .prop_diverted Coefficient for \code{prop_diversions} variable
 #' @param .surv_juv_delta_total_diverted Coefficient for \code{total_diversions} variable
 #' @param ..surv_juv_delta_total_diverted Calibrated coefficient for \code{total_diversions} variable
-#' @param .medium size related intercept for medium sized fish
-#' @param .large size related intercept for large sized fish
-#' @param min_survival_rate estimated survival rate if temperature threshold is exceeded
+#' @param .medium Size related intercept for medium sized fish
+#' @param .large Size related intercept for large sized fish
+#' @param min_survival_rate Estimated survival rate if temperature threshold is exceeded
 #' @param stochastic \code{TRUE} \code{FALSE} value indicating if model is being run stochastically
 #' @source IP-117068
 #' @export
@@ -206,19 +206,19 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
 #' @param month The simulation month, 1-8
 #' @param survival_adjustment Survival adjustment applied to survival rates based on SIT strategies
 #' @param mode The mode that the model is being run in
-#' @param avg_temp More details at \code{\link[DSMtemperature]{stream_tempetature}}
-#' @param avg_temp_delta More details at \code{\link[DSMtempetature]{delta_temprature}}
-#' @param prob_strand_early More details at \code{\link[DSMhabitat]{prop_strand_early}}
-#' @param prob_strand_late More details at \code{\link[DSMhabitat]{prop_strand_late}}
-#' @param proportion_diverted More details at \code{\link[DSMflow]{proportion_diverted}}
-#' @param total_diverted More details at \code{\link[DSMflow]{total_diverted}}
-#' @param delta_proportion_diverted More details at \code{\link[DSMflow]{delta_proportion_diverted}}
-#' @param delta_total_diverted More details at \code{\link[DSMflow]{delta_total_diverted}}
-#' @param weeks_flooded More details at \code{\link[DSMflow]{weeks_flooded}}
-#' @param prop_high_predation More details at \code{\link[DSMhabitat]{prop_high_predation}}
-#' @param contact_points More details at \code{\link[DSMhabitat]{contact_points}}
-#' @param delta_contact_points More details at \code{\link[DSMhabitat]{delta_contact_points}}
-#' @param delta_prop_high_predation More details at \code{\link[DSMhabitat]{delta_prop_high_predation}}
+#' @param avg_temp The 1980-2000 the monthly mean water temperature in °C. More details at \code{\link[DSMtemperature]{stream_temperature}}
+#' @param avg_temp_delta The 1980-2000 rearing temperature in the North and South Delta in °C. More details at \code{\link[DSMtemperature]{delta_temperature}}
+#' @param prob_strand_early Experts estimated probabilities for predation, stranding, and nest scouring. More details at \code{\link[DSMhabitat]{prob_strand_early}}
+#' @param prob_strand_late Experts estimated probabilities for predation, stranding, and nest scouring. More details at \code{\link[DSMhabitat]{prob_strand_late}}
+#' @param proportion_diverted A dataset containing the proportion of flow diverted within watersheds for use with the CVPIA SIT Salmon Population Model. More details at \code{\link[DSMflow]{proportion_diverted}}
+#' @param total_diverted A dataset containing the diverted flow in cms within watersheds for use with the CVPIA SIT Salmon Population Model. More details at \code{\link[DSMflow]{total_diverted}}
+#' @param delta_proportion_diverted The proportion of delta inflow diverted from 1980-2000. More details at \code{\link[DSMflow]{delta_proportion_diverted}}
+#' @param delta_total_diverted The total diverted of delta inflow in cubic meters per second from 1980-2000.. More details at \code{\link[DSMflow]{delta_total_diverted}}
+#' @param weeks_flooded The 1980-2000 floodplain rearing habitat event duration in number of weeks. More details at \code{\link[DSMhabitat]{weeks_flooded}}
+#' @param prop_high_predation Experts estimated probabilities for predation, stranding, and nest scouring. More details at \code{\link[DSMhabitat]{prop_high_predation}}
+#' @param contact_points Number of contact points, estimated using PAD Contact points were derived from the Passage Assessment Database (PAD) maintained by California Department of Fish and Wildlife. Each location considered in the model (e.g., tributary, Sacramento reach, and delta subdivisions) was assessed for all structures identified in the PAD. More details at \code{\link[DSMhabitat]{contact_points}}
+#' @param delta_contact_points Number of contact points, estimated using PAD Contact points were derived from the Passage Assessment Database (PAD) maintained by California Department of Fish and Wildlife. Each location considered in the model (e.g., tributary, Sacramento reach, and delta subdivisions) was assessed for all structures identified in the PAD. More details at \code{\link[DSMhabitat]{delta_contact_points}}
+#' @param delta_prop_high_predation Expert estimated high predation probabilities. More details at \code{\link[DSMhabitat]{delta_prop_high_predation}}
 #' @param ..surv_juv_rear_int Intercept for \code{\link{surv_juv_rear}}
 #' @param .surv_juv_rear_contact_points Coefficient for \code{\link{surv_juv_rear}} \code{contact_points} variable
 #' @param ..surv_juv_rear_contact_points Calibrated coefficient for \code{\link{surv_juv_rear}} \code{contact_points} variable
@@ -248,7 +248,7 @@ surv_juv_delta <- function(avg_temp, max_temp_thresh, avg_temp_thresh, high_pred
 #' @param .surv_juv_delta_prop_diverted Coefficient for \code{\link{surv_juv_delta}} \code{prop_diversions} variable
 #' @param .surv_juv_delta_medium Size related intercept for \code{\link{surv_juv_delta}} medium sized fish
 #' @param .surv_juv_delta_large Size related intercept for \code{\link{surv_juv_delta}} large sized fish
-#' @param min_survival_rate estimated survival rate if temperature threshold is exceeded
+#' @param min_survival_rate Estimated survival rate if temperature threshold is exceeded
 #' @param stochastic \code{TRUE} \code{FALSE} value indicating if model is being run stochastically
 #' @source IP-117068
 #' @export
@@ -459,19 +459,19 @@ surv_juv_outmigration_san_joaquin <- function(..surv_juv_outmigration_sj_int = f
 
 #' @title Juvenile Delta Outmigration Survival
 #' @description Calculates the North and South Delta juvenile out migration survival
-#' @param prop_DCC_closed proportion of days the Delta Cross Channel Gates are closed
-#' @param hor_barr indicator if head of old river physical barrier in place
-#' @param freeport_flow average daily discharge at Freeport in cubic meters per second
-#' @param vernalis_flow average daily discharge at Vernalis in cubic meters per second
-#' @param stockton_flow average daily discharge at Stockton in cubic meters per second
-#' @param vernalis_temperature average daily temperature at Vernalis in °C
-#' @param prisoners_point_temperature average daily temperature of the San Joaquin River at Prisoners Point °C
-#' @param CVP_exp average daily exports Central Valley Project in cubic meters per second
-#' @param SWP_exp average daily exports State Water Project in cubic meters per second
-#' @param trap_trans proportion of smolts trapped at Vernalis and transported to Chips island
+#' @param prop_DCC_closed Proportion of days the Delta Cross Channel Gates are closed
+#' @param hor_barr Indicator if head of old river physical barrier in place
+#' @param freeport_flow Average daily discharge at Freeport in cubic meters per second
+#' @param vernalis_flow Average daily discharge at Vernalis in cubic meters per second
+#' @param stockton_flow Average daily discharge at Stockton in cubic meters per second
+#' @param vernalis_temperature Average daily temperature at Vernalis in °C
+#' @param prisoners_point_temperature Average daily temperature of the San Joaquin River at Prisoners Point °C
+#' @param CVP_exp Average daily exports Central Valley Project in cubic meters per second
+#' @param SWP_exp Average daily exports State Water Project in cubic meters per second
+#' @param trap_trans Proportion of smolts trapped at Vernalis and transported to Chips island
 #' @section Parameters:
 #' All parameters were derived from Perry et al. (2018)
-#' @details function returns proportion of fish from the Sacramento at Feeeport (northern_fish)
+#' @details Function returns proportion of fish from the Sacramento at Feeeport (northern_fish)
 #' Mokelumne and Cosumnes (cosumnes_mokelumne_fish), Calaveras (calaveras_fish) and
 #' San Joaquin tributaries from Vernalis (southern_fish) arriving alive at Chipps
 #' Island in four size groups (35-42mm, 42-72mm, 72-110mm, >110mm).
@@ -625,23 +625,23 @@ surv_juv_outmigration_delta <- function(prop_DCC_closed, hor_barr, freeport_flow
 #' regions for a month and year of the simulation
 #' @param year The simulation year, 1-20
 #' @param month The simulation month, 1-8
-#' @param cc_gates_prop_days_closed More details at \code{\link[DSMflow]{delta_cross_channel_closed}}
-#' @param freeport_flows More details at \code{\link[DSMflow]{freeport_flow}}
-#' @param vernalis_flows More details at \code{\link[DSMflow]{vernalis_flow}}
-#' @param stockton_flows More details at \code{\link[DSMflow]{stockton_flow}}
-#' @param vernalis_temps More details at \code{\link[DSMtemperature]{vernalis_temperature}}
-#' @param prisoners_point_temps More details at \code{\link[DSMtemperature]{prisoners_point_temperature}}
-#' @param CVP_exports More details at \code{\link[DSMflow]{cvp_exports}}
-#' @param SWP_exports More details at \code{\link[DSMflow]{swp_exports}}
-#' @param upper_sacramento_flows average monthly flows on the Upper Sacramento River in cubic meters per second, more details at \code{\link[DSMflow]{upper_sacramento_flows}}
+#' @param cc_gates_prop_days_closed The number of days and proportion of days the Delta Cross Channel gates are typically closed for each month. More details at \code{\link[DSMflow]{delta_cross_channel_closed}}
+#' @param freeport_flows Flow in cms at Freeport (CALSIM node C400). More details at \code{\link[DSMflow]{freeport_flow}}
+#' @param vernalis_flows Flow in cms at Vernalis (CALSIM node C639). More details at \code{\link[DSMflow]{vernalis_flow}}
+#' @param stockton_flows Flow in cms at Stockton (CALSIM node C417A). More details at \code{\link[DSMflow]{stockton_flow}}
+#' @param vernalis_temps Monthly water temperature (°C) at Vernalis from 1980-2000. More details at \code{\link[DSMtemperature]{vernalis_temperature}}
+#' @param prisoners_point_temps Monthly water temperature (°C) at Prisoner's Point from 1980-2000. More details at \code{\link[DSMtemperature]{prisoners_point_temperature}}
+#' @param CVP_exports Total exports for CVP in cms. Value is obtained using CALSIM variable DEL_CVP_EXP. More details at \code{\link[DSMflow]{cvp_exports}}
+#' @param SWP_exports Total exports for SWP in cms. Value is obtained using CALSIM variable DEL_SWP_EXP. More details at \code{\link[DSMflow]{swp_exports}}
+#' @param upper_sacramento_flows Average monthly flows on the Upper Sacramento River in cubic meters per second, more details at \code{\link[DSMflow]{upper_sacramento_flows}}
 #' @param delta_inflow Variable describing delta inflow in cubic meters per second, more details at \code{\link[DSMflow]{delta_inflow}}
-#' @param avg_temp_delta Variable describing monthly mean temperature in celsius, more details at  \code{\link[DSMtempetature]{delta_temprature}}
-#' @param avg_temp Variable describing monthly mean temperature in celsius, more details at  \code{\link[DSMtempetature]{avg_temp}}
-#' @param delta_proportion_diverted Variable describing diversions from the delta in cubic meters per seccond, more details at \code{\link[DSMflow]{delta_proportion_diverted}}
+#' @param avg_temp_delta Variable describing monthly mean temperature in celsius, more details at  \code{\link[DSMtemperature]{delta_temperature}}
+#' @param avg_temp Variable describing monthly mean temperature in celsius, more details at  \code{\link[DSMtemperature]{stream_temperature}}
+#' @param delta_proportion_diverted Variable describing diversions from the delta in cubic meters per second, more details at \code{\link[DSMflow]{delta_proportion_diverted}}
 #' @param ..surv_juv_outmigration_sj_int Intercept for \code{\link{surv_juv_outmigration_san_joaquin}}
 #' @param .surv_juv_outmigration_san_joaquin_medium Size related intercept for \code{\link{surv_juv_outmigration_san_joaquin}} medium sized fish
 #' @param .surv_juv_outmigration_san_joaquin_large Size related intercept for \code{\link{surv_juv_outmigration_san_joaquin}} large sized fish
-#' @param min_survival_rate estimated survival rate if temperature threshold is exceeded
+#' @param min_survival_rate Estimated survival rate if temperature threshold is exceeded
 #' @param stochastic \code{TRUE} \code{FALSE} value indicating if model is being run stochastically
 #' @source IP-117068
 #' @export

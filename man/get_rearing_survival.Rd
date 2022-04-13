@@ -67,31 +67,31 @@ get_rearing_survival(
 
 \item{mode}{The mode that the model is being run in}
 
-\item{avg_temp}{More details at \code{\link[DSMtemperature]{stream_tempetature}}}
+\item{avg_temp}{The 1980-2000 the monthly mean water temperature in °C. More details at \code{\link[DSMtemperature]{stream_temperature}}}
 
-\item{avg_temp_delta}{More details at \code{\link[DSMtempetature]{delta_temprature}}}
+\item{avg_temp_delta}{The 1980-2000 rearing temperature in the North and South Delta in °C. More details at \code{\link[DSMtemperature]{delta_temperature}}}
 
-\item{prob_strand_early}{More details at \code{\link[DSMhabitat]{prop_strand_early}}}
+\item{prob_strand_early}{Experts estimated probabilities for predation, stranding, and nest scouring. More details at \code{\link[DSMhabitat]{prob_strand_early}}}
 
-\item{prob_strand_late}{More details at \code{\link[DSMhabitat]{prop_strand_late}}}
+\item{prob_strand_late}{Experts estimated probabilities for predation, stranding, and nest scouring. More details at \code{\link[DSMhabitat]{prob_strand_late}}}
 
-\item{proportion_diverted}{More details at \code{\link[DSMflow]{proportion_diverted}}}
+\item{proportion_diverted}{A dataset containing the proportion of flow diverted within watersheds for use with the CVPIA SIT Salmon Population Model. More details at \code{\link[DSMflow]{proportion_diverted}}}
 
-\item{total_diverted}{More details at \code{\link[DSMflow]{total_diverted}}}
+\item{total_diverted}{A dataset containing the diverted flow in cms within watersheds for use with the CVPIA SIT Salmon Population Model. More details at \code{\link[DSMflow]{total_diverted}}}
 
-\item{delta_proportion_diverted}{More details at \code{\link[DSMflow]{delta_proportion_diverted}}}
+\item{delta_proportion_diverted}{The proportion of delta inflow diverted from 1980-2000. More details at \code{\link[DSMflow]{delta_proportion_diverted}}}
 
-\item{delta_total_diverted}{More details at \code{\link[DSMflow]{delta_total_diverted}}}
+\item{delta_total_diverted}{The total diverted of delta inflow in cubic meters per second from 1980-2000.. More details at \code{\link[DSMflow]{delta_total_diverted}}}
 
-\item{weeks_flooded}{More details at \code{\link[DSMflow]{weeks_flooded}}}
+\item{weeks_flooded}{The 1980-2000 floodplain rearing habitat event duration in number of weeks. More details at \code{\link[DSMhabitat]{weeks_flooded}}}
 
-\item{prop_high_predation}{More details at \code{\link[DSMhabitat]{prop_high_predation}}}
+\item{prop_high_predation}{Experts estimated probabilities for predation, stranding, and nest scouring. More details at \code{\link[DSMhabitat]{prop_high_predation}}}
 
-\item{contact_points}{More details at \code{\link[DSMhabitat]{contact_points}}}
+\item{contact_points}{Number of contact points, estimated using PAD Contact points were derived from the Passage Assessment Database (PAD) maintained by California Department of Fish and Wildlife. Each location considered in the model (e.g., tributary, Sacramento reach, and delta subdivisions) was assessed for all structures identified in the PAD. More details at \code{\link[DSMhabitat]{contact_points}}}
 
-\item{delta_contact_points}{More details at \code{\link[DSMhabitat]{delta_contact_points}}}
+\item{delta_contact_points}{Number of contact points, estimated using PAD Contact points were derived from the Passage Assessment Database (PAD) maintained by California Department of Fish and Wildlife. Each location considered in the model (e.g., tributary, Sacramento reach, and delta subdivisions) was assessed for all structures identified in the PAD. More details at \code{\link[DSMhabitat]{delta_contact_points}}}
 
-\item{delta_prop_high_predation}{More details at \code{\link[DSMhabitat]{delta_prop_high_predation}}}
+\item{delta_prop_high_predation}{Expert estimated high predation probabilities. More details at \code{\link[DSMhabitat]{delta_prop_high_predation}}}
 
 \item{..surv_juv_rear_int}{Intercept for \code{\link{surv_juv_rear}}}
 
@@ -151,7 +151,7 @@ get_rearing_survival(
 
 \item{.surv_juv_delta_large}{Size related intercept for \code{\link{surv_juv_delta}} large sized fish}
 
-\item{min_survival_rate}{estimated survival rate if temperature threshold is exceeded}
+\item{min_survival_rate}{Estimated survival rate if temperature threshold is exceeded}
 
 \item{stochastic}{\code{TRUE} \code{FALSE} value indicating if model is being run stochastically}
 }
