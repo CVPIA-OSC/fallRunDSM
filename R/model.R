@@ -162,8 +162,8 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                fecundity = ..params$spawn_success_fecundity,
                                stochastic = stochastic)
 
-    # TODO: udpate to reflect actual number of hypothesis
-    fish_1 <- fish_2 <- fish_3 <- list(juveniles = juveniles,
+    # TODO: udpate to reflect actual number of hypothesis. Are there 4 or 5?
+    fish_1 <- fish_2 <- fish_3 <- fish_4 <- list(juveniles = juveniles,
                                        lower_mid_sac_fish = lower_mid_sac_fish,
                                        lower_sac_fish = lower_sac_fish,
                                        upper_mid_sac_fish = upper_mid_sac_fish,
@@ -261,7 +261,8 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                             migratory_survival = migratory_survival,
                                             habitat = habitat, ..params = ..params,
                                             avg_ocean_transition_month = avg_ocean_transition_month,
-                                            stochastic = stochastic)
+                                            stochastic = stochastic,
+                                            juvenile = juvenile)
 
     } # end month loop
 

@@ -20,7 +20,8 @@
 #' @param stochastic \code{TRUE} \code{FALSE} value indicating if model is being run stochastically
 #' @source IP-117068
 #' @export
-route <- function(year, month, juveniles, inchannel_habitat, floodplain_habitat,
+route <- function(year, month, juveniles, inchannel_habitat,
+                  floodplain_habitat,
                   prop_pulse_flows,
                   vernalis_flows,
                   freeport_flows,
@@ -36,7 +37,7 @@ route <- function(year, month, juveniles, inchannel_habitat, floodplain_habitat,
                   stochastic) {
 
   if (hypothesis %in% 4:5) { #density dependent
-    fill_natal <- fallRunDSM::fill_natal_des_depend
+    fill_natal <- fallRunDSM::fill_natal_dens_depend
   }
 
   natal_watersheds <- fill_natal(juveniles = juveniles,
@@ -163,6 +164,9 @@ route_regional <- function(month, year, migrants,
                                  habitat = inchannel_habitat,
                                  floodplain_habitat = floodplain_habitat,
                                  territory_size = territory_size)
+
+  #TODO: MR 5/11 do we need the fill_regional_dens_depend here?
+
   # estimate probability leaving as function of pulse flow
   pulse_flows <- prop_pulse_flows[ , month]
   prob_pulse_leave <- matrix(pulse_movement(pulse_flows), ncol = 4, byrow = T)
