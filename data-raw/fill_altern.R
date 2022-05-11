@@ -1,0 +1,174 @@
+#' @title Filling Natal Tributary and Regional Habitat
+#' @description Allocates juvenile fish onto the floodplain, in-channel, and once
+#' available habitat is full, assigns fish to out migrate.
+#' The \code{fill_natal} function is used to route fish within their natal tributary
+#' and the \code{fill_regional} function is used to route fish on the mainstem, bypasses, and deltas.
+#' The \code{fill_natal_Dens_Depend} function is used to route fish within their natal tributary as an
+#' alternative to fill_natal
+#' and the \code{fill_regional_Dens_Depend} function is used to route fish on the mainstem, bypasses,
+#'  and deltas as an alternative to fill_regional
+#' @param juveniles An n by 4 matrix of juvenile fish size s, m, l, vl
+#' @param inchannel_habitat The available tributary habitat in square meters
+#' @param floodplain_habitat The available floodplain habitat in square meters (NULL for bypasses and delta)
+#' @param territory_size A length 4 array of juvenile fish territory requirements s, m, l, vl
+#' @param up_to_size_class Which size class and under is moved to floodplain and
+#' inchannel habitat (small = 1, medium = 2, large = 3, very large = 4)
+#' @source IP-117068
+#' @name fill
+NULL
+
+#' @rdname fill
+#' @export
+fill_natal <- function(juveniles, inchannel_habitat, floodplain_habitat,
+                       territory_size = fallRunDSM::params$territory_size,
+                       up_to_size_class = 2){
+
+  number_of_regions <- max(nrow(juveniles), 1)
+
+  migrants <- flood_rear <- river_rear <- matrix(0, ncol = 4, nrow = number_of_regions)
+
+  # Assign individuals to flood habitat, largest first
+  if(!is.null(floodplain_habitat)){
+    for(r in 1:number_of_regions){
+      for(i in up_to_size_class:1){
+        flood_rear[r, i] <- min(round(floodplain_habitat[r] / territory_size[i]), juveniles[r, i])
+        floodplain_habitat[r] <- max(floodplain_habitat[r] - flood_rear[r, i] * territory_size[i], 0)
+      }}
+  }
+
+  flood_rear <- pmax(flood_rear, 0)
+  juveniles <- pmax(juveniles - flood_rear, 0)
+  for(r in 1:number_of_regions){
+    for(i in 2:1){
+      river_rear[r, i] <- min(round(inchannel_habitat[r] / territory_size[i]), juveniles[r ,i])
+      inchannel_habitat[r] <- max(inchannel_habitat[r] - river_rear[r, i] * territory_size[i], 0)
+    }}
+
+  river_rear <- pmax(river_rear, 0)
+
+  migrants <- pmax(juveniles - river_rear, 0)
+  list(inchannel = river_rear, floodplain = flood_rear, migrants = migrants)
+}
+
+#' @rdname fill
+#' @export
+fill_regional <- function(juveniles, habitat, floodplain_habitat = NULL,
+                          territory_size = fallRunDSM::params$territory_size,
+                          up_to_size_class = 3){
+
+  all_sheds <- orig_tot <- colSums(juveniles)
+
+  migrants <- flood_rear <- river_rear <- matrix(0, ncol = 4, nrow = 1)
+
+  # Assign individuals to flood habitat largest first
+  if(!is.null(floodplain_habitat)){
+    for(i in up_to_size_class:1){
+      flood_rear[i] <- min(round(floodplain_habitat / territory_size[i]), all_sheds[i])
+      floodplain_habitat <- max(floodplain_habitat - flood_rear[i] * territory_size[i], 0)
+    }
+  }
+
+  all_sheds <- all_sheds - flood_rear
+  for(i in up_to_size_class:1){
+    river_rear[i] <- min(round(habitat / territory_size[i]), all_sheds[i])
+    habitat <- max(habitat - river_rear[i] * territory_size[i], 0)
+  }
+
+  migrants <- pmax(all_sheds - river_rear, 0)
+
+  # remove negative and NaN values
+  prop_flood <- mapply(flood_rear / orig_tot, FUN = max, 0, na.rm = TRUE)
+  prop_river <- mapply(river_rear / orig_tot, FUN = max, 0, na.rm = TRUE)
+  prop_migrant <- mapply(migrants / orig_tot, FUN = max, 0, na.rm = TRUE)
+
+  # apportioning tributary fish to the region
+  flood_rear <- round(t(t(juveniles) * prop_flood))
+  river_rear <- round(t(t(juveniles) * prop_river))
+  migrants <- round(t(t(juveniles) * prop_migrant))
+
+  if (is.null(floodplain_habitat)) {
+    list(inchannel = river_rear, migrants = migrants)
+  } else {
+    list(inchannel = river_rear, floodplain = flood_rear, migrants = migrants)
+  }
+}
+
+# Alternative density dependent version of fill_natal with two additional parameters
+#' @param habitat_capacity the maximum number of rearing juveniles in channel habitat
+#' @param floodplain_capacity the maximum number of rearing juveniles in floodplain habitat
+
+fill_natal_Dens_Depend <- function(juveniles, inchannel_habitat, floodplain_habitat,
+                       up_to_size_class = 2, floodplain_capacity= 5, habitat_capacity=4){
+
+  number_of_regions <- max(nrow(juveniles), 1)
+
+  migrants <- flood_rear <- river_rear <- matrix(0, ncol = 4, nrow = number_of_regions)
+
+  # Assign individuals to floodplain habitat
+  tot.rear<-rowSums(juveniles[,1:up_to_size_class])
+  prop.sizes<-juveniles[,1:up_to_size_class]/tot.rear
+  for(i in 1:(4-up_to_size_class))  prop.sizes<-cbind(prop.sizes,0)
+  P.stay<-1-exp(-floodplain_habitat*floodplain_capacity/tot.rear)
+  flood_rear<-round(P.stay*tot.rear*prop.sizes)
+
+  flood_rear <- pmax(flood_rear, 0)
+  juveniles <- pmax(juveniles - flood_rear, 0)
+
+  # Assign individuals to in channel habitat
+  tot.rear<-rowSums(juveniles[,1:up_to_size_class])
+  prop.sizes<-juveniles[,1:up_to_size_class]/tot.rear
+  for(i in 1:(4-up_to_size_class))  prop.sizes<-cbind(prop.sizes,0)
+  P.stay<-1-exp(-inchannel_habitat*habitat_capacity/tot.rear)
+  river_rear<-round(P.stay*tot.rear*prop.sizes)
+
+  river_rear <- pmax(river_rear, 0)
+
+  migrants <- pmax(juveniles - river_rear, 0)
+  list(inchannel = river_rear, floodplain = flood_rear, migrants = migrants)
+}
+
+# Alternative density dependent version of fill_regional with two additional parameters
+#' @param habitat_capacity the maximum number of rearing juveniles in channel habitat
+#' @param floodplain_capacity the maximum number of rearing juveniles in floodplain habitat
+
+
+fill_regional_Dens_Depend <- function(juveniles, habitat, floodplain_habitat = NULL,
+                          up_to_size_class = 3, floodplain_capacity= 5, habitat_capacity=4){
+
+  all_sheds <- orig_tot <- colSums(juveniles)
+
+  migrants <- flood_rear <- river_rear <- matrix(0, ncol = 4, nrow = 1)
+
+  # Assign individuals to floodplain habitat
+  tot.rear<-sum(all_sheds[1:up_to_size_class])
+  prop.sizes<-all_sheds[1:up_to_size_class]/tot.rear
+  for(i in 1:(4-up_to_size_class))  prop.sizes<-c(prop.sizes,0)
+  P.stay<-1-exp(-floodplain_habitat*floodplain_capacity/tot.rear)
+  flood_rear<-round(P.stay*tot.rear*prop.sizes)
+
+  all_sheds <- all_sheds - flood_rear
+
+  tot.rear<-sum(all_sheds[1:up_to_size_class])
+  prop.sizes<-all_sheds[1:up_to_size_class]/tot.rear
+  for(i in 1:(4-up_to_size_class))  prop.sizes<-c(prop.sizes,0)
+  P.stay<-1-exp(-habitat*habitat_capacity/tot.rear)
+  river_rear<-round(P.stay*tot.rear*prop.sizes)
+
+  migrants <- pmax(all_sheds - river_rear, 0)
+
+  # remove negative and NaN values
+  prop_flood <- mapply(flood_rear / orig_tot, FUN = max, 0, na.rm = TRUE)
+  prop_river <- mapply(river_rear / orig_tot, FUN = max, 0, na.rm = TRUE)
+  prop_migrant <- mapply(migrants / orig_tot, FUN = max, 0, na.rm = TRUE)
+
+  # apportioning tributary fish to the region
+  flood_rear <- round(t(t(juveniles) * prop_flood))
+  river_rear <- round(t(t(juveniles) * prop_river))
+  migrants <- round(t(t(juveniles) * prop_migrant))
+
+  if (is.null(floodplain_habitat)) {
+    list(inchannel = river_rear, migrants = migrants)
+  } else {
+    list(inchannel = river_rear, floodplain = flood_rear, migrants = migrants)
+  }
+}

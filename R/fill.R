@@ -89,3 +89,7 @@ fill_regional <- function(juveniles, habitat, floodplain_habitat = NULL,
     list(inchannel = river_rear, floodplain = flood_rear, migrants = migrants)
   }
 }
+
+
+# TODO: move the alternative fill functions here, so that they are callable by
+# doing fallRunDSM::

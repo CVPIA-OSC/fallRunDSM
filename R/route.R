@@ -35,7 +35,7 @@ route <- function(year, month, juveniles, inchannel_habitat, floodplain_habitat,
                   territory_size,
                   stochastic) {
 
-  if (fill_hypothesis == 1) { #density dependent
+  if (hypothesis %in% 4:5) { #density dependent
     fill_natal <- fallRunDSM::fill_natal_des_depend
   }
 
@@ -48,30 +48,31 @@ route <- function(year, month, juveniles, inchannel_habitat, floodplain_habitat,
 
   # total fish that will migrate because of pulse flows, this derived using total in river
   # and a binomial selection based on pr of movement due to pulse flows
-
-  if (movement_hypothesis == 1) { # snowglobe
-    if (vernalis_flows[month, year] + freeport_flows[month, year] >= 1000) {
-      prob_pulse_leave <- 0.3
+  if (hypothesis == 1 | hypothesis == 3) {
+    if (month %in% 1:2) {
+      # apply snowglobe movement
     }
-  } else if (movement_hypothesis == 2) { # genetic
-    prob_pulse_leave <- 0.25
-  } else {
-    # estimate probability leaving as function of pulse flow
-    prob_pulse_leave <- pulse_movement(prop_pulse_flows[ , month],
-                                       .intercept = .pulse_movement_intercept,
-                                       .proportion_pulse = .pulse_movement_proportion_pulse,
-                                       .medium = .pulse_movement_medium,
-                                       .large = .pulse_movement_large,
-                                       .vlarge = .pulse_movement_vlarge,
-                                       .medium_pulse = .pulse_movement_medium_pulse,
-                                       .large_pulse = .pulse_movement_large_pulse,
-                                       .very_large_pulse = .pulse_movement_very_large_pulse)
+  } else if (hypothesis == 2 | hypothesis == 4) {
+    if (month %in% 1:2) {
+      # apply genetics movement
+    }
   }
 
+  # estimate probability leaving as function of pulse flow
+  prob_pulse_leave <- pulse_movement(prop_pulse_flows[ , month],
+                                     .intercept = .pulse_movement_intercept,
+                                     .proportion_pulse = .pulse_movement_proportion_pulse,
+                                     .medium = .pulse_movement_medium,
+                                     .large = .pulse_movement_large,
+                                     .vlarge = .pulse_movement_vlarge,
+                                     .medium_pulse = .pulse_movement_medium_pulse,
+                                     .large_pulse = .pulse_movement_large_pulse,
+                                     .very_large_pulse = .pulse_movement_very_large_pulse)
+
   pulse_migrants <- if (stochastic) {
-    # t(sapply(1:nrow(juveniles), function(i) {
-    #   rbinom(n = 4, size = round(natal_watersheds$inchannel[i, ]), prob = prob_pulse_leave[i, ])
-    # }))
+    t(sapply(1:nrow(juveniles), function(i) {
+      rbinom(n = 4, size = round(natal_watersheds$inchannel[i, ]), prob = prob_pulse_leave[i, ])
+    }))
     rbinom(n = 4, size = round(natal_watersheds$inchannel), prob = prob_pulse_leave)
   } else {
     round(natal_watersheds$inchannel * prob_pulse_leave)
