@@ -104,10 +104,10 @@ fill_natal_dens_depend <- function(juveniles, inchannel_habitat, floodplain_habi
   migrants <- flood_rear <- river_rear <- matrix(0, ncol = 4, nrow = number_of_regions)
 
   # Assign individuals to floodplain habitat
-  total_rear <- rowSums(juveniles[ , 1:up_to_size_class])
-  prop_sizes <- juveniles[ , 1:up_to_size_class] / total_rear
+  total_rear <- rowSums(juveniles[ , 1:up_to_size_class, drop = FALSE])
+  prop_sizes <- juveniles[ , 1:up_to_size_class, drop = FALSE] / total_rear
   for(i in 1:(4 - up_to_size_class)) {
-    prop_sizes <- cbind(prop_sizes, 0)
+    prop_sizes <- cbind(prop_sizes, 0) # TODO potential break
   }
   prop_stay <- 1 - exp(-floodplain_habitat * floodplain_capacity / total_rear)
   flood_rear <- round(prop_stay * total_rear * prop_sizes)
@@ -116,8 +116,8 @@ fill_natal_dens_depend <- function(juveniles, inchannel_habitat, floodplain_habi
   juveniles <- pmax(juveniles - flood_rear, 0)
 
   # Assign individuals to in channel habitat
-  total_rear <- rowSums(juveniles[ , 1:up_to_size_class])
-  prop_sizes <- juveniles[ , 1:up_to_size_class] / total_rear
+  total_rear <- rowSums(juveniles[ , 1:up_to_size_class, drop = FALSE])
+  prop_sizes <- juveniles[ , 1:up_to_size_class, drop = FALSE] / total_rear
   for(i in 1:(4-up_to_size_class)) {
     prop_sizes <- cbind(prop_sizes,0)
   }
@@ -133,6 +133,7 @@ fill_natal_dens_depend <- function(juveniles, inchannel_habitat, floodplain_habi
 # Alternative density dependent version of fill_regional with two additional parameters
 #' @param habitat_capacity the maximum number of rearing juveniles in channel habitat
 #' @param floodplain_capacity the maximum number of rearing juveniles in floodplain habitat
+#' @export
 fill_regional_dens_depend <- function(juveniles, habitat, floodplain_habitat = NULL,
                                       up_to_size_class = 3, floodplain_capacity = 5,
                                       habitat_capacity = 4){

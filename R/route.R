@@ -34,6 +34,7 @@ route <- function(year, month, juveniles, inchannel_habitat,
                   .pulse_movement_large_pulse,
                   .pulse_movement_very_large_pulse,
                   territory_size,
+                  hypothesis, # TODO is there a cleaner way to do this?
                   stochastic) {
 
   if (hypothesis %in% 4:5) { #density dependent
@@ -140,6 +141,7 @@ route_regional <- function(month, year, migrants,
                            prop_pulse_flows, migration_survival_rate,
                            proportion_flow_bypass, detour = NULL,
                            territory_size,
+                           hypothesis,
                            stochastic) {
 
   if (!is.null(detour)) {

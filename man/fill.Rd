@@ -4,6 +4,7 @@
 \alias{fill}
 \alias{fill_natal}
 \alias{fill_regional}
+\alias{fill_natal_dens_depend}
 \title{Filling Natal Tributary and Regional Habitat}
 \source{
 IP-117068
@@ -23,6 +24,16 @@ fill_regional(
   floodplain_habitat = NULL,
   territory_size = fallRunDSM::params$territory_size,
   up_to_size_class = 3
+)
+
+fill_natal_dens_depend(
+  juveniles,
+  inchannel_habitat,
+  floodplain_habitat,
+  up_to_size_class = 2,
+  floodplain_capacity = 5,
+  habitat_capacity = 4,
+  territory_size = territory_size
 )
 }
 \arguments{

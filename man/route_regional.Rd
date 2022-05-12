@@ -18,6 +18,7 @@ route_regional(
   proportion_flow_bypass,
   detour = NULL,
   territory_size,
+  hypothesis,
   stochastic
 )
 }
