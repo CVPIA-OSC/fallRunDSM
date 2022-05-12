@@ -40,7 +40,7 @@ genetic_movement <- function(juveniles, p_leave = 0.25, stochastic){
   migrants <- matrix(0, ncol = 4, nrow = number_of_regions)
   river_rear <- juveniles
     if(stochastic){
-      migrants[,1]<- rbinom(n=number_of_regions,juveniles[,1],p_leave)
+      migrants[,1]<- rbinom(n = number_of_regions,juveniles[,1], p_leave)
     } else {
       migrants[,1]<-round(juveniles[,1]*p_leave)
     }
