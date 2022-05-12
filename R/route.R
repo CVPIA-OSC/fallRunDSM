@@ -53,10 +53,17 @@ route <- function(year, month, juveniles, inchannel_habitat,
   if (hypothesis == 1 | hypothesis == 3) {
     if (month %in% 1:2) {
       # apply snowglobe movement
+      # TODO: MR: I have no idea what to call this and where it should get plugged in, but it is functional.
+      something <- snow_globe_movement(juveniles, freeport_flow = DSMflow::freeport_flow[month, year],
+                                        vernalis_flow = DSMflow::vernalis_flow[month, year],
+                                        threshold = 1000, p_leave = 0.3, stochastic)
     }
   } else if (hypothesis == 2 | hypothesis == 4) {
     if (month %in% 1:2) {
       # apply genetics movement
+
+      # TODO: MR: I have no idea what to call this and where it should get plugged in, but it is functional.
+      something <- genetic_movement(juveniles, p_leave = 0.25, stochastic)
     }
   }
 

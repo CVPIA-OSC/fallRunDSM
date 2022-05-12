@@ -91,8 +91,6 @@ fill_regional <- function(juveniles, habitat, floodplain_habitat = NULL,
 }
 
 
-# TODO: move the alternative fill functions here, so that they are callable by
-# doing fallRunDSM::
 #' @rdname fill
 #' @export
 fill_natal_dens_depend <- function(juveniles, inchannel_habitat, floodplain_habitat,

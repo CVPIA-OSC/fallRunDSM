@@ -254,7 +254,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                                    stochastic = stochastic)
 
 
-      fish_output <- juvenile_month_dynamic(hypothesis = 1,
+      fish_output <- juvenile_month_dynamic(hypothesis = 2,
                                             fish_1,
                                             year = year, month = month,
                                             rearing_survival = rearing_survival,
