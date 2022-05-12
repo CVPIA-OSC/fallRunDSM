@@ -11,12 +11,11 @@
 #' @param p_leave the proportion of juvenile fish leaving in response to high flows
 #' @param stochastic when true the fish leaving are assigned randomly
 #'
-
 #' @rdname movement
 #' @export
-snow_globe_movement<-function(juveniles, freeport_flow = DSMflow::freeport_flow[month, year],
-                              vernalis_flow = DSMflow::vernalis_flow[month, year],
-                              threshold = 1000, p_leave = 0.3, stochastic){
+snow_globe_movement<-function(juveniles, freeport_flow, vernalis_flow,
+                              threshold = 1000, p_leave = 0.3, stochastic = FALSE){
+
   number_of_regions <- max(nrow(juveniles), 1)
   migrants <- matrix(0, ncol=4, nrow=number_of_regions)
   river_rear<-juveniles
@@ -26,7 +25,7 @@ snow_globe_movement<-function(juveniles, freeport_flow = DSMflow::freeport_flow[
     } else {
       migrants[,1] <- round(juveniles[,1]*p_leave)
     }
-    river_rear[,1] <- juveniles[,1]- migrants[,1]
+    river_rear[,1] <- juveniles[,1] - migrants[,1]
     river_rear <- pmax(river_rear, 0)
   }
   list(river_rear = river_rear, migrants = migrants)
@@ -34,7 +33,7 @@ snow_globe_movement<-function(juveniles, freeport_flow = DSMflow::freeport_flow[
 
 #' @rdname movement
 #' @export
-genetic_movement <- function(juveniles, p_leave = 0.25, stochastic){
+genetic_movement <- function(juveniles, p_leave = 0.25, stochastic = FALSE){
 
   number_of_regions <- max(nrow(juveniles), 1)
   migrants <- matrix(0, ncol = 4, nrow = number_of_regions)

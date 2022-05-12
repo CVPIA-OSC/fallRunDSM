@@ -37,7 +37,8 @@ route <- function(year, month, juveniles, inchannel_habitat,
                   hypothesis, # TODO is there a cleaner way to do this?
                   stochastic) {
 
-  if (hypothesis %in% 4:5) { #density dependent
+  # Density dependent hypothesis
+  if (hypothesis %in% 4:5) {
     fill_natal <- fallRunDSM::fill_natal_dens_depend
   }
 
@@ -54,16 +55,20 @@ route <- function(year, month, juveniles, inchannel_habitat,
     if (month %in% 1:2) {
       # apply snowglobe movement
       # TODO: MR: I have no idea what to call this and where it should get plugged in, but it is functional.
-      something <- snow_globe_movement(juveniles, freeport_flow = DSMflow::freeport_flow[month, year],
-                                        vernalis_flow = DSMflow::vernalis_flow[month, year],
-                                        threshold = 1000, p_leave = 0.3, stochastic)
+      movement_results <- snow_globe_movement(juveniles,
+                                       freeport_flow = DSMflow::freeport_flow[month, year],
+                                       vernalis_flow = DSMflow::vernalis_flow[month, year],
+                                       threshold = 1000, p_leave = 0.3, stochastic)
+      natal_watersheds$inchannel <- movement_results$river_rear
+      natal_watersheds$migrants <- movement_results$migrants
     }
   } else if (hypothesis == 2 | hypothesis == 4) {
     if (month %in% 1:2) {
       # apply genetics movement
 
-      # TODO: MR: I have no idea what to call this and where it should get plugged in, but it is functional.
-      something <- genetic_movement(juveniles, p_leave = 0.25, stochastic)
+      movement_results <- genetic_movement(juveniles, p_leave = 0.25, stochastic)
+      natal_watersheds$inchannel <- movement_results$river_rear
+      natal_watersheds$migrants <- movement_results$migrants
     }
   }
 
