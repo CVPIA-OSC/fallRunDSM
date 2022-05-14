@@ -38,8 +38,9 @@ route <- function(year, month, juveniles, inchannel_habitat,
                   stochastic) {
 
   # Density dependent hypothesis
-  if (hypothesis %in% 4:5) {
+  if (hypothesis %in% 3:5) {
     fill_natal <- fallRunDSM::fill_natal_dens_depend
+    fill_regional <- fallRunDSM::fill_regional_dens_depend
   }
 
   natal_watersheds <- fill_natal(juveniles = juveniles,
@@ -51,7 +52,7 @@ route <- function(year, month, juveniles, inchannel_habitat,
 
   # total fish that will migrate because of pulse flows, this derived using total in river
   # and a binomial selection based on pr of movement due to pulse flows
-  if (hypothesis == 1 | hypothesis == 3) {
+  if (hypothesis == 1 | hypothesis == 4) {
     if (month %in% 1:2) {
       # apply snowglobe movement
       # TODO: MR: I have no idea what to call this and where it should get plugged in, but it is functional.
@@ -62,7 +63,7 @@ route <- function(year, month, juveniles, inchannel_habitat,
       natal_watersheds$inchannel <- movement_results$river_rear
       natal_watersheds$migrants <- movement_results$migrants
     }
-  } else if (hypothesis == 2 | hypothesis == 4) {
+  } else if (hypothesis == 2 | hypothesis == 5) {
     if (month %in% 1:2) {
       # apply genetics movement
 

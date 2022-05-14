@@ -2,7 +2,7 @@ library(tidyverse)
 
 # 2019 Calibration Parameters ------------
 params_2019 <- list(
-
+  juveniles_at_chipps_model_weights = rep(1/6, 6),
   # Data from DSMscenarios
   spawn_decay_rate = DSMscenario::spawn_decay_rate,
   rear_decay_rate = DSMscenario::rear_decay_rate,

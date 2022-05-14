@@ -253,7 +253,17 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                                    min_survival_rate = ..params$min_survival_rate,
                                                    stochastic = stochastic)
 
-      dynamics_output_0 <- juvenile_month_dynamic(hypothesis = 0,
+      fish_0 <- juvenile_month_dynamic(hypothesis = 0,
+                                                  fish_0,
+                                                  year = year, month = month,
+                                                  rearing_survival = rearing_survival,
+                                                  migratory_survival = migratory_survival,
+                                                  habitat = habitat, ..params = ..params,
+                                                  avg_ocean_transition_month = avg_ocean_transition_month,
+                                                  stochastic = stochastic,
+                                                  juvenile = juvenile)
+
+      fish_1 <- juvenile_month_dynamic(hypothesis = 1,
                                                   fish_1,
                                                   year = year, month = month,
                                                   rearing_survival = rearing_survival,
@@ -263,8 +273,8 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                                   stochastic = stochastic,
                                                   juvenile = juvenile)
 
-      dynamics_output_1 <- juvenile_month_dynamic(hypothesis = 1,
-                                                  fish_1,
+      fish_2 <- juvenile_month_dynamic(hypothesis = 2,
+                                                  fish_2,
                                                   year = year, month = month,
                                                   rearing_survival = rearing_survival,
                                                   migratory_survival = migratory_survival,
@@ -273,8 +283,8 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                                   stochastic = stochastic,
                                                   juvenile = juvenile)
 
-      dynamics_output_2 <- juvenile_month_dynamic(hypothesis = 2,
-                                                  fish_1,
+      fish_3 <- juvenile_month_dynamic(hypothesis = 3,
+                                                  fish_3,
                                                   year = year, month = month,
                                                   rearing_survival = rearing_survival,
                                                   migratory_survival = migratory_survival,
@@ -283,18 +293,8 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                                   stochastic = stochastic,
                                                   juvenile = juvenile)
 
-      dynamics_output_3 <- juvenile_month_dynamic(hypothesis = 3,
-                                                  fish_1,
-                                                  year = year, month = month,
-                                                  rearing_survival = rearing_survival,
-                                                  migratory_survival = migratory_survival,
-                                                  habitat = habitat, ..params = ..params,
-                                                  avg_ocean_transition_month = avg_ocean_transition_month,
-                                                  stochastic = stochastic,
-                                                  juvenile = juvenile)
-
-      dynamics_output_4 <- juvenile_month_dynamic(hypothesis = 4,
-                                            fish_1,
+      fish_4 <- juvenile_month_dynamic(hypothesis = 4,
+                                            fish_4,
                                             year = year, month = month,
                                             rearing_survival = rearing_survival,
                                             migratory_survival = migratory_survival,
@@ -303,8 +303,8 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                             stochastic = stochastic,
                                             juvenile = juvenile)
 
-      dynamics_output_5 <- juvenile_month_dynamic(hypothesis = 5,
-                                                  fish_1,
+      fish_5 <- juvenile_month_dynamic(hypothesis = 5,
+                                                  fish_5,
                                                   year = year, month = month,
                                                   rearing_survival = rearing_survival,
                                                   migratory_survival = migratory_survival,
@@ -313,8 +313,69 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                                   stochastic = stochastic,
                                                   juvenile = juvenile)
 
+      fish_0_df <- data.frame(fish_0$juveniles_at_chipps * (1/6))
+      fish_0_df$watershed = FallRunDSM::watershed_labels
+      fish_0_df$month = month
+      fish_0_df$year = year
+      fish_0_df$hypothesis = "zero"
+      rownames(fish_0_df) <- NULL
+
+      fish_1_df <- data.frame(fish_1$juveniles_at_chipps * (1/6))
+      fish_1_df$watershed = FallRunDSM::watershed_labels
+      fish_1_df$month = month
+      fish_1_df$year = year
+      fish_1_df$hypothesis = "one"
+      rownames(fish_1_df) <- NULL
+
+      fish_2_df <- data.frame(fish_2$juveniles_at_chipps * (1/6))
+      fish_2_df$watershed = FallRunDSM::watershed_labels
+      fish_2_df$month = month
+      fish_2_df$year = year
+      fish_2_df$hypothesis = "two"
+      rownames(fish_2_df) <- NULL
+
+      fish_3_df <- data.frame(fish_3$juveniles_at_chipps * (1/6))
+      fish_3_df$watershed = FallRunDSM::watershed_labels
+      fish_3_df$month = month
+      fish_3_df$year = year
+      fish_3_df$hypothesis = "three"
+      rownames(fish_3_df) <- NULL
+
+      fish_4_df <- data.frame(fish_3$juveniles_at_chipps * (1/6))
+      fish_4_df$watershed = FallRunDSM::watershed_labels
+      fish_4_df$month = month
+      fish_4_df$year = year
+      fish_4_df$hypothesis = "four"
+      rownames(fish_4_df) <- NULL
+
+
+      fish_5_df <- data.frame(fish_5$juveniles_at_chipps * (1/6))
+      fish_5_df$watershed = FallRunDSM::watershed_labels
+      fish_5_df$month = month
+      fish_5_df$year = year
+      fish_5_df$hypothesis = "five"
+      rownames(fish_5_df) <- NULL
+
+      output$juveniles_at_chipps <- dplyr::bind_rows(
+        output$juveniles_at_chipps,
+        fish_0_df,
+        fish_1_df,
+        fish_2_df,
+        fish_3_df,
+        fish_4_df,
+        fish_5_df
+      )
+
     } # end month loop
 
+    juveniles_at_chipps <- ..params$juveniles_at_chipps_model_weights[1] * fish_0$juveniles_at_chipps +
+      ..params$juveniles_at_chipps_model_weights[2] * fish_1$juveniles_at_chipps +
+      ..params$juveniles_at_chipps_model_weights[3] * fish_2$juveniles_at_chipps +
+      ..params$juveniles_at_chipps_model_weights[4] * fish_3$juveniles_at_chipps +
+      ..params$juveniles_at_chipps_model_weights[5] * fish_4$juveniles_at_chipps +
+      ..params$juveniles_at_chipps_model_weights[6] * fish_5$juveniles_at_chipps
+
+    #still need adults in ocean and adult in ocean weights
     output$juvenile_biomass[ , year] <- juveniles_at_chipps %*% fallRunDSM::params$mass_by_size_class
 
     adults_returning <- t(sapply(1:31, function(i) {
