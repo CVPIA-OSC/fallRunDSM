@@ -399,4 +399,17 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
                                                            .ocean_entry_success_months = ..params$.ocean_entry_success_months,
                                                            stochastic = stochastic)
 
+  return(list(juveniles = juveniles,
+              lower_mid_sac_fish = lower_mid_sac_fish,
+              lower_sac_fish = lower_sac_fish,
+              upper_mid_sac_fish = upper_mid_sac_fish,
+              sutter_fish = sutter_fish,
+              yolo_fish = yolo_fish,
+              san_joaquin_fish = san_joaquin_fish,
+              north_delta_fish = north_delta_fish,
+              south_delta_fish = south_delta_fish,
+              juveniles_at_chipps = juveniles_at_chipps,
+              adults_in_ocean = adults_in_ocean)
+  )
+
 }

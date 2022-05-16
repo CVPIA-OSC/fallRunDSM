@@ -314,35 +314,35 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                                   juvenile = juvenile)
 
       fish_0_df <- data.frame(fish_0$juveniles_at_chipps * (1/6))
-      fish_0_df$watershed = FallRunDSM::watershed_labels
+      fish_0_df$watershed = fallRunDSM::watershed_labels
       fish_0_df$month = month
       fish_0_df$year = year
       fish_0_df$hypothesis = "zero"
       rownames(fish_0_df) <- NULL
 
       fish_1_df <- data.frame(fish_1$juveniles_at_chipps * (1/6))
-      fish_1_df$watershed = FallRunDSM::watershed_labels
+      fish_1_df$watershed = fallRunDSM::watershed_labels
       fish_1_df$month = month
       fish_1_df$year = year
       fish_1_df$hypothesis = "one"
       rownames(fish_1_df) <- NULL
 
       fish_2_df <- data.frame(fish_2$juveniles_at_chipps * (1/6))
-      fish_2_df$watershed = FallRunDSM::watershed_labels
+      fish_2_df$watershed = fallRunDSM::watershed_labels
       fish_2_df$month = month
       fish_2_df$year = year
       fish_2_df$hypothesis = "two"
       rownames(fish_2_df) <- NULL
 
       fish_3_df <- data.frame(fish_3$juveniles_at_chipps * (1/6))
-      fish_3_df$watershed = FallRunDSM::watershed_labels
+      fish_3_df$watershed = fallRunDSM::watershed_labels
       fish_3_df$month = month
       fish_3_df$year = year
       fish_3_df$hypothesis = "three"
       rownames(fish_3_df) <- NULL
 
       fish_4_df <- data.frame(fish_3$juveniles_at_chipps * (1/6))
-      fish_4_df$watershed = FallRunDSM::watershed_labels
+      fish_4_df$watershed = fallRunDSM::watershed_labels
       fish_4_df$month = month
       fish_4_df$year = year
       fish_4_df$hypothesis = "four"
@@ -350,7 +350,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
 
       fish_5_df <- data.frame(fish_5$juveniles_at_chipps * (1/6))
-      fish_5_df$watershed = FallRunDSM::watershed_labels
+      fish_5_df$watershed = fallRunDSM::watershed_labels
       fish_5_df$month = month
       fish_5_df$year = year
       fish_5_df$hypothesis = "five"
@@ -368,12 +368,12 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
     } # end month loop
 
-    juveniles_at_chipps <- ..params$juveniles_at_chipps_model_weights[1] * fish_0$juveniles_at_chipps +
-      ..params$juveniles_at_chipps_model_weights[2] * fish_1$juveniles_at_chipps +
-      ..params$juveniles_at_chipps_model_weights[3] * fish_2$juveniles_at_chipps +
-      ..params$juveniles_at_chipps_model_weights[4] * fish_3$juveniles_at_chipps +
-      ..params$juveniles_at_chipps_model_weights[5] * fish_4$juveniles_at_chipps +
-      ..params$juveniles_at_chipps_model_weights[6] * fish_5$juveniles_at_chipps
+    juveniles_at_chipps <- (1/6) * fish_0$juveniles_at_chipps +
+      (1/6) * fish_1$juveniles_at_chipps +
+      (1/6) * fish_2$juveniles_at_chipps +
+      (1/6) * fish_3$juveniles_at_chipps +
+      (1/6) * fish_4$juveniles_at_chipps +
+      (1/6) * fish_5$juveniles_at_chipps
 
     #still need adults in ocean and adult in ocean weights
     output$juvenile_biomass[ , year] <- juveniles_at_chipps %*% fallRunDSM::params$mass_by_size_class
