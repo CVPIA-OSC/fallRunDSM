@@ -104,6 +104,7 @@ fill_natal_dens_depend <- function(juveniles, inchannel_habitat, floodplain_habi
   # Assign individuals to floodplain habitat
   total_rear <- rowSums(juveniles[ , 1:up_to_size_class, drop = FALSE])
   prop_sizes <- juveniles[ , 1:up_to_size_class, drop = FALSE] / total_rear
+  prop_sizes[is.nan(prop_sizes)] <- 0
   for(i in 1:(4 - up_to_size_class)) {
     prop_sizes <- cbind(prop_sizes, 0) # TODO potential break
   }
@@ -116,6 +117,7 @@ fill_natal_dens_depend <- function(juveniles, inchannel_habitat, floodplain_habi
   # Assign individuals to in channel habitat
   total_rear <- rowSums(juveniles[ , 1:up_to_size_class, drop = FALSE])
   prop_sizes <- juveniles[ , 1:up_to_size_class, drop = FALSE] / total_rear
+  prop_sizes[is.nan(prop_sizes)] <- 0
   for(i in 1:(4-up_to_size_class)) {
     prop_sizes <- cbind(prop_sizes,0)
   }
@@ -143,6 +145,8 @@ fill_regional_dens_depend <- function(juveniles, habitat, floodplain_habitat = N
   # Assign individuals to floodplain habitat
   total_rear <- sum(all_sheds[1:up_to_size_class])
   prop_sizes <- all_sheds[1:up_to_size_class] / total_rear
+  prop_sizes[is.nan(prop_sizes)] <- 0
+
   for(i in 1:(4 - up_to_size_class)){
     prop_sizes <- c(prop_sizes,0)
   }
@@ -153,6 +157,8 @@ fill_regional_dens_depend <- function(juveniles, habitat, floodplain_habitat = N
 
   total_rear <- sum(all_sheds[1:up_to_size_class])
   prop_sizes <- all_sheds[1:up_to_size_class] / total_rear
+  prop_sizes[is.nan(prop_sizes)] <- 0
+
   for(i in 1:(4 - up_to_size_class)) {
     prop_sizes <- c(prop_sizes, 0)
   }
