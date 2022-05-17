@@ -109,6 +109,7 @@ fill_natal_dens_depend <- function(juveniles, inchannel_habitat, floodplain_habi
     prop_sizes <- cbind(prop_sizes, 0) # TODO potential break
   }
   prop_stay <- 1 - exp(-floodplain_habitat * floodplain_capacity / total_rear)
+  prop_stay[is.nan(prop_stay)] <- 0
   flood_rear <- round(prop_stay * total_rear * prop_sizes)
 
   flood_rear <- pmax(flood_rear, 0)
@@ -122,6 +123,7 @@ fill_natal_dens_depend <- function(juveniles, inchannel_habitat, floodplain_habi
     prop_sizes <- cbind(prop_sizes,0)
   }
   prop_stay <- 1 - exp(-inchannel_habitat * habitat_capacity / total_rear)
+  prop_stay[is.nan(prop_stay)] <- 0
   river_rear <- round(prop_stay * total_rear * prop_sizes)
 
   river_rear <- pmax(river_rear, 0)
@@ -151,6 +153,7 @@ fill_regional_dens_depend <- function(juveniles, habitat, floodplain_habitat = N
     prop_sizes <- c(prop_sizes,0)
   }
   prop_stay <- 1 - exp(-floodplain_habitat * floodplain_capacity / total_rear)
+  prop_stay[is.nan(prop_stay)] <- 0
   flood_rear <- round(prop_stay * total_rear * prop_sizes)
 
   all_sheds <- all_sheds - flood_rear
@@ -163,6 +166,7 @@ fill_regional_dens_depend <- function(juveniles, habitat, floodplain_habitat = N
     prop_sizes <- c(prop_sizes, 0)
   }
   prop_stay <- 1 - exp(-habitat * habitat_capacity / total_rear)
+  prop_stay[is.nan(prop_stay)] <- 0
   river_rear <- round(prop_stay * total_rear * prop_sizes)
 
   migrants <- pmax(all_sheds - river_rear, 0)
