@@ -50,12 +50,10 @@ route <- function(year, month, juveniles, inchannel_habitat,
 
 
 
-  # total fish that will migrate because of pulse flows, this derived using total in river
-  # and a binomial selection based on pr of movement due to pulse flows
+
   if (hypothesis == 1 | hypothesis == 4) {
     if (month %in% 1:2) {
       # apply snowglobe movement
-      # TODO: MR: I have no idea what to call this and where it should get plugged in, but it is functional.
       movement_results <- snow_globe_movement(juveniles,
                                        freeport_flow = DSMflow::freeport_flow[month, year],
                                        vernalis_flow = DSMflow::vernalis_flow[month, year],
@@ -66,7 +64,6 @@ route <- function(year, month, juveniles, inchannel_habitat,
   } else if (hypothesis == 2 | hypothesis == 5) {
     if (month %in% 1:2) {
       # apply genetics movement
-
       movement_results <- genetic_movement(juveniles, p_leave = 0.25, stochastic)
       natal_watersheds$inchannel <- movement_results$river_rear
       natal_watersheds$migrants <- movement_results$migrants
