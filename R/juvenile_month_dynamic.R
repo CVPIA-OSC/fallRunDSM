@@ -30,6 +30,12 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
   juveniles_at_chipps <- fish$juveniles_at_chipps
   adults_in_ocean <- fish$adults_in_ocean
 
+
+  if (hypothesis %in% 3:5) {
+    fill_natal <- fallRunDSM::fill_natal_dens_depend
+    fill_regional <- fallRunDSM::fill_regional_dens_depend
+  }
+
   migrants <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
 
   if (month == 8) {
@@ -63,6 +69,7 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
                                         juveniles_at_chipps = juveniles_at_chipps,
                                         growth_rates = ..params$growth_rates,
                                         territory_size = ..params$territory_size,
+                                        hypothesis = hypothesis,
                                         stochastic = stochastic)
 
     juveniles_at_chipps <- delta_fish$juveniles_at_chipps
@@ -123,7 +130,8 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
                                 bypass_habitat = habitat$sutter,
                                 migration_survival_rate = migratory_survival$sutter,
                                 territory_size = ..params$territory_size,
-                                stochastic = stochastic)
+                                stochastic = stochastic,
+                                hypothesis = hypothesis)
 
     migrants[1:15, ] <- upper_mid_sac_fish$migrants + sutter_fish$migrants
 
@@ -195,7 +203,8 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
                               bypass_habitat = habitat$yolo,
                               migration_survival_rate = migratory_survival$yolo,
                               territory_size = ..params$territory_size,
-                              stochastic = stochastic)
+                              stochastic = stochastic,
+                              hypothesis = hypothesis)
 
     migrants[1:20, ] <- lower_mid_sac_fish$migrants + yolo_fish$migrants
 
@@ -381,6 +390,7 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
                                         juveniles_at_chipps = juveniles_at_chipps,
                                         growth_rates = ..params$growth_rates,
                                         territory_size = ..params$territory_size,
+                                        hypothesis = hypothesis,
                                         stochastic = stochastic)
 
     migrants_at_golden_gate <- delta_fish$migrants_at_golden_gate

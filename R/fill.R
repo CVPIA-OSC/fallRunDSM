@@ -95,7 +95,7 @@ fill_regional <- function(juveniles, habitat, floodplain_habitat = NULL,
 #' @export
 fill_natal_dens_depend <- function(juveniles, inchannel_habitat, floodplain_habitat,
                                    up_to_size_class = 2, floodplain_capacity = 5,
-                                   habitat_capacity = 4, territory_size = territory_size) {# not actually used
+                                   habitat_capacity = 4, territory_size = territory_size, ...) {# not actually used
 
   number_of_regions <- max(nrow(juveniles), 1)
 
@@ -138,7 +138,7 @@ fill_natal_dens_depend <- function(juveniles, inchannel_habitat, floodplain_habi
 #' @export
 fill_regional_dens_depend <- function(juveniles, habitat, floodplain_habitat = NULL,
                                       up_to_size_class = 3, floodplain_capacity = 5,
-                                      habitat_capacity = 4){
+                                      habitat_capacity = 4, ...){
 
   all_sheds <- orig_tot <- colSums(juveniles)
 
@@ -152,9 +152,16 @@ fill_regional_dens_depend <- function(juveniles, habitat, floodplain_habitat = N
   for(i in 1:(4 - up_to_size_class)){
     prop_sizes <- c(prop_sizes,0)
   }
-  prop_stay <- 1 - exp(-floodplain_habitat * floodplain_capacity / total_rear)
-  prop_stay[is.nan(prop_stay)] <- 0
-  flood_rear <- round(prop_stay * total_rear * prop_sizes)
+
+  if (is.null(floodplain_habitat)) {
+    prop_stay <- rep(0, length(prop_sizes))
+    flood_rear <- rep(0, length(prop_sizes))
+  } else {
+    prop_stay <- 1 - exp(-floodplain_habitat * floodplain_capacity / total_rear)
+    prop_stay[is.nan(prop_stay)] <- 0
+
+    flood_rear <- round(prop_stay * total_rear * prop_sizes)
+  }
 
   all_sheds <- all_sheds - flood_rear
 

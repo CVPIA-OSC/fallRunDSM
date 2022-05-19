@@ -341,7 +341,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
       fish_3_df$hypothesis = "three"
       rownames(fish_3_df) <- NULL
 
-      fish_4_df <- data.frame(fish_3$juveniles_at_chipps * (1/6))
+      fish_4_df <- data.frame(fish_4$juveniles_at_chipps * (1/6))
       fish_4_df$watershed = fallRunDSM::watershed_labels
       fish_4_df$month = month
       fish_4_df$year = year
