@@ -343,6 +343,7 @@ route_and_rear_deltas <- function(year, month, migrants, north_delta_fish, south
                          hypothesis,
                          stochastic) {
 
+
   prop_delta_fish_entrained <- route_to_south_delta(freeport_flow = freeport_flows[[month, year]] * 35.3147,
                                                  dcc_closed = cc_gates_days_closed[month],
                                                  month = month)
@@ -372,42 +373,17 @@ route_and_rear_deltas <- function(year, month, migrants, north_delta_fish, south
                                     habitat = south_delta_habitat,
                                     territory_size = territory_size)
 
-  # TODO add snowglobe and genetic movement here ??
-  if (hypothesis == 1 | hypothesis == 4) {
-    if (month %in% 1:2) {
-      # apply snowglobe movement
-      north_movement_results <- snow_globe_movement(north_delta_fish$inchannel,
-                                              freeport_flow = DSMflow::freeport_flow[month, year],
-                                              vernalis_flow = DSMflow::vernalis_flow[month, year],
-                                              threshold = 1000, p_leave = 0.3, stochastic)
-
-      south_movement_results <- snow_globe_movement(south_delta_fish$inchannel,
-                                                    freeport_flow = DSMflow::freeport_flow[month, year],
-                                                    vernalis_flow = DSMflow::vernalis_flow[month, year],
-                                                    threshold = 1000, p_leave = 0.3, stochastic)
-
-      north_delta_fish$inchannel <- north_movement_results$river_rear
-      north_delta_fish$migrants <- north_movement_results$migrants
-
-      south_delta_fish$inchannel <- south_movement_results$river_rear
-      south_delta_fish$migrants <- south_movement_results$migrants
-    }
-  } else if (hypothesis == 2 | hypothesis == 5) {
-    if (month %in% 1:2) {
-      # apply genetics movement
-      north_movement_results <- genetic_movement(north_delta_fish$inchannel, p_leave = 0.25, stochastic)
-      south_movement_results <- genetic_movement(south_delta_fish$inchannel, p_leave = 0.25, stochastic)
-
-
-      north_delta_fish$inchannel <- north_movement_results$river_rear
-      north_delta_fish$migrants <- north_movement_results$migrants
-
-      south_delta_fish$inchannel <- south_movement_results$river_rear
-      south_delta_fish$migrants <- south_movement_results$migrants
-    }
-  }
-
-
+  # TODO DBUG PATCH!!!
+  # if (hypothesis == 1 | hypothesis == 4) {
+  #   if (month %in% 1:2) {
+  #     # apply snowglobe movement
+  #     movement_results <- snow_globe_movement(juveniles = north_delta_fish$inchannel,
+  #                                             freeport_flow = DSMflow::freeport_flow[month, year],
+  #                                             vernalis_flow = DSMflow::vernalis_flow[month, year],
+  #                                             threshold = 1000, p_leave = 0.3, stochastic)
+  #     north_delta_fish$inchannel <- movement_results$river_rear
+  #     north_delta_fish$migrants <- movement_results$migrants
+  #   }}
 
   if (month == 8) {
     north_delta_fish = list(migrants = north_delta_fish$inchannel + north_delta_fish$migrants)
@@ -442,6 +418,8 @@ route_and_rear_deltas <- function(year, month, migrants, north_delta_fish, south
   migrants_at_golden_gate <- rbind(north_delta_out_survived, matrix(0, nrow = 8, ncol = 4)) + south_delta_out_survived
 
   juveniles_at_chipps <- juveniles_at_chipps + rbind(north_delta_fish$migrants, matrix(0, nrow = 8, ncol = 4)) + south_delta_migrants
+
+
 
   if (month != 8) {
     north_delta_fish <- rear(juveniles = north_delta_fish$inchannel,

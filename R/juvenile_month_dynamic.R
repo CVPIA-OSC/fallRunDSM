@@ -419,7 +419,8 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
               north_delta_fish = north_delta_fish,
               south_delta_fish = south_delta_fish,
               juveniles_at_chipps = juveniles_at_chipps,
-              adults_in_ocean = adults_in_ocean)
+              adults_in_ocean = adults_in_ocean,
+              migrants_at_golden_gate = migrants_at_golden_gate)
   )
 
 }
