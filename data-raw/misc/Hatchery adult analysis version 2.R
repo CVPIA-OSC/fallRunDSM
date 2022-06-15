@@ -192,7 +192,7 @@ names(Fa_Trib_Hat_Allocation)[5] <- "Old_Hatchery_Allocation"
 
 fall_tribs <- calc_prop_hatch(file <- dat, run="Fall")
 Fa_Trib_Hat_Allocation <- merge(Fa_Trib_Hat_Allocation,fall_tribs[,1:2], by="Trib", all = T)
-Fa_Trib_Hat_Allocation[is_na(Fa_Trib_Hat_Allocation[,6]),6] <- 0
+Fa_Trib_Hat_Allocation[is.na(Fa_Trib_Hat_Allocation[,6]),6] <- 0
 Fa_Trib_Hat_Allocation <- Fa_Trib_Hat_Allocation[order(Fa_Trib_Hat_Allocation$Srt),]
 
 names(Fa_Trib_Hat_Allocation)[6] <- "New_Hatchery_Allocation"
@@ -221,21 +221,19 @@ Fa_Trib_Rem_rate$New_Natural_Removal_Rate <- ifelse(Fa_Trib_Rem_rate$Trib == "Am
                                                   Fa_Trib_Rem_rate$New_Natural_Removal_Rate)
 Fa_Trib_Rem_rate$New_Natural_Removal_Rate <- ifelse(Fa_Trib_Rem_rate$Trib=="Battle Creek", Fall_Rem[2,2],
                                                   Fa_Trib_Rem_rate$New_Natural_Removal_Rate)
-Fa_Trib_Rem_rate$New_Natural_Removal_Rate <- ifelse(Fa_Trib_Rem_rate$Trib=="Feather River", Fall_Rem[3,2],
+Fa_Trib_Rem_rate$New_Natural_Removal_Rate <- ifelse(Fa_Trib_Rem_rate$Trib=="Feather River", Fall_Rem[3,2], # TODO: Feather is not located in Fall_Rem file
                                                   Fa_Trib_Rem_rate$New_Natural_Removal_Rate)
 Fa_Trib_Rem_rate$New_Natural_Removal_Rate <- ifelse(Fa_Trib_Rem_rate$Trib=="Merced River", Fall_Rem[4,2],
                                                   Fa_Trib_Rem_rate$New_Natural_Removal_Rate)
 Fa_Trib_Rem_rate$New_Natural_Removal_Rate <- ifelse(Fa_Trib_Rem_rate$Trib=="Mokelumne River", Fall_Rem[5,2], # TODO: should this value be NA?
                                                   Fa_Trib_Rem_rate$New_Natural_Removal_Rate)
-New_Old_Fall_Parms <- merge(Fa_Trib_Hat_Allocation,Fa_Trib_Rem_rate)
+New_Old_Fall_Parms <- merge(Fa_Trib_Hat_Allocation, Fa_Trib_Rem_rate)
 #################################################################################
 ##### Now Fall adult harvest rate
 #################################################################################
 
 #load(paste(Fplace,"adult_harvest_rate_rda", sep=""))
-
-# TODO: check that not part of params?!
-load('data/adult_harvest_rate.rda')
+adult_harvest_rate <- fallRunDSM::adult_harvest_rate
 
 Fa_TribH_rate <- cbind(Tribz,adult_harvest_rate)
 names(Fa_TribH_rate)[5] <-  "Old_Harvest_Rate"
@@ -271,7 +269,7 @@ Fa_TribH_rate$New_Harvest_Rate <- ifelse(Fa_TribH_rate$Old_Harvest_Rate==0,
 
 New_Old_Fall_Parms <- merge(New_Old_Fall_Parms, Fa_TribH_rate)
 
-# write.csv(New_Old_Fall_Parms, "New Fall run model parameters_csv", row_names = F)
+write.csv(New_Old_Fall_Parms, "New Fall run model parameters_vFW.csv")
 
 ############################################################################
 ###########             Spring run                     #####################
@@ -304,16 +302,18 @@ names(Sp_Trib_Rem_rate)[5] <-  "Old_Natural_Removal_Rate"
 
 spring_remov <- Rem_wild_spwn(df= dat, run = "Spring", Tribs = c("Feather River Hatchery", "Feather River"))
 
-Sp_Trib_Rem_rate$New_Natural_Removal_Rate <- ifelse(Sp_Trib_Rem_rate$Trib=="Feather River",spring_remov[1,2],0)
+Sp_Trib_Rem_rate$New_Natural_Removal_Rate <- ifelse(Sp_Trib_Rem_rate$Trib == "Feather River", spring_remov[1,2], 0)
 
 New_Old_Spring_Parms <- merge(Sp_Trib_Hat_Allocation,Sp_Trib_Rem_rate)
 
-write_csv(New_Old_Spring_Parms, "New Spring run model parameters_csv", row_names = F)
+write.csv(New_Old_Spring_Parms, "New Spring run model parameters_vFW.csv")
 
 ############################################################################
 ###########             Winter run                     #####################
 ############################################################################
-load(paste(Wplace,"hatchery_allocation_rda", sep=""))
+#load(paste(Wplace,"hatchery_allocation_rda", sep=""))
+hatchery_allocation <- winterRunDSM::params$hatchery_allocation
+
 Wi_Trib_Hat_Allocation <- cbind(Tribz,hatchery_allocation)
 names(Wi_Trib_Hat_Allocation)[5] <- "Old_Hatchery_Allocation"
 
@@ -326,7 +326,9 @@ Wi_Trib_Hat_Allocation$New_Hatchery_Allocation[1] <- winter_tribs[1,2]
 # Estimate proportion of naturally produced fish used in a hatchery
 # i_e_, they did not spawn
 #########################################################################
-load(paste(Wplace,"natural_adult_removal_rate_rda", sep=""))
+#load(paste(Wplace,"natural_adult_removal_rate_rda", sep=""))
+natural_adult_removal_rate <- winterRunDSM::params$natural_adult_removal_rate
+
 Wi_Trib_Rem_rate <- cbind(Tribz,natural_adult_removal_rate)
 names(Wi_Trib_Rem_rate)[5] <-  "Old_Natural_Removal_Rate"
 
@@ -338,7 +340,7 @@ Wi_Trib_Rem_rate$New_Natural_Removal_Rate[1] <- winter_rem[1,2]
 
 New_Old_Winter_Parms <- merge(Wi_Trib_Hat_Allocation,Wi_Trib_Rem_rate)
 
-write_csv(New_Old_Winter_Parms, "New Winter run model parameters_csv", row_names = F)
+write.csv(New_Old_Winter_Parms, "New Winter run model parameters_vFW.csv")
 
 ############################################################################
 ###                 Late Fall run                      #####################
