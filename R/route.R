@@ -54,19 +54,31 @@ route <- function(year, month, juveniles, inchannel_habitat,
   if (hypothesis == 1 | hypothesis == 4) {
     if (month %in% 1:2) {
       # apply snowglobe movement
-      movement_results <- snow_globe_movement(juveniles,
-                                       freeport_flow = DSMflow::freeport_flow[month, year],
-                                       vernalis_flow = DSMflow::vernalis_flow[month, year],
-                                       threshold = 1000, p_leave = 0.3, stochastic)
-      natal_watersheds$inchannel <- movement_results$river_rear
-      natal_watersheds$migrants <- movement_results$migrants
+
+      # if there are no fish inchannel we grab them from floodplain?
+      if (sum(natal_watersheds$inchannel) == 0) {
+        movement_results <- snow_globe_movement(natal_watersheds$floodplain,
+                                                freeport_flow = DSMflow::freeport_flow[month, year],
+                                                vernalis_flow = DSMflow::vernalis_flow[month, year],
+                                                threshold = 1000, p_leave = 0.3, stochastic)
+        natal_watersheds$floodplain <- movement_results$river_rear
+        natal_watersheds$migrants <- natal_watersheds$migrants + movement_results$migrants
+      } else {
+        movement_results <- snow_globe_movement(natal_watersheds$inchannel,
+                                                freeport_flow = DSMflow::freeport_flow[month, year],
+                                                vernalis_flow = DSMflow::vernalis_flow[month, year],
+                                                threshold = 1000, p_leave = 0.3, stochastic)
+        natal_watersheds$inchannel <- movement_results$river_rear
+        natal_watersheds$migrants <- natal_watersheds$migrants + movement_results$migrants
+
+      }
     }
   } else if (hypothesis == 2 | hypothesis == 5) {
     if (month %in% 1:2) {
       # apply genetics movement
-      movement_results <- genetic_movement(juveniles, p_leave = 0.25, stochastic)
+      movement_results <- genetic_movement(natal_watersheds$inchannel, p_leave = 0.25, stochastic)
       natal_watersheds$inchannel <- movement_results$river_rear
-      natal_watersheds$migrants <- movement_results$migrants
+      natal_watersheds$migrants <- natal_watersheds$migrants + movement_results$migrants
     }
   }
 
@@ -191,19 +203,33 @@ route_regional <- function(month, year, migrants,
   if (hypothesis == 1 | hypothesis == 4) {
     if (month %in% 1:2) {
       # apply snowglobe movement
-      movement_results <- snow_globe_movement(juveniles = migrants,
-                                              freeport_flow = DSMflow::freeport_flow[month, year],
-                                              vernalis_flow = DSMflow::vernalis_flow[month, year],
-                                              threshold = 1000, p_leave = 0.3, stochastic)
-      regional_fish$inchannel <- movement_results$river_rear
-      regional_fish$migrants <- movement_results$migrants
+
+      if (sum(regional_fish$inchannel) == 0) {
+        movement_results <- snow_globe_movement(juveniles = regional_fish$floodplain,
+                                                freeport_flow = DSMflow::freeport_flow[month, year],
+                                                vernalis_flow = DSMflow::vernalis_flow[month, year],
+                                                threshold = 1000, p_leave = 0.3, stochastic)
+
+        regional_fish$floodplain <- movement_results$river_rear
+        regional_fish$migrants <- regional_fish$migrants + movement_results$migrants
+
+      } else {
+        movement_results <- snow_globe_movement(juveniles = regional_fish$inchannel,
+                                                freeport_flow = DSMflow::freeport_flow[month, year],
+                                                vernalis_flow = DSMflow::vernalis_flow[month, year],
+                                                threshold = 1000, p_leave = 0.3, stochastic)
+
+        regional_fish$inchannel <- movement_results$river_rear
+        regional_fish$migrants <- regional_fish$migrants + movement_results$migrants
+
+      }
     }
   } else if (hypothesis == 2 | hypothesis == 5) {
     if (month %in% 1:2) {
       # apply genetics movement
-      movement_results <- genetic_movement(juveniles = migrants, p_leave = 0.25, stochastic)
+      movement_results <- genetic_movement(juveniles = regional_fish$inchannel, p_leave = 0.25, stochastic)
       regional_fish$inchannel <- movement_results$river_rear
-      regional_fish$migrants <- movement_results$migrants
+      regional_fish$migrants <- regional_fish$migrants + movement_results$migrants
     }
   }
 

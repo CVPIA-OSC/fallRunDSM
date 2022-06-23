@@ -90,7 +90,7 @@ fill_regional <- function(juveniles, habitat, floodplain_habitat = NULL,
   }
 }
 
-
+# TODO expose the habitat_capacity function for calibration
 #' @rdname fill
 #' @export
 fill_natal_dens_depend <- function(juveniles, inchannel_habitat, floodplain_habitat,
