@@ -4,7 +4,12 @@
 \alias{temperature_movement}
 \title{Temperature Movement}
 \usage{
-temperature_movement(juveniles, Month = 3, MeanT = 15, stochastic)
+temperature_movement(
+  juveniles,
+  movement_month = 3,
+  movement_temp = 15,
+  stochastic
+)
 }
 \description{
 Move juvenile based on temperature metrics

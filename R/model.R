@@ -254,65 +254,119 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                                    min_survival_rate = ..params$min_survival_rate,
                                                    stochastic = stochastic)
 
+      # hypothesis are layed out as follows:
+      # 0. base filling + base move
+      # 1. bsae filling + snow move
+      # 2. base filling + genetics move
+      # 3. base filling + temperature move
+      # 4. base filling + time move
+      # 5. base filling + base move
+      # 6. bsae filling + snow move
+      # 7. base filling + genetics move
+      # 8. base filling + temperature move
+      # 9. base filling + time move
+
       fish_0 <- juvenile_month_dynamic(hypothesis = 0,
-                                                  fish_0,
-                                                  year = year, month = month,
-                                                  rearing_survival = rearing_survival,
-                                                  migratory_survival = migratory_survival,
-                                                  habitat = habitat, ..params = ..params,
-                                                  avg_ocean_transition_month = avg_ocean_transition_month,
-                                                  stochastic = stochastic,
-                                                  juvenile = juvenile)
+                                       fish_0,
+                                       year = year, month = month,
+                                       rearing_survival = rearing_survival,
+                                       migratory_survival = migratory_survival,
+                                       habitat = habitat, ..params = ..params,
+                                       avg_ocean_transition_month = avg_ocean_transition_month,
+                                       stochastic = stochastic,
+                                       juvenile = juvenile)
 
       fish_1 <- juvenile_month_dynamic(hypothesis = 1,
-                                                  fish_1,
-                                                  year = year, month = month,
-                                                  rearing_survival = rearing_survival,
-                                                  migratory_survival = migratory_survival,
-                                                  habitat = habitat, ..params = ..params,
-                                                  avg_ocean_transition_month = avg_ocean_transition_month,
-                                                  stochastic = stochastic,
-                                                  juvenile = juvenile)
+                                       fish_1,
+                                       year = year, month = month,
+                                       rearing_survival = rearing_survival,
+                                       migratory_survival = migratory_survival,
+                                       habitat = habitat, ..params = ..params,
+                                       avg_ocean_transition_month = avg_ocean_transition_month,
+                                       stochastic = stochastic,
+                                       juvenile = juvenile)
 
       fish_2 <- juvenile_month_dynamic(hypothesis = 2,
-                                                  fish_2,
-                                                  year = year, month = month,
-                                                  rearing_survival = rearing_survival,
-                                                  migratory_survival = migratory_survival,
-                                                  habitat = habitat, ..params = ..params,
-                                                  avg_ocean_transition_month = avg_ocean_transition_month,
-                                                  stochastic = stochastic,
-                                                  juvenile = juvenile)
+                                       fish_2,
+                                       year = year, month = month,
+                                       rearing_survival = rearing_survival,
+                                       migratory_survival = migratory_survival,
+                                       habitat = habitat, ..params = ..params,
+                                       avg_ocean_transition_month = avg_ocean_transition_month,
+                                       stochastic = stochastic,
+                                       juvenile = juvenile)
 
       fish_3 <- juvenile_month_dynamic(hypothesis = 3,
-                                                  fish_3,
-                                                  year = year, month = month,
-                                                  rearing_survival = rearing_survival,
-                                                  migratory_survival = migratory_survival,
-                                                  habitat = habitat, ..params = ..params,
-                                                  avg_ocean_transition_month = avg_ocean_transition_month,
-                                                  stochastic = stochastic,
-                                                  juvenile = juvenile)
+                                       fish_3,
+                                       year = year, month = month,
+                                       rearing_survival = rearing_survival,
+                                       migratory_survival = migratory_survival,
+                                       habitat = habitat, ..params = ..params,
+                                       avg_ocean_transition_month = avg_ocean_transition_month,
+                                       stochastic = stochastic,
+                                       juvenile = juvenile)
 
       fish_4 <- juvenile_month_dynamic(hypothesis = 4,
-                                            fish_4,
-                                            year = year, month = month,
-                                            rearing_survival = rearing_survival,
-                                            migratory_survival = migratory_survival,
-                                            habitat = habitat, ..params = ..params,
-                                            avg_ocean_transition_month = avg_ocean_transition_month,
-                                            stochastic = stochastic,
-                                            juvenile = juvenile)
+                                       fish_4,
+                                       year = year, month = month,
+                                       rearing_survival = rearing_survival,
+                                       migratory_survival = migratory_survival,
+                                       habitat = habitat, ..params = ..params,
+                                       avg_ocean_transition_month = avg_ocean_transition_month,
+                                       stochastic = stochastic,
+                                       juvenile = juvenile)
+
+      # ---------- start density dep filling -------------------------------
 
       fish_5 <- juvenile_month_dynamic(hypothesis = 5,
-                                                  fish_5,
-                                                  year = year, month = month,
-                                                  rearing_survival = rearing_survival,
-                                                  migratory_survival = migratory_survival,
-                                                  habitat = habitat, ..params = ..params,
-                                                  avg_ocean_transition_month = avg_ocean_transition_month,
-                                                  stochastic = stochastic,
-                                                  juvenile = juvenile)
+                                       fish_5,
+                                       year = year, month = month,
+                                       rearing_survival = rearing_survival,
+                                       migratory_survival = migratory_survival,
+                                       habitat = habitat, ..params = ..params,
+                                       avg_ocean_transition_month = avg_ocean_transition_month,
+                                       stochastic = stochastic,
+                                       juvenile = juvenile)
+
+      fish_6 <- juvenile_month_dynamic(hypothesis = 6,
+                                       fish_5,
+                                       year = year, month = month,
+                                       rearing_survival = rearing_survival,
+                                       migratory_survival = migratory_survival,
+                                       habitat = habitat, ..params = ..params,
+                                       avg_ocean_transition_month = avg_ocean_transition_month,
+                                       stochastic = stochastic,
+                                       juvenile = juvenile)
+
+      fish_7 <- juvenile_month_dynamic(hypothesis = 7,
+                                       fish_5,
+                                       year = year, month = month,
+                                       rearing_survival = rearing_survival,
+                                       migratory_survival = migratory_survival,
+                                       habitat = habitat, ..params = ..params,
+                                       avg_ocean_transition_month = avg_ocean_transition_month,
+                                       stochastic = stochastic,
+                                       juvenile = juvenile)
+
+      fish_8 <- juvenile_month_dynamic(hypothesis = 8,
+                                       fish_5,
+                                       year = year, month = month,
+                                       rearing_survival = rearing_survival,
+                                       migratory_survival = migratory_survival,
+                                       habitat = habitat, ..params = ..params,
+                                       avg_ocean_transition_month = avg_ocean_transition_month,
+                                       stochastic = stochastic,
+                                       juvenile = juvenile)
+
+      fish_9 <- juvenile_month_dynamic(hypothesis = 9,
+                                       fish_5,
+                                       year = year, month = month,
+                                       rearing_survival = rearing_survival,
+                                       migratory_survival = migratory_survival,
+                                       habitat = habitat, ..params = ..params,
+                                       avg_ocean_transition_month = avg_ocean_transition_month,
+                                       stochastic = stochastic,
+                                       juvenile = juvenile)
 
       tmp <- rbind(fish_0$north_delta_fish, matrix(0, ncol = 4, nrow = 8)) + fish_0$south_delta_fish
       fish_0_df <- data.frame(tmp * (1/5))

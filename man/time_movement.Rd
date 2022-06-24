@@ -4,7 +4,7 @@
 \alias{time_movement}
 \title{Time Movmenet}
 \usage{
-time_movement(juveniles, Month = 3, stochastic)
+time_movement(juveniles, movement_month = 3, stochastic)
 }
 \description{
 moves juvenile based on time in simulation
