@@ -15,20 +15,11 @@ juvenile_month_dynamic(
   ..params = ..params,
   avg_ocean_transition_month = avg_ocean_transition_month,
   stochastic = stochastic,
-  juveniles,
-  natal_filling_fn = fallRunDSM::fill_natal,
-  regional_filling_fn = fallRunDSM::fill_regional,
-  movement_fn = NULL
+  juveniles
 )
 }
 \arguments{
 \item{fish}{list object containing tracking matrices for juveniles, juveniles at chips, and adults in ocean}
-
-\item{natal_filling_fn}{overwrite base filling function}
-
-\item{regional_filling_fn}{overwrite base regional filling}
-
-\item{movement_fn}{adds a additional movement function}
 }
 \description{
 Juvenile Month Dynamics
