@@ -47,7 +47,7 @@ valley_wide |>
 
 
 
-
+# -----
 
 american_river <- run$north_delta_fish |>
   pivot_longer(names_to = "size", values_to = "count", s:vl) |>
@@ -72,11 +72,13 @@ american_river_props |>
          hypothesis_label = factor(hypothesis, levels = c("zero", "one", "two",
                                                           "three", "four", "five",
                                                           "six", "seven", "eight",
-                                                          "nine"))) |>
+                                                          "nine"),
+                                   labels = hypothesis_levels)) |>
   filter(cal_year == 1990) |>
   ggplot(aes(month_label, prop_fish, fill = size_label)) +
   geom_col(position = "dodge") +
-  facet_grid(cols(hypothesis_label), rows = 2)
+  facet_wrap(~hypothesis_label, nrow = 2) +
+  labs(title = "American River - 1990")
 
 
 american_river_props |>
@@ -113,7 +115,7 @@ upsac_river_props |>
                                                           "six", "seven", "eight",
                                                           "nine"),
                                    labels = hypothesis_levels)) |>
-  filter(cal_year == 1990) |>
+  filter(cal_year == 1997) |>
   ggplot(aes(month_label, prop_fish, fill = size_label)) +
   geom_col(position = "dodge") +
   facet_wrap(~hypothesis_label, nrow = 2)
@@ -123,3 +125,4 @@ american_river_props |>
   filter(year == 1, hypothesis == "zero") |>
   select(month, year, size, count) |>
   pivot_wider(names_from = size, values_from = count)
+

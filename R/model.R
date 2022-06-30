@@ -464,13 +464,25 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
     } # end month loop
 
-    juveniles_at_chipps <-
-      # (1/6) * fish_0$juveniles_at_chipps +
-      # (1/6) * fish_1$juveniles_at_chipps +
-      # (1/6) * fish_2$juveniles_at_chipps +
-      # (1/6) * fish_3$juveniles_at_chipps +
-      (1/6) * fish_4$juveniles_at_chipps + 0
-      # (1/6) * fish_5$juveniles_at_chipps
+    # juveniles_at_chipps <-
+    #   # (1/6) * fish_0$juveniles_at_chipps +
+    #   # (1/6) * fish_1$juveniles_at_chipps +
+    #   # (1/6) * fish_2$juveniles_at_chipps +
+    #   # (1/6) * fish_3$juveniles_at_chipps +
+    #   (1/6) * fish_4$juveniles_at_chipps + 0
+    #   # (1/6) * fish_5$juveniles_at_chipps
+
+    adults_in_ocean <-
+      (1/10) * fish_0$adults_in_ocean +
+      (1/10) * fish_1$adults_in_ocean +
+      (1/10) * fish_2$adults_in_ocean +
+      (1/10) * fish_3$adults_in_ocean +
+      (1/10) * fish_4$adults_in_ocean +
+      (1/10) * fish_5$adults_in_ocean +
+      (1/10) * fish_6$adults_in_ocean +
+      (1/10) * fish_7$adults_in_ocean +
+      (1/10) * fish_8$adults_in_ocean +
+      (1/10) * fish_9$adults_in_ocean
 
     #still need adults in ocean and adult in ocean weights
     output$juvenile_biomass[ , year] <- juveniles_at_chipps %*% fallRunDSM::params$mass_by_size_class
