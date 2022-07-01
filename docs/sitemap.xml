@@ -4,9 +4,6 @@
     <loc>https://CVPIA-OSC.github.io/fallRunDSM/404.html</loc>
   </url>
   <url>
-    <loc>https://CVPIA-OSC.github.io/fallRunDSM/LICENSE.html</loc>
-  </url>
-  <url>
     <loc>https://CVPIA-OSC.github.io/fallRunDSM/articles/calibration-2021.html</loc>
   </url>
   <url>
@@ -14,6 +11,9 @@
   </url>
   <url>
     <loc>https://CVPIA-OSC.github.io/fallRunDSM/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://CVPIA-OSC.github.io/fallRunDSM/articles/model_faq.html</loc>
   </url>
   <url>
     <loc>https://CVPIA-OSC.github.io/fallRunDSM/articles/scenario.html</loc>
@@ -32,6 +32,9 @@
   </url>
   <url>
     <loc>https://CVPIA-OSC.github.io/fallRunDSM/index.html</loc>
+  </url>
+  <url>
+    <loc>https://CVPIA-OSC.github.io/fallRunDSM/LICENSE.html</loc>
   </url>
   <url>
     <loc>https://CVPIA-OSC.github.io/fallRunDSM/news/index.html</loc>
@@ -163,6 +166,9 @@
     <loc>https://CVPIA-OSC.github.io/fallRunDSM/reference/stray_rate.html</loc>
   </url>
   <url>
+    <loc>https://CVPIA-OSC.github.io/fallRunDSM/reference/survival_betas.html</loc>
+  </url>
+  <url>
     <loc>https://CVPIA-OSC.github.io/fallRunDSM/reference/surv_adult_enroute.html</loc>
   </url>
   <url>
@@ -191,9 +197,6 @@
   </url>
   <url>
     <loc>https://CVPIA-OSC.github.io/fallRunDSM/reference/surv_juv_rear.html</loc>
-  </url>
-  <url>
-    <loc>https://CVPIA-OSC.github.io/fallRunDSM/reference/survival_betas.html</loc>
   </url>
   <url>
     <loc>https://CVPIA-OSC.github.io/fallRunDSM/reference/territory_by_size.html</loc>

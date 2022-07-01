@@ -61,6 +61,9 @@
     <li>
       <a href="../articles/temperature-model.html">Temperature Modeling</a>
     </li>
+    <li>
+      <a href="../articles/model_faq.html">Model FAQ</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -170,7 +173,7 @@ document.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">no_cores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">detectCores</a></span><span class="op">(</span>logical <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># total cores available</span>
 <span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">makeCluster</a></span><span class="op">(</span><span class="va">no_cores</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="co"># create a cluster from cores</span>
-<span class="fu"><a href="https://rdrr.io/pkg/doParallel/man/registerDoParallel.html" class="external-link">registerDoParallel</a></span><span class="op">(</span><span class="va">cl</span><span class="op">)</span> <span class="co"># register cluster with package</span>
+<span class="fu">registerDoParallel</span><span class="op">(</span><span class="va">cl</span><span class="op">)</span> <span class="co"># register cluster with package</span>
 
 
 <span class="co"># register the functions for use in parallel mode</span>

@@ -94,6 +94,8 @@ navbar:
         href: 'articles/hatchery-analysis.html'
       - text: 'Temperature Modeling'
         href: 'articles/temperature-model.html'
+      - text: 'Model FAQ'
+        href: 'articles/model_faq.html'
   - text: 'News'
     href: news/index.html
 
