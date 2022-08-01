@@ -106,8 +106,8 @@ size_class_labels <- c('s', 'm', 'l', 'vl')
 usethis::use_data(size_class_labels)
 
 # calculate growth rates
-growth_rates_inchannel <- growth()
-usethis::use_data(growth_rates_inchannel)
+growth_rates_inchannel <- growth(daily_growth_rate = .35)
+usethis::use_data(growth_rates_inchannel, overwrite = TRUE)
 growth_rates_floodplain <- growth_floodplain()
 usethis::use_data(growth_rates_floodplain)
 
