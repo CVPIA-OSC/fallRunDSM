@@ -108,8 +108,8 @@ usethis::use_data(size_class_labels)
 # calculate growth rates
 growth_rates_inchannel <- growth(daily_growth_rate = .35)
 usethis::use_data(growth_rates_inchannel, overwrite = TRUE)
-growth_rates_floodplain <- growth_floodplain()
-usethis::use_data(growth_rates_floodplain)
+growth_rates_floodplain <- growth_floodplain(daily_rates = .35)
+usethis::use_data(growth_rates_floodplain, overwrite = TRUE)
 
 
 
