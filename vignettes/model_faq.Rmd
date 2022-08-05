@@ -27,7 +27,7 @@ A: The functions within the file **R/model.R** defines the lifecycle mechanics. 
 A: The calibration, sensitivity analysis, and reference materials are found on the model documentation website, under the following links:
 
 -   [Fall-run documentation site](https://cvpia-osc.github.io/fallRunDSM)
--   [Spting-run documentation site](https://cvpia-osc.github.io/springRunDSM)
+-   [Spring-run documentation site](https://cvpia-osc.github.io/springRunDSM)
 -   [Winter-run documentation site](https://cvpia-osc.github.io/winterRunDSM)
 -   [Late-fall-run documentation site](https://cvpia-osc.github.io/lateFallRunDSM) 
 
@@ -139,7 +139,7 @@ It is important to note that the interpretation of the model output is a single 
 
 #### Q: I found something within the code or inputs that seems like an error, how can I notify model developers?
 
-A: When you find n error, you can open an [issue on GitHub](https://github.com/CVhttps:/github.com/CVPIA-OSC/fallRunDSM/issuesPIA-OSC/fallRusection%20of%20the%20issue%20please%20descrinDSM/issues). In the comments section of the issue please describe the problem in detail, and if possible paste code that reproduces this error. Maintainers will be notified of this issue and communicate with you on the issue tracker page. 
+A: When you find an error, you can open an [issue on GitHub](https://github.com/CVhttps:/github.com/CVPIA-OSC/fallRunDSM/issuesPIA-OSC/fallRusection%20of%20the%20issue%20please%20descrinDSM/issues). In the comments section of the issue please describe the problem in detail, and if possible paste code that reproduces this error. Maintainers will be notified of this issue and communicate with you on the issue tracker page. 
 
 #### Q: I have an idea on how to improve model mechanics or source data, how can I propose a change?
 A: The SIT has a process and template for proposing changes to the models. Please contact the Science Coordinator for more information.
