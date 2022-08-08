@@ -32,7 +32,11 @@ rear <- function(juveniles, survival_rate, growth, floodplain_juveniles = NULL,
         }
       }))
     }
-  next_juveniles <- round(survived %*% growth)
+
+  next_juveniles <- round(t(sapply(1:nrow(juveniles), function(i) {
+    survived[i,, drop = FALSE] %*% growth[,,i]
+  })))
+
   if(!is.null(floodplain_juveniles)) {
     floodplain_juveniles_survived <- if (is.vector(floodplain_survival_rate)) {
       t(sapply(1:nrow(floodplain_juveniles), function(watershed) {
@@ -54,7 +58,7 @@ rear <- function(juveniles, survival_rate, growth, floodplain_juveniles = NULL,
     next_floodplain_juveniles <- c()
     for(i in 1:nrow(floodplain_juveniles)) {
       if (weeks_flooded[i] > 0) {
-        watershed_floodplain_juveniles <- floodplain_juveniles_survived[i, ] %*% floodplain_growth[ , , weeks_flooded[i]]
+        watershed_floodplain_juveniles <- floodplain_juveniles_survived[i, ] %*% floodplain_growth[ , , i]
         next_floodplain_juveniles <- rbind(next_floodplain_juveniles, watershed_floodplain_juveniles)
       } else {
         next_floodplain_juveniles <- rbind(next_floodplain_juveniles, rep(0, 4))

@@ -164,8 +164,11 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
     for (month in 1:8) {
 
-      # add get growth
-      growth_rates_ic <- get_growth_rates()
+      growth_rates_ic <- get_growth_rates(..params$avg_temp[,month, year],
+                                          prey_density = "low")
+      growth_rates_fp <- get_growth_rates(..params$avg_temp[,month, year],
+                                          prey_density = "low",
+                                          floodplain = TRUE)
 
       habitat <- get_habitat(year, month,
                              inchannel_habitat_fry = ..params$inchannel_habitat_fry,
@@ -303,10 +306,10 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
         upper_sac_trib_rear <- rear(juveniles = upper_sac_trib_fish$inchannel,
                                     survival_rate = rearing_survival$inchannel[1:15, ],
-                                    growth = ..params$growth_rates,
+                                    growth = growth_rates_ic,
                                     floodplain_juveniles = upper_sac_trib_fish$floodplain,
                                     floodplain_survival_rate = rearing_survival$floodplain[1:15, ],
-                                    floodplain_growth = ..params$growth_rates_floodplain,
+                                    floodplain_growth = growth_rates_fp,
                                     weeks_flooded = ..params$weeks_flooded[1:15, month, year],
                                     stochastic = stochastic)
 
