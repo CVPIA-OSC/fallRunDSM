@@ -18,6 +18,9 @@ get_growth_rates(
 
 \item{floodplain}{boolean indicating whether lookup is for floodplain}
 }
+\value{
+a matrix of size 4x4 corresponding to the approraite growth rate based on parameters
+}
 \description{
 Get Growth Rates
 }

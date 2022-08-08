@@ -342,10 +342,10 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
         upper_mid_sac_fish <- rear(juveniles = upper_mid_sac_fish$inchannel,
                                    survival_rate = rearing_survival$inchannel[16, ],
-                                   growth = ..params$growth_rates,
+                                   growth = growth_rates_ic[,,16],
                                    floodplain_juveniles = upper_mid_sac_fish$floodplain,
                                    floodplain_survival_rate = rearing_survival$floodplain[16, ],
-                                   floodplain_growth = ..params$growth_rates_floodplain,
+                                   floodplain_growth = growth_rates_fp[,,16],
                                    weeks_flooded = rep(..params$weeks_flooded[16, month, year], nrow(upper_mid_sac_fish$inchannel)),
                                    stochastic = stochastic)
 
