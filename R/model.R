@@ -17,7 +17,8 @@
 #' @export
 fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibrate"),
                            seeds = NULL, ..params = fallRunDSM::params,
-                           stochastic = FALSE){
+                           stochastic = FALSE,
+                           prey_density = "med"){
 
   mode <- match.arg(mode)
 
@@ -165,10 +166,14 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
     for (month in 1:8) {
 
       growth_rates_ic <- get_growth_rates(..params$avg_temp[,month, year],
-                                          prey_density = "low")
+                                          prey_density = prey_density)
+
       growth_rates_fp <- get_growth_rates(..params$avg_temp[,month, year],
-                                          prey_density = "low",
+                                          prey_density = prey_density,
                                           floodplain = TRUE)
+
+      growth_rates_delta <- get_growth_rates(..params$avg_temp_delta[month, year,],
+                                             prey_density = prey_density)
 
       habitat <- get_habitat(year, month,
                              inchannel_habitat_fry = ..params$inchannel_habitat_fry,
@@ -277,7 +282,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                             migratory_survival_delta = migratory_survival$delta,
                                             migratory_survival_bay_delta = migratory_survival$bay_delta,
                                             juveniles_at_chipps = juveniles_at_chipps,
-                                            growth_rates = ..params$growth_rates,
+                                            growth_rates = growth_rates_delta,
                                             territory_size = ..params$territory_size,
                                             stochastic = stochastic)
 
@@ -306,10 +311,10 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
         upper_sac_trib_rear <- rear(juveniles = upper_sac_trib_fish$inchannel,
                                     survival_rate = rearing_survival$inchannel[1:15, ],
-                                    growth = growth_rates_ic,
+                                    growth = growth_rates_ic[,,1:15],
                                     floodplain_juveniles = upper_sac_trib_fish$floodplain,
                                     floodplain_survival_rate = rearing_survival$floodplain[1:15, ],
-                                    floodplain_growth = growth_rates_fp,
+                                    floodplain_growth = growth_rates_fp[,,1:15],
                                     weeks_flooded = ..params$weeks_flooded[1:15, month, year],
                                     stochastic = stochastic)
 
@@ -353,7 +358,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
         sutter_fish <- rear(juveniles = sutter_fish$inchannel,
                             survival_rate = matrix(rep(rearing_survival$sutter, nrow(sutter_fish$inchannel)), ncol = 4, byrow = TRUE),
-                            growth = growth_rates_ic,
+                            growth = growth_rates_ic[,,17],
                             stochastic = stochastic)
 
 
@@ -380,10 +385,10 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
         lower_mid_sac_trib_rear <- rear(juveniles = lower_mid_sac_trib_fish$inchannel,
                                         survival_rate = rearing_survival$inchannel[18:20, ],
-                                        growth = growth_rates_ic,
+                                        growth = growth_rates_ic[,,18:20],
                                         floodplain_juveniles = lower_mid_sac_trib_fish$floodplain,
                                         floodplain_survival_rate = rearing_survival$floodplain[18:20, ],
-                                        floodplain_growth = growth_rates_fp,
+                                        floodplain_growth = growth_rates_fp[,,18:20],
                                         weeks_flooded = ..params$weeks_flooded[18:20, month, year],
                                         stochastic = stochastic)
 
@@ -412,10 +417,10 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
         lower_mid_sac_fish <- rear(juveniles = lower_mid_sac_fish$inchannel,
                                    survival_rate = rearing_survival$inchannel[21, ],
-                                   growth = growth_rates_ic,
+                                   growth = growth_rates_ic[,,21],
                                    floodplain_juveniles = lower_mid_sac_fish$floodplain,
                                    floodplain_survival_rate = rearing_survival$floodplain[21, ],
-                                   floodplain_growth = growth_rates_fp,
+                                   floodplain_growth = growth_rates_fp[,,21],
                                    weeks_flooded = rep(..params$weeks_flooded[21, month, year], nrow(lower_mid_sac_fish$inchannel)),
                                    stochastic = stochastic)
 
@@ -423,7 +428,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
         yolo_fish <- rear(juveniles = yolo_fish$inchannel,
                           survival_rate = matrix(rep(rearing_survival$yolo, nrow(yolo_fish$inchannel)), ncol = 4, byrow = TRUE),
-                          growth = growth_rates_ic,
+                          growth = growth_rates_ic[,,22],
                           stochastic = stochastic)
 
 
@@ -449,10 +454,10 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
         lower_sac_trib_rear <- rear(juveniles = lower_sac_trib_fish$inchannel,
                                     survival_rate = rearing_survival$inchannel[23, , drop = FALSE],
-                                    growth = growth_rates_ic,
+                                    growth = growth_rates_ic[,,23],
                                     floodplain_juveniles = lower_sac_trib_fish$floodplain,
                                     floodplain_survival_rate = rearing_survival$floodplain[23, , drop = FALSE],
-                                    floodplain_growth = growth_rates_fp,
+                                    floodplain_growth = growth_rates_fp[,,23],
                                     weeks_flooded = ..params$weeks_flooded[23, month, year],
                                     stochastic = stochastic)
 
@@ -474,10 +479,10 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
         lower_sac_fish <- rear(juveniles = lower_sac_fish$inchannel,
                                survival_rate = rearing_survival$inchannel[24, ],
-                               growth = growth_rates_ic,
+                               growth = growth_rates_ic[,,24],
                                floodplain_juveniles = lower_sac_fish$floodplain,
                                floodplain_survival_rate = rearing_survival$floodplain[24, ],
-                               floodplain_growth = growth_rates_fp,
+                               floodplain_growth = growth_rates_fp[,,24],
                                weeks_flooded = rep(..params$weeks_flooded[24, month, year], nrow(lower_sac_fish$inchannel)),
                                stochastic = stochastic)
 
@@ -507,10 +512,10 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
         south_delta_trib_rear <- rear(juveniles = south_delta_trib_fish$inchannel,
                                       survival_rate = rearing_survival$inchannel[25:27, ],
-                                      growth = growth_rates_ic,
+                                      growth = growth_rates_ic[,,25:27],
                                       floodplain_juveniles = south_delta_trib_fish$floodplain,
                                       floodplain_survival_rate = rearing_survival$floodplain[25:27, ],
-                                      floodplain_growth = growth_rates_fp,
+                                      floodplain_growth = growth_rates_fp[,,25:27],
                                       weeks_flooded = ..params$weeks_flooded[25:27, month, year],
                                       stochastic = stochastic)
 
@@ -541,10 +546,10 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
         san_joaquin_trib_rear <- rear(juveniles = san_joaquin_trib_fish$inchannel,
                                       survival_rate = rearing_survival$inchannel[28:30, ],
-                                      growth = growth_rates_ic,
+                                      growth = growth_rates_ic[,,28:30],
                                       floodplain_juveniles = san_joaquin_trib_fish$floodplain,
                                       floodplain_survival_rate = rearing_survival$floodplain[28:30, ],
-                                      floodplain_growth = growth_rates_fp,
+                                      floodplain_growth = growth_rates_fp[,,28:30],
                                       weeks_flooded = ..params$weeks_flooded[28:30, month, year],
                                       stochastic = stochastic)
 
@@ -564,10 +569,10 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
         san_joaquin_fish <- rear(juveniles = san_joaquin_fish$inchannel,
                                  survival_rate = rearing_survival$inchannel[31, ],
-                                 growth = growth_rates_ic,
+                                 growth = growth_rates_ic[,,31],
                                  floodplain_juveniles = san_joaquin_fish$floodplain,
                                  floodplain_survival_rate = rearing_survival$floodplain[31, ],
-                                 floodplain_growth = growth_rates_fp,
+                                 floodplain_growth = growth_rates_fp[,,31],
                                  weeks_flooded = rep(..params$weeks_flooded[31, month, year], nrow(san_joaquin_fish$inchannel)),
                                  stochastic = stochastic)
 
@@ -585,7 +590,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                             migratory_survival_delta = migratory_survival$delta,
                                             migratory_survival_bay_delta = migratory_survival$bay_delta,
                                             juveniles_at_chipps = juveniles_at_chipps,
-                                            growth_rates = ..params$growth_rates,
+                                            growth_rates = growth_rates_delta,
                                             territory_size = ..params$territory_size,
                                             stochastic = stochastic)
 
