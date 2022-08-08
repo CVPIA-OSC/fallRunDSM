@@ -163,6 +163,10 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                stochastic = stochastic)
 
     for (month in 1:8) {
+
+      # add get growth
+      growth_rates_ic <- get_growth_rates()
+
       habitat <- get_habitat(year, month,
                              inchannel_habitat_fry = ..params$inchannel_habitat_fry,
                              inchannel_habitat_juvenile = ..params$inchannel_habitat_juvenile,

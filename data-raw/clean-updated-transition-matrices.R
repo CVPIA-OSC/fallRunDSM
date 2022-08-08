@@ -18,17 +18,13 @@ gr <- function(temperature, prey_density = c("low", "med", "hi", "max"),
     stop("temperature out of range of transition probability matrices, defined range is from 1C to 28C", call. = FALSE)
   }
 
-  if (floodplain) {
-    density_index <- paste("floodplain", prey_density, sep = "_")
+  density_index <- if (floodplain) {
+    paste0("floodplain_", prey_density)
   } else {
-    density_index <- paste("perennial", prey_density, sep = "_")
+    paste0("perennial_", prey_density)
   }
 
   return(transition_matrices[,,temp_index, density_index])
 
 }
 
-gr(22, prey_density = "fdsa")
-
-
-# lets make this faster

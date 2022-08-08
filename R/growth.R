@@ -1,3 +1,32 @@
+#' @title Get Growth Rates
+#' @param temperature in Celsius to be used to lookup
+#' @param prey_density one of "low", "med", "hi", or "max"
+#' @param floodplain boolean indicating whether lookup is for floodplain
+#' @value a matrix of size 4x4 corresponding to the approraite growth rate based on parameters
+#' @export
+get_growth_rates <- function(temperature, prey_density = c("low", "med", "hi", "max"),
+               floodplain = FALSE, transitions = fallRunDSM::bioenergetics_transitions) {
+
+  temp_index <- ceiling(temperature)
+  prey_density <- match.arg(prey_density)
+
+  if (temp_index > 28 | temp_index < 1) {
+    stop("temperature out of range of transition probability matrices, defined range is from 1C to 28C", call. = FALSE)
+  }
+
+  density_index <- if (floodplain) {
+    paste0("floodplain_", prey_density)
+  } else {
+    paste0("perennial_", prey_density)
+  }
+
+  return(transitions[,,temp_index, density_index])
+
+}
+
+
+
+
 #' @title Method of Moments Gamma Parameter Estimation
 #' @description Estimate parameters for gamma distribution using the method of moments
 #' @param mu Mean
@@ -41,6 +70,7 @@ growth <- function(daily_growth_rate = .5, size_class_breaks = c(35, 42, 72, 110
 
   transition_matrix
 }
+
 
 #' @title Floodplain Growth Transition Probability
 #' @description Generates transition probability matrices for growth on the

@@ -111,8 +111,9 @@ usethis::use_data(growth_rates_inchannel)
 growth_rates_floodplain <- growth_floodplain()
 usethis::use_data(growth_rates_floodplain)
 
-
-
+# cache new growth rates
+bioenergetics_transitions <- read_rds("data-raw/growTPM.rds")
+usethis::use_data(bioenergetics_transitions, overwrite = TRUE)
 
 
 
