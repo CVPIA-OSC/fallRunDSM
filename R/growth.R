@@ -10,7 +10,7 @@ get_growth_rates <- function(temperature, prey_density = c("low", "med", "hi", "
   temp_index <- ceiling(temperature)
   prey_density <- match.arg(prey_density)
 
-  if (temp_index > 28 | temp_index < 1) {
+  if (any(temp_index > 28) | any(temp_index < 1)) {
     stop("temperature out of range of transition probability matrices, defined range is from 1C to 28C", call. = FALSE)
   }
 
