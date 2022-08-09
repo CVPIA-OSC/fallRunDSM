@@ -22,6 +22,7 @@ growth_rates_df <- map_df(1:28, function(x) {
 
 growth_rates_df |>
   ggplot() +
-  geom_raster(aes(size_from, size_to, fill = prob), interpolate = TRUE) +
+  geom_raster(aes(size_from, size_to, fill = prob), interpolate = FALSE) +
   scale_fill_gradient(low = "blue", high = "red") +
   facet_wrap(vars(temperature), nrow = 4)
+
