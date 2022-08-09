@@ -1,7 +1,10 @@
 # There is no easy way of doing this. The best approach is to swtich branches
 # and rebuild in between runs of the model.
 
-
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(gridExtra)
 # Updated Transitions ----------------------
 
 run_scenario <- function(scenario, seeds, prey_dens) {
@@ -11,7 +14,6 @@ run_scenario <- function(scenario, seeds, prey_dens) {
   return(mean(colSums(run$spawners * run$proportion_natural, na.rm = TRUE)))
 }
 
-seeds <- fallRunDSM::fall_run_model(mode = "seed", stochastic = FALSE)
 scenarios <- list(DSMscenario::scenarios$NO_ACTION, DSMscenario::scenarios$ONE,
                   DSMscenario::scenarios$TWO, DSMscenario::scenarios$THREE,
                   DSMscenario::scenarios$FOUR, DSMscenario::scenarios$FIVE,
@@ -21,6 +23,7 @@ scenarios <- list(DSMscenario::scenarios$NO_ACTION, DSMscenario::scenarios$ONE,
                   DSMscenario::scenarios$TWELVE, DSMscenario::scenarios$THIRTEEN)
 
 # low
+seeds <- fallRunDSM::fall_run_model(mode = "seed", stochastic = FALSE, prey_density = "low")
 low_dens_growth_model <-
   purrr::map_dbl(scenarios, ~run_scenario(., seeds, prey_dens = "low"))
 names(low_dens_growth_model) <- c("no action", as.character(1:13))
@@ -28,19 +31,177 @@ rev(sort(low_dens_growth_model))
 
 
 # med
+seeds <- fallRunDSM::fall_run_model(mode = "seed", stochastic = FALSE, prey_density = "med")
 med_dens_growth_model <-
   purrr::map_dbl(scenarios, ~run_scenario(., seeds, prey_dens = "med"))
 names(med_dens_growth_model) <- c("no action", as.character(1:13))
 rev(sort(med_dens_growth_model))
 
 # hi
+seeds <- fallRunDSM::fall_run_model(mode = "seed", stochastic = FALSE, prey_density = "hi")
 hi_dens_growth_model <-
   purrr::map_dbl(scenarios, ~run_scenario(., seeds, prey_dens = "hi"))
 names(hi_dens_growth_model) <- c("no action", as.character(1:13))
 rev(sort(hi_dens_growth_model))
 
 # max
+seeds <- fallRunDSM::fall_run_model(mode = "seed", stochastic = FALSE, prey_density = "max")
 max_dens_growth_model <-
   purrr::map_dbl(scenarios, ~run_scenario(., seeds, prey_dens = "max"))
 names(max_dens_growth_model) <- c("no action", as.character(1:13))
 rev(sort(max_dens_growth_model))
+
+
+# plots -------------------------------
+
+
+# LOW
+low_seeds <- fall_run_model(mode = "seed", prey_density = "low")
+low_dens_sim <- fall_run_model(mode = "simulate", seeds = low_seeds, prey_density = "low",
+                               track_juveniles = TRUE)
+low_dens_outmigration_dist <- low_dens_sim$delta_fish |>
+  as_tibble() |>
+  pivot_longer(names_to = "size", values_to = "count", s:vl) |>
+  group_by(year, month, size) |>
+  summarise(valley_total = sum(count)) |>
+  ungroup() |>
+  group_by(year) |>
+  mutate(annual_total = sum(valley_total)) |>
+  ungroup() |>
+  mutate(
+    prop_of_year = valley_total / annual_total
+  ) |>
+  group_by(month, size) |>
+  summarise(avg_prop = mean(prop_of_year)) |>
+  ungroup() |>
+  mutate(month_label = factor(month.abb[month], levels = month.abb),
+         size_label = factor(size, levels = c("s", "m", "l", "vl")))
+
+low_plot <- low_dens_outmigration_dist |>
+  ggplot(aes(month_label, avg_prop, fill=size_label)) +
+  geom_col() +
+  scale_fill_brewer(palette = "BrBG") +
+  theme_gray() +
+  ylim(c(0, 1)) +
+  labs(x = "", y = "Proportion Outmigrating",
+       title = "Prey Density: LOW",
+       fill = "Size")
+
+
+
+# MED
+med_seeds <- fall_run_model(mode = "seed", prey_density = "med")
+med_dens_sim <- fall_run_model(mode = "simulate", seeds = med_seeds, prey_density = "med",
+                               track_juveniles = TRUE)
+
+med_dens_outmigration_dist <- med_dens_sim$delta_fish |>
+  as_tibble() |>
+  pivot_longer(names_to = "size", values_to = "count", s:vl) |>
+  group_by(year, month, size) |>
+  summarise(valley_total = sum(count)) |>
+  ungroup() |>
+  group_by(year) |>
+  mutate(annual_total = sum(valley_total)) |>
+  ungroup() |>
+  mutate(
+    prop_of_year = valley_total / annual_total
+  ) |>
+  group_by(month, size) |>
+  summarise(avg_prop = mean(prop_of_year)) |>
+  ungroup() |>
+  mutate(month_label = factor(month.abb[month], levels = month.abb),
+         size_label = factor(size, levels = c("s", "m", "l", "vl")))
+
+med_plot <- med_dens_outmigration_dist |>
+  ggplot(aes(month_label, avg_prop, fill=size_label)) +
+  geom_col() +
+  scale_fill_brewer(palette = "BrBG") +
+  theme_gray() +
+  ylim(c(0, 1)) +
+  labs(x = "", y = "Proportion Outmigrating",
+       title = "Prey Density: MED",
+       fill = "Size")
+
+
+
+# HI
+hi_seeds <- fall_run_model(mode = "seed", prey_density = "hi")
+hi_dens_sim <- fall_run_model(mode = "simulate", seeds = hi_seeds, prey_density = "hi",
+                               track_juveniles = TRUE)
+
+hi_dens_outmigration_dist <- hi_dens_sim$delta_fish |>
+  as_tibble() |>
+  pivot_longer(names_to = "size", values_to = "count", s:vl) |>
+  group_by(year, month, size) |>
+  summarise(valley_total = sum(count)) |>
+  ungroup() |>
+  group_by(year) |>
+  mutate(annual_total = sum(valley_total)) |>
+  ungroup() |>
+  mutate(
+    prop_of_year = valley_total / annual_total
+  ) |>
+  group_by(month, size) |>
+  summarise(avg_prop = mean(prop_of_year)) |>
+  ungroup() |>
+  mutate(month_label = factor(month.abb[month], levels = month.abb),
+         size_label = factor(size, levels = c("s", "m", "l", "vl")))
+
+hi_plot <- hi_dens_outmigration_dist |>
+  ggplot(aes(month_label, avg_prop, fill=size_label)) +
+  geom_col() +
+  scale_fill_brewer(palette = "BrBG") +
+  theme_gray() +
+  ylim(c(0, 1)) +
+  labs(x = "", y = "Proportion Outmigrating",
+       title = "Prey Density: HI",
+       fill = "Size")
+
+
+
+# MAX
+max_seeds <- fall_run_model(mode = "seed", prey_density = "max")
+max_dens_sim <- fall_run_model(mode = "simulate", seeds = max_seeds, prey_density = "max",
+                               track_juveniles = TRUE)
+
+max_dens_outmigration_dist <- max_dens_sim$delta_fish |>
+  as_tibble() |>
+  pivot_longer(names_to = "size", values_to = "count", s:vl) |>
+  group_by(year, month, size) |>
+  summarise(valley_total = sum(count)) |>
+  ungroup() |>
+  group_by(year) |>
+  mutate(annual_total = sum(valley_total)) |>
+  ungroup() |>
+  mutate(
+    prop_of_year = valley_total / annual_total
+  ) |>
+  group_by(month, size) |>
+  summarise(avg_prop = mean(prop_of_year)) |>
+  ungroup() |>
+  mutate(month_label = factor(month.abb[month], levels = month.abb),
+         size_label = factor(size, levels = c("s", "m", "l", "vl")))
+
+max_plot <- max_dens_outmigration_dist |>
+  ggplot(aes(month_label, avg_prop, fill=size_label)) +
+  geom_col() +
+  scale_fill_brewer(palette = "BrBG") +
+  theme_gray() +
+  ylim(c(0, 1)) +
+  labs(x = "", y = "Proportion Outmigrating",
+       title = "Prey Density: MAX",
+       fill = "Size")
+
+load(file = "../../cvpia-fw/original-plot.rdata")
+
+grid.arrange(low_plot, med_plot, hi_plot, max_plot, original_plot, nrow = 2)
+
+low_plot + med_plot + hi_plot + max_plot + original_plot +
+  guide_area() +
+  plot_layout(nrow = 2, guides = "collect")
+
+
+
+
+
+
