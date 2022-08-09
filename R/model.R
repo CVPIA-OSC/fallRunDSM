@@ -18,7 +18,8 @@
 fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibrate"),
                            seeds = NULL, ..params = fallRunDSM::params,
                            stochastic = FALSE,
-                           prey_density = "med"){
+                           prey_density = "med",
+                           track_juveniles = FALSE){
 
   mode <- match.arg(mode)
 
@@ -63,7 +64,8 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
     # SIT METRICS
     spawners = matrix(0, nrow = 31, ncol = 20, dimnames = list(fallRunDSM::watershed_labels, 1:20)),
     juvenile_biomass = matrix(0, nrow = 31, ncol = 20, dimnames = list(fallRunDSM::watershed_labels, 1:20)),
-    proportion_natural = matrix(NA_real_, nrow = 31, ncol = 20, dimnames = list(fallRunDSM::watershed_labels, 1:20))
+    proportion_natural = matrix(NA_real_, nrow = 31, ncol = 20, dimnames = list(fallRunDSM::watershed_labels, 1:20)),
+    delta_fish = data.frame()
   )
 
 
@@ -266,6 +268,10 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
         # all remaining fish outmigrate
         migrants <- juveniles
 
+        #TODO find where the names are lost and make sure they persist all way to
+        # part of the code
+        colnames(migrants) <- c("s", "m", "l", "vl")
+
         sutter_fish <- migrate(sutter_fish, migratory_survival$sutter, stochastic = stochastic)
         upper_mid_sac_fish <- migrate(upper_mid_sac_fish + migrants[1:15, ], migratory_survival$uppermid_sac, stochastic = stochastic)
         migrants[1:15, ] <- upper_mid_sac_fish + sutter_fish
@@ -294,6 +300,23 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                             growth_rates = growth_rates_delta,
                                             territory_size = ..params$territory_size,
                                             stochastic = stochastic)
+
+        # TODO add tracking code here
+        if (track_juveniles) {
+
+          juvs_at_deltas <-
+            data.frame(
+              round(rbind(delta_fish$north_delta_fish$migrants, matrix(0, ncol = 4, nrow = 8)) +
+                      delta_fish$south_delta_fish$migrants)
+            )
+          juvs_at_deltas$watershed <- fallRunDSM::watershed_labels
+          juvs_at_deltas$month <- month
+          juvs_at_deltas$year <- year
+
+          output$delta_fish <- dplyr::bind_rows(output$delta_fish, juvs_at_deltas)
+        }
+
+        migrants_at_golden_gate <- delta_fish$migrants_at_golden_gate
 
         juveniles_at_chipps <- delta_fish$juveniles_at_chipps
         migrants_at_golden_gate <- delta_fish$migrants_at_golden_gate
@@ -602,6 +625,22 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                             growth_rates = growth_rates_delta,
                                             territory_size = ..params$territory_size,
                                             stochastic = stochastic)
+
+        #TODO add tracking code here
+        if (track_juveniles) {
+
+          juvs_at_deltas <-
+            data.frame(
+              round(rbind(delta_fish$north_delta_fish, matrix(0, ncol = 4, nrow = 8)) +
+                      delta_fish$south_delta_fish)
+            )
+          juvs_at_deltas$watershed <- fallRunDSM::watershed_labels
+          juvs_at_deltas$month <- month
+          juvs_at_deltas$year <- year
+
+          output$delta_fish <- dplyr::bind_rows(output$delta_fish, juvs_at_deltas)
+
+        }
 
         migrants_at_golden_gate <- delta_fish$migrants_at_golden_gate
 

@@ -13,7 +13,8 @@ fall_run_model(
   seeds = NULL,
   ..params = fallRunDSM::params,
   stochastic = FALSE,
-  prey_density = "med"
+  prey_density = "med",
+  track_juveniles = FALSE
 )
 }
 \arguments{
