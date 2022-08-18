@@ -175,6 +175,17 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                              ..surv_adult_prespawn_int = ..params$..surv_adult_prespawn_int,
                                              .deg_day = ..params$.adult_prespawn_deg_day)
 
+    if (mode == "simulate") {
+      output$adult_prespawn_survival <- dplyr::bind_rows(
+        output$adult_prespawn_survival,
+        tibble(
+          watershed = fallRunDSM::watershed_labels,
+          survival = prespawn_survival,
+          year = year
+        )
+      )
+    }
+
     juveniles <- spawn_success(escapement = init_adults,
                                adult_prespawn_survival = prespawn_survival,
                                egg_to_fry_survival = egg_to_fry_surv,
