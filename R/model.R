@@ -138,6 +138,17 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                     .adult_en_route_adult_harvest_rate = ..params$.adult_en_route_adult_harvest_rate,
                                     stochastic = stochastic)
 
+    if (mode == "simulate") {
+      output$adult_enroute_survival <- dplyr::bind_rows(
+        output$adult_enroute_survival,
+        tibble::tibble(
+          watershed = fallRunDSM::watershed_labels,
+          survival = spawners$enroute_survival,
+          year = year
+        )
+      )
+    }
+
     init_adults <- spawners$init_adults
 
     output$spawners[ , year] <- init_adults
