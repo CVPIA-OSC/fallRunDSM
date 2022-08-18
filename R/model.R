@@ -300,6 +300,27 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                             size = c("s", "m", "l", "vl"),
                             watershed = "Lower Sacramento River")
         )
+
+        bypass_migratory_surv <- dplyr::bind_rows(
+          tibble::tibble(survival = migratory_survival$sutter,
+                         size = c("s", "m", "l", "vl"),
+                         watershed = "Sutter Bypass"),
+
+          tibble::tibble(survival = migratory_survival$yolo,
+                         size = c("s", "m", "l", "vl"),
+                         watershed = "Yolo Bypass")
+        )
+
+        san_joaquin_migratory_surv <- dplyr::bind_rows(
+          tibble::tibble(survival = migratory_survival$san_joaquin,
+                         size = c("s", "m", "l", "vl"),
+                         watershed = "San Joaquin")
+        )
+
+        delta_migratory_surv <- tibble::as_tibble(migratory_survival$delta) |>
+          dplyr::mutate(origin = c("Northern Fish", "Consumnes and Mokelumne Fish",
+                                   "Calaveras Fish", "Southern Fish")) |>
+          tidyr::pivot_longer(s:vl, names_to = "size", values_to = "survival")
       }
 
       migrants <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
