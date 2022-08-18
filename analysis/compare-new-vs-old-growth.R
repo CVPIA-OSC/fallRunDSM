@@ -27,7 +27,7 @@ seeds <- fallRunDSM::fall_run_model(mode = "seed", stochastic = FALSE, prey_dens
 low_dens_growth_model <-
   purrr::map_dbl(scenarios, ~run_scenario(., seeds, prey_dens = "low"))
 names(low_dens_growth_model) <- c("no action", as.character(1:13))
-rev(sort(low_dens_growth_model))
+low_rankings <- rev(sort(low_dens_growth_model))
 
 
 # med
@@ -35,21 +35,45 @@ seeds <- fallRunDSM::fall_run_model(mode = "seed", stochastic = FALSE, prey_dens
 med_dens_growth_model <-
   purrr::map_dbl(scenarios, ~run_scenario(., seeds, prey_dens = "med"))
 names(med_dens_growth_model) <- c("no action", as.character(1:13))
-rev(sort(med_dens_growth_model))
+med_rankings <- rev(sort(med_dens_growth_model))
 
 # hi
 seeds <- fallRunDSM::fall_run_model(mode = "seed", stochastic = FALSE, prey_density = "hi")
 hi_dens_growth_model <-
   purrr::map_dbl(scenarios, ~run_scenario(., seeds, prey_dens = "hi"))
 names(hi_dens_growth_model) <- c("no action", as.character(1:13))
-rev(sort(hi_dens_growth_model))
+hi_rankings <- rev(sort(hi_dens_growth_model))
 
 # max
 seeds <- fallRunDSM::fall_run_model(mode = "seed", stochastic = FALSE, prey_density = "max")
 max_dens_growth_model <-
   purrr::map_dbl(scenarios, ~run_scenario(., seeds, prey_dens = "max"))
 names(max_dens_growth_model) <- c("no action", as.character(1:13))
-rev(sort(max_dens_growth_model))
+max_rankings <- rev(sort(max_dens_growth_model))
+
+orig_rank <- c(`5` = 89655.55, `6` = 87771.85, `11` = 86170.45, `3` = 85571.85,
+               `2` = 85571.85, `1` = 85127, `10` = 84921.1, `9` = 82825.75,
+               `12` = 82803.35, `13` = 82725.9, `8` = 82598.85, `no action` = 82516.95,
+               `7` = 81975.15, `4` = 81616.55)
+
+ranks <- tibble(
+  low_dens = names(low_rankings),
+  med_dens = names(med_rankings),
+  hi_dens = names(hi_rankings),
+  max_dens = names(max_rankings),
+  original_rank = names(orig_rank)
+)
+
+ranks_values <- tibble(
+  low_dens = low_rankings,
+  med_dens = med_rankings,
+  hi_dens = hi_rankings,
+  max_dens = max_rankings,
+  original_rank = orig_rank
+)
+
+readr::write_csv(ranks, "data-raw/scenario-ranks.csv")
+readr::write_csv(ranks_values, "data-raw/scenario-ranks-vals.csv")
 
 
 # plots -------------------------------
@@ -198,10 +222,17 @@ grid.arrange(low_plot, med_plot, hi_plot, max_plot, original_plot, nrow = 2)
 
 low_plot + med_plot + hi_plot + max_plot + original_plot +
   guide_area() +
-  plot_layout(nrow = 2, guides = "collect")
+  plot_layout(nrow = 2, guides = "collect") +
+  theme_minimal()
 
 
 
+outmigration_dist_all_dens <- bind_rows(
+  low_dens_outmigration_dist,
+  med_dens_outmigration_dist,
+  hi_dens_outmigration_dist,
+  max_dens_outmigration_dist
+)
 
 
 
