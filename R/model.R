@@ -57,12 +57,24 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                                    1980:2000)))
   }
 
-  output <- list(
+  # TODO: request to add the following as output in the simulation mode
+  # Adult en-route survival
+  # Adult prespawn survival
+  # Juvenile rearing survival (tribs., mainstem, delta)
+  # Juvenile outmigration survival
+  # Juvenile survival in the delta routing function (actively migrating fish.)
 
+  output <- list(
     # SIT METRICS
     spawners = matrix(0, nrow = 31, ncol = 20, dimnames = list(fallRunDSM::watershed_labels, 1:20)),
     juvenile_biomass = matrix(0, nrow = 31, ncol = 20, dimnames = list(fallRunDSM::watershed_labels, 1:20)),
-    proportion_natural = matrix(NA_real_, nrow = 31, ncol = 20, dimnames = list(fallRunDSM::watershed_labels, 1:20))
+    proportion_natural = matrix(NA_real_, nrow = 31, ncol = 20, dimnames = list(fallRunDSM::watershed_labels, 1:20)),
+    adult_enroute_survival = data.frame(),
+    adult_prespawn_survival = data.frame(),
+    ic_rearing_survival = data.frame(),
+    fp_rearing_survival = data.frame(),
+    outmigration_survival = data.frame(),
+    delta_survival = data.frame()
   )
 
 
@@ -219,6 +231,41 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                                min_survival_rate = ..params$min_survival_rate,
                                                stochastic = stochastic)
 
+      if (mode == "simulate") {
+        # inchannel
+        inchannel_surv <- rearing_survival$inchannel
+        colnames(inchannel_surv) <- c("s", "m", "l", "vl")
+        inchannel_surv <- tibble::as_tibble(inchannel_surv) |>
+          dplyr::mutate(year = year, month = month) |>
+          tidyr::pivot_longer(s:vl, names_to = "size", values_to = "survival")
+
+        output$ic_rearing_survival <- dplyr::bind_rows(
+          output$ic_rearing_survival, inchannel_surv
+        )
+
+        # floodplain
+        floodplain_surv <- rearing_survival$floodplain
+        colnames(floodplain_surv) <- c("s", "m", "l", "vl")
+        floodplain_surv <- tibble::as_tibble(floodplain_surv) |>
+          dplyr::mutate(year = year, month = month) |>
+          tidyr::pivot_longer(s:vl, names_to = "size", values_to = "survival")
+
+        output$fp_rearing_survival <- dplyr::bind_rows(
+          output$fp_rearing_survival, floodplain_surv
+        )
+
+        # delta
+        delta_surv <- rearing_survival$delta
+        delta_surv <- tibble::as_tibble(delta_surv) |>
+          dplyr::mutate(year = year, month = month) |>
+          tidyr::pivot_longer(s:vl, names_to = "size", values_to = "survival")
+
+        output$delta_surv <- dplyr::bind_rows(
+          output$delta_surv, delta_surv
+        )
+      }
+
+
       migratory_survival <- get_migratory_survival(year, month,
                                                    cc_gates_prop_days_closed = ..params$cc_gates_prop_days_closed,
                                                    freeport_flows = ..params$freeport_flows,
@@ -238,6 +285,22 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                                    .surv_juv_outmigration_san_joaquin_large = ..params$.surv_juv_outmigration_san_joaquin_large,
                                                    min_survival_rate = ..params$min_survival_rate,
                                                    stochastic = stochastic)
+
+      if (mode == "seed") {
+        sac_migratory_survivals <- dplyr::bind_rows(
+          tibble::tibble(survival = migratory_survival$uppermid_sac,
+                            size = c("s", "m", "l", "vl"),
+                            watershed = "Upper-mid Sacramento River"),
+
+          tibble::tibble(survival = migratory_survival$lowermid_sac,
+                            size = c("s", "m", "l", "vl"),
+                            watershed = "Lower-mid Sacramento River"),
+
+          tibble::tibble(survival = migratory_survival$lower_sac,
+                            size = c("s", "m", "l", "vl"),
+                            watershed = "Lower Sacramento River")
+        )
+      }
 
       migrants <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
 
