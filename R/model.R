@@ -286,7 +286,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                                    min_survival_rate = ..params$min_survival_rate,
                                                    stochastic = stochastic)
 
-      if (mode == "seed") {
+      if (mode == "simulate") {
         sac_migratory_survivals <- dplyr::bind_rows(
           tibble::tibble(survival = migratory_survival$uppermid_sac,
                             size = c("s", "m", "l", "vl"),
@@ -317,10 +317,21 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                          watershed = "San Joaquin")
         )
 
+        # TODO Note that the use of watershed as a column is not the same as
+        # it was used in other dataframes here watershed is just used so that
+        # I can in the end bind row these tibbles
         delta_migratory_surv <- tibble::as_tibble(migratory_survival$delta) |>
-          dplyr::mutate(origin = c("Northern Fish", "Consumnes and Mokelumne Fish",
+          dplyr::mutate(watershed = c("Northern Fish", "Consumnes and Mokelumne Fish",
                                    "Calaveras Fish", "Southern Fish")) |>
           tidyr::pivot_longer(s:vl, names_to = "size", values_to = "survival")
+
+        output$outmigration_survival <- dplyr::bind_rows(
+          output$outmigration_survival,
+          sac_migratory_survivals,
+          bypass_migratory_surv,
+          delta_migratory_surv,
+          san_joaquin_migratory_surv
+        )
       }
 
       migrants <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
