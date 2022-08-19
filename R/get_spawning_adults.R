@@ -192,11 +192,14 @@ get_spawning_adults <- function(year, adults, hatch_adults, mode,
 
   }
 
+  if (mode != "simulate") {
+    adult_en_route_surv <- NA
+  }
 
   list(init_adults = init_adults,
        proportion_natural = replace(proportion_natural, is.nan(proportion_natural), 0),
        init_adults_by_month = init_adults_by_month,
-       enroute_survival = rowMeans(adult_en_route_surv))
+       enroute_survival = adult_en_route_surv)
 
 }
 
