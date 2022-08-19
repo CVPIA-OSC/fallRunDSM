@@ -259,7 +259,8 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
         colnames(inchannel_surv) <- c("s", "m", "l", "vl")
         inchannel_surv <- tibble::as_tibble(inchannel_surv) |>
           dplyr::mutate(year = year, month = month,
-                        watershed = fallRunDSM::watershed_labels) |>
+                        watershed = fallRunDSM::watershed_labels,
+                        survival_type = "inchannel rearing") |>
           tidyr::pivot_longer(s:vl, names_to = "size", values_to = "survival")
 
         output$ic_rearing_survival <- dplyr::bind_rows(
@@ -271,7 +272,8 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
         colnames(floodplain_surv) <- c("s", "m", "l", "vl")
         floodplain_surv <- tibble::as_tibble(floodplain_surv) |>
           dplyr::mutate(year = year, month = month,
-                        watershed = fallRunDSM::watershed_labels) |>
+                        watershed = fallRunDSM::watershed_labels,
+                        survival_type = "floodplain rearing") |>
           tidyr::pivot_longer(s:vl, names_to = "size", values_to = "survival")
 
         output$fp_rearing_survival <- dplyr::bind_rows(
@@ -282,7 +284,8 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
         delta_surv <- rearing_survival$delta
         delta_surv <- tibble::as_tibble(delta_surv) |>
           dplyr::mutate(year = year, month = month,
-                        watershed = c("North Delta", "South Delta")) |>
+                        watershed = c("North Delta", "South Delta"),
+                        survival_type = "delta rearing") |>
           tidyr::pivot_longer(s:vl, names_to = "size", values_to = "survival")
 
         output$delta_surv <- dplyr::bind_rows(
@@ -356,7 +359,8 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
           bypass_migratory_surv,
           delta_migratory_surv,
           san_joaquin_migratory_surv
-        )
+        ) |>
+          mutate(survival_type = "migration survival")
       }
 
       migrants <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))

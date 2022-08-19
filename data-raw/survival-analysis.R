@@ -21,6 +21,21 @@ waterYearType::water_year_indices
 
 floodplain_rearing_survival |>
   mutate(cal_year = 1979 + year) |>
+  group_by(watershed, month_label, size) |>
+  summarise(
+    avg_survival = mean(survival),
+    min_survival = min(survival),
+    max_survival = max(survival)
+  ) |>
+  filter(watershed == "American River") |>
+  ggplot(aes(month_label, avg_survival, fill = size)) +
+  geom_col(position = "dodge") +
+  scale_fill_brewer(palette = "BrBG")
+
+
+
+floodplain_rearing_survival |>
+  mutate(cal_year = 1979 + year) |>
   left_join(select(waterYearType::water_year_indices, WY, Yr_type), by=c("cal_year"="WY")) |>
   group_by(watershed, Yr_type, month_label, size) |>
   summarise(
