@@ -282,7 +282,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
         delta_surv <- rearing_survival$delta
         delta_surv <- tibble::as_tibble(delta_surv) |>
           dplyr::mutate(year = year, month = month,
-                        watershed = fallRunDSM::watershed_labels) |>
+                        watershed = c("North Delta", "South Delta")) |>
           tidyr::pivot_longer(s:vl, names_to = "size", values_to = "survival")
 
         output$delta_surv <- dplyr::bind_rows(
