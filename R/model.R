@@ -258,7 +258,8 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
         inchannel_surv <- rearing_survival$inchannel
         colnames(inchannel_surv) <- c("s", "m", "l", "vl")
         inchannel_surv <- tibble::as_tibble(inchannel_surv) |>
-          dplyr::mutate(year = year, month = month) |>
+          dplyr::mutate(year = year, month = month,
+                        watershed = fallRunDSM::watershed_labels) |>
           tidyr::pivot_longer(s:vl, names_to = "size", values_to = "survival")
 
         output$ic_rearing_survival <- dplyr::bind_rows(
@@ -269,7 +270,8 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
         floodplain_surv <- rearing_survival$floodplain
         colnames(floodplain_surv) <- c("s", "m", "l", "vl")
         floodplain_surv <- tibble::as_tibble(floodplain_surv) |>
-          dplyr::mutate(year = year, month = month) |>
+          dplyr::mutate(year = year, month = month,
+                        watershed = fallRunDSM::watershed_labels) |>
           tidyr::pivot_longer(s:vl, names_to = "size", values_to = "survival")
 
         output$fp_rearing_survival <- dplyr::bind_rows(
@@ -279,7 +281,8 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
         # delta
         delta_surv <- rearing_survival$delta
         delta_surv <- tibble::as_tibble(delta_surv) |>
-          dplyr::mutate(year = year, month = month) |>
+          dplyr::mutate(year = year, month = month,
+                        watershed = fallRunDSM::watershed_labels) |>
           tidyr::pivot_longer(s:vl, names_to = "size", values_to = "survival")
 
         output$delta_surv <- dplyr::bind_rows(
