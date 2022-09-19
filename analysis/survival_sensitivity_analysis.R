@@ -103,13 +103,6 @@ scenario_results_list4 <- parLapply(cl, 1:nrow(scenarios4),
                                     })
 toc()
 
-# tic("parallel 5")
-# scenario_results_list5 <- parLapply(cl, 1:nrow(scenarios5),
-#                                     fun = function(scenario) {
-#                                       sensitivity_fall_run_model(scenario, scenarios5, sensi_seeds)
-#                                     })
-# toc()
-
 # combine into one
 r1 <- scenario_results_list1 |> dplyr::bind_rows()
 r2 <- scenario_results_list2 |> dplyr::bind_rows() |> dplyr::mutate(id = id + max(r1$id))
@@ -135,9 +128,10 @@ do_nothing <- dplyr::as_tibble(model_results$spawners * model_results$proportion
 results <- dplyr::bind_rows(r1, r2, r3, r4, do_nothing)
 #write_csv(results, "analysis/fall_run_survival_sensi_model_ouput.csv")
 
-results <-read_csv('analysis/fall_run_survival_sensi_model_ouput.csv')
+results <- read_csv('analysis/fall_run_survival_sensi_model_ouput.csv')
 
 # exploratory plots
+# juv_rear:
 results %>%
   filter(is.na(survival_target)) %>%
   bind_rows(results %>%
@@ -147,10 +141,10 @@ results %>%
   pivot_longer(cols = c(`1`:`20`), values_to = 'natural_spawners', names_to = "year") %>%
   mutate(year = as.numeric(year)) %>%
   ggplot() +
-  geom_point(aes(x = as.factor(year), y = natural_spawners, color = as.factor(id))) +
+  geom_point(aes(x = as.factor(year), y = natural_spawners, color = as.factor(id), alpha = 0.5)) +
   coord_flip()
 
-# juv migratory
+# juv migratory:
 results %>%
   filter(is.na(survival_target)) %>%
   bind_rows(results %>%
@@ -160,10 +154,10 @@ results %>%
   pivot_longer(cols = c(`1`:`20`), values_to = 'natural_spawners', names_to = "year") %>%
   mutate(year = as.numeric(year)) %>%
   ggplot() +
-  geom_point(aes(x = as.factor(year), y = natural_spawners, color = as.factor(id))) +
+  geom_point(aes(x = as.factor(year), y = natural_spawners, color = as.factor(id), alpha = 0.5)) +
   coord_flip()
 
-# egg to fry
+# egg to fry:
 results %>%
   filter(is.na(survival_target)) %>%
   bind_rows(results %>%
@@ -172,5 +166,5 @@ results %>%
   pivot_longer(cols = c(`1`:`20`), values_to = 'natural_spawners', names_to = "year") %>%
   mutate(year = as.numeric(year)) %>%
   ggplot() +
-  geom_point(aes(x = as.factor(year), y = natural_spawners, color = as.factor(id))) +
+  geom_point(aes(x = as.factor(year), y = natural_spawners, color = as.factor(id), alpha = 0.5)) +
   coord_flip()
