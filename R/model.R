@@ -229,7 +229,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
       # juvenile rearing sensitivity
       if (mode == "simulate" & !is.na(which_surv) &  which_surv == "juv_rear"  & month == month_surv) {
-        if(location_surv %in% fallRunDSM::watershed_labels) {
+        if(location_surv %in% fallRunDSM::watershed_labels[-c(17, 22)]) {
           index_position <- which(winterRunDSM::watershed_labels == location_surv)
           rearing_survival$inchannel[index_position, ] <- pmin(rearing_survival$inchannel[index_position, ] * 1.2, 1)
           rearing_survival$floodplain[index_position, ] <- pmin(rearing_survival$floodplain[index_position, ] * 1.2, 1)
