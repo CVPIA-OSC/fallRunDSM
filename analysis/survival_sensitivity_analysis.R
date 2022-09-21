@@ -46,10 +46,9 @@ scenarios4 <- expand.grid(location_surv = c("North Delta", "South Delta"),
                           month_surv = c(1:8),
                           which_surv = c("juv_rear"))
 
-scenarios2  <- expand.grid(location_surv = c("Upper Sacramento River", "Lower-mid Sacramento River",
+scenarios2  <- expand.grid(location_surv = c("Lower-mid Sacramento River",
                                              "Lower Sacramento River", "Sutter Bypass", "Yolo Bypass",
                                              "Delta", "Bay Delta", "San Joaquin River",
-                                            # "South Delta", "North Delta", #TODO: confirm that we need migratory survival
                                              "Upper-mid Sacramento River"
                                              ),
                            month_surv = c(1:8),
@@ -126,9 +125,16 @@ do_nothing <- dplyr::as_tibble(model_results$spawners * model_results$proportion
   dplyr::select(id, location, survival_target, location_target, month_target, `1`:`20`)
 
 results <- dplyr::bind_rows(r1, r2, r3, r4, do_nothing)
-#write_csv(results, "analysis/fall_run_survival_sensi_model_ouput.csv")
 
-results <- read_csv('analysis/fall_run_survival_sensi_model_ouput.csv')
+# remove zero rows:
+results <- results %>%
+  mutate(row_sum = rowSums(results[6:20])) %>%
+  filter(row_sum > 0) %>%
+  glimpse
+
+write_csv(results, "analysis/fall_run_survival_sensi_model_ouput.csv")
+
+#results <- read_csv('analysis/fall_run_survival_sensi_model_ouput.csv')
 
 # exploratory plots
 # juv_rear:
@@ -149,8 +155,8 @@ results %>%
   filter(is.na(survival_target)) %>%
   bind_rows(results %>%
               filter(survival_target == "juv_migratory",
-                     location_target == "Lower-mid Sacramento River",
-                     month_target == 1)) %>%
+                     location_target == "Bay Delta",
+                     month_target == 5)) %>%
   pivot_longer(cols = c(`1`:`20`), values_to = 'natural_spawners', names_to = "year") %>%
   mutate(year = as.numeric(year)) %>%
   ggplot() +
