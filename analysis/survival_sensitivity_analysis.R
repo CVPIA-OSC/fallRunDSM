@@ -174,3 +174,30 @@ results %>%
   ggplot() +
   geom_point(aes(x = as.factor(year), y = natural_spawners, color = as.factor(id), alpha = 0.5)) +
   coord_flip()
+
+# elasticity:
+# Elasticity was calculated as:
+# Proportion change in natural production from baseline divided by proportion change
+# in survival parameter from baseline
+# (this is the standard calculation of ecologists and economists alike).
+
+max(results$id) # baseline
+
+do_nothing <- do_nothing %>%
+  mutate(row_sum = rowSums(do_nothing[6:20])) %>%
+  summarise(all_do_nothing = sum(row_sum)) %>%
+  pull(all_do_nothing)
+
+
+results %>%
+  filter(survival_target == "egg_to_fry") %>%
+  group_by(id) %>%
+  mutate(total = sum(row_sum)) %>%
+  mutate(elasticity = total/do_nothing/1.2) %>%
+  pivot_longer(cols = c(`1`:`20`), values_to = 'natural_spawners', names_to = "year") %>%
+  mutate(year = as.numeric(year)) %>%
+  ggplot() +
+  geom_segment( aes(x=location_target, xend=location_target, y=0.825, yend=elasticity), color = "gray") +
+  geom_point(aes(x = location_target, y = elasticity)) +
+  coord_flip()
+
