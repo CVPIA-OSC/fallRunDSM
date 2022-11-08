@@ -1,8 +1,10 @@
 #' @title Get Growth Rates
-#' @param temperature in Celsius to be used to lookup
+#' @param temperature in Celsius to be used to lookup appropriate transition matrix
 #' @param prey_density one of "low", "med", "hi", or "max"
-#' @param floodplain boolean indicating whether lookup is for floodplain
-#' @return a matrix of size 4x4 corresponding to the approraite growth rate based on parameters
+#' @param floodplain boolean indicating whether lookup is for floodplain growth transition
+#' @return a matrix or matrices of size 4x4 corresponding to the approraite growth rate
+#' @examples
+#' ic_growth_rates <- get_growth_rates(10, "low", floodplain = FALSE)
 #' @export
 get_growth_rates <- function(temperature, prey_density = c("low", "med", "hi", "max"),
                floodplain = FALSE, transitions = fallRunDSM::bioenergetics_transitions) {
