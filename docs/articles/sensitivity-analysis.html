@@ -43,7 +43,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -60,6 +60,9 @@
     </li>
     <li>
       <a href="../articles/temperature-model.html">Temperature Modeling</a>
+    </li>
+    <li>
+      <a href="../articles/model_faq.html">Model FAQ</a>
     </li>
   </ul>
 </li>
@@ -100,26 +103,55 @@
 <div class="section level2">
 <h2 id="objective">Objective<a class="anchor" aria-label="anchor" href="#objective"></a>
 </h2>
-<p>Sensitivity analysis is performed to understand how changes in model parameters or inputs affect the model output. A <strong>One-way</strong> sensitivity analysis varies each model parameter or input individually across a known parameter space while holding all other inputs and parameters constant.</p>
-<p>The model parameters varied for sensitivity analysis were all the parameters documented in the <a href="https://cvpia-osc.github.io/fallRunDSM/reference/params.html" class="external-link">fallRunDSM::params</a></p>
+<p>Sensitivity analysis is performed to understand how changes in model
+parameters or inputs affect the model output. A <strong>One-way</strong>
+sensitivity analysis varies each model parameter or input individually
+across a known parameter space while holding all other inputs and
+parameters constant.</p>
+<p>The model parameters varied for sensitivity analysis were all the
+parameters documented in the <a href="https://cvpia-osc.github.io/fallRunDSM/reference/params.html" class="external-link">fallRunDSM::params</a></p>
 </div>
 <div class="section level2">
 <h2 id="scaling-methodology">Scaling Methodology<a class="anchor" aria-label="anchor" href="#scaling-methodology"></a>
 </h2>
 <ol style="list-style-type: decimal">
-<li><p>Most of the model inputs are scaled by 0.5 to 1.5 in increments of 0.1. For example, if an input has an original value of 100, then for sensitivity analysis the model is run eleven times with the input set to the values: 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, and 150.</p></li>
-<li><p>When the scaled input value need to be between 0 and 1 <em>(ex: proportions or survival rates)</em>, the input is scaled as follows: <span class="math display">\[Inv.Logit\left(log\left(\frac{x}{1-x}\right) \times scaler\right)\]</span> where <span class="math inline">\(x\)</span> is the model input being varied for sensitivity analysis, and <span class="math inline">\(scaler\)</span> is the same scaling from .5 to 1.5 described above. In this example, if <span class="math inline">\(x = .3\)</span> then the scaled inputs used in the sensitivity analysis would be 0.396, 0.376, 0.356, 0.337, 0.318, 0.3, 0.283, 0.266, 0.249, 0.234, and 0.219</p></li>
-<li><p>The following model inputs are discrete values and handled as special cases. For <code>cc_gates_days_closed</code>, first the values of <code>cc_gates_prop_days_closed</code> <em>(proportion of days within a month the cross channel gates are closed)</em> are scaled using the inverse logit method described above and then multiplying this proportion by the number of days in the month to produce the number of days closed within a month. For <code>weeks_flooded</code>, the original input is modified by adding <span class="math inline">\(\pm 2\)</span> weeks or <span class="math inline">\(\pm 1\)</span> week, with a minimum of 1 week and a maximum of 4 weeks.</p></li>
+<li><p>Most of the model inputs are scaled by 0.5 to 1.5 in increments
+of 0.1. For example, if an input has an original value of 100, then for
+sensitivity analysis the model is run eleven times with the input set to
+the values: 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, and
+150.</p></li>
+<li><p>When the scaled input value need to be between 0 and 1 <em>(ex:
+proportions or survival rates)</em>, the input is scaled as follows:
+<span class="math display">\[Inv.Logit\left(log\left(\frac{x}{1-x}\right)
+\times scaler\right)\]</span> where <span class="math inline">\(x\)</span> is the model input being varied for
+sensitivity analysis, and <span class="math inline">\(scaler\)</span> is
+the same scaling from .5 to 1.5 described above. In this example, if
+<span class="math inline">\(x = .3\)</span> then the scaled inputs used
+in the sensitivity analysis would be 0.396, 0.376, 0.356, 0.337, 0.318,
+0.3, 0.283, 0.266, 0.249, 0.234, and 0.219</p></li>
+<li><p>The following model inputs are discrete values and handled as
+special cases. For <code>cc_gates_days_closed</code>, first the values
+of <code>cc_gates_prop_days_closed</code> <em>(proportion of days within
+a month the cross channel gates are closed)</em> are scaled using the
+inverse logit method described above and then multiplying this
+proportion by the number of days in the month to produce the number of
+days closed within a month. For <code>weeks_flooded</code>, the original
+input is modified by adding <span class="math inline">\(\pm 2\)</span>
+weeks or <span class="math inline">\(\pm 1\)</span> week, with a minimum
+of 1 week and a maximum of 4 weeks.</p></li>
 </ol>
 </div>
 <div class="section level2">
 <h2 id="running-sensitivity-analysis">Running Sensitivity Analysis<a class="anchor" aria-label="anchor" href="#running-sensitivity-analysis"></a>
 </h2>
-<p>The functions developed below automate as much of the sensitivity analysis as possible. It captures the scaling described above and allows the analysis to be run in parallel.</p>
+<p>The functions developed below automate as much of the sensitivity
+analysis as possible. It captures the scaling described above and allows
+the analysis to be run in parallel.</p>
 <div class="section level3">
 <h3 id="package-dependencies-and-parallel-mode-set-up">Package Dependencies and Parallel Mode Set Up<a class="anchor" aria-label="anchor" href="#package-dependencies-and-parallel-mode-set-up"></a>
 </h3>
-<p>In order to run models in parallel, both <code>parallel</code> and <code>doParallel</code> packages need to be installed.</p>
+<p>In order to run models in parallel, both <code>parallel</code> and
+<code>doParallel</code> packages need to be installed.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://CVPIA-OSC.github.io/fallRunDSM/">fallRunDSM</a></span><span class="op">)</span>
 <span class="co"># remotes::install_github("cvpia-osc/DSMscenario")</span>
@@ -128,15 +160,20 @@
 <span class="co"># install.packages("parallel")</span>
 <span class="co"># install.packages("doParallel")</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">parallel</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">doParallel</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/RevolutionAnalytics/doparallel" class="external-link">doParallel</a></span><span class="op">)</span>
 
 <span class="co"># install.packages("purrr")</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org" class="external-link">purrr</a></span><span class="op">)</span> <span class="co"># functional programming library</span></code></pre></div>
-<p>Next, register the CPU cores that will be utilized for the parallel process. Also specify any functions or data that will be used during the parallel process. Here the <code>run_scenario</code>, <code>fall_run_model</code>, and <code>scenarios</code> elements are registered. These elements are defined further down in this document.</p>
+<p>Next, register the CPU cores that will be utilized for the parallel
+process. Also specify any functions or data that will be used during the
+parallel process. Here the <code>run_scenario</code>,
+<code>fall_run_model</code>, and <code>scenarios</code> elements are
+registered. These elements are defined further down in this
+document.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">no_cores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">detectCores</a></span><span class="op">(</span>logical <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># total cores available</span>
 <span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">makeCluster</a></span><span class="op">(</span><span class="va">no_cores</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="co"># create a cluster from cores</span>
-<span class="fu"><a href="https://rdrr.io/pkg/doParallel/man/registerDoParallel.html" class="external-link">registerDoParallel</a></span><span class="op">(</span><span class="va">cl</span><span class="op">)</span> <span class="co"># register cluster with package</span>
+<span class="fu">registerDoParallel</span><span class="op">(</span><span class="va">cl</span><span class="op">)</span> <span class="co"># register cluster with package</span>
 
 
 <span class="co"># register the functions for use in parallel mode</span>
@@ -145,11 +182,21 @@
 <div class="section level3">
 <h3 id="sensitivility-analysis-process">Sensitivility Analysis Process<a class="anchor" aria-label="anchor" href="#sensitivility-analysis-process"></a>
 </h3>
-<p>The sensitivity analysis process is made up of a series of functions each doing a specific job. Below we describe each one of these and explain how they work together to create the sensitivity analysis.</p>
+<p>The sensitivity analysis process is made up of a series of functions
+each doing a specific job. Below we describe each one of these and
+explain how they work together to create the sensitivity analysis.</p>
 <div class="section level4">
 <h4 id="run-scenario">Run Scenario<a class="anchor" aria-label="anchor" href="#run-scenario"></a>
 </h4>
-<p>The <code>run_scenarios</code> function calls the <code>fall_run_model</code> in both the seeding and the full 20-year simulation modes with the user provided scenario object and modified model parameters. The function returns the valley-wide averages of total number of spawners for each year in the simulation. This metric can be modified to be whatever the user desires to compare between model runs to gauge model sensitivity. The <code>run_scenarios</code> function is called within the <code>run_scenarios_scaled_param</code> function described in the next section.</p>
+<p>The <code>run_scenarios</code> function calls the
+<code>fall_run_model</code> in both the seeding and the full 20-year
+simulation modes with the user provided scenario object and modified
+model parameters. The function returns the valley-wide averages of total
+number of spawners for each year in the simulation. This metric can be
+modified to be whatever the user desires to compare between model runs
+to gauge model sensitivity. The <code>run_scenarios</code> function is
+called within the <code>run_scenarios_scaled_param</code> function
+described in the next section.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">run_scenario</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">scenario</span>, <span class="va">sensi_params</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">seeds</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fall_run_model.html">fall_run_model</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"seed"</span>, ..params <span class="op">=</span> <span class="va">sensi_params</span>, stochastic <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
@@ -162,7 +209,12 @@
 <div class="section level4">
 <h4 id="run-scenarios-with-scaled-parameters">Run Scenarios with Scaled Parameters<a class="anchor" aria-label="anchor" href="#run-scenarios-with-scaled-parameters"></a>
 </h4>
-<p>The <code>run_scenarios_scaled_param</code> runs <code>run_scenarios</code> in parallel with a scaled version of model parameters <em>(see section Scaling Methodology above for details)</em>. The function selects the appropriate scaling methodology based on the <code>param</code> name. This function returns a data frame with results for each of the 13 SIT Candidate Restoration Strategies.</p>
+<p>The <code>run_scenarios_scaled_param</code> runs
+<code>run_scenarios</code> in parallel with a scaled version of model
+parameters <em>(see section Scaling Methodology above for details)</em>.
+The function selects the appropriate scaling methodology based on the
+<code>param</code> name. This function returns a data frame with results
+for each of the 13 SIT Candidate Restoration Strategies.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># create a list of the scenario for convenience</span>
 <span class="va">scenarios</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu">DSMscenario</span><span class="fu">::</span><span class="va"><a href="https://CVPIA-OSC.github.io/DSMscenario//reference/scenarios.html" class="external-link">scenarios</a></span><span class="op">$</span><span class="va">NO_ACTION</span>, <span class="fu">DSMscenario</span><span class="fu">::</span><span class="va"><a href="https://CVPIA-OSC.github.io/DSMscenario//reference/scenarios.html" class="external-link">scenarios</a></span><span class="op">$</span><span class="va">ONE</span>,
@@ -232,7 +284,11 @@
 <div class="section level4">
 <h4 id="runnning-sensitivity">Runnning Sensitivity<a class="anchor" aria-label="anchor" href="#runnning-sensitivity"></a>
 </h4>
-<p>The <code>param_sensitivity</code> function brings everything together, it takes a model parameter or input as an argument and iterates through different scaling values each time running all 13 SIT Candidate Restoration Strategies by calling <code>run_scenarios_scaled_param</code>.</p>
+<p>The <code>param_sensitivity</code> function brings everything
+together, it takes a model parameter or input as an argument and
+iterates through different scaling values each time running all 13 SIT
+Candidate Restoration Strategies by calling
+<code>run_scenarios_scaled_param</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">param_sensitivity</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">param</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">scalars</span> <span class="op">&lt;-</span> <span class="kw">if</span> <span class="op">(</span><span class="va">param</span> <span class="op">==</span> <span class="st">"weeks_flooded"</span><span class="op">)</span> <span class="op">{</span>
@@ -282,7 +338,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer>

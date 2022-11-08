@@ -124,8 +124,8 @@ hatchery_per_trib <- summarized_fish_in_wild %>%
                mean_trib_hatchery_percentage = rep(min(summarized_fish_in_wild$mean_trib_hatchery_percentage), 5))) %>%
   mutate(mean_trib_hatchery_percentage = round((mean_trib_hatchery_percentage / sum(mean_trib_hatchery_percentage, 
                                                                                     na.rm = TRUE)), 4)) %>%
-  rename("Fall proportion allocated to tributary" = mean_trib_hatchery_percentage) %>%
-  mutate(across(everything(), ~replace_na(.x, 0)))
+  rename("Fall proportion allocated to tributary" = mean_trib_hatchery_percentage)# %>%
+  #mutate(across(everything(), ~replace_na(.x, 0)))
 
 datatable(hatchery_per_trib, 
           options = list(
@@ -176,8 +176,8 @@ fall_fish_removal <- map_df(1:nrow(pairs), function(i){
 # Combine run removal rates 
 natural_adult_removal_rate <- fall_fish_removal %>%
   group_by(Trib) %>%
-  summarise("Fall Proportion Removed" = round(mean(fall_proportion_removed), 3)) %>%
-  mutate(across(everything(), ~replace_na(.x, 0)))
+  summarise("Fall Proportion Removed" = round(mean(fall_proportion_removed), 3))# %>%
+  #mutate(across(everything(), ~replace_na(.x, 0)))
 
 # Display it all 
 datatable(natural_adult_removal_rate, 

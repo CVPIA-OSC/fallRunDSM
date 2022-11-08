@@ -306,7 +306,7 @@ fall_run_fitness <- function(
 ```{r, eval=FALSE}
 params <- DSMCalibrationData::set_synth_years(fallRunDSM::params)
 
-res <- ga(type = "real-valued",
+res <- GA::ga(type = "real-valued",
           fitness =
             function(x) -fall_run_fitness(
               known_adults = DSMCalibrationData::grandtab_observed$fall,
