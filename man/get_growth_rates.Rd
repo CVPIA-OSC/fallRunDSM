@@ -6,21 +6,24 @@
 \usage{
 get_growth_rates(
   temperature,
-  prey_density = c("low", "med", "hi", "max"),
+  prey_density,
   floodplain = FALSE,
   transitions = fallRunDSM::bioenergetics_transitions
 )
 }
 \arguments{
-\item{temperature}{in Celsius to be used to lookup}
+\item{temperature}{in Celsius to be used to lookup appropriate transition matrix}
 
 \item{prey_density}{one of "low", "med", "hi", or "max"}
 
-\item{floodplain}{boolean indicating whether lookup is for floodplain}
+\item{floodplain}{boolean indicating whether lookup is for floodplain growth transition}
 }
 \value{
-a matrix of size 4x4 corresponding to the approraite growth rate based on parameters
+a matrix or matrices of size 4x4 corresponding to the approraite growth rate
 }
 \description{
 Get Growth Rates
+}
+\examples{
+ic_growth_rates <- get_growth_rates(10, "low", floodplain = FALSE)
 }
