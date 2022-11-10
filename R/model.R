@@ -17,7 +17,6 @@
 #' @export
 fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibrate"),
                            seeds = NULL, ..params = fallRunDSM::params,
-                           prey_density = c("low", "med", "hi", "max"),
                            stochastic = FALSE){
 
   mode <- match.arg(mode)
@@ -175,14 +174,14 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
     for (month in 1:8) {
 
       growth_rates_ic <- get_growth_rates(growth_temps[,month, year],
-                                          prey_density = prey_density)
+                                          prey_density = ..params$prey_density)
 
       growth_rates_fp <- get_growth_rates(growth_temps[,month, year],
-                                          prey_density = prey_density,
+                                          prey_density = ..params$prey_density,
                                           floodplain = TRUE)
 
       growth_rates_delta <- get_growth_rates(..params$avg_temp_delta[month, year,],
-                                             prey_density = prey_density)
+                                             prey_density = ..params$prey_density_delta)
 
       habitat <- get_habitat(year, month,
                              inchannel_habitat_fry = ..params$inchannel_habitat_fry,

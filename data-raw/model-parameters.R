@@ -140,6 +140,11 @@ params <- list(
   prob_strand_late = DSMhabitat::prob_strand_late,
   prob_nest_scoured = DSMhabitat::prob_nest_scoured,
 
+
+  prey_density = rep("med", 31), # NOTE this is to drive the new prey density dependent growth
+                                  # should be moved to a data package?
+  prey_density_delta = c("med", "med"),
+
   # Calibration Variables (vary by run)
   ..surv_adult_enroute_int = solution[1],
   ..surv_adult_prespawn_int = solution[2],

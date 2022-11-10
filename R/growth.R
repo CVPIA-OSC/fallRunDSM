@@ -6,11 +6,10 @@
 #' @examples
 #' ic_growth_rates <- get_growth_rates(10, "low", floodplain = FALSE)
 #' @export
-get_growth_rates <- function(temperature, prey_density = c("low", "med", "hi", "max"),
+get_growth_rates <- function(temperature, prey_density,
                floodplain = FALSE, transitions = fallRunDSM::bioenergetics_transitions) {
 
   temp_index <- ceiling(temperature)
-  prey_density <- match.arg(prey_density)
 
   if (any(temp_index > 28) | any(temp_index < 1)) {
     stop("temperature out of range of transition probability matrices, defined range is from 1C to 28C", call. = FALSE)
@@ -22,7 +21,18 @@ get_growth_rates <- function(temperature, prey_density = c("low", "med", "hi", "
     paste0("perennial_", prey_density)
   }
 
-  return(transitions[,,temp_index, density_index])
+  transition_matrices_list <- purrr::map2(temp_index, density_index, function(x, y) {
+    transitions[,,x, y]
+  })
+
+  location_dim_names <- names(transition_matrices_list)
+
+  transition_array <- array(unlist(transition_matrices_list), dim = c(4, 4, length(location_dim_names)),
+                            dimnames = list(fallRunDSM::size_class_labels,
+                                            fallRunDSM::size_class_labels,
+                                            location_dim_names))
+
+  return(transition_array)
 
 }
 
