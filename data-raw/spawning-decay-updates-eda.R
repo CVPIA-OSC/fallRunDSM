@@ -1,4 +1,4 @@
-params_0 <- fallRunDSM::params
+params_0 <- params_biop_2008
 params_1 <- params_0
 params_1$spawn_decay_multiplier <- DSMscenario::spawning_decay_multiplier$fr
 
@@ -45,4 +45,6 @@ x <- purrr::map_df(1:31, function(i) {
 
 x |>
   filter(watershed %in% names(which(DSMhabitat::watershed_decay_status))) |>
-  ggplot(aes(date, prop, color = watershed)) + geom_line()
+  ggplot(aes(date, prop, color = watershed)) + geom_line() +
+  facet_wrap(vars(watershed))
+
