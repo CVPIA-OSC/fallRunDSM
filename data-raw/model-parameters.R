@@ -93,23 +93,23 @@ params <- list(
 
   ## Variable from load baseline data
   # DSMflow variables -----
-  freeport_flows = DSMflow::freeport_flow,
-  vernalis_flows = DSMflow::vernalis_flow,
-  stockton_flows = DSMflow::stockton_flow,
-  CVP_exports = DSMflow::cvp_exports,
-  SWP_exports = DSMflow::swp_exports,
-  proportion_diverted = DSMflow::proportion_diverted,
-  total_diverted = DSMflow::total_diverted,
-  delta_proportion_diverted = DSMflow::delta_proportion_diverted,
-  delta_total_diverted = DSMflow::delta_total_diverted,
-  prop_pulse_flows = DSMflow::proportion_pulse_flows,
-  prop_flow_natal = DSMflow::proportion_flow_natal,
-  upper_sacramento_flows = DSMflow::upper_sacramento_flows,
-  delta_inflow = DSMflow::delta_inflow,
-  cc_gates_days_closed = DSMflow::delta_cross_channel_closed["count", ],
-  cc_gates_prop_days_closed = DSMflow::delta_cross_channel_closed["proportion", ],
-  proportion_flow_bypass = DSMflow::proportion_flow_bypasses,
-  gates_overtopped = DSMflow::gates_overtopped,
+  freeport_flows = DSMflow::freeport_flow$biop_itp_2018_2019,
+  vernalis_flows = DSMflow::vernalis_flow$biop_itp_2018_2019,
+  stockton_flows = DSMflow::stockton_flow$biop_itp_2018_2019,
+  CVP_exports = DSMflow::cvp_exports$biop_itp_2018_2019,
+  SWP_exports = DSMflow::swp_exports$biop_itp_2018_2019,
+  proportion_diverted = DSMflow::proportion_diverted$biop_itp_2018_2019,
+  total_diverted = DSMflow::total_diverted$biop_itp_2018_2019,
+  delta_proportion_diverted = DSMflow::delta_proportion_diverted$biop_itp_2018_2019,
+  delta_total_diverted = DSMflow::delta_total_diverted$biop_itp_2018_2019,
+  prop_pulse_flows = DSMflow::proportion_pulse_flows$biop_itp_2018_2019,
+  prop_flow_natal = DSMflow::proportion_flow_natal$biop_itp_2018_2019,
+  upper_sacramento_flows = DSMflow::upper_sacramento_flows$biop_itp_2018_2019,
+  delta_inflow = DSMflow::delta_inflow$biop_itp_2018_2019,
+  cc_gates_days_closed = DSMflow::delta_cross_channel_closed$biop_itp_2018_2019["count", ],
+  cc_gates_prop_days_closed = DSMflow::delta_cross_channel_closed$biop_itp_2018_2019["proportion", ],
+  proportion_flow_bypass = DSMflow::proportion_flow_bypasses$biop_itp_2018_2019,
+  gates_overtopped = DSMflow::gates_overtopped$biop_itp_2018_2019,
 
   # DSMtemperature variables -----
   vernalis_temps = DSMtemperature::vernalis_temperature,
@@ -121,14 +121,14 @@ params <- list(
   migratory_temperature_proportion_over_20 = DSMtemperature::migratory_temperature_proportion_over_20,
 
   # DSMhabitat variables -----
-  spawning_habitat = DSMhabitat::fr_spawn,
-  inchannel_habitat_fry = DSMhabitat::fr_fry, # vary by run
-  inchannel_habitat_juvenile = DSMhabitat::fr_juv, # vary by run
-  floodplain_habitat = DSMhabitat::fr_fp, # vary by run
-  weeks_flooded = DSMhabitat::weeks_flooded,
+  spawning_habitat = DSMhabitat::fr_spawn$biop_itp_2018_2019,
+  inchannel_habitat_fry = DSMhabitat::fr_fry$biop_itp_2018_2019, # vary by run
+  inchannel_habitat_juvenile = DSMhabitat::fr_juv$biop_itp_2018_2019, # vary by run
+  floodplain_habitat = DSMhabitat::fr_fp$biop_itp_2018_2019, # vary by run
+  weeks_flooded = DSMhabitat::weeks_flooded$biop_itp_2018_2019,
   delta_habitat = DSMhabitat::delta_habitat,
-  sutter_habitat = DSMhabitat::sutter_habitat,
-  yolo_habitat = DSMhabitat::yolo_habitat,
+  sutter_habitat = DSMhabitat::sutter_habitat$biop_itp_2018_2019,
+  yolo_habitat = DSMhabitat::yolo_habitat$biop_itp_2018_2019,
   tisdale_bypass_watershed = DSMhabitat::tisdale_bypass_watershed,
   yolo_bypass_watershed = DSMhabitat::yolo_bypass_watershed,
   south_delta_routed_watersheds = DSMhabitat::south_delta_routed_watersheds,
