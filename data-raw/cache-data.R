@@ -125,8 +125,9 @@ prey_density_delta <- c("med", "med")
 usethis::use_data(prey_density_delta, overwrite = TRUE)
 
 
-
-
+# watershed attributes
+watershed_attributes <- read_csv("data-raw/watershed-attributes.csv")
+usethis::use_data(watershed_attributes, overwrite = TRUE)
 
 
 
