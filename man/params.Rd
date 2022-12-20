@@ -101,6 +101,8 @@ period in front are model or submodel coefficients. Parameters with double perio
   \item \code{.surv_juv_rear_medium}: Size related intercept for medium sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
   \item \code{.surv_juv_rear_large}: Size related intercept for large sized fish, source: \href{https://afspubs.onlinelibrary.wiley.com/doi/abs/10.1577/M02-161.1}{Connor et al. (2004)}
   \item \code{.surv_juv_rear_floodplain}: Additional intercept for floodplain rearing benefit, source: \href{https://dsm-docs.s3-us-west-2.amazonaws.com/SOMMER_T-SDWA+180+Floodplain+rearing+of+juvenile+chinook+salmon+evidence+of+enhanced+growth+and+survival+.pdf}{Sommer et al. (2001)}
+  \item \code{prey_density}: More details at \code{\link{prey_density}}
+  \item \code{prey_density_delta}: More details at \code{\link{prey_density_delta}}
 }
 }
 

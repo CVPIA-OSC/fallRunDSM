@@ -6,8 +6,8 @@
 \usage{
 days_in_month(
   month,
-  days_by_month = c(Jan = 31L, Feb = 28L, Mar = 31L, Apr = 30L, May = 31L, Jun = 30L,
-    Jul = 31L, Aug = 31L, Sep = 30L, Oct = 31L, Nov = 30L, Dec = 31L)
+  days_by_month = c(Jan = 31L, Feb = 28L, Mar = 31L, Apr = 30L, May = 31L, Jun = 30L, Jul
+    = 31L, Aug = 31L, Sep = 30L, Oct = 31L, Nov = 30L, Dec = 31L)
 )
 }
 \arguments{

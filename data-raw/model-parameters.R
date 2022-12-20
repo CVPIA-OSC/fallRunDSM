@@ -140,6 +140,11 @@ params <- list(
   prob_strand_late = DSMhabitat::prob_strand_late,
   prob_nest_scoured = DSMhabitat::prob_nest_scoured,
 
+
+  prey_density = fallRunDSM::prey_density,
+  prey_density_delta = fallRunDSM::prey_density_delta,
+
+
   # Calibration Variables (vary by run)
   ..surv_adult_enroute_int = solution[1],
   ..surv_adult_prespawn_int = solution[2],
