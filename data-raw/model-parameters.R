@@ -1,5 +1,11 @@
 library(tidyverse)
 
+# 2022
+
+params_2022 <- fallRunDSM::params
+
+params_2022$spawn_decay_multiplier <- DSMscenario::spawning_decay_multiplier$fr
+
 
 # 2021
 calib_results <- read_rds("calibration/calibration-results.rds")
@@ -223,9 +229,3 @@ params <- list(
 )
 
 usethis::use_data(params, overwrite = TRUE)
-
-
-
-
-
-
