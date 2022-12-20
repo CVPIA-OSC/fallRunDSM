@@ -120,9 +120,9 @@ params <- list(
   # DSMtemperature variables -----
   vernalis_temps = DSMtemperature::vernalis_temperature,
   prisoners_point_temps = DSMtemperature::prisoners_point_temperature,
-  degree_days = DSMtemperature::degree_days,
+  degree_days = DSMtemperature::degree_days$biop_itp_2018_2019,
   mean_egg_temp_effect = DSMtemperature::egg_temperature_effect$fall_run,
-  avg_temp = DSMtemperature::stream_temperature,
+  avg_temp = DSMtemperature::stream_temperature$biop_itp_2018_2019,
   avg_temp_delta = DSMtemperature::delta_temperature,
   migratory_temperature_proportion_over_20 = DSMtemperature::migratory_temperature_proportion_over_20,
 
