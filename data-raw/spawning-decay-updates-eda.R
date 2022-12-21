@@ -1,4 +1,6 @@
-params_0 <- params_biop_2008
+library(fallRunDSM)
+
+params_0 <- fallRunDSM::params
 params_1 <- params_0
 params_1$spawn_decay_multiplier <- DSMscenario::spawning_decay_multiplier$fr
 
@@ -11,13 +13,13 @@ sim_0 <- fall_run_model(seeds = s0, mode = "sim", ..params = params_0)
 sim_1 <- fall_run_model(seeds = s1, mode = "sim", ..params = params_1)
 
 
-d0 <- sim_0$spawners |>
+d0 <- (sim_0$spawners * sim_0$proportion_natural) |>
   as_tibble() |>
   mutate(watershed = fallRunDSM::watershed_labels) |>
   pivot_longer(-watershed, names_to = "year", values_to = "spawners") |>
   mutate(type = "original spawn decay")
 
-d1 <- sim_1$spawners |>
+d1 <- (sim_1$spawners * sim_1$proportion_natural) |>
   as_tibble() |>
   mutate(watershed = fallRunDSM::watershed_labels) |>
   pivot_longer(-watershed, names_to = "year", values_to = "spawners") |>
@@ -27,7 +29,7 @@ d1 <- sim_1$spawners |>
 d <- bind_rows(d0, d1) |> mutate(year = as.numeric(year))
 
 d |>
-  filter(watershed == "Merced River") |>
+  filter(watershed == "Upper Sacramento River") |>
   ggplot(aes(year, spawners, color = type)) + geom_line()
 
 
