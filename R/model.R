@@ -17,7 +17,8 @@
 #' @export
 fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibrate"),
                            seeds = NULL, ..params = fallRunDSM::params,
-                           stochastic = FALSE){
+                           stochastic = FALSE,
+                           keep_all_data = FALSE){
 
   mode <- match.arg(mode)
 
@@ -81,7 +82,28 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                               "simulate" = 20,
                               "calibrate" = 20)
 
+  # TODO: add additional elements to output required for capturing all data
+  if (keep_all_data) {
+
+    sim_len_names <- 1:simulation_length
+
+    output$adults_in_ocean <- array(NA, dim = c(simulation_length, 31), dimnames = list(sim_len_names, fallRunDSM::watershed_labels))
+    output$lower_mid_sac_fish <- array(NA, dim = c(simulation_length, 20, 4), dimnames = list(sim_len_names, fallRunDSM::watershed_labels[1:20], fallRunDSM::size_class_labels))
+    output$lower_sac_fish <- NULL
+    output$upper_mid_sac_fish <- array(NA, dim = c(simulation_length, 8, 15, 4), dimnames = list(sim_len_names, month.abb[1:8], fallRunDSM::watershed_labels[1:15], fallRunDSM::size_class_labels))
+    output$sutter_fish <- NULL
+    output$yolo_fish <- NULL
+    output$san_joaquin_fish <- NULL
+    output$north_delta_fish <- NULL
+    output$south_delta_fish <- NULL
+    output$juveniles_at_chipps <- NULL
+  }
+
+
   for (year in 1:simulation_length) {
+
+
+
     adults_in_ocean <- numeric(31)
     # initialize 31 x 4 matrices for natal fish, migrants, and ocean fish
     lower_mid_sac_fish <- matrix(0, nrow = 20, ncol = 4, dimnames = list(fallRunDSM::watershed_labels[1:20], fallRunDSM::size_class_labels))
@@ -95,6 +117,8 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
     juveniles_at_chipps <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
 
     avg_ocean_transition_month <- ocean_transition_month(stochastic = stochastic) # 2
+
+
 
     hatch_adults <- if (stochastic) {
       rmultinom(1, size = round(runif(1, 83097.01,532203.1)), prob = ..params$hatchery_allocation)[ , 1]
@@ -626,6 +650,10 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                                                .ocean_entry_success_months = ..params$.ocean_entry_success_months,
                                                                stochastic = stochastic)
 
+      if (keep_all_data) {
+        output$upper_mid_sac_fish[year,month,,] <- upper_mid_sac_fish
+      }
+
     } # end month loop
 
     output$juvenile_biomass[ , year] <- juveniles_at_chipps %*% fallRunDSM::params$mass_by_size_class
@@ -647,6 +675,11 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
       adults[1:31, (year + 2):(year + 4)] <- adults[1:31, (year + 2):(year + 4)] + adults_returning
     }
 
+
+    # TODO: add all keep data for the structured that get orverwritten anually
+    if (keep_all_data) {
+      output$adults_in_ocean[year, ] <- adults_in_ocean
+    }
 
   } # end year for loop
 
