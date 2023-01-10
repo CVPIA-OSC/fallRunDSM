@@ -9,6 +9,8 @@ The 2.0.0 release of the fallRunDSM introduces several notable changes:
 
 * Growth rates are now calculated using transition matrices produced by Bioenergetics. These changes have been incorporated into the new `get_growth_rates` function in the file `R/growth.R`. The new matrices enable the simulation to take into account both temperature and prey density in order to determine the appropriate transition to use for either perennial or floodplain growth.
 
+* CALSIM data is now updated to incorporate 2019 BiOp and 2020 ITP rulesets. The changes are introduced in the latest version of the [DSMflow](https://github.com/CVPIA-OSC/DSMflow) package and cached in this model package. Users are still able to run the model using previous rulesets by making use or 2019 model `params`. More info on this approach [here](#)
+
 
 
 fallRunDSM v2.0.0 was run with the following data package releases to inform the [Near-term Restoration Strategy FY2021-2025](https://cvpia-documents.s3-us-west-1.amazonaws.com/CVPIA_Near-term-Restoration-Strategy_FY21-FY25_FINAL.pdf):
