@@ -9,9 +9,9 @@ The 3.0.0 release of the fallRunDSM introduces several notable changes:
 
 * Growth rates are now calculated using transition matrices produced by Bioenergetics. These changes have been incorporated into the new `get_growth_rates` function in the file `R/growth.R`. The new matrices enable the simulation to take into account both temperature and prey density in order to determine the appropriate transition to use for either perennial or floodplain growth.
 
-* CALSIM data is now updated to incorporate 2019 BiOp and 2020 ITP rulesets. The changes are introduced in the latest version of the [DSMflow](https://github.com/CVPIA-OSC/DSMflow) package and cached in this model package. Users are still able to run the model using previous rulesets by using the 2021 model `params`, more info [here](#)
+* CALSIM data is now updated to incorporate 2019 BiOp and 2020 ITP rulesets. The changes are introduced in the latest version of the [DSMflow](https://github.com/CVPIA-OSC/DSMflow) package and cached in this model package. Users are still able to run the model using previous rulesets by using the 2021 model `params`.
 
-* Spawning habitat decay has been updated and transitioned away from a probabilistic decay to a flow-driven approach. Details on the analysis for these changes can be found [here](#).
+* Spawning habitat decay has been updated and transitioned away from a probabilistic decay to a flow-driven approach. Details on the analysis for these changes can be found [here](https://cvpia-osc.github.io/DSMhabitat/articles/flow-driven-spawning-decay.html).
 
 * Yuba Fall Run adult estimates have been updated based on analysis from the [Lower Yuba river Vaki Riverwatcher™ Chinook Salmon passage and run differentiation analyses](https://cvpia-meeting-slides.s3.us-west-2.amazonaws.com/2020-Update_LYR-Chinook-Salmon-Run-Differentiation_December-2020.pdf) 
 
