@@ -19,10 +19,10 @@ The 3.0.0 release of the fallRunDSM introduces several notable changes:
 (*TODO: update the section with the correct version numbers*)
 fallRunDSM v3.0.0 was run with the following data package releases to inform the [Near-term Restoration Strategy FY2021-2025](https://cvpia-documents.s3-us-west-1.amazonaws.com/CVPIA_Near-term-Restoration-Strategy_FY21-FY25_FINAL.pdf):
 
-- [cvpiaTemperatue v2.0.1](https://github.com/FlowWest/cvpiaTemperature/releases/tag/v2.0.1)
-- [cvpiaHabitat v1.1.1](https://github.com/FlowWest/cvpiaHabitat/releases/tag/v1.1.1)
-- [cvpiaFlow v1.0.1](https://github.com/FlowWest/cvpiaFlow/releases/tag/v1.0.1)
-- [cvpiaCalibration v1.0.5](https://github.com/FlowWest/cvpiaCalibration/releases/tag/v1.0.5)
+- [cvpiaTemperatue v2.0.1](https://github.com/FlowWest/cvpiaTemperature/releases/tag/v3.0)
+- [cvpiaHabitat v1.1.1](https://github.com/FlowWest/cvpiaHabitat/releases/tag/v3.0)
+- [cvpiaFlow v1.0.1](https://github.com/FlowWest/cvpiaFlow/releases/tag/v3.0)
+- [cvpiaCalibration v1.0.5](https://github.com/FlowWest/cvpiaCalibration/releases/tag/v3.0)
 
 
 
