@@ -16,7 +16,6 @@ The 3.0.0 release of the fallRunDSM introduces several notable changes:
 * Yuba Fall Run adult estimates have been updated based on analysis from the [Lower Yuba river Vaki Riverwatcher™ Chinook Salmon passage and run differentiation analyses](https://cvpia-meeting-slides.s3.us-west-2.amazonaws.com/2020-Update_LYR-Chinook-Salmon-Run-Differentiation_December-2020.pdf) 
 
 
-(*TODO: update the section with the correct version numbers*)
 fallRunDSM v3.0.0 was run with the following data package releases to inform the [Near-term Restoration Strategy FY2021-2025](https://cvpia-documents.s3-us-west-1.amazonaws.com/CVPIA_Near-term-Restoration-Strategy_FY21-FY25_FINAL.pdf):
 
 - [cvpiaTemperatue v2.0.1](https://github.com/FlowWest/cvpiaTemperature/releases/tag/v3.0)
