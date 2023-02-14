@@ -7,6 +7,9 @@ params_2022 <- fallRunDSM::params
 params_2022$spawn_decay_multiplier <- DSMscenario::spawning_decay_multiplier$fr
 
 
+usethis::use_data(params_2022, overwrite = TRUE)
+
+
 # 2021
 calib_results <- read_rds("calibration/calibration-results.rds")
 solution <- calib_results@solution
