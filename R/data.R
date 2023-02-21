@@ -105,6 +105,12 @@ NULL
 #' Vector defining prey density level ("low", "med", "hi", "max") for North and South Delta
 "prey_density_delta"
 
+#' Bioenergetics Transistion Matrices
+#' @description Chinook growth rates in floodplain and inchannel habitat.
+#' @format 4 x 4 x 28 x 8 array [4 size classes x 4 size classes x 28 temperatures x 8 rear/flood and level combinations]
+#' @source TODO
+"bioenergetics_transitions"
+
 #' @title Model Parameters
 #' @description A list containing all parameters needed for running the \code{\link{fall_run_model}}. Parameters with a single
 #' period in front are model or submodel coefficients. Parameters with double periods in front of them are calibrated model parameters.
@@ -294,3 +300,7 @@ NULL
 #' @rdname params
 #' @format NULL
 "params_2019"
+
+#' @rdname params
+#' @format NULL
+"params_2022"

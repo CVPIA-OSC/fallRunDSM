@@ -4,11 +4,14 @@
 \name{params}
 \alias{params}
 \alias{params_2019}
+\alias{params_2022}
 \title{Model Parameters}
 \usage{
 params
 
 params_2019
+
+params_2022
 }
 \description{
 A list containing all parameters needed for running the \code{\link{fall_run_model}}. Parameters with a single

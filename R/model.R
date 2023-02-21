@@ -35,12 +35,25 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
       weeks_flooded = ..params$weeks_flooded
     )
 
-    scenario_data <- DSMscenario::load_scenario(scenario,
-                                                habitat_inputs = habitats,
-                                                species = DSMscenario::species$FALL_RUN,
-                                                spawn_decay_rate = ..params$spawn_decay_rate,
-                                                rear_decay_rate = ..params$rear_decay_rate,
-                                                stochastic = stochastic)
+    # check if the params has the new decay element, if yes use new function applying decay
+    # to spawning, if not then use the old method. This is a temporary bit of code to allow
+    # for quick comparison between two versions of the model.
+    if ("spawn_decay_multiplier" %in% names(..params)) {
+      scenario_data <- DSMscenario::load_scenario(scenario,
+                                                  habitat_inputs = habitats,
+                                                  species = DSMscenario::species$FALL_RUN,
+                                                  spawn_decay_rate = ..params$spawn_decay_rate,
+                                                  rear_decay_rate = ..params$rear_decay_rate,
+                                                  spawn_decay_multiplier = ..params$spawn_decay_multiplier,
+                                                  stochastic = stochastic)
+    } else {
+      scenario_data <- DSMscenario::load_scenario(scenario,
+                                                  habitat_inputs = habitats,
+                                                  species = DSMscenario::species$FALL_RUN,
+                                                  spawn_decay_rate = ..params$spawn_decay_rate,
+                                                  rear_decay_rate = ..params$rear_decay_rate,
+                                                  stochastic = stochastic)
+    }
 
     ..params$spawning_habitat <- scenario_data$spawning_habitat
     ..params$inchannel_habitat_fry <- scenario_data$inchannel_habitat_fry

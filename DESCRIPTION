@@ -1,7 +1,7 @@
 Package: fallRunDSM
 Type: Package
 Title: Structured Decision Fall Run Model for CVPIA
-Version: 2.0
+Version: 2.1
 Authors@R: c(
     person("James", "Petterson", email = "jt.peterson@oregonstate.edu", role = "aut"),
     person("Adam", "Duarte", email = "adam.duarte@oregonstate.edu", role = "aut"), 
