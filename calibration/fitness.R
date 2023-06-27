@@ -127,6 +127,22 @@ fall_run_fitness <- function(
   total_obs <- sum(!is.na(known_adults[keep, 6:20]))
   weights <- num_obs / total_obs
 
+  # penalize terms that are far from a default value for surv juv
+  dist_from_def_ocean_val <- sum(
+    dist(upsac_ocean_entry_surv, default_ocean_entry_surv) > 2,
+    dist(butte_ocean_entry_surv, default_ocean_entry_surv) > 2,
+    dist(deer_ocean_entry_surv, default_ocean_entry_surv) > 2,
+    dist(mill_ocean_entry_surv, default_ocean_entry_surv) > 2,
+    dist(midsactribs_ocean_entry_surv, default_ocean_entry_surv) > 2,
+    dist(yuba_ocean_entry_surv, default_ocean_entry_surv) > 2,
+    dist(american_ocean_entry_surv, default_ocean_entry_surv) > 2,
+    dist(deltatribs_ocean_entry_surv, default_ocean_entry_surv) > 2,
+    dist(moke_ocean_entry_surv, default_ocean_entry_surv) > 2,
+    dist(merced_ocean_entry_surv, default_ocean_entry_surv) > 2,
+    dist(stan_ocean_entry_surv, default_ocean_entry_surv) > 2,
+    dist(tuol_ocean_entry_surv, default_ocean_entry_surv) > 2,
+  )
+
 
   tryCatch({
     preds <- fall_run_model(mode = "calibrate",
@@ -139,7 +155,9 @@ fall_run_fitness <- function(
 
     sse <- sum(((preds[keep,] - known_nats)^2 * weights)/mean_escapent, na.rm = TRUE)
 
-    return(sse)
+    # additional penalties you add to sse
+    pen <- sse + (dist_from_def_ocean_val * 1000)
+    return(pen)
   },
   error = function(e) return(1e12),
   warning = function(w) return(1e12)
