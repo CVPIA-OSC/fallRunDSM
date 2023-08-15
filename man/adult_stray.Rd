@@ -17,8 +17,8 @@ adult_stray(
   .intercept = fallRunDSM::params$.adult_stray_intercept,
   .wild = fallRunDSM::params$.adult_stray_wild,
   .natal_flow = fallRunDSM::params$.adult_stray_natal_flow,
- 
-    .cross_channel_gates_closed = fallRunDSM::params$.adult_stray_cross_channel_gates_closed,
+  .cross_channel_gates_closed =
+    fallRunDSM::params$.adult_stray_cross_channel_gates_closed,
   .prop_bay_trans = fallRunDSM::params$.adult_stray_prop_bay_trans,
   .prop_delta_trans = fallRunDSM::params$.adult_stray_prop_delta_trans
 )

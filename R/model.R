@@ -35,12 +35,25 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
       weeks_flooded = ..params$weeks_flooded
     )
 
-    scenario_data <- DSMscenario::load_scenario(scenario,
-                                                habitat_inputs = habitats,
-                                                species = DSMscenario::species$FALL_RUN,
-                                                spawn_decay_rate = ..params$spawn_decay_rate,
-                                                rear_decay_rate = ..params$rear_decay_rate,
-                                                stochastic = stochastic)
+    # check if the params has the new decay element, if yes use new function applying decay
+    # to spawning, if not then use the old method. This is a temporary bit of code to allow
+    # for quick comparison between two versions of the model.
+    if ("spawn_decay_multiplier" %in% names(..params)) {
+      scenario_data <- DSMscenario::load_scenario(scenario,
+                                                  habitat_inputs = habitats,
+                                                  species = DSMscenario::species$FALL_RUN,
+                                                  spawn_decay_rate = ..params$spawn_decay_rate,
+                                                  rear_decay_rate = ..params$rear_decay_rate,
+                                                  spawn_decay_multiplier = ..params$spawn_decay_multiplier,
+                                                  stochastic = stochastic)
+    } else {
+      scenario_data <- DSMscenario::load_scenario(scenario,
+                                                  habitat_inputs = habitats,
+                                                  species = DSMscenario::species$FALL_RUN,
+                                                  spawn_decay_rate = ..params$spawn_decay_rate,
+                                                  rear_decay_rate = ..params$rear_decay_rate,
+                                                  stochastic = stochastic)
+    }
 
     ..params$spawning_habitat <- scenario_data$spawning_habitat
     ..params$inchannel_habitat_fry <- scenario_data$inchannel_habitat_fry
@@ -163,7 +176,8 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                fecundity = ..params$spawn_success_fecundity,
                                stochastic = stochastic)
 
-    # TODO: udpate to reflect actual number of hypothesis. Are there 4 or 5?
+
+     # TODO: udpate to reflect actual number of hypothesis. Are there 4 or 5?
     fish_0 <- fish_1 <- fish_2 <- fish_3 <- fish_4 <- fish_5 <- list(juveniles = juveniles,
                                        lower_mid_sac_fish = lower_mid_sac_fish,
                                        lower_sac_fish = lower_sac_fish,
@@ -176,8 +190,27 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                        juveniles_at_chipps = juveniles_at_chipps,
                                        adults_in_ocean = adults_in_ocean)
 
+    # TODO Some temperatures are over the 28C limit, for now I am going to
+    # just make these be 28. Both of these cases in the 20 years of data
+    # are barely over 28 so I think for now this is justified. With that
+    # said we need to make this change in the cached data itself and make
+    # a note of it.
+
+    growth_temps <- ..params$avg_temp
+    growth_temps[which(growth_temps > 28)] <- 28
+
     for (month in 1:8) {
-      # add two movement hypothesis here
+
+      growth_rates_ic <- get_growth_rates(growth_temps[,month, year],
+                                          prey_density = ..params$prey_density)
+
+      growth_rates_fp <- get_growth_rates(growth_temps[,month, year],
+                                          prey_density = ..params$prey_density,
+                                          floodplain = TRUE)
+
+      growth_rates_delta <- get_growth_rates(..params$avg_temp_delta[month, year,],
+                                             prey_density = ..params$prey_density_delta)
+
       habitat <- get_habitat(year, month,
                              inchannel_habitat_fry = ..params$inchannel_habitat_fry,
                              inchannel_habitat_juvenile = ..params$inchannel_habitat_juvenile,

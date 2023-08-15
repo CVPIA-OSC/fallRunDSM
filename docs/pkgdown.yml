@@ -1,14 +1,15 @@
-pandoc: '2.12'
-pkgdown: 2.0.1
+pandoc: 2.17.1.1
+pkgdown: 2.0.3
 pkgdown_sha: ~
 articles:
   calibration-2021: calibration-2021.html
   hatchery-analysis: hatchery-analysis.html
+  model_faq: model_faq.html
   scenario: scenario.html
   sensitivity-analysis: sensitivity-analysis.html
   straying-model: straying-model.html
   temperature-model: temperature-model.html
-last_built: 2022-03-08T23:20Z
+last_built: 2022-07-01T15:53Z
 urls:
   reference: https://CVPIA-OSC.github.io/fallRunDSM/reference
   article: https://CVPIA-OSC.github.io/fallRunDSM/articles

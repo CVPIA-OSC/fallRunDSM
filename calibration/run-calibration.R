@@ -11,7 +11,7 @@ source("calibration/update-params.R")
 
 current_best_solution <- read_rds("calibration/calibration-result.rds")
 
-params <- DSMCalibrationData::set_synth_years(fallRunDSM::params)
+params <- DSMCalibrationData::set_synth_years(fallRunDSM::params_2022)
 # Perform calibration --------------------
 res <- ga(type = "real-valued",
           fitness =
@@ -41,7 +41,7 @@ keep <- c(1,6,7,10,12,19,20,23,26:30)
 result_solution <- res@solution[1, ]
 result_params <- update_params(x = result_solution, fallRunDSM::params)
 result_params <- DSMCalibrationData::set_synth_years(result_params)
-result_sim <- fall_run_model(seeds = calibration_seeds, mode = "calibrate",
+result_sim <- fall_run_model(seeds = DSMCalibrationData::grandtab_imputed$fall, mode = "calibrate",
                          ..params = result_params,
                          stochastic = FALSE)
 

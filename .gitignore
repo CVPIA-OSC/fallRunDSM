@@ -7,3 +7,5 @@ calibration/fits/*.rds
 .~lock*
 inst/doc
 .DS*
+data-raw/1976-2001_DJFMP_trawl_fish_and_water_quality_data.csv
+data-raw/chipps-trawls.rds

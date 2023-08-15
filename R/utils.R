@@ -34,12 +34,3 @@ ocean_transition_month <- function(stochastic) {
 pretty_num <- function(num, places = 2) {
   format(round(num, places), big.mark = ',', drop = FALSE)
 }
-
-
-
-
-
-
-
-
-

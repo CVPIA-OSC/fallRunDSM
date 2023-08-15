@@ -24,8 +24,7 @@ surv_juv_rear(
   .surv_juv_rear_prop_diversions = fallRunDSM::params$.surv_juv_rear_prop_diversions,
   ..surv_juv_rear_prop_diversions = fallRunDSM::params$..surv_juv_rear_prop_diversions,
   .surv_juv_rear_total_diversions = fallRunDSM::params$.surv_juv_rear_total_diversions,
- 
-    ..surv_juv_rear_total_diversions = fallRunDSM::params$..surv_juv_rear_total_diversions,
+  ..surv_juv_rear_total_diversions = fallRunDSM::params$..surv_juv_rear_total_diversions,
   .stranded = fallRunDSM::params$.surv_juv_rear_stranded,
   .medium = fallRunDSM::params$.surv_juv_rear_medium,
   .large = fallRunDSM::params$.surv_juv_rear_large,
