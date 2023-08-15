@@ -16,7 +16,8 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
                                    migratory_survival = migratory_survival,
                                    habitat = habitat, ..params = ..params,
                                    avg_ocean_transition_month = avg_ocean_transition_month,
-                                   stochastic = stochastic, juveniles) {
+                                   stochastic = stochastic,
+                                   juveniles, ic_growth, fp_growth, delta_growth) {
 
   juveniles <- fish$juveniles
   lower_mid_sac_fish <- fish$lower_mid_sac_fish
@@ -29,6 +30,8 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
   south_delta_fish <- fish$south_delta_fish
   juveniles_at_chipps <- fish$juveniles_at_chipps
   adults_in_ocean <- fish$adults_in_ocean
+
+
 
 
   if (hypothesis %in% 3:5) {
@@ -67,7 +70,7 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
                                         migratory_survival_delta = migratory_survival$delta,
                                         migratory_survival_bay_delta = migratory_survival$bay_delta,
                                         juveniles_at_chipps = juveniles_at_chipps,
-                                        growth_rates = ..params$growth_rates,
+                                        growth_rates = delta_growth,
                                         territory_size = ..params$territory_size,
                                         hypothesis = hypothesis,
                                         stochastic = stochastic)
@@ -82,6 +85,8 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
     upper_sac_trib_fish <-  route(year = year,
                                   month = month,
                                   juveniles = juveniles[1:15, ],
+                                  freeport_flows = ..params$freeport_flows,
+                                  vernalis_flows = ..params$vernalis_flows,
                                   inchannel_habitat = habitat$inchannel[1:15],
                                   floodplain_habitat = habitat$floodplain[1:15],
                                   prop_pulse_flows = ..params$prop_pulse_flows[1:15, ],
@@ -99,10 +104,10 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
 
     upper_sac_trib_rear <- rear(juveniles = upper_sac_trib_fish$inchannel,
                                 survival_rate = rearing_survival$inchannel[1:15, ],
-                                growth = ..params$growth_rates,
+                                growth = ic_growth[,,1:15],
                                 floodplain_juveniles = upper_sac_trib_fish$floodplain,
                                 floodplain_survival_rate = rearing_survival$floodplain[1:15, ],
-                                floodplain_growth = ..params$growth_rates_floodplain,
+                                floodplain_growth = fp_growth[,,1:15],
                                 weeks_flooded = ..params$weeks_flooded[1:15, month, year],
                                 stochastic = stochastic)
 
@@ -122,6 +127,8 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
                                          proportion_flow_bypass = ..params$proportion_flow_bypass,
                                          detour = 'sutter',
                                          territory_size = ..params$territory_size,
+                                         freeport_flows = ..params$freeport_flows,
+                                         vernalis_flows = ..params$vernalis_flows,
                                          hypothesis = hypothesis,
                                          stochastic = stochastic)
 
@@ -137,10 +144,10 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
 
     upper_mid_sac_fish <- rear(juveniles = upper_mid_sac_fish$inchannel,
                                survival_rate = rearing_survival$inchannel[16, ],
-                               growth = ..params$growth_rates,
+                               growth = ic_growth[,,16],
                                floodplain_juveniles = upper_mid_sac_fish$floodplain,
                                floodplain_survival_rate = rearing_survival$floodplain[16, ],
-                               floodplain_growth = ..params$growth_rates_floodplain,
+                               floodplain_growth = fp_growth[,,16],
                                weeks_flooded = rep(..params$weeks_flooded[16, month, year], nrow(upper_mid_sac_fish$inchannel)),
                                stochastic = stochastic)
 
@@ -148,7 +155,7 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
 
     sutter_fish <- rear(juveniles = sutter_fish$inchannel,
                         survival_rate = matrix(rep(rearing_survival$sutter, nrow(sutter_fish$inchannel)), ncol = 4, byrow = TRUE),
-                        growth = ..params$growth_rates,
+                        growth = ic_growth[,,17],
                         stochastic = stochastic)
 
 
@@ -159,6 +166,8 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
     lower_mid_sac_trib_fish <- route(year = year,
                                      month = month,
                                      juveniles = juveniles[18:20, ],
+                                     freeport_flows = ..params$freeport_flows,
+                                     vernalis_flows = ..params$vernalis_flows,
                                      inchannel_habitat = habitat$inchannel[18:20],
                                      floodplain_habitat = habitat$floodplain[18:20],
                                      prop_pulse_flows =  ..params$prop_pulse_flows[18:20, ],
@@ -176,10 +185,10 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
 
     lower_mid_sac_trib_rear <- rear(juveniles = lower_mid_sac_trib_fish$inchannel,
                                     survival_rate = rearing_survival$inchannel[18:20, ],
-                                    growth = ..params$growth_rates,
+                                    growth = ic_growth[,,18:20],
                                     floodplain_juveniles = lower_mid_sac_trib_fish$floodplain,
                                     floodplain_survival_rate = rearing_survival$floodplain[18:20, ],
-                                    floodplain_growth = ..params$growth_rates_floodplain,
+                                    floodplain_growth = fp_growth[,,18:20],
                                     weeks_flooded = ..params$weeks_flooded[18:20, month, year],
                                     stochastic = stochastic)
 
@@ -196,6 +205,8 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
                                          proportion_flow_bypass = ..params$proportion_flow_bypass,
                                          detour = 'yolo',
                                          territory_size = ..params$territory_size,
+                                         freeport_flows = ..params$freeport_flows,
+                                         vernalis_flows = ..params$vernalis_flows,
                                          hypothesis = hypothesis,
                                          stochastic = stochastic)
 
@@ -210,10 +221,10 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
 
     lower_mid_sac_fish <- rear(juveniles = lower_mid_sac_fish$inchannel,
                                survival_rate = rearing_survival$inchannel[21, ],
-                               growth = ..params$growth_rates,
+                               growth = ic_growth[,,21],
                                floodplain_juveniles = lower_mid_sac_fish$floodplain,
                                floodplain_survival_rate = rearing_survival$floodplain[21, ],
-                               floodplain_growth = ..params$growth_rates_floodplain,
+                               floodplain_growth = fp_growth[,,21],
                                weeks_flooded = rep(..params$weeks_flooded[21, month, year], nrow(lower_mid_sac_fish$inchannel)),
                                stochastic = stochastic)
 
@@ -221,7 +232,7 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
 
     yolo_fish <- rear(juveniles = yolo_fish$inchannel,
                       survival_rate = matrix(rep(rearing_survival$yolo, nrow(yolo_fish$inchannel)), ncol = 4, byrow = TRUE),
-                      growth = ..params$growth_rates,
+                      growth = ic_growth[,,22],
                       stochastic = stochastic)
 
 
@@ -231,6 +242,8 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
     lower_sac_trib_fish <- route(year = year,
                                  month = month,
                                  juveniles = juveniles[23, , drop = FALSE],
+                                 freeport_flows = ..params$freeport_flows,
+                                 vernalis_flows = ..params$vernalis_flows,
                                  inchannel_habitat = habitat$inchannel[23],
                                  floodplain_habitat = habitat$floodplain[23],
                                  prop_pulse_flows =  ..params$prop_pulse_flows[23, , drop = FALSE],
@@ -248,10 +261,10 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
 
     lower_sac_trib_rear <- rear(juveniles = lower_sac_trib_fish$inchannel,
                                 survival_rate = rearing_survival$inchannel[23, , drop = FALSE],
-                                growth = ..params$growth_rates,
+                                growth = ic_growth[,,23],
                                 floodplain_juveniles = lower_sac_trib_fish$floodplain,
                                 floodplain_survival_rate = rearing_survival$floodplain[23, , drop = FALSE],
-                                floodplain_growth = ..params$growth_rates_floodplain,
+                                floodplain_growth = fp_growth[,,23],
                                 weeks_flooded = ..params$weeks_flooded[23, month, year],
                                 stochastic = stochastic)
 
@@ -267,6 +280,8 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
                                      prop_pulse_flows = ..params$prop_pulse_flows[24, , drop = FALSE],
                                      migration_survival_rate = migratory_survival$lower_sac,
                                      territory_size = ..params$territory_size,
+                                     freeport_flows = ..params$freeport_flows,
+                                     vernalis_flows = ..params$vernalis_flows,
                                      hypothesis = hypothesis,
                                      stochastic = stochastic)
 
@@ -274,10 +289,10 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
 
     lower_sac_fish <- rear(juveniles = lower_sac_fish$inchannel,
                            survival_rate = rearing_survival$inchannel[24, ],
-                           growth = ..params$growth_rates,
+                           growth = ic_growth[,,24],
                            floodplain_juveniles = lower_sac_fish$floodplain,
                            floodplain_survival_rate = rearing_survival$floodplain[24, ],
-                           floodplain_growth = ..params$growth_rates_floodplain,
+                           floodplain_growth = fp_growth[,,24],
                            weeks_flooded = rep(..params$weeks_flooded[24, month, year], nrow(lower_sac_fish$inchannel)),
                            stochastic = stochastic)
 
@@ -291,6 +306,8 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
     south_delta_trib_fish <- route(year = year,
                                    month = month,
                                    juveniles = juveniles[25:27, ],
+                                   freeport_flows = ..params$freeport_flows,
+                                   vernalis_flows = ..params$vernalis_flows,
                                    inchannel_habitat = habitat$inchannel[25:27],
                                    floodplain_habitat = habitat$floodplain[25:27],
                                    prop_pulse_flows =  ..params$prop_pulse_flows[25:27, ],
@@ -308,10 +325,10 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
 
     south_delta_trib_rear <- rear(juveniles = south_delta_trib_fish$inchannel,
                                   survival_rate = rearing_survival$inchannel[25:27, ],
-                                  growth = ..params$growth_rates,
+                                  growth = ic_growth[,,25:27],
                                   floodplain_juveniles = south_delta_trib_fish$floodplain,
                                   floodplain_survival_rate = rearing_survival$floodplain[25:27, ],
-                                  floodplain_growth = ..params$growth_rates_floodplain,
+                                  floodplain_growth = fp_growth[,,25:27],
                                   weeks_flooded = ..params$weeks_flooded[25:27, month, year],
                                   stochastic = stochastic)
 
@@ -326,6 +343,8 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
     san_joaquin_trib_fish <- route(year = year,
                                    month = month,
                                    juveniles = juveniles[28:30, ],
+                                   freeport_flows = ..params$freeport_flows,
+                                   vernalis_flows = ..params$vernalis_flows,
                                    inchannel_habitat = habitat$inchannel[28:30],
                                    floodplain_habitat = habitat$floodplain[28:30],
                                    prop_pulse_flows =  ..params$prop_pulse_flows[28:30, ],
@@ -343,10 +362,10 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
 
     san_joaquin_trib_rear <- rear(juveniles = san_joaquin_trib_fish$inchannel,
                                   survival_rate = rearing_survival$inchannel[28:30, ],
-                                  growth = ..params$growth_rates,
+                                  growth = ic_growth[,,28:30],
                                   floodplain_juveniles = san_joaquin_trib_fish$floodplain,
                                   floodplain_survival_rate = rearing_survival$floodplain[28:30, ],
-                                  floodplain_growth = ..params$growth_rates_floodplain,
+                                  floodplain_growth = fp_growth[,,28:30],
                                   weeks_flooded = ..params$weeks_flooded[28:30, month, year],
                                   stochastic = stochastic)
 
@@ -360,6 +379,8 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
                                        prop_pulse_flows = ..params$prop_pulse_flows[31, , drop = FALSE],
                                        migration_survival_rate = migratory_survival$san_joaquin,
                                        territory_size = ..params$territory_size,
+                                       freeport_flows = ..params$freeport_flows,
+                                       vernalis_flows = ..params$vernalis_flows,
                                        hypothesis = hypothesis,
                                        stochastic = stochastic)
 
@@ -367,10 +388,10 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
 
     san_joaquin_fish <- rear(juveniles = san_joaquin_fish$inchannel,
                              survival_rate = rearing_survival$inchannel[31, ],
-                             growth = ..params$growth_rates,
+                             growth = ic_growth[,,31],
                              floodplain_juveniles = san_joaquin_fish$floodplain,
                              floodplain_survival_rate = rearing_survival$floodplain[31, ],
-                             floodplain_growth = ..params$growth_rates_floodplain,
+                             floodplain_growth = fp_growth[,,31],
                              weeks_flooded = rep(..params$weeks_flooded[31, month, year], nrow(san_joaquin_fish$inchannel)),
                              stochastic = stochastic)
 
@@ -388,7 +409,7 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
                                         migratory_survival_delta = migratory_survival$delta,
                                         migratory_survival_bay_delta = migratory_survival$bay_delta,
                                         juveniles_at_chipps = juveniles_at_chipps,
-                                        growth_rates = ..params$growth_rates,
+                                        growth_rates = delta_growth,
                                         territory_size = ..params$territory_size,
                                         hypothesis = hypothesis,
                                         stochastic = stochastic)

@@ -57,15 +57,15 @@ route <- function(year, month, juveniles, inchannel_habitat,
       # if there are no fish inchannel we grab them from floodplain?
       if (sum(natal_watersheds$inchannel) == 0) {
         movement_results <- snow_globe_movement(natal_watersheds$floodplain,
-                                                freeport_flow = DSMflow::freeport_flow[month, year],
-                                                vernalis_flow = DSMflow::vernalis_flow[month, year],
+                                                freeport_flow = freeport_flows[month, year],
+                                                vernalis_flow = vernalis_flows[month, year],
                                                 stochastic = stochastic)
         natal_watersheds$floodplain <- movement_results$river_rear
         natal_watersheds$migrants <- natal_watersheds$migrants + movement_results$migrants
       } else {
         movement_results <- snow_globe_movement(natal_watersheds$inchannel,
-                                                freeport_flow = DSMflow::freeport_flow[month, year],
-                                                vernalis_flow = DSMflow::vernalis_flow[month, year],
+                                                freeport_flow = freeport_flows[month, year],
+                                                vernalis_flow = vernalis_flows[month, year],
                                                 stochastic = stochastic)
         natal_watersheds$inchannel <- movement_results$river_rear
         natal_watersheds$migrants <- natal_watersheds$migrants + movement_results$migrants
@@ -176,6 +176,8 @@ route_regional <- function(month, year, migrants,
                            prop_pulse_flows, migration_survival_rate,
                            proportion_flow_bypass, detour = NULL,
                            territory_size,
+                           freeport_flows,
+                           vernalis_flows,
                            hypothesis,
                            stochastic) {
 
@@ -213,17 +215,19 @@ route_regional <- function(month, year, migrants,
       # apply snowglobe movement
 
       # if there are no fish inchannel we grab them from floodplain?
+
+
       if (sum(regional_fish$inchannel) == 0) {
         movement_results <- snow_globe_movement(regional_fish$floodplain,
-                                                freeport_flow = DSMflow::freeport_flow[month, year],
-                                                vernalis_flow = DSMflow::vernalis_flow[month, year],
+                                                freeport_flow = freeport_flows[month, year],
+                                                vernalis_flow = vernalis_flows[month, year],
                                                 stochastic = stochastic)
         regional_fish$floodplain <- movement_results$river_rear
         regional_fish$migrants <- regional_fish$migrants + movement_results$migrants
       } else {
         movement_results <- snow_globe_movement(regional_fish$inchannel,
-                                                freeport_flow = DSMflow::freeport_flow[month, year],
-                                                vernalis_flow = DSMflow::vernalis_flow[month, year],
+                                                freeport_flow = freeport_flows[month, year],
+                                                vernalis_flow = vernalis_flows[month, year],
                                                 stochastic = stochastic)
         regional_fish$inchannel <- movement_results$river_rear
         regional_fish$migrants <- regional_fish$migrants + movement_results$migrants
@@ -418,8 +422,8 @@ route_and_rear_deltas <- function(year, month, migrants, north_delta_fish, south
   #   if (month %in% 1:2) {
   #     # apply snowglobe movement
   #     movement_results <- snow_globe_movement(juveniles = north_delta_fish$inchannel,
-  #                                             freeport_flow = DSMflow::freeport_flow[month, year],
-  #                                             vernalis_flow = DSMflow::vernalis_flow[month, year],
+  #                                             freeport_flow = DSMflow::freeport_flows[month, year],
+  #                                             vernalis_flow = DSMflow::vernalis_flows[month, year],
   #                                             threshold = 1000, p_leave = 0.3, stochastic)
   #     north_delta_fish$inchannel <- movement_results$river_rear
   #     north_delta_fish$migrants <- movement_results$migrants

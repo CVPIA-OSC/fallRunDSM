@@ -18,6 +18,8 @@ route_regional(
   proportion_flow_bypass,
   detour = NULL,
   territory_size,
+  freeport_flows,
+  vernalis_flows,
   hypothesis,
   stochastic
 )

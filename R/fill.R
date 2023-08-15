@@ -163,7 +163,7 @@ fill_regional_dens_depend <- function(juveniles, habitat, floodplain_habitat = N
     flood_rear <- round(prop_stay * total_rear * prop_sizes)
   }
 
-  all_sheds <- all_sheds - flood_rear
+  all_sheds <- pmax(all_sheds - flood_rear, 0)
 
   total_rear <- sum(all_sheds[1:up_to_size_class])
   prop_sizes <- all_sheds[1:up_to_size_class] / total_rear

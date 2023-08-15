@@ -15,7 +15,10 @@ juvenile_month_dynamic(
   ..params = ..params,
   avg_ocean_transition_month = avg_ocean_transition_month,
   stochastic = stochastic,
-  juveniles
+  juveniles,
+  ic_growth,
+  fp_growth,
+  delta_growth
 )
 }
 \arguments{
