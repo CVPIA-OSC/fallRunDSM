@@ -19,7 +19,8 @@ RoxygenNote: 7.2.3
 URL: https://CVPIA-OSC.github.io/fallRunDSM/
 BugReports: https://github.com/CVPIA-OSC/fallRunDSM/issues
 Imports: 
-    boot
+    boot,
+    cli
 Suggests: 
     rmarkdown,
     knitr,

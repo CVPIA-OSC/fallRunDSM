@@ -307,7 +307,6 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                        habitat = habitat, ..params = ..params,
                                        avg_ocean_transition_month = avg_ocean_transition_month,
                                        stochastic = stochastic,
-                                       juvenile = juvenile,
                                        ic_growth = growth_rates_ic,
                                        fp_growth = growth_rates_fp,
                                        delta_growth = growth_rates_delta)
@@ -320,7 +319,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                        habitat = habitat, ..params = ..params,
                                        avg_ocean_transition_month = avg_ocean_transition_month,
                                        stochastic = stochastic,
-                                       juvenile = juvenile,
+
                                        ic_growth = growth_rates_ic,
                                        fp_growth = growth_rates_fp,
                                        delta_growth = growth_rates_delta)
@@ -333,7 +332,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                        habitat = habitat, ..params = ..params,
                                        avg_ocean_transition_month = avg_ocean_transition_month,
                                        stochastic = stochastic,
-                                       juvenile = juvenile,
+
                                        ic_growth = growth_rates_ic,
                                        fp_growth = growth_rates_fp,
                                        delta_growth = growth_rates_delta)
@@ -346,7 +345,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                        habitat = habitat, ..params = ..params,
                                        avg_ocean_transition_month = avg_ocean_transition_month,
                                        stochastic = stochastic,
-                                       juvenile = juvenile,
+
                                        ic_growth = growth_rates_ic,
                                        fp_growth = growth_rates_fp,
                                        delta_growth = growth_rates_delta)
@@ -359,7 +358,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                        habitat = habitat, ..params = ..params,
                                        avg_ocean_transition_month = avg_ocean_transition_month,
                                        stochastic = stochastic,
-                                       juvenile = juvenile,
+
                                        ic_growth = growth_rates_ic,
                                        fp_growth = growth_rates_fp,
                                        delta_growth = growth_rates_delta)
@@ -374,7 +373,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                        habitat = habitat, ..params = ..params,
                                        avg_ocean_transition_month = avg_ocean_transition_month,
                                        stochastic = stochastic,
-                                       juvenile = juvenile,
+
                                        ic_growth = growth_rates_ic,
                                        fp_growth = growth_rates_fp,
                                        delta_growth = growth_rates_delta)
@@ -388,7 +387,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                        habitat = habitat, ..params = ..params,
                                        avg_ocean_transition_month = avg_ocean_transition_month,
                                        stochastic = stochastic,
-                                       juvenile = juvenile,
+
                                        ic_growth = growth_rates_ic,
                                        fp_growth = growth_rates_fp,
                                        delta_growth = growth_rates_delta)
@@ -401,7 +400,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                        habitat = habitat, ..params = ..params,
                                        avg_ocean_transition_month = avg_ocean_transition_month,
                                        stochastic = stochastic,
-                                       juvenile = juvenile,
+
                                        ic_growth = growth_rates_ic,
                                        fp_growth = growth_rates_fp,
                                        delta_growth = growth_rates_delta)
@@ -414,7 +413,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                        habitat = habitat, ..params = ..params,
                                        avg_ocean_transition_month = avg_ocean_transition_month,
                                        stochastic = stochastic,
-                                       juvenile = juvenile,
+
                                        ic_growth = growth_rates_ic,
                                        fp_growth = growth_rates_fp,
                                        delta_growth = growth_rates_delta)
@@ -427,7 +426,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                        habitat = habitat, ..params = ..params,
                                        avg_ocean_transition_month = avg_ocean_transition_month,
                                        stochastic = stochastic,
-                                       juvenile = juvenile,
+
                                        ic_growth = growth_rates_ic,
                                        fp_growth = growth_rates_fp,
                                        delta_growth = growth_rates_delta)

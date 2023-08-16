@@ -2,6 +2,7 @@
 
 export(adult_stray)
 export(fall_run_model)
+export(fall_run_seed_and_sim)
 export(fill_natal)
 export(fill_natal_dens_depend)
 export(fill_regional)
