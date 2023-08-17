@@ -441,7 +441,29 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
               south_delta_fish = south_delta_fish,
               juveniles_at_chipps = juveniles_at_chipps,
               adults_in_ocean = adults_in_ocean,
-              migrants_at_golden_gate = migrants_at_golden_gate)
+              migrants_at_golden_gate = migrants_at_golden_gate,
+              hypothesis = hypothesis)
   )
+
+}
+
+convert_number_to_word <- function(number) {
+  number_to_word <- c("zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine")
+  word_form <- number_to_word[number + 1]
+}
+
+create_fish_df <- function(fish_df, month, year) {
+
+  hypothesis <- convert_number_to_word(fish_df$hypothesis)
+
+  tmp <- rbind(fish_df$north_delta_fish, matrix(0, ncol = 4, nrow = 8)) + fish_df$south_delta_fish
+  fish_df <- data.frame(tmp)
+  fish_df$watershed = fallRunDSM::watershed_labels[1:31]
+  fish_df$month = month
+  fish_df$year = year
+  fish_df$hypothesis = hypothesis
+  rownames(fish_df) <- NULL
+
+  return(fish_df)
 
 }

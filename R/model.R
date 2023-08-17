@@ -413,7 +413,6 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                        habitat = habitat, ..params = ..params,
                                        avg_ocean_transition_month = avg_ocean_transition_month,
                                        stochastic = stochastic,
-
                                        ic_growth = growth_rates_ic,
                                        fp_growth = growth_rates_fp,
                                        delta_growth = growth_rates_delta)
@@ -426,90 +425,21 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                        habitat = habitat, ..params = ..params,
                                        avg_ocean_transition_month = avg_ocean_transition_month,
                                        stochastic = stochastic,
-
                                        ic_growth = growth_rates_ic,
                                        fp_growth = growth_rates_fp,
                                        delta_growth = growth_rates_delta)
 
-      tmp <- rbind(fish_0$north_delta_fish, matrix(0, ncol = 4, nrow = 8)) + fish_0$south_delta_fish
-      fish_0_df <- data.frame(tmp)
-      fish_0_df$watershed = fallRunDSM::watershed_labels[1:31]
-      fish_0_df$month = month
-      fish_0_df$year = year
-      fish_0_df$hypothesis = "zero"
-      rownames(fish_0_df) <- NULL
 
-      tmp <- rbind(fish_1$north_delta_fish, matrix(0, ncol = 4, nrow = 8)) + fish_1$south_delta_fish
-      fish_1_df <- data.frame(tmp)
-      fish_1_df$watershed = fallRunDSM::watershed_labels[1:31]
-      fish_1_df$month = month
-      fish_1_df$year = year
-      fish_1_df$hypothesis = "one"
-      rownames(fish_1_df) <- NULL
-
-      tmp <- rbind(fish_2$north_delta_fish, matrix(0, ncol = 4, nrow = 8)) + fish_2$south_delta_fish
-      fish_2_df <- data.frame(tmp)
-      fish_2_df$watershed = fallRunDSM::watershed_labels[1:31]
-      fish_2_df$month = month
-      fish_2_df$year = year
-      fish_2_df$hypothesis = "two"
-      rownames(fish_2_df) <- NULL
-
-      tmp <- rbind(fish_3$north_delta_fish, matrix(0, ncol = 4, nrow = 8)) + fish_3$south_delta_fish
-      fish_3_df <- data.frame(tmp)
-      fish_3_df$watershed = fallRunDSM::watershed_labels[1:31]
-      fish_3_df$month = month
-      fish_3_df$year = year
-      fish_3_df$hypothesis = "three"
-      rownames(fish_3_df) <- NULL
-
-      tmp <- rbind(fish_4$north_delta_fish, matrix(0, ncol = 4, nrow = 8)) + fish_4$south_delta_fish
-      fish_4_df <- data.frame(tmp)
-      fish_4_df$watershed = fallRunDSM::watershed_labels[1:31]
-      fish_4_df$month = month
-      fish_4_df$year = year
-      fish_4_df$hypothesis = "four"
-      rownames(fish_4_df) <- NULL
-
-      tmp <- rbind(fish_5$north_delta_fish, matrix(0, ncol = 4, nrow = 8)) + fish_5$south_delta_fish
-      fish_5_df <- data.frame(tmp)
-      fish_5_df$watershed = fallRunDSM::watershed_labels[1:31]
-      fish_5_df$month = month
-      fish_5_df$year = year
-      fish_5_df$hypothesis = "five"
-      rownames(fish_5_df) <- NULL
-
-      tmp <- rbind(fish_6$north_delta_fish, matrix(0, ncol = 4, nrow = 8)) + fish_6$south_delta_fish
-      fish_6_df <- data.frame(tmp)
-      fish_6_df$watershed = fallRunDSM::watershed_labels[1:31]
-      fish_6_df$month = month
-      fish_6_df$year = year
-      fish_6_df$hypothesis = "six"
-      rownames(fish_6_df) <- NULL
-
-      tmp <- rbind(fish_7$north_delta_fish, matrix(0, ncol = 4, nrow = 8)) + fish_7$south_delta_fish
-      fish_7_df <- data.frame(tmp)
-      fish_7_df$watershed = fallRunDSM::watershed_labels[1:31]
-      fish_7_df$month = month
-      fish_7_df$year = year
-      fish_7_df$hypothesis = "seven"
-      rownames(fish_7_df) <- NULL
-
-      tmp <- rbind(fish_8$north_delta_fish, matrix(0, ncol = 4, nrow = 8)) + fish_8$south_delta_fish
-      fish_8_df <- data.frame(tmp)
-      fish_8_df$watershed = fallRunDSM::watershed_labels[1:31]
-      fish_8_df$month = month
-      fish_8_df$year = year
-      fish_8_df$hypothesis = "eight"
-      rownames(fish_8_df) <- NULL
-
-      tmp <- rbind(fish_9$north_delta_fish, matrix(0, ncol = 4, nrow = 8)) + fish_9$south_delta_fish
-      fish_9_df <- data.frame(tmp)
-      fish_9_df$watershed = fallRunDSM::watershed_labels[1:31]
-      fish_9_df$month = month
-      fish_9_df$year = year
-      fish_9_df$hypothesis = "nine"
-      rownames(fish_9_df) <- NULL
+      fish_0_df <- create_fish_df(fish_df = fish_0, month = month, year = year)
+      fish_1_df <- create_fish_df(fish_df = fish_1, month = month, year = year)
+      fish_2_df <- create_fish_df(fish_df = fish_2, month = month, year = year)
+      fish_3_df <- create_fish_df(fish_df = fish_3, month = month, year = year)
+      fish_4_df <- create_fish_df(fish_df = fish_4, month = month, year = year)
+      fish_5_df <- create_fish_df(fish_df = fish_5, month = month, year = year)
+      fish_6_df <- create_fish_df(fish_df = fish_6, month = month, year = year)
+      fish_7_df <- create_fish_df(fish_df = fish_7, month = month, year = year)
+      fish_8_df <- create_fish_df(fish_df = fish_8, month = month, year = year)
+      fish_9_df <- create_fish_df(fish_df = fish_9, month = month, year = year)
 
       output$north_delta_fish <- dplyr::bind_rows(
         output$north_delta_fish,
