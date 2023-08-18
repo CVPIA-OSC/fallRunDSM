@@ -176,18 +176,18 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                fecundity = ..params$spawn_success_fecundity,
                                stochastic = stochastic)
 
-    fish_0 <- fish_1 <- fish_2 <- fish_3 <- fish_4 <- fish_5 <- fish_6 <- fish_7 <- fish_8 <- fish_9 <- list(juveniles = juveniles,
-                                       lower_mid_sac_fish = lower_mid_sac_fish,
-                                       lower_sac_fish = lower_sac_fish,
-                                       upper_mid_sac_fish = upper_mid_sac_fish,
-                                       sutter_fish = sutter_fish,
-                                       yolo_fish = yolo_fish,
-                                       san_joaquin_fish = san_joaquin_fish,
-                                       north_delta_fish = north_delta_fish,
-                                       south_delta_fish = south_delta_fish,
-                                       juveniles_at_chipps = juveniles_at_chipps,
-                                       adults_in_ocean = adults_in_ocean)
-
+    fish_list <- lapply(1:10, function(i) list(juveniles = juveniles,
+                                               lower_mid_sac_fish = lower_mid_sac_fish,
+                                               lower_sac_fish = lower_sac_fish,
+                                               upper_mid_sac_fish = upper_mid_sac_fish,
+                                               sutter_fish = sutter_fish,
+                                               yolo_fish = yolo_fish,
+                                               san_joaquin_fish = san_joaquin_fish,
+                                               north_delta_fish = north_delta_fish,
+                                               south_delta_fish = south_delta_fish,
+                                               juveniles_at_chipps = juveniles_at_chipps,
+                                               adults_in_ocean = adults_in_ocean))
+    names(fish_list) <- c(paste0("fish_", 0:9))
 
     # TODO Some temperatures are over the 28C limit, for now I am going to
     # just make these be 28. Both of these cases in the 20 years of data
@@ -299,7 +299,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
       # 9. base filling + time move
 
       fish_0 <- juvenile_month_dynamic(hypothesis = 0,
-                                       fish_0,
+                                       fish_list$fish_0,
                                        year = year, month = month,
                                        rearing_survival = rearing_survival,
                                        migratory_survival = migratory_survival,
@@ -311,7 +311,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                        delta_growth = growth_rates_delta)
 
       fish_1 <- juvenile_month_dynamic(hypothesis = 1,
-                                       fish_1,
+                                       fish_list$fish_1,
                                        year = year, month = month,
                                        rearing_survival = rearing_survival,
                                        migratory_survival = migratory_survival,
@@ -323,7 +323,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                        delta_growth = growth_rates_delta)
 
       fish_2 <- juvenile_month_dynamic(hypothesis = 2,
-                                       fish_2,
+                                       fish_list$fish_2,
                                        year = year, month = month,
                                        rearing_survival = rearing_survival,
                                        migratory_survival = migratory_survival,
@@ -335,7 +335,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                        delta_growth = growth_rates_delta)
 
       fish_3 <- juvenile_month_dynamic(hypothesis = 3,
-                                       fish_3,
+                                       fish_list$fish_3,
                                        year = year, month = month,
                                        rearing_survival = rearing_survival,
                                        migratory_survival = migratory_survival,
@@ -347,7 +347,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                        delta_growth = growth_rates_delta)
 
       fish_4 <- juvenile_month_dynamic(hypothesis = 4,
-                                       fish_4,
+                                       fish_list$fish_4,
                                        year = year, month = month,
                                        rearing_survival = rearing_survival,
                                        migratory_survival = migratory_survival,
@@ -361,34 +361,32 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
       # ---------- start density dep filling -------------------------------
 
       fish_5 <- juvenile_month_dynamic(hypothesis = 5,
-                                       fish_5,
+                                       fish_list$fish_5,
                                        year = year, month = month,
                                        rearing_survival = rearing_survival,
                                        migratory_survival = migratory_survival,
                                        habitat = habitat, ..params = ..params,
                                        avg_ocean_transition_month = avg_ocean_transition_month,
                                        stochastic = stochastic,
-
                                        ic_growth = growth_rates_ic,
                                        fp_growth = growth_rates_fp,
                                        delta_growth = growth_rates_delta)
 
       # if (hypothesis == 6 & month == 2 & year == 4) browser()
       fish_6 <- juvenile_month_dynamic(hypothesis = 6,
-                                       fish_6,
+                                       fish_list$fish_6,
                                        year = year, month = month,
                                        rearing_survival = rearing_survival,
                                        migratory_survival = migratory_survival,
                                        habitat = habitat, ..params = ..params,
                                        avg_ocean_transition_month = avg_ocean_transition_month,
                                        stochastic = stochastic,
-
                                        ic_growth = growth_rates_ic,
                                        fp_growth = growth_rates_fp,
                                        delta_growth = growth_rates_delta)
 
       fish_7 <- juvenile_month_dynamic(hypothesis = 7,
-                                       fish_7,
+                                       fish_list$fish_7,
                                        year = year, month = month,
                                        rearing_survival = rearing_survival,
                                        migratory_survival = migratory_survival,
@@ -401,7 +399,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                        delta_growth = growth_rates_delta)
 
       fish_8 <- juvenile_month_dynamic(hypothesis = 8,
-                                       fish_8,
+                                       fish_list$fish_8,
                                        year = year, month = month,
                                        rearing_survival = rearing_survival,
                                        migratory_survival = migratory_survival,
@@ -413,7 +411,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                        delta_growth = growth_rates_delta)
 
       fish_9 <- juvenile_month_dynamic(hypothesis = 9,
-                                       fish_9,
+                                       fish_list$fish_9,
                                        year = year, month = month,
                                        rearing_survival = rearing_survival,
                                        migratory_survival = migratory_survival,
