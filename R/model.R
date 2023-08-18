@@ -176,8 +176,6 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                fecundity = ..params$spawn_success_fecundity,
                                stochastic = stochastic)
 
-
-     # TODO: udpate to reflect actual number of hypothesis. Are there 4 or 5?
     fish_0 <- fish_1 <- fish_2 <- fish_3 <- fish_4 <- fish_5 <- fish_6 <- fish_7 <- fish_8 <- fish_9 <- list(juveniles = juveniles,
                                        lower_mid_sac_fish = lower_mid_sac_fish,
                                        lower_sac_fish = lower_sac_fish,
@@ -189,6 +187,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                        south_delta_fish = south_delta_fish,
                                        juveniles_at_chipps = juveniles_at_chipps,
                                        adults_in_ocean = adults_in_ocean)
+
 
     # TODO Some temperatures are over the 28C limit, for now I am going to
     # just make these be 28. Both of these cases in the 20 years of data
@@ -319,7 +318,6 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                        habitat = habitat, ..params = ..params,
                                        avg_ocean_transition_month = avg_ocean_transition_month,
                                        stochastic = stochastic,
-
                                        ic_growth = growth_rates_ic,
                                        fp_growth = growth_rates_fp,
                                        delta_growth = growth_rates_delta)
@@ -332,7 +330,6 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                        habitat = habitat, ..params = ..params,
                                        avg_ocean_transition_month = avg_ocean_transition_month,
                                        stochastic = stochastic,
-
                                        ic_growth = growth_rates_ic,
                                        fp_growth = growth_rates_fp,
                                        delta_growth = growth_rates_delta)
@@ -345,7 +342,6 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                        habitat = habitat, ..params = ..params,
                                        avg_ocean_transition_month = avg_ocean_transition_month,
                                        stochastic = stochastic,
-
                                        ic_growth = growth_rates_ic,
                                        fp_growth = growth_rates_fp,
                                        delta_growth = growth_rates_delta)
@@ -358,7 +354,6 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                        habitat = habitat, ..params = ..params,
                                        avg_ocean_transition_month = avg_ocean_transition_month,
                                        stochastic = stochastic,
-
                                        ic_growth = growth_rates_ic,
                                        fp_growth = growth_rates_fp,
                                        delta_growth = growth_rates_delta)
@@ -466,16 +461,17 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
     #   # (1/6) * fish_5$juveniles_at_chipps
 
     adults_in_ocean <-
-      (1/10) * fish_0$adults_in_ocean +
-      (1/10) * fish_1$adults_in_ocean +
-      (1/10) * fish_2$adults_in_ocean +
-      (1/10) * fish_3$adults_in_ocean +
-      (1/10) * fish_4$adults_in_ocean +
-      (1/10) * fish_5$adults_in_ocean +
-      (1/10) * fish_6$adults_in_ocean +
-      (1/10) * fish_7$adults_in_ocean +
-      (1/10) * fish_8$adults_in_ocean +
-      (1/10) * fish_9$adults_in_ocean
+      adults_in_ocean_weights[1] * fish_0$adults_in_ocean +
+      adults_in_ocean_weights[2] * fish_1$adults_in_ocean +
+      adults_in_ocean_weights[3] * fish_2$adults_in_ocean +
+      adults_in_ocean_weights[4] * fish_3$adults_in_ocean +
+      adults_in_ocean_weights[5] * fish_4$adults_in_ocean +
+      adults_in_ocean_weights[6] * fish_5$adults_in_ocean +
+      adults_in_ocean_weights[7] * fish_6$adults_in_ocean +
+      adults_in_ocean_weights[8] * fish_7$adults_in_ocean +
+      adults_in_ocean_weights[9] * fish_8$adults_in_ocean +
+      adults_in_ocean_weights[10] * fish_9$adults_in_ocean
+
 
     #still need adults in ocean and adult in ocean weights
     output$juvenile_biomass[ , year] <- juveniles_at_chipps %*% fallRunDSM::params$mass_by_size_class

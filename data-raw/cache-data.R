@@ -129,5 +129,6 @@ usethis::use_data(prey_density_delta, overwrite = TRUE)
 watershed_attributes <- read_csv("data-raw/watershed-attributes.csv")
 usethis::use_data(watershed_attributes, overwrite = TRUE)
 
-
-
+# adults in ocean weights
+adults_in_ocean_weights <-  c(0.1, 0.1, 0.1, 01, 01, 0.1, 0.1, 0.1, 0.1, 0.1)
+usethis::use_data(adults_in_ocean_weights, overwrite = TRUE)
