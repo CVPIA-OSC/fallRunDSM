@@ -31,10 +31,7 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
   juveniles_at_chipps <- fish$juveniles_at_chipps
   adults_in_ocean <- fish$adults_in_ocean
 
-
-
-
-  if (hypothesis %in% 3:5) {
+  if (hypothesis %in% 4:6) {
     fill_natal <- fallRunDSM::fill_natal_dens_depend
     fill_regional <- fallRunDSM::fill_regional_dens_depend
   }
@@ -448,8 +445,9 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
 }
 
 convert_number_to_word <- function(number) {
-  number_to_word <- c("zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine")
-  word_form <- number_to_word[number + 1]
+  number_to_word <- c("one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten")
+  word_form <- number_to_word[number]
+  return(word_form)
 }
 
 create_fish_df <- function(fish_df, month, year) {
