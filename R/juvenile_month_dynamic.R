@@ -454,12 +454,20 @@ create_fish_df <- function(fish_df, month, year) {
 
   hypothesis <- convert_number_to_word(fish_df$hypothesis)
 
-  tmp <- rbind(fish_df$north_delta_fish, matrix(0, ncol = 4, nrow = 8)) + fish_df$south_delta_fish
-  fish_df <- data.frame(tmp)
-  fish_df$watershed = fallRunDSM::watershed_labels[1:31]
-  fish_df$month = month
-  fish_df$year = year
-  fish_df$hypothesis = hypothesis
+  tmp <- data.frame("s" = rep(0, 31),
+                    "m" = rep(0, 31),
+                    "l" = rep(0, 31),
+                    'vl' = rep(0, 31))
+
+  north_delta_fish <-  data.frame(fish_df$north_delta_fish)
+  south_delta_fish <- data.frame(fish_df$south_delta_fish)
+
+  tmp[1:nrow(north_delta_fish), ] <- north_delta_fish
+  fish_df <- data.frame(tmp + south_delta_fish) |>
+    mutate(watershed = fallRunDSM::watershed_labels[1:31],
+           month = month,
+           year = year,
+           hypothesis = hypothesis)
   rownames(fish_df) <- NULL
 
   return(fish_df)
