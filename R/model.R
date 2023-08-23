@@ -422,32 +422,32 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                        fp_growth = growth_rates_fp,
                                        delta_growth = growth_rates_delta)
 
+      if (mode == "simulate") {
+        fish_1_df <- create_fish_df(fish_df = fish_1, month = month, year = year)
+        fish_2_df <- create_fish_df(fish_df = fish_2, month = month, year = year)
+        fish_3_df <- create_fish_df(fish_df = fish_3, month = month, year = year)
+        fish_4_df <- create_fish_df(fish_df = fish_4, month = month, year = year)
+        fish_5_df <- create_fish_df(fish_df = fish_5, month = month, year = year)
+        fish_6_df <- create_fish_df(fish_df = fish_6, month = month, year = year)
+        fish_7_df <- create_fish_df(fish_df = fish_7, month = month, year = year)
+        fish_8_df <- create_fish_df(fish_df = fish_8, month = month, year = year)
+        fish_9_df <- create_fish_df(fish_df = fish_9, month = month, year = year)
+        fish_10_df <- create_fish_df(fish_df = fish_10, month = month, year = year)
 
-      fish_1_df <- create_fish_df(fish_df = fish_1, month = month, year = year)
-      fish_2_df <- create_fish_df(fish_df = fish_2, month = month, year = year)
-      fish_3_df <- create_fish_df(fish_df = fish_3, month = month, year = year)
-      fish_4_df <- create_fish_df(fish_df = fish_4, month = month, year = year)
-      fish_5_df <- create_fish_df(fish_df = fish_5, month = month, year = year)
-      fish_6_df <- create_fish_df(fish_df = fish_6, month = month, year = year)
-      fish_7_df <- create_fish_df(fish_df = fish_7, month = month, year = year)
-      fish_8_df <- create_fish_df(fish_df = fish_8, month = month, year = year)
-      fish_9_df <- create_fish_df(fish_df = fish_9, month = month, year = year)
-      fish_10_df <- create_fish_df(fish_df = fish_10, month = month, year = year)
-
-
-      output$north_delta_fish <- dplyr::bind_rows(
-        output$north_delta_fish,
-        fish_1_df,
-        fish_2_df,
-        fish_3_df,
-        fish_4_df,
-        fish_5_df,
-        fish_6_df,
-        fish_7_df,
-        fish_8_df,
-        fish_9_df,
-        fish_10_df
-      )
+        output$north_delta_fish <- dplyr::bind_rows(
+          output$north_delta_fish,
+          fish_1_df,
+          fish_2_df,
+          fish_3_df,
+          fish_4_df,
+          fish_5_df,
+          fish_6_df,
+          fish_7_df,
+          fish_8_df,
+          fish_9_df,
+          fish_10_df
+        )
+      }
 
     } # end month loop
 
@@ -470,8 +470,6 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
       adults_in_ocean_weights[8] * fish_8$adults_in_ocean +
       adults_in_ocean_weights[9] * fish_9$adults_in_ocean +
       adults_in_ocean_weights[10] * fish_10$adults_in_ocean
-
-
 
     #still need adults in ocean and adult in ocean weights
     output$juvenile_biomass[ , year] <- juveniles_at_chipps %*% fallRunDSM::params$mass_by_size_class
