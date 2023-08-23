@@ -298,7 +298,10 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
       # 9. base filling + temperature move 8
       # 10. base filling + time move 9
 
-      fish_1 <- juvenile_month_dynamic(hypothesis = 1,
+
+     # hypothesis_number <- c(1:10)
+
+      fish_list$route_1_fish <- juvenile_month_dynamic(hypothesis = 1,
                                        fish_list$route_1_fish,
                                        year = year, month = month,
                                        rearing_survival = rearing_survival,
@@ -310,7 +313,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                        fp_growth = growth_rates_fp,
                                        delta_growth = growth_rates_delta)
 
-      fish_2 <- juvenile_month_dynamic(hypothesis = 2,
+      fish_list$route_2_fish <- juvenile_month_dynamic(hypothesis = 2,
                                        fish_list$route_2_fish,
                                        year = year, month = month,
                                        rearing_survival = rearing_survival,
@@ -322,7 +325,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                        fp_growth = growth_rates_fp,
                                        delta_growth = growth_rates_delta)
 
-      fish_3 <- juvenile_month_dynamic(hypothesis = 3,
+      fish_list$route_3_fish <- juvenile_month_dynamic(hypothesis = 3,
                                        fish_list$route_3_fish,
                                        year = year, month = month,
                                        rearing_survival = rearing_survival,
@@ -334,7 +337,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                        fp_growth = growth_rates_fp,
                                        delta_growth = growth_rates_delta)
 
-      fish_4 <- juvenile_month_dynamic(hypothesis = 4,
+      fish_list$route_4_fish <- juvenile_month_dynamic(hypothesis = 4,
                                        fish_list$route_4_fish,
                                        year = year, month = month,
                                        rearing_survival = rearing_survival,
@@ -348,7 +351,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
       # ---------- start density dep filling -------------------------------
 
-      fish_5 <- juvenile_month_dynamic(hypothesis = 5,
+      fish_list$route_5_fish <- juvenile_month_dynamic(hypothesis = 5,
                                        fish_list$route_5_fish,
                                        year = year, month = month,
                                        rearing_survival = rearing_survival,
@@ -361,7 +364,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                        delta_growth = growth_rates_delta)
 
       # if (hypothesis == 6 & month == 2 & year == 4) browser()
-      fish_6 <- juvenile_month_dynamic(hypothesis = 6,
+      fish_list$route_6_fish <- juvenile_month_dynamic(hypothesis = 6,
                                        fish_list$route_6_fish,
                                        year = year, month = month,
                                        rearing_survival = rearing_survival,
@@ -373,7 +376,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                        fp_growth = growth_rates_fp,
                                        delta_growth = growth_rates_delta)
 
-      fish_7 <- juvenile_month_dynamic(hypothesis = 7,
+      fish_list$route_7_fish <- juvenile_month_dynamic(hypothesis = 7,
                                        fish_list$route_7_fish,
                                        year = year, month = month,
                                        rearing_survival = rearing_survival,
@@ -381,12 +384,11 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                        habitat = habitat, ..params = ..params,
                                        avg_ocean_transition_month = avg_ocean_transition_month,
                                        stochastic = stochastic,
-
                                        ic_growth = growth_rates_ic,
                                        fp_growth = growth_rates_fp,
                                        delta_growth = growth_rates_delta)
 
-      fish_8 <- juvenile_month_dynamic(hypothesis = 8,
+      fish_list$route_8_fish <- juvenile_month_dynamic(hypothesis = 8,
                                        fish_list$route_8_fish,
                                        year = year, month = month,
                                        rearing_survival = rearing_survival,
@@ -398,7 +400,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                        fp_growth = growth_rates_fp,
                                        delta_growth = growth_rates_delta)
 
-      fish_9 <- juvenile_month_dynamic(hypothesis = 9,
+      fish_list$route_9_fish <- juvenile_month_dynamic(hypothesis = 9,
                                        fish_list$route_9_fish,
                                        year = year, month = month,
                                        rearing_survival = rearing_survival,
@@ -410,7 +412,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                        fp_growth = growth_rates_fp,
                                        delta_growth = growth_rates_delta)
 
-      fish_10 <- juvenile_month_dynamic(hypothesis = 10,
+      fish_list$route_10_fish <- juvenile_month_dynamic(hypothesis = 10,
                                        fish_list$route_10_fish,
                                        year = year, month = month,
                                        rearing_survival = rearing_survival,
@@ -423,16 +425,16 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
                                        delta_growth = growth_rates_delta)
 
       if (mode == "simulate") {
-        fish_1_df <- create_fish_df(fish_df = fish_1, month = month, year = year)
-        fish_2_df <- create_fish_df(fish_df = fish_2, month = month, year = year)
-        fish_3_df <- create_fish_df(fish_df = fish_3, month = month, year = year)
-        fish_4_df <- create_fish_df(fish_df = fish_4, month = month, year = year)
-        fish_5_df <- create_fish_df(fish_df = fish_5, month = month, year = year)
-        fish_6_df <- create_fish_df(fish_df = fish_6, month = month, year = year)
-        fish_7_df <- create_fish_df(fish_df = fish_7, month = month, year = year)
-        fish_8_df <- create_fish_df(fish_df = fish_8, month = month, year = year)
-        fish_9_df <- create_fish_df(fish_df = fish_9, month = month, year = year)
-        fish_10_df <- create_fish_df(fish_df = fish_10, month = month, year = year)
+        fish_1_df <- create_fish_df(fish_df = fish_list$route_1_fish, month = month, year = year)
+        fish_2_df <- create_fish_df(fish_df = fish_list$route_2_fish, month = month, year = year)
+        fish_3_df <- create_fish_df(fish_df = fish_list$route_3_fish, month = month, year = year)
+        fish_4_df <- create_fish_df(fish_df = fish_list$route_4_fish, month = month, year = year)
+        fish_5_df <- create_fish_df(fish_df = fish_list$route_5_fish, month = month, year = year)
+        fish_6_df <- create_fish_df(fish_df = fish_list$route_6_fish, month = month, year = year)
+        fish_7_df <- create_fish_df(fish_df = fish_list$route_7_fish, month = month, year = year)
+        fish_8_df <- create_fish_df(fish_df = fish_list$route_8_fish, month = month, year = year)
+        fish_9_df <- create_fish_df(fish_df = fish_list$route_9_fish, month = month, year = year)
+        fish_10_df <- create_fish_df(fish_df = fish_list$route_10_fish, month = month, year = year)
 
         output$north_delta_fish <- dplyr::bind_rows(
           output$north_delta_fish,
@@ -460,16 +462,16 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
     #   # (1/6) * fish_5$juveniles_at_chipps
 
     adults_in_ocean <-
-      adults_in_ocean_weights[1] * fish_1$adults_in_ocean +
-      adults_in_ocean_weights[2] * fish_2$adults_in_ocean +
-      adults_in_ocean_weights[3] * fish_3$adults_in_ocean +
-      adults_in_ocean_weights[4] * fish_4$adults_in_ocean +
-      adults_in_ocean_weights[5] * fish_5$adults_in_ocean +
-      adults_in_ocean_weights[6] * fish_6$adults_in_ocean +
-      adults_in_ocean_weights[7] * fish_7$adults_in_ocean +
-      adults_in_ocean_weights[8] * fish_8$adults_in_ocean +
-      adults_in_ocean_weights[9] * fish_9$adults_in_ocean +
-      adults_in_ocean_weights[10] * fish_10$adults_in_ocean
+      adults_in_ocean_weights[1] * fish_list$route_1_fish$adults_in_ocean +
+      adults_in_ocean_weights[2] * fish_list$route_2_fish$adults_in_ocean +
+      adults_in_ocean_weights[3] * fish_list$route_3_fish$adults_in_ocean +
+      adults_in_ocean_weights[4] * fish_list$route_4_fish$adults_in_ocean +
+      adults_in_ocean_weights[5] * fish_list$route_5_fish$adults_in_ocean +
+      adults_in_ocean_weights[6] * fish_list$route_6_fish$adults_in_ocean +
+      adults_in_ocean_weights[7] * fish_list$route_7_fish$adults_in_ocean +
+      adults_in_ocean_weights[8] * fish_list$route_8_fish$adults_in_ocean +
+      adults_in_ocean_weights[9] * fish_list$route_9_fish$adults_in_ocean +
+      adults_in_ocean_weights[10] * fish_list$route_10_fish$adults_in_ocean
 
     #still need adults in ocean and adult in ocean weights
     output$juvenile_biomass[ , year] <- juveniles_at_chipps %*% fallRunDSM::params$mass_by_size_class

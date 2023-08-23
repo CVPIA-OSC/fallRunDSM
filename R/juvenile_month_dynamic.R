@@ -464,7 +464,7 @@ create_fish_df <- function(fish_df, month, year) {
 
   tmp[1:nrow(north_delta_fish), ] <- north_delta_fish
   fish_df <- data.frame(tmp + south_delta_fish) |>
-    mutate(watershed = fallRunDSM::watershed_labels[1:31],
+    dplyr::mutate(watershed = fallRunDSM::watershed_labels[1:31],
            month = month,
            year = year,
            hypothesis = hypothesis)
