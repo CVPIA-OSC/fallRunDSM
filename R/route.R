@@ -38,7 +38,7 @@ route <- function(year, month, juveniles, inchannel_habitat,
                   stochastic) {
 
   # Density dependent hypothesis
-  if (hypothesis %in% 5:9) {
+  if (hypothesis %in% 6:10) {
     fill_natal <- fallRunDSM::fill_natal_dens_depend
     fill_regional <- fallRunDSM::fill_regional_dens_depend
   }
@@ -52,7 +52,7 @@ route <- function(year, month, juveniles, inchannel_habitat,
 
   if (month %in% 1:2) {
 
-    if (hypothesis == 1 | hypothesis == 6) { # SNOW GLOBE -----------------
+    if (hypothesis == 2 | hypothesis == 7) { # SNOW GLOBE -----------------
 
       # if there are no fish inchannel we grab them from floodplain?
       if (sum(natal_watersheds$inchannel) == 0) {
@@ -71,17 +71,17 @@ route <- function(year, month, juveniles, inchannel_habitat,
         natal_watersheds$migrants <- natal_watersheds$migrants + movement_results$migrants
 
       }
-    } else if (hypothesis == 2 | hypothesis == 7) { # GENETICS ---------------
+    } else if (hypothesis == 3 | hypothesis == 8) { # GENETICS ---------------
       # apply genetics movement
       movement_results <- genetic_movement(natal_watersheds$inchannel, stochastic = stochastic)
       natal_watersheds$inchannel <- movement_results$river_rear
       natal_watersheds$migrants <- natal_watersheds$migrants + movement_results$migrants
-    } else if (hypothesis == 3 | hypothesis == 8) { # TEMPERATURE ---------------
+    } else if (hypothesis == 4 | hypothesis == 9) { # TEMPERATURE ---------------
       # apply genetics movement
       movement_results <- temperature_movement(natal_watersheds$inchannel, stochastic = stochastic)
       natal_watersheds$inchannel <- movement_results$river_rear
       natal_watersheds$migrants <- natal_watersheds$migrants + movement_results$migrants
-    } else if (hypothesis == 4 | hypothesis == 9) { # TIME ---------------
+    } else if (hypothesis == 5 | hypothesis == 10) { # TIME ---------------
       # apply genetics movement
       movement_results <- time_movement(natal_watersheds$inchannel, stochastic = stochastic)
       natal_watersheds$inchannel <- movement_results$river_rear
@@ -132,7 +132,7 @@ route_bypass <- function(bypass_fish, bypass_habitat, migration_survival_rate,
                          territory_size, stochastic, hypothesis) {
 
   # Density dependent hypothesis
-  if (hypothesis %in% 3:5) {
+  if (hypothesis %in% 4:6) {
     fill_natal <- fallRunDSM::fill_natal_dens_depend
     fill_regional <- fallRunDSM::fill_regional_dens_depend
   }
@@ -181,7 +181,7 @@ route_regional <- function(month, year, migrants,
                            hypothesis,
                            stochastic) {
 
-  if (hypothesis %in% 5:9) {
+  if (hypothesis %in% 6:10) {
     fill_natal <- fallRunDSM::fill_natal_dens_depend
     fill_regional <- fallRunDSM::fill_regional_dens_depend
   }
@@ -211,7 +211,7 @@ route_regional <- function(month, year, migrants,
 
   if (month %in% 1:2) {
 
-    if (hypothesis == 1 | hypothesis == 6) { # SNOW GLOBE -----------------
+    if (hypothesis == 2 | hypothesis == 7) { # SNOW GLOBE -----------------
       # apply snowglobe movement
 
       # if there are no fish inchannel we grab them from floodplain?
@@ -233,17 +233,17 @@ route_regional <- function(month, year, migrants,
         regional_fish$migrants <- regional_fish$migrants + movement_results$migrants
 
       }
-    } else if (hypothesis == 2 | hypothesis == 7) { # GENETICS ---------------
+    } else if (hypothesis == 3 | hypothesis == 8) { # GENETICS ---------------
       # apply genetics movement
       movement_results <- genetic_movement(regional_fish$inchannel, stochastic = stochastic)
       regional_fish$inchannel <- movement_results$river_rear
       regional_fish$migrants <- regional_fish$migrants + movement_results$migrants
-    } else if (hypothesis == 3 | hypothesis == 8) { # TEMPERATURE ---------------
+    } else if (hypothesis == 4 | hypothesis == 9) { # TEMPERATURE ---------------
       # apply genetics movement
       movement_results <- temperature_movement(regional_fish$inchannel, stochastic = stochastic)
       regional_fish$inchannel <- movement_results$river_rear
       regional_fish$migrants <- regional_fish$migrants + movement_results$migrants
-    } else if (hypothesis == 4 | hypothesis == 9) { # TIME ---------------
+    } else if (hypothesis == 5 | hypothesis == 10) { # TIME ---------------
       # apply genetics movement
       movement_results <- time_movement(regional_fish$inchannel, stochastic = stochastic)
       regional_fish$inchannel <- movement_results$river_rear
@@ -404,7 +404,7 @@ route_and_rear_deltas <- function(year, month, migrants, north_delta_fish, south
   migrants_and_salvaged <- migrants
   migrants_and_salvaged[1:23, ] <- migrants_and_salvaged[1:23, ] - sac_not_entrained
 
-  if (hypothesis %in% 3:5) {
+  if (hypothesis %in% 4:6) {
     fill_natal <- fallRunDSM::fill_natal_dens_depend
     fill_regional <- fallRunDSM::fill_regional_dens_depend
   }

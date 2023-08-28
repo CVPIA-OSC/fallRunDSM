@@ -31,10 +31,7 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
   juveniles_at_chipps <- fish$juveniles_at_chipps
   adults_in_ocean <- fish$adults_in_ocean
 
-
-
-
-  if (hypothesis %in% 3:5) {
+  if (hypothesis %in% 4:6) {
     fill_natal <- fallRunDSM::fill_natal_dens_depend
     fill_regional <- fallRunDSM::fill_regional_dens_depend
   }
@@ -441,7 +438,38 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
               south_delta_fish = south_delta_fish,
               juveniles_at_chipps = juveniles_at_chipps,
               adults_in_ocean = adults_in_ocean,
-              migrants_at_golden_gate = migrants_at_golden_gate)
+              migrants_at_golden_gate = migrants_at_golden_gate,
+              hypothesis = hypothesis)
   )
+
+}
+
+convert_number_to_word <- function(number) {
+  number_to_word <- c("one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten")
+  word_form <- number_to_word[number]
+  return(word_form)
+}
+
+create_fish_df <- function(fish_df, month, year) {
+
+  hypothesis <- convert_number_to_word(fish_df$hypothesis)
+
+  tmp <- data.frame("s" = rep(0, 31),
+                    "m" = rep(0, 31),
+                    "l" = rep(0, 31),
+                    'vl' = rep(0, 31))
+
+  north_delta_fish <-  data.frame(fish_df$north_delta_fish)
+  south_delta_fish <- data.frame(fish_df$south_delta_fish)
+
+  tmp[1:nrow(north_delta_fish), ] <- north_delta_fish
+  fish_df <- data.frame(tmp + south_delta_fish) |>
+    dplyr::mutate(watershed = fallRunDSM::watershed_labels[1:31],
+           month = month,
+           year = year,
+           hypothesis = hypothesis)
+  rownames(fish_df) <- NULL
+
+  return(fish_df)
 
 }
