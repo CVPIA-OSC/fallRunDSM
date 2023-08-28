@@ -19,7 +19,10 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
                                    stochastic = stochastic,
                                    juveniles, ic_growth, fp_growth, delta_growth,
                                    filling_fn = fallRunDSM::fill_natal,
-                                   filling_regional_fn = fallRunDSM::fill_regional) {
+                                   filling_regional_fn = fallRunDSM::fill_regional,
+                                   movement_fn = NULL,
+                                   movement_args = NULL,
+                                   movement_months = NULL) {
 
   juveniles <- fish$juveniles
   lower_mid_sac_fish <- fish$lower_mid_sac_fish
@@ -95,6 +98,9 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
                                   .pulse_movement_very_large_pulse = ..params$.pulse_movement_very_large_pulse,
                                   territory_size = ..params$territory_size,
                                   filling_fn = filling_fn,
+                                  movement_fn = movement_fn,
+                                  movement_args = movement_args,
+                                  movement_months = movement_months,
                                   hypothesis = hypothesis,
                                   stochastic = stochastic)
 

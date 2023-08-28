@@ -20,7 +20,10 @@ juvenile_month_dynamic(
   fp_growth,
   delta_growth,
   filling_fn = fallRunDSM::fill_natal,
-  filling_regional_fn = fallRunDSM::fill_regional
+  filling_regional_fn = fallRunDSM::fill_regional,
+  movement_fn = NULL,
+  movement_args = NULL,
+  movement_months = NULL
 )
 }
 \arguments{
