@@ -24,6 +24,7 @@ route(
   .pulse_movement_medium_pulse,
   .pulse_movement_large_pulse,
   .pulse_movement_very_large_pulse,
+  filling_fn = fallRunDSM::fill_natal,
   territory_size,
   hypothesis,
   stochastic

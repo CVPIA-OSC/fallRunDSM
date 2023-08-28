@@ -33,17 +33,13 @@ route <- function(year, month, juveniles, inchannel_habitat,
                   .pulse_movement_medium_pulse,
                   .pulse_movement_large_pulse,
                   .pulse_movement_very_large_pulse,
+                  filling_fn = fallRunDSM::fill_natal,
                   territory_size,
                   hypothesis, # TODO is there a cleaner way to do this?
                   stochastic) {
 
-  # Density dependent hypothesis
-  if (hypothesis %in% 6:10) {
-    fill_natal <- fallRunDSM::fill_natal_dens_depend
-    fill_regional <- fallRunDSM::fill_regional_dens_depend
-  }
 
-  natal_watersheds <- fill_natal(juveniles = juveniles,
+  natal_watersheds <- filling_fn(juveniles = juveniles,
                                  inchannel_habitat = inchannel_habitat,
                                  floodplain_habitat = floodplain_habitat,
                                  territory_size = territory_size)
@@ -129,15 +125,10 @@ route <- function(year, month, juveniles, inchannel_habitat,
 #' @source IP-117068
 #' @export
 route_bypass <- function(bypass_fish, bypass_habitat, migration_survival_rate,
-                         territory_size, stochastic, hypothesis) {
+                         territory_size, stochastic, hypothesis,
+                         filling_fn = fallRunDSM::fill_regional) {
 
-  # Density dependent hypothesis
-  if (hypothesis %in% 4:6) {
-    fill_natal <- fallRunDSM::fill_natal_dens_depend
-    fill_regional <- fallRunDSM::fill_regional_dens_depend
-  }
-
-  bypass_fish <- fill_regional(juveniles = bypass_fish,
+  bypass_fish <- filling_fn(juveniles = bypass_fish,
                                habitat = bypass_habitat,
                                territory_size = territory_size)
 
@@ -175,16 +166,12 @@ route_regional <- function(month, year, migrants,
                            inchannel_habitat, floodplain_habitat,
                            prop_pulse_flows, migration_survival_rate,
                            proportion_flow_bypass, detour = NULL,
+                           filling_fn = fallRunDSM::fill_regional,
                            territory_size,
                            freeport_flows,
                            vernalis_flows,
                            hypothesis,
                            stochastic) {
-
-  if (hypothesis %in% 6:10) {
-    fill_natal <- fallRunDSM::fill_natal_dens_depend
-    fill_regional <- fallRunDSM::fill_regional_dens_depend
-  }
 
   if (!is.null(detour)) {
     bypass <- ifelse(detour == 'sutter', "Sutter Bypass", "Yolo Bypass")
@@ -204,7 +191,7 @@ route_regional <- function(month, year, migrants,
   }
 
   # fill up upper mainstem, but in river fish can leave due to pulses
-  regional_fish <- fill_regional(juveniles = migrants,
+  regional_fish <- filling_fn(juveniles = migrants,
                                  habitat = inchannel_habitat,
                                  floodplain_habitat = floodplain_habitat,
                                  territory_size = territory_size)
@@ -385,6 +372,7 @@ route_and_rear_deltas <- function(year, month, migrants, north_delta_fish, south
                          location_index = c(rep(1, 24), 3, rep(2, 2), rep(4, 4)),
                          territory_size,
                          hypothesis,
+                         filling_fn = fallRunDSM::fill_regional,
                          stochastic) {
 
 
@@ -404,30 +392,14 @@ route_and_rear_deltas <- function(year, month, migrants, north_delta_fish, south
   migrants_and_salvaged <- migrants
   migrants_and_salvaged[1:23, ] <- migrants_and_salvaged[1:23, ] - sac_not_entrained
 
-  if (hypothesis %in% 4:6) {
-    fill_natal <- fallRunDSM::fill_natal_dens_depend
-    fill_regional <- fallRunDSM::fill_regional_dens_depend
-  }
 
-  north_delta_fish <- fill_regional(juveniles = sac_not_entrained + north_delta_fish,
+  north_delta_fish <- filling_fn(juveniles = sac_not_entrained + north_delta_fish,
                                     habitat = north_delta_habitat,
                                     territory_size = territory_size)
 
-  south_delta_fish <- fill_regional(juveniles = migrants_and_salvaged + south_delta_fish,
+  south_delta_fish <- filling_fn(juveniles = migrants_and_salvaged + south_delta_fish,
                                     habitat = south_delta_habitat,
                                     territory_size = territory_size)
-
-  # TODO DBUG PATCH!!!
-  # if (hypothesis == 1 | hypothesis == 4) {
-  #   if (month %in% 1:2) {
-  #     # apply snowglobe movement
-  #     movement_results <- snow_globe_movement(juveniles = north_delta_fish$inchannel,
-  #                                             freeport_flow = DSMflow::freeport_flows[month, year],
-  #                                             vernalis_flow = DSMflow::vernalis_flows[month, year],
-  #                                             threshold = 1000, p_leave = 0.3, stochastic)
-  #     north_delta_fish$inchannel <- movement_results$river_rear
-  #     north_delta_fish$migrants <- movement_results$migrants
-  #   }}
 
   if (month == 8) {
     north_delta_fish = list(migrants = north_delta_fish$inchannel + north_delta_fish$migrants)

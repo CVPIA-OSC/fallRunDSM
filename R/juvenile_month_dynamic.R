@@ -17,7 +17,9 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
                                    habitat = habitat, ..params = ..params,
                                    avg_ocean_transition_month = avg_ocean_transition_month,
                                    stochastic = stochastic,
-                                   juveniles, ic_growth, fp_growth, delta_growth) {
+                                   juveniles, ic_growth, fp_growth, delta_growth,
+                                   filling_fn = fallRunDSM::fill_natal,
+                                   filling_regional_fn = fallRunDSM::fill_regional) {
 
   juveniles <- fish$juveniles
   lower_mid_sac_fish <- fish$lower_mid_sac_fish
@@ -30,11 +32,6 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
   south_delta_fish <- fish$south_delta_fish
   juveniles_at_chipps <- fish$juveniles_at_chipps
   adults_in_ocean <- fish$adults_in_ocean
-
-  if (hypothesis %in% 4:6) {
-    fill_natal <- fallRunDSM::fill_natal_dens_depend
-    fill_regional <- fallRunDSM::fill_regional_dens_depend
-  }
 
   migrants <- matrix(0, nrow = 31, ncol = 4, dimnames = list(fallRunDSM::watershed_labels, fallRunDSM::size_class_labels))
 
@@ -69,6 +66,7 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
                                         juveniles_at_chipps = juveniles_at_chipps,
                                         growth_rates = delta_growth,
                                         territory_size = ..params$territory_size,
+                                        filling_fn = filling_regional_fn,
                                         hypothesis = hypothesis,
                                         stochastic = stochastic)
 
@@ -96,6 +94,7 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
                                   .pulse_movement_large_pulse = ..params$.pulse_movement_large_pulse,
                                   .pulse_movement_very_large_pulse = ..params$.pulse_movement_very_large_pulse,
                                   territory_size = ..params$territory_size,
+                                  filling_fn = filling_fn,
                                   hypothesis = hypothesis,
                                   stochastic = stochastic)
 
@@ -126,6 +125,7 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
                                          territory_size = ..params$territory_size,
                                          freeport_flows = ..params$freeport_flows,
                                          vernalis_flows = ..params$vernalis_flows,
+                                         filling_fn = filling_regional_fn,
                                          hypothesis = hypothesis,
                                          stochastic = stochastic)
 
@@ -134,6 +134,7 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
                                 bypass_habitat = habitat$sutter,
                                 migration_survival_rate = migratory_survival$sutter,
                                 territory_size = ..params$territory_size,
+                                filling_fn = filling_regional_fn,
                                 stochastic = stochastic,
                                 hypothesis = hypothesis)
 
@@ -177,6 +178,7 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
                                      .pulse_movement_large_pulse = ..params$.pulse_movement_large_pulse,
                                      .pulse_movement_very_large_pulse = ..params$.pulse_movement_very_large_pulse,
                                      territory_size = ..params$territory_size,
+                                     filling_fn = filling_fn,
                                      hypothesis = hypothesis,
                                      stochastic = stochastic)
 
@@ -204,6 +206,7 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
                                          territory_size = ..params$territory_size,
                                          freeport_flows = ..params$freeport_flows,
                                          vernalis_flows = ..params$vernalis_flows,
+                                         filling_fn = filling_regional_fn,
                                          hypothesis = hypothesis,
                                          stochastic = stochastic)
 
@@ -211,6 +214,7 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
                               bypass_habitat = habitat$yolo,
                               migration_survival_rate = migratory_survival$yolo,
                               territory_size = ..params$territory_size,
+                              filling_fn = filling_regional_fn,
                               stochastic = stochastic,
                               hypothesis = hypothesis)
 
@@ -253,6 +257,7 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
                                  .pulse_movement_large_pulse = ..params$.pulse_movement_large_pulse,
                                  .pulse_movement_very_large_pulse = ..params$.pulse_movement_very_large_pulse,
                                  territory_size = ..params$territory_size,
+                                 filling_fn = filling_fn,
                                  hypothesis = hypothesis,
                                  stochastic = stochastic)
 
@@ -279,6 +284,7 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
                                      territory_size = ..params$territory_size,
                                      freeport_flows = ..params$freeport_flows,
                                      vernalis_flows = ..params$vernalis_flows,
+                                     filling_fn = filling_regional_fn,
                                      hypothesis = hypothesis,
                                      stochastic = stochastic)
 
@@ -317,6 +323,7 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
                                    .pulse_movement_large_pulse = ..params$.pulse_movement_large_pulse,
                                    .pulse_movement_very_large_pulse = ..params$.pulse_movement_very_large_pulse,
                                    territory_size = ..params$territory_size,
+                                   filling_fn = filling_fn,
                                    hypothesis = hypothesis,
                                    stochastic = stochastic)
 
@@ -354,6 +361,7 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
                                    .pulse_movement_large_pulse = ..params$.pulse_movement_large_pulse,
                                    .pulse_movement_very_large_pulse = ..params$.pulse_movement_very_large_pulse,
                                    territory_size = ..params$territory_size,
+                                   filling_fn = filling_fn,
                                    hypothesis = hypothesis,
                                    stochastic = stochastic)
 
@@ -378,6 +386,7 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
                                        territory_size = ..params$territory_size,
                                        freeport_flows = ..params$freeport_flows,
                                        vernalis_flows = ..params$vernalis_flows,
+                                       filling_fn = filling_regional_fn,
                                        hypothesis = hypothesis,
                                        stochastic = stochastic)
 
@@ -408,6 +417,7 @@ juvenile_month_dynamic <- function(hypothesis, fish, year = year, month = month,
                                         juveniles_at_chipps = juveniles_at_chipps,
                                         growth_rates = delta_growth,
                                         territory_size = ..params$territory_size,
+                                        filling_fn = filling_regional_fn,
                                         hypothesis = hypothesis,
                                         stochastic = stochastic)
 

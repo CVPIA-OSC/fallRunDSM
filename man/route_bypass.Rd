@@ -13,7 +13,8 @@ route_bypass(
   migration_survival_rate,
   territory_size,
   stochastic,
-  hypothesis
+  hypothesis,
+  filling_fn = fallRunDSM::fill_regional
 )
 }
 \arguments{

@@ -17,6 +17,7 @@ route_regional(
   migration_survival_rate,
   proportion_flow_bypass,
   detour = NULL,
+  filling_fn = fallRunDSM::fill_regional,
   territory_size,
   freeport_flows,
   vernalis_flows,
