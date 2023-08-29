@@ -38,7 +38,6 @@ route <- function(year, month, juveniles, inchannel_habitat,
                   movement_args = NULL,
                   movement_months = NULL,
                   territory_size,
-                  hypothesis, # TODO is there a cleaner way to do this?
                   stochastic) {
 
 
@@ -55,46 +54,20 @@ route <- function(year, month, juveniles, inchannel_habitat,
   if (!is.null(movement_fn)) {
 
     if (month %in% movement_months) {
-      movement_results <- do.call(movement_fn, args = append(list(juveniles=juveniles), movement_args))
+
+      if (sum(natal_watersheds$inchannel) == 0) {
+        movement_results <- do.call(movement_fn, args = append(list(juveniles=natal_watersheds$floodplain), movement_args))
+        natal_watersheds$floodplain <- movement_results$river_rear
+        natal_watersheds$migrants <- natal_watersheds$migrants + movement_results$migrants
+      } else {
+        movement_results <- do.call(movement_fn, args = append(list(juveniles=natal_watersheds$inchannel), movement_args))
+        natal_watersheds$floodplain <- movement_results$river_rear
+        natal_watersheds$migrants <- natal_watersheds$migrants + movement_results$migrants
+      }
+
     }
 
   }
-  # if (month %in% 1:2) {
-  #
-  #   if (hypothesis == 2 | hypothesis == 6) { # SNOW GLOBE -----------------
-  #     # apply snowglobe movement
-  #
-  #     # if there are no fish inchannel we grab them from floodplain?
-  #
-  #
-  #     if (sum(regional_fish$inchannel) == 0) {
-  #       movement_results <- snow_globe_movement(regional_fish$floodplain,
-  #                                               freeport_flow = freeport_flows[month, year],
-  #                                               vernalis_flow = vernalis_flows[month, year],
-  #                                               stochastic = stochastic)
-  #       regional_fish$floodplain <- movement_results$river_rear
-  #       regional_fish$migrants <- regional_fish$migrants + movement_results$migrants
-  #     } else {
-  #       movement_results <- snow_globe_movement(regional_fish$inchannel,
-  #                                               freeport_flow = freeport_flows[month, year],
-  #                                               vernalis_flow = vernalis_flows[month, year],
-  #                                               stochastic = stochastic)
-  #       regional_fish$inchannel <- movement_results$river_rear
-  #       regional_fish$migrants <- regional_fish$migrants + movement_results$migrants
-  #
-  #     }
-  #   } else if (hypothesis == 3 | hypothesis == 7) { # GENETICS ---------------
-  #     # apply genetics movement
-  #     movement_results <- genetic_movement(regional_fish$inchannel, stochastic = stochastic)
-  #     regional_fish$inchannel <- movement_results$river_rear
-  #     regional_fish$migrants <- regional_fish$migrants + movement_results$migrants
-  #   } else if (hypothesis == 4 | hypothesis == 8) { # TEMPERATURE ---------------
-  #     # apply genetics movement
-  #     movement_results <- temperature_movement(regional_fish$inchannel, stochastic = stochastic)
-  #     regional_fish$inchannel <- movement_results$river_rear
-  #     regional_fish$migrants <- regional_fish$migrants + movement_results$migrants
-  #   }
-  # }
 
   # estimate probability leaving as function of pulse flow
   prob_pulse_leave <- pulse_movement(prop_pulse_flows[ , month],
@@ -178,10 +151,12 @@ route_regional <- function(month, year, migrants,
                            prop_pulse_flows, migration_survival_rate,
                            proportion_flow_bypass, detour = NULL,
                            filling_fn = fallRunDSM::fill_regional,
+                           movement_fn = NULL,
+                           movement_months = NULL,
+                           movement_args = NULL,
                            territory_size,
                            freeport_flows,
                            vernalis_flows,
-                           hypothesis,
                            stochastic) {
 
   if (!is.null(detour)) {
@@ -207,41 +182,26 @@ route_regional <- function(month, year, migrants,
                                  floodplain_habitat = floodplain_habitat,
                                  territory_size = territory_size)
 
-  if (month %in% 1:2) {
+  if ((!is.null(movement_fn) && is.null(movement_months)) || (is.null(movement_fn) && !is.null(movement_months))) {
+    stop("if using 'movement_fn' argument you must supply 'movement_fn' and vice-versa")
+  }
 
-    if (hypothesis == 2 | hypothesis == 6) { # SNOW GLOBE -----------------
-      # apply snowglobe movement
+  if (!is.null(movement_fn)) {
 
-      # if there are no fish inchannel we grab them from floodplain?
+    if (month %in% movement_months) {
 
-
-      if (sum(regional_fish$inchannel) == 0) {
-        movement_results <- snow_globe_movement(regional_fish$floodplain,
-                                                freeport_flow = freeport_flows[month, year],
-                                                vernalis_flow = vernalis_flows[month, year],
-                                                stochastic = stochastic)
+      if (sum(natal_watersheds$inchannel) == 0) {
+        movement_results <- do.call(movement_fn, args = append(list(juveniles=regional_fish$floodplain), movement_args))
         regional_fish$floodplain <- movement_results$river_rear
-        regional_fish$migrants <- regional_fish$migrants + movement_results$migrants
+        regional_fish$migrants <- natal_watersheds$migrants + movement_results$migrants
       } else {
-        movement_results <- snow_globe_movement(regional_fish$inchannel,
-                                                freeport_flow = freeport_flows[month, year],
-                                                vernalis_flow = vernalis_flows[month, year],
-                                                stochastic = stochastic)
-        regional_fish$inchannel <- movement_results$river_rear
-        regional_fish$migrants <- regional_fish$migrants + movement_results$migrants
-
+        movement_results <- do.call(movement_fn, args = append(list(juveniles=regional_fish$inchannel), movement_args))
+        regional_fish$floodplain <- movement_results$river_rear
+        regional_fish$migrants <- natal_watersheds$migrants + movement_results$migrants
       }
-    } else if (hypothesis == 3 | hypothesis == 7) { # GENETICS ---------------
-      # apply genetics movement
-      movement_results <- genetic_movement(regional_fish$inchannel, stochastic = stochastic)
-      regional_fish$inchannel <- movement_results$river_rear
-      regional_fish$migrants <- regional_fish$migrants + movement_results$migrants
-    } else if (hypothesis == 4 | hypothesis == 8) { # TEMPERATURE ---------------
-      # apply genetics movement
-      movement_results <- temperature_movement(regional_fish$inchannel, stochastic = stochastic)
-      regional_fish$inchannel <- movement_results$river_rear
-      regional_fish$migrants <- regional_fish$migrants + movement_results$migrants
+
     }
+
   }
 
 
@@ -377,7 +337,6 @@ route_and_rear_deltas <- function(year, month, migrants, north_delta_fish, south
                          juveniles_at_chipps, growth_rates,
                          location_index = c(rep(1, 24), 3, rep(2, 2), rep(4, 4)),
                          territory_size,
-                         hypothesis,
                          filling_fn = fallRunDSM::fill_regional,
                          stochastic) {
 

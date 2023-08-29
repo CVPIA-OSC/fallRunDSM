@@ -1,11 +1,17 @@
 library(tidyverse)
 
-# 2022
+# params with new routing
+params_multi_route <- fallRunDSM::params_2022
+params_multi_route$adults_in_ocean_weights <- rep(1/8, 8)
 
+usethis::use_data(params_multi_route, overwrite = TRUE)
+
+# 2022
 # start with old params
 params_2022_raw <- fallRunDSM::params
 # add new decay multiplier
 params_2022_raw$spawn_decay_multiplier <- DSMhabitat::spawning_decay_multiplier
+
 # updates based on latest calibration
 source("calibration/update-params.R")
 calib_results_2022 <- readr::read_rds("calibration/calibration-results-2022.rds")@solution[1,]

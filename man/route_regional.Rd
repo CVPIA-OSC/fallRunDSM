@@ -18,10 +18,12 @@ route_regional(
   proportion_flow_bypass,
   detour = NULL,
   filling_fn = fallRunDSM::fill_regional,
+  movement_fn = NULL,
+  movement_months = NULL,
+  movement_args = NULL,
   territory_size,
   freeport_flows,
   vernalis_flows,
-  hypothesis,
   stochastic
 )
 }

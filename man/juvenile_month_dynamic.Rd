@@ -5,7 +5,6 @@
 \title{Juvenile Month Dynamics}
 \usage{
 juvenile_month_dynamic(
-  hypothesis,
   fish,
   year = year,
   month = month,

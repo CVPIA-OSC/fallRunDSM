@@ -17,3 +17,41 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(fallRunDSM)
 ```
+
+# Introduction
+
+This guide will take you through the steps required to extend the model with custom movement functions, allowing you to modify how fish move within the simulation.
+
+There are two types of routing functions in the DSM: `routing` and `regional_routing`. The difference between the two boils down to whether we 
+intend to apply per-watershed growth and survival, or if all the fish will experience regional growth and survival. Additional details
+about these differences are not crucial for creating custom movement functions, so we'll set them aside for now. Both of these functions take 
+a set of arguments — `movement_fn`, `movement_months`, and `movement_args` — which allow users to create their own movement functions and have 
+the routing functions apply them to the fish in the model.
+
+
+# Function Structure
+
+Movement functions need to satisfy just two basic rules. It must take in a fish `matrix` with dimensions $n \times 4$, where $n$ is the number
+of watersheds being operated on (this value can vary anywhere between 1 and 31), and $4$ represents the four size classes: s, m, l, and vl. The function
+must also return a list with two named values: `list(river_rear = river_rear, migrants = migrants)`. Whatever happens within the body of the function
+is entirely up to the user and represents a rule that models fish movement through the watershed.
+
+
+## A Trivial Example
+
+Recall that our function must take in a `fish` matrix, and return a list with two named arguemnts `river_rear` and `migrants`. Here
+is a trivial example that satisfied these:
+
+```r
+
+custom_movement <- function(fish, prop_move = .2) {
+
+  migrating_fish <- fish * prop_move
+  
+  return (list(in_river = fish - migrating_fish, migrants = migrating_fish))
+  
+}
+
+```
+
+We can apply this new movement to the model by identifying 

@@ -29,7 +29,6 @@ route(
   movement_args = NULL,
   movement_months = NULL,
   territory_size,
-  hypothesis,
   stochastic
 )
 }

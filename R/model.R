@@ -297,135 +297,141 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
       # 8. dens filling + temperature
 
 
-     # hypothesis_number <- c(1:10)
+      fish_list$route_1_fish <- juvenile_month_dynamic(
+        fish_list$route_1_fish,
+        year = year, month = month,
+        rearing_survival = rearing_survival,
+        migratory_survival = migratory_survival,
+        habitat = habitat, ..params = ..params,
+        avg_ocean_transition_month = avg_ocean_transition_month,
+        stochastic = stochastic,
+        ic_growth = growth_rates_ic,
+        fp_growth = growth_rates_fp,
+        delta_growth = growth_rates_delta
+      )
 
-      fish_list$route_1_fish <- juvenile_month_dynamic(hypothesis = 1,
-                                       fish_list$route_1_fish,
-                                       year = year, month = month,
-                                       rearing_survival = rearing_survival,
-                                       migratory_survival = migratory_survival,
-                                       habitat = habitat, ..params = ..params,
-                                       avg_ocean_transition_month = avg_ocean_transition_month,
-                                       stochastic = stochastic,
-                                       ic_growth = growth_rates_ic,
-                                       fp_growth = growth_rates_fp,
-                                       delta_growth = growth_rates_delta)
+      fish_list$route_2_fish <- juvenile_month_dynamic(
+        fish_list$route_2_fish,
+        year = year, month = month,
+        rearing_survival = rearing_survival,
+        migratory_survival = migratory_survival,
+        habitat = habitat, ..params = ..params,
+        avg_ocean_transition_month = avg_ocean_transition_month,
+        stochastic = stochastic,
+        ic_growth = growth_rates_ic,
+        fp_growth = growth_rates_fp,
+        delta_growth = growth_rates_delta,
+        movement_fn = fallRunDSM::snow_globe_movement,
+        movement_months = 1:2,
+        movement_args = list(freeport_flow = ..params$freeport_flows[month, year],
+                             vernalis_flow = ..params$vernalis_flows[month, year],
+                             threshold = 1000, p_leave = 0.3, stochastic = stochastic)
+      )
 
-      fish_list$route_2_fish <- juvenile_month_dynamic(hypothesis = 2,
-                                       fish_list$route_2_fish,
-                                       year = year, month = month,
-                                       rearing_survival = rearing_survival,
-                                       migratory_survival = migratory_survival,
-                                       habitat = habitat, ..params = ..params,
-                                       avg_ocean_transition_month = avg_ocean_transition_month,
-                                       stochastic = stochastic,
-                                       ic_growth = growth_rates_ic,
-                                       fp_growth = growth_rates_fp,
-                                       delta_growth = growth_rates_delta,
-                                       movement_fn = fallRunDSM::snow_globe_movement,
-                                       movement_months = 1:2,
-                                       movement_args = list(freeport_flow = ..params$freeport_flows[month, year],
-                                                            vernalis_flow = ..params$vernalis_flows[month, year],
-                                                            threshold = 1000, p_leave = 0.3, stochastic = stochastic))
+      fish_list$route_3_fish <- juvenile_month_dynamic(
+        fish_list$route_3_fish,
+        year = year, month = month,
+        rearing_survival = rearing_survival,
+        migratory_survival = migratory_survival,
+        habitat = habitat, ..params = ..params,
+        avg_ocean_transition_month = avg_ocean_transition_month,
+        stochastic = stochastic,
+        ic_growth = growth_rates_ic,
+        fp_growth = growth_rates_fp,
+        delta_growth = growth_rates_delta,
+        movement_fn = fallRunDSM::genetic_movement,
+        movement_months = 1:2,
+        movement_args = list(p_leave = 0.25, stochastic = stochastic)
+      )
 
-      fish_list$route_3_fish <- juvenile_month_dynamic(hypothesis = 3,
-                                       fish_list$route_3_fish,
-                                       year = year, month = month,
-                                       rearing_survival = rearing_survival,
-                                       migratory_survival = migratory_survival,
-                                       habitat = habitat, ..params = ..params,
-                                       avg_ocean_transition_month = avg_ocean_transition_month,
-                                       stochastic = stochastic,
-                                       ic_growth = growth_rates_ic,
-                                       fp_growth = growth_rates_fp,
-                                       delta_growth = growth_rates_delta,
-                                       movement_fn = fallRunDSM::genetic_movement,
-                                       movement_months = 1:2,
-                                       movement_args = list(p_leave = 0.25, stochastic = stochastic))
-
-      fish_list$route_4_fish <- juvenile_month_dynamic(hypothesis = 4,
-                                       fish_list$route_4_fish,
-                                       year = year, month = month,
-                                       rearing_survival = rearing_survival,
-                                       migratory_survival = migratory_survival,
-                                       habitat = habitat, ..params = ..params,
-                                       avg_ocean_transition_month = avg_ocean_transition_month,
-                                       stochastic = stochastic,
-                                       ic_growth = growth_rates_ic,
-                                       fp_growth = growth_rates_fp,
-                                       delta_growth = growth_rates_delta,
-                                       movement_fn = fallRunDSM::temperature_movement,
-                                       movement_months = 1:2,
-                                       movement_args = list(movement_month = 3, movement_temp = 15, stochastic = stochastic))
-
-
-      fish_list$route_5_fish <- juvenile_month_dynamic(hypothesis = 5,
-                                                       fish_list$route_6_fish,
-                                                       year = year, month = month,
-                                                       rearing_survival = rearing_survival,
-                                                       migratory_survival = migratory_survival,
-                                                       habitat = habitat, ..params = ..params,
-                                                       avg_ocean_transition_month = avg_ocean_transition_month,
-                                                       stochastic = stochastic,
-                                                       ic_growth = growth_rates_ic,
-                                                       fp_growth = growth_rates_fp,
-                                                       delta_growth = growth_rates_delta,
-                                                       filling_fn = fallRunDSM::fill_natal_dens_depend, # filling using density dependence
-                                                       filling_regional_fn = fallRunDSM::fill_regional_dens_depend)
+      fish_list$route_4_fish <- juvenile_month_dynamic(
+        fish_list$route_4_fish,
+        year = year, month = month,
+        rearing_survival = rearing_survival,
+        migratory_survival = migratory_survival,
+        habitat = habitat, ..params = ..params,
+        avg_ocean_transition_month = avg_ocean_transition_month,
+        stochastic = stochastic,
+        ic_growth = growth_rates_ic,
+        fp_growth = growth_rates_fp,
+        delta_growth = growth_rates_delta,
+        movement_fn = fallRunDSM::temperature_movement,
+        movement_months = 1:2,
+        movement_args = list(movement_month = 3, movement_temp = 15, stochastic = stochastic)
+      )
 
 
-      fish_list$route_6_fish <- juvenile_month_dynamic(hypothesis = 6,
-                                       fish_list$route_6_fish,
-                                       year = year, month = month,
-                                       rearing_survival = rearing_survival,
-                                       migratory_survival = migratory_survival,
-                                       habitat = habitat, ..params = ..params,
-                                       avg_ocean_transition_month = avg_ocean_transition_month,
-                                       stochastic = stochastic,
-                                       ic_growth = growth_rates_ic,
-                                       fp_growth = growth_rates_fp,
-                                       delta_growth = growth_rates_delta,
-                                       filling_fn = fallRunDSM::fill_natal_dens_depend, # filling using density dependence
-                                       filling_regional_fn = fallRunDSM::fill_regional_dens_depend,
-                                       movement_fn = fallRunDSM::snow_globe_movement,
-                                       movement_months = 1:2,
-                                       movement_args = list(freeport_flow = ..params$freeport_flows[month, year],
-                                                            vernalis_flow = ..params$vernalis_flows[month, year],
-                                                            threshold = 1000, p_leave = 0.3, stochastic = stochastic))
+      fish_list$route_5_fish <- juvenile_month_dynamic(
+        fish_list$route_6_fish,
+        year = year, month = month,
+        rearing_survival = rearing_survival,
+        migratory_survival = migratory_survival,
+        habitat = habitat, ..params = ..params,
+        avg_ocean_transition_month = avg_ocean_transition_month,
+        stochastic = stochastic,
+        ic_growth = growth_rates_ic,
+        fp_growth = growth_rates_fp,
+        delta_growth = growth_rates_delta,
+        filling_fn = fallRunDSM::fill_natal_dens_depend, # filling using density dependence
+        filling_regional_fn = fallRunDSM::fill_regional_dens_depend
+      )
 
-      fish_list$route_7_fish <- juvenile_month_dynamic(hypothesis = 7,
-                                       fish_list$route_7_fish,
-                                       year = year, month = month,
-                                       rearing_survival = rearing_survival,
-                                       migratory_survival = migratory_survival,
-                                       habitat = habitat, ..params = ..params,
-                                       avg_ocean_transition_month = avg_ocean_transition_month,
-                                       stochastic = stochastic,
-                                       ic_growth = growth_rates_ic,
-                                       fp_growth = growth_rates_fp,
-                                       delta_growth = growth_rates_delta,
-                                       filling_fn = fallRunDSM::fill_natal_dens_depend, # filling using density dependence
-                                       filling_regional_fn = fallRunDSM::fill_regional_dens_depend,
-                                       movement_fn = fallRunDSM::genetic_movement,
-                                       movement_months = 1:2,
-                                       movement_args = list(p_leave = 0.25, stochastic = stochastic))
 
-      fish_list$route_8_fish <- juvenile_month_dynamic(hypothesis = 8,
-                                       fish_list$route_8_fish,
-                                       year = year, month = month,
-                                       rearing_survival = rearing_survival,
-                                       migratory_survival = migratory_survival,
-                                       habitat = habitat, ..params = ..params,
-                                       avg_ocean_transition_month = avg_ocean_transition_month,
-                                       stochastic = stochastic,
-                                       ic_growth = growth_rates_ic,
-                                       fp_growth = growth_rates_fp,
-                                       delta_growth = growth_rates_delta,
-                                       filling_fn = fallRunDSM::fill_natal_dens_depend, # filling using density dependence
-                                       filling_regional_fn = fallRunDSM::fill_regional_dens_depend,
-                                       movement_fn = fallRunDSM::temperature_movement,
-                                       movement_months = 1:2,
-                                       movement_args = list(movement_month = 3, movement_temp = 15, stochastic = stochastic))
+      fish_list$route_6_fish <- juvenile_month_dynamic(
+        fish_list$route_6_fish,
+        year = year, month = month,
+        rearing_survival = rearing_survival,
+        migratory_survival = migratory_survival,
+        habitat = habitat, ..params = ..params,
+        avg_ocean_transition_month = avg_ocean_transition_month,
+        stochastic = stochastic,
+        ic_growth = growth_rates_ic,
+        fp_growth = growth_rates_fp,
+        delta_growth = growth_rates_delta,
+        filling_fn = fallRunDSM::fill_natal_dens_depend, # filling using density dependence
+        filling_regional_fn = fallRunDSM::fill_regional_dens_depend,
+        movement_fn = fallRunDSM::snow_globe_movement,
+        movement_months = 1:2,
+        movement_args = list(freeport_flow = ..params$freeport_flows[month, year],
+                             vernalis_flow = ..params$vernalis_flows[month, year],
+                             threshold = 1000, p_leave = 0.3, stochastic = stochastic)
+      )
+
+      fish_list$route_7_fish <- juvenile_month_dynamic(
+        fish_list$route_7_fish,
+        year = year, month = month,
+        rearing_survival = rearing_survival,
+        migratory_survival = migratory_survival,
+        habitat = habitat, ..params = ..params,
+        avg_ocean_transition_month = avg_ocean_transition_month,
+        stochastic = stochastic,
+        ic_growth = growth_rates_ic,
+        fp_growth = growth_rates_fp,
+        delta_growth = growth_rates_delta,
+        filling_fn = fallRunDSM::fill_natal_dens_depend, # filling using density dependence
+        filling_regional_fn = fallRunDSM::fill_regional_dens_depend,
+        movement_fn = fallRunDSM::genetic_movement,
+        movement_months = 1:2,
+        movement_args = list(p_leave = 0.25, stochastic = stochastic)
+      )
+
+      fish_list$route_8_fish <- juvenile_month_dynamic(
+        fish_list$route_8_fish,
+        year = year, month = month,
+        rearing_survival = rearing_survival,
+        migratory_survival = migratory_survival,
+        habitat = habitat, ..params = ..params,
+        avg_ocean_transition_month = avg_ocean_transition_month,
+        stochastic = stochastic,
+        ic_growth = growth_rates_ic,
+        fp_growth = growth_rates_fp,
+        delta_growth = growth_rates_delta,
+        filling_fn = fallRunDSM::fill_natal_dens_depend, # filling using density dependence
+        filling_regional_fn = fallRunDSM::fill_regional_dens_depend,
+        movement_fn = fallRunDSM::temperature_movement,
+        movement_months = 1:2,
+        movement_args = list(movement_month = 3, movement_temp = 15, stochastic = stochastic)
+      )
 
       if (FALSE) {
         fish_1_df <- create_fish_df(fish_df = fish_list$route_1_fish, month = month, year = year)
@@ -452,23 +458,15 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
     } # end month loop
 
-    # juveniles_at_chipps <-
-    #   # (1/6) * fish_0$juveniles_at_chipps +
-    #   # (1/6) * fish_1$juveniles_at_chipps +
-    #   # (1/6) * fish_2$juveniles_at_chipps +
-    #   # (1/6) * fish_3$juveniles_at_chipps +
-    #   (1/6) * fish_4$juveniles_at_chipps + 0
-    #   # (1/6) * fish_5$juveniles_at_chipps
-
     adults_in_ocean <-
-      adults_in_ocean_weights[1] * fish_list$route_1_fish$adults_in_ocean +
-      adults_in_ocean_weights[2] * fish_list$route_2_fish$adults_in_ocean +
-      adults_in_ocean_weights[3] * fish_list$route_3_fish$adults_in_ocean +
-      adults_in_ocean_weights[4] * fish_list$route_4_fish$adults_in_ocean +
-      adults_in_ocean_weights[5] * fish_list$route_5_fish$adults_in_ocean +
-      adults_in_ocean_weights[6] * fish_list$route_6_fish$adults_in_ocean +
-      adults_in_ocean_weights[7] * fish_list$route_7_fish$adults_in_ocean +
-      adults_in_ocean_weights[8] * fish_list$route_8_fish$adults_in_ocean
+      ..params$adults_in_ocean_weights[1] * fish_list$route_1_fish$adults_in_ocean +
+      ..params$adults_in_ocean_weights[2] * fish_list$route_2_fish$adults_in_ocean +
+      ..params$adults_in_ocean_weights[3] * fish_list$route_3_fish$adults_in_ocean +
+      ..params$adults_in_ocean_weights[4] * fish_list$route_4_fish$adults_in_ocean +
+      ..params$adults_in_ocean_weights[5] * fish_list$route_5_fish$adults_in_ocean +
+      ..params$adults_in_ocean_weights[6] * fish_list$route_6_fish$adults_in_ocean +
+      ..params$adults_in_ocean_weights[7] * fish_list$route_7_fish$adults_in_ocean +
+      ..params$adults_in_ocean_weights[8] * fish_list$route_8_fish$adults_in_ocean
 
     #still need adults in ocean and adult in ocean weights
     output$juvenile_biomass[ , year] <- juveniles_at_chipps %*% fallRunDSM::params$mass_by_size_class
