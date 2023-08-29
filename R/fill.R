@@ -95,7 +95,7 @@ fill_regional <- function(juveniles, habitat, floodplain_habitat = NULL,
 #' @export
 fill_natal_dens_depend <- function(juveniles, inchannel_habitat, floodplain_habitat,
                                    up_to_size_class = 2, floodplain_capacity = 5,
-                                   habitat_capacity = 4, territory_size = territory_size, ...) {# not actually used
+                                   ..habitat_capacity = 4, territory_size = territory_size, ...) {# not actually used
 
   number_of_regions <- max(nrow(juveniles), 1)
 
@@ -122,7 +122,7 @@ fill_natal_dens_depend <- function(juveniles, inchannel_habitat, floodplain_habi
   for(i in 1:(4-up_to_size_class)) {
     prop_sizes <- cbind(prop_sizes,0)
   }
-  prop_stay <- 1 - exp(-inchannel_habitat * habitat_capacity / total_rear)
+  prop_stay <- 1 - exp(-inchannel_habitat * ..habitat_capacity / total_rear)
   prop_stay[is.nan(prop_stay)] <- 0
   river_rear <- round(prop_stay * total_rear * prop_sizes)
 
@@ -133,12 +133,12 @@ fill_natal_dens_depend <- function(juveniles, inchannel_habitat, floodplain_habi
 }
 
 # Alternative density dependent version of fill_regional with two additional parameters
-#' @param habitat_capacity the maximum number of rearing juveniles in channel habitat
+#' @param ..habitat_capacity the maximum number of rearing juveniles in channel habitat
 #' @param floodplain_capacity the maximum number of rearing juveniles in floodplain habitat
 #' @export
 fill_regional_dens_depend <- function(juveniles, habitat, floodplain_habitat = NULL,
                                       up_to_size_class = 3, floodplain_capacity = 5,
-                                      habitat_capacity = 4, ...){
+                                      ..habitat_capacity = 4, ...){
 
   all_sheds <- orig_tot <- colSums(juveniles)
 
@@ -172,7 +172,7 @@ fill_regional_dens_depend <- function(juveniles, habitat, floodplain_habitat = N
   for(i in 1:(4 - up_to_size_class)) {
     prop_sizes <- c(prop_sizes, 0)
   }
-  prop_stay <- 1 - exp(-habitat * habitat_capacity / total_rear)
+  prop_stay <- 1 - exp(-habitat * ..habitat_capacity / total_rear)
   prop_stay[is.nan(prop_stay)] <- 0
   river_rear <- round(prop_stay * total_rear * prop_sizes)
 

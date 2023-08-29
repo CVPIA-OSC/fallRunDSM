@@ -459,14 +459,14 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
     } # end month loop
 
     adults_in_ocean <-
-      ..params$adults_in_ocean_weights[1] * fish_list$route_1_fish$adults_in_ocean +
-      ..params$adults_in_ocean_weights[2] * fish_list$route_2_fish$adults_in_ocean +
-      ..params$adults_in_ocean_weights[3] * fish_list$route_3_fish$adults_in_ocean +
-      ..params$adults_in_ocean_weights[4] * fish_list$route_4_fish$adults_in_ocean +
-      ..params$adults_in_ocean_weights[5] * fish_list$route_5_fish$adults_in_ocean +
-      ..params$adults_in_ocean_weights[6] * fish_list$route_6_fish$adults_in_ocean +
-      ..params$adults_in_ocean_weights[7] * fish_list$route_7_fish$adults_in_ocean +
-      ..params$adults_in_ocean_weights[8] * fish_list$route_8_fish$adults_in_ocean
+      ..params$..adults_in_ocean_weights[1] * fish_list$route_1_fish$adults_in_ocean +
+      ..params$..adults_in_ocean_weights[2] * fish_list$route_2_fish$adults_in_ocean +
+      ..params$..adults_in_ocean_weights[3] * fish_list$route_3_fish$adults_in_ocean +
+      ..params$..adults_in_ocean_weights[4] * fish_list$route_4_fish$adults_in_ocean +
+      ..params$..adults_in_ocean_weights[5] * fish_list$route_5_fish$adults_in_ocean +
+      ..params$..adults_in_ocean_weights[6] * fish_list$route_6_fish$adults_in_ocean +
+      ..params$..adults_in_ocean_weights[7] * fish_list$route_7_fish$adults_in_ocean +
+      ..params$..adults_in_ocean_weights[8] * fish_list$route_8_fish$adults_in_ocean
 
     #still need adults in ocean and adult in ocean weights
     output$juvenile_biomass[ , year] <- juveniles_at_chipps %*% fallRunDSM::params$mass_by_size_class
