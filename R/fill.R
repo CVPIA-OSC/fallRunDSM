@@ -94,7 +94,7 @@ fill_regional <- function(juveniles, habitat, floodplain_habitat = NULL,
 #' @rdname fill
 #' @export
 fill_natal_dens_depend <- function(juveniles, inchannel_habitat, floodplain_habitat,
-                                   up_to_size_class = 2, floodplain_capacity = 5,
+                                   up_to_size_class = 2, ..floodplain_capacity = 5,
                                    ..habitat_capacity = 4, territory_size = territory_size, ...) {# not actually used
 
   number_of_regions <- max(nrow(juveniles), 1)
@@ -108,7 +108,7 @@ fill_natal_dens_depend <- function(juveniles, inchannel_habitat, floodplain_habi
   for(i in 1:(4 - up_to_size_class)) {
     prop_sizes <- cbind(prop_sizes, 0) # TODO potential break
   }
-  prop_stay <- 1 - exp(-floodplain_habitat * floodplain_capacity / total_rear)
+  prop_stay <- 1 - exp(-floodplain_habitat * ..floodplain_capacity / total_rear)
   prop_stay[is.nan(prop_stay)] <- 0
   flood_rear <- round(prop_stay * total_rear * prop_sizes)
 
@@ -137,7 +137,7 @@ fill_natal_dens_depend <- function(juveniles, inchannel_habitat, floodplain_habi
 #' @param floodplain_capacity the maximum number of rearing juveniles in floodplain habitat
 #' @export
 fill_regional_dens_depend <- function(juveniles, habitat, floodplain_habitat = NULL,
-                                      up_to_size_class = 3, floodplain_capacity = 5,
+                                      up_to_size_class = 3, ..floodplain_capacity = 5,
                                       ..habitat_capacity = 4, ...){
 
   all_sheds <- orig_tot <- colSums(juveniles)
@@ -157,7 +157,7 @@ fill_regional_dens_depend <- function(juveniles, habitat, floodplain_habitat = N
     prop_stay <- rep(0, length(prop_sizes))
     flood_rear <- rep(0, length(prop_sizes))
   } else {
-    prop_stay <- 1 - exp(-floodplain_habitat * floodplain_capacity / total_rear)
+    prop_stay <- 1 - exp(-floodplain_habitat * ..floodplain_capacity / total_rear)
     prop_stay[is.nan(prop_stay)] <- 0
 
     flood_rear <- round(prop_stay * total_rear * prop_sizes)

@@ -19,7 +19,9 @@ juvenile_month_dynamic <- function(fish, year = year, month = month,
                                    stochastic = stochastic,
                                    juveniles, ic_growth, fp_growth, delta_growth,
                                    filling_fn = fallRunDSM::fill_natal,
+                                   filling_args = NULL,
                                    filling_regional_fn = fallRunDSM::fill_regional,
+                                   filling_regional_args = NULL,
                                    movement_fn = NULL,
                                    movement_args = NULL,
                                    movement_months = NULL) {
@@ -97,6 +99,7 @@ juvenile_month_dynamic <- function(fish, year = year, month = month,
                                   .pulse_movement_very_large_pulse = ..params$.pulse_movement_very_large_pulse,
                                   territory_size = ..params$territory_size,
                                   filling_fn = filling_fn,
+                                  filling_args = filling_args,
                                   movement_fn = movement_fn,
                                   movement_args = movement_args,
                                   movement_months = movement_months,
@@ -130,6 +133,7 @@ juvenile_month_dynamic <- function(fish, year = year, month = month,
                                          freeport_flows = ..params$freeport_flows,
                                          vernalis_flows = ..params$vernalis_flows,
                                          filling_fn = filling_regional_fn,
+
                                          stochastic = stochastic)
 
 

@@ -3,6 +3,8 @@ library(tidyverse)
 # params with new routing
 params_multi_route <- fallRunDSM::params_2022
 params_multi_route$..adults_in_ocean_weights <- rep(1/8, 8)
+params_multi_route$..habitat_capacity = 5
+params_multi_route$..floodplain_capacity = 5
 
 usethis::use_data(params_multi_route, overwrite = TRUE)
 

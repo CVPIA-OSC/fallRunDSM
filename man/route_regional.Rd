@@ -18,6 +18,7 @@ route_regional(
   proportion_flow_bypass,
   detour = NULL,
   filling_fn = fallRunDSM::fill_regional,
+  filling_args = NULL,
   movement_fn = NULL,
   movement_months = NULL,
   movement_args = NULL,
@@ -45,6 +46,10 @@ route_regional(
 \item{proportion_flow_bypass}{Variable describing the proportion of flows routed through the bypasses, more details at \code{\link[DSMflow]{proportion_flow_bypasses}}}
 
 \item{detour}{Values can be 'sutter' or 'yolo' if some juveniles are detoured on to that bypass, otherwise NULL}
+
+\item{filling_fn}{optional filling function to use in routing procedure, by default it uses fallRunDSM::fill_regional}
+
+\item{filling_args}{when passing custom filling function, pass function specific arguments as a list here}
 
 \item{territory_size}{Array of juvenile fish territory requirements for \code{\link{fill_regional}}}
 

@@ -34,6 +34,7 @@ route <- function(year, month, juveniles, inchannel_habitat,
                   .pulse_movement_large_pulse,
                   .pulse_movement_very_large_pulse,
                   filling_fn = fallRunDSM::fill_natal,
+                  filling_args = NULL,
                   movement_fn = NULL,
                   movement_args = NULL,
                   movement_months = NULL,
@@ -41,10 +42,12 @@ route <- function(year, month, juveniles, inchannel_habitat,
                   stochastic) {
 
 
-  natal_watersheds <- filling_fn(juveniles = juveniles,
-                                 inchannel_habitat = inchannel_habitat,
-                                 floodplain_habitat = floodplain_habitat,
-                                 territory_size = territory_size)
+  filling_combined_args <- append(list(juveniles = juveniles,
+                                       inchannel_habitat = inchannel_habitat,
+                                       floodplain_habitat = floodplain_habitat),
+                                  filling_args)
+
+  natal_watersheds <- do.call(filling_fn, filling_combined_args)
 
 
   if ((!is.null(movement_fn) && is.null(movement_months)) || (is.null(movement_fn) && !is.null(movement_months))) {
@@ -110,7 +113,8 @@ route <- function(year, month, juveniles, inchannel_habitat,
 #' @export
 route_bypass <- function(bypass_fish, bypass_habitat, migration_survival_rate,
                          territory_size, stochastic, hypothesis,
-                         filling_fn = fallRunDSM::fill_regional) {
+                         filling_fn = fallRunDSM::fill_regional,
+                         filling_args = NULL) {
 
   bypass_fish <- filling_fn(juveniles = bypass_fish,
                                habitat = bypass_habitat,
@@ -144,6 +148,8 @@ route_bypass <- function(bypass_fish, bypass_habitat, migration_survival_rate,
 #' @param detour Values can be 'sutter' or 'yolo' if some juveniles are detoured on to that bypass, otherwise NULL
 #' @param territory_size Array of juvenile fish territory requirements for \code{\link{fill_regional}}
 #' @param stochastic \code{TRUE} \code{FALSE} value indicating if model is being run stochastically
+#' @param filling_fn optional filling function to use in routing procedure, by default it uses fallRunDSM::fill_regional
+#' @param filling_args when passing custom filling function, pass function specific arguments as a list here
 #' @source IP-117068
 #' @export
 route_regional <- function(month, year, migrants,
@@ -151,6 +157,7 @@ route_regional <- function(month, year, migrants,
                            prop_pulse_flows, migration_survival_rate,
                            proportion_flow_bypass, detour = NULL,
                            filling_fn = fallRunDSM::fill_regional,
+                           filling_args = NULL,
                            movement_fn = NULL,
                            movement_months = NULL,
                            movement_args = NULL,

@@ -25,6 +25,7 @@ route(
   .pulse_movement_large_pulse,
   .pulse_movement_very_large_pulse,
   filling_fn = fallRunDSM::fill_natal,
+  filling_args = NULL,
   movement_fn = NULL,
   movement_args = NULL,
   movement_months = NULL,

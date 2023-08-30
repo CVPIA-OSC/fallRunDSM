@@ -31,7 +31,7 @@ fill_natal_dens_depend(
   inchannel_habitat,
   floodplain_habitat,
   up_to_size_class = 2,
-  floodplain_capacity = 5,
+  ..floodplain_capacity = 5,
   ..habitat_capacity = 4,
   territory_size = territory_size,
   ...

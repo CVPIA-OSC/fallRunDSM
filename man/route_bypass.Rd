@@ -14,7 +14,8 @@ route_bypass(
   territory_size,
   stochastic,
   hypothesis,
-  filling_fn = fallRunDSM::fill_regional
+  filling_fn = fallRunDSM::fill_regional,
+  filling_args = NULL
 )
 }
 \arguments{
