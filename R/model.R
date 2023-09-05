@@ -362,7 +362,7 @@ fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibr
 
 
       fish_list$route_5_fish <- juvenile_month_dynamic(
-        fish_list$route_6_fish,
+        fish_list$route_5_fish,
         year = year, month = month,
         rearing_survival = rearing_survival,
         migratory_survival = migratory_survival,
