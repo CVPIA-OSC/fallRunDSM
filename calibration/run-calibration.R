@@ -36,12 +36,26 @@ res <- ga(type = "real-valued",
 readr::write_rds(res, paste0("calibration/fits/result-", Sys.Date(), ".rds"))
 
 # Evaluate Results ------------------------------------
+prey_d <- rep("med", 31)
+names(prey_d) <- watershed_labels
+prey_d["American River"] <- "max"
+prey_d["Yuba River"] <- "max"
+prey_d["Mokelumne River"] <- "max"
+
+res <- read_rds("calibration/result-last-week2023-09-25_17-48.rds")
+
+calib_seeds <- DSMCalibrationData::grandtab_observed$fall
+calib_seeds[is.na(calib_seeds)] <- 0
 
 keep <- c(1,6,7,10,12,19,20,23,26:30)
 result_solution <- res@solution[1, ]
-result_params <- update_params(x = result_solution, fallRunDSM::params)
+result_params <- update_params(x = result_solution, fallRunDSM::params_2022)
 result_params <- DSMCalibrationData::set_synth_years(result_params)
-result_sim <- fall_run_model(seeds = DSMCalibrationData::grandtab_imputed$fall, mode = "calibrate",
+result_params$prey_density <- prey_d
+
+
+
+result_sim <- fall_run_model(seeds = calib_seeds, mode = "calibrate",
                          ..params = result_params,
                          stochastic = FALSE)
 

@@ -16,7 +16,7 @@
 #'                            seeds = fall_run_seeds)
 #' @export
 fall_run_model <- function(scenario = NULL, mode = c("seed", "simulate", "calibrate"),
-                           seeds = NULL, ..params = fallRunDSM::params,
+                           seeds = NULL, ..params = fallRunDSM::params_2022,
                            stochastic = FALSE){
 
   mode <- match.arg(mode)

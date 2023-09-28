@@ -1,15 +1,15 @@
 library(tidyverse)
 
 # 2022
-
 # start with old params
 params_2022_raw <- fallRunDSM::params
 # add new decay multiplier
-params_2022_raw$spawn_decay_multiplier <- DSMhabitat::spawning_decay_multiplier
+# params_2022_raw$spawn_decay_multiplier <- DSMhabitat::spawning_decay_multiplier
 # updates based on latest calibration
 source("calibration/update-params.R")
-calib_results_2022 <- readr::read_rds("calibration/calibration-results-2022.rds")@solution[1,]
+calib_results_2022 <- readr::read_rds("calibration/result-last-week2023-09-25_17-48.rds")@solution[1,]
 params_2022 <- update_params(x = calib_results_2022, params = params_2022_raw)
+params_2022$prey_density <- rep("med", 31)
 
 usethis::use_data(params_2022, overwrite = TRUE)
 
